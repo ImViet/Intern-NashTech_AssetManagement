@@ -11,7 +11,7 @@ variables:
   azureSubscription: 'MSDN Subscription'
 
   # Web App name
-  webAppName: 'asset-management-team3'
+  webAppName: 'asset-management-net-group1'
   
   # Environment
   environment: 'QC'
