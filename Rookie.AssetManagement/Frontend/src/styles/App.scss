@@ -1,0 +1,62 @@
+@import './Header.scss';
+@import './LeftSiteBar.scss';
+@import './Table.scss';
+@import './Modal.scss';
+@import './Intro.scss';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+}
+
+body {
+    max-width: 100vw;
+}
+
+.primaryColor {
+    color: rgba(207,35,56,1);
+}
+
+.invalid {
+    color: #dc3545;
+}
+
+.container-lg-min {
+    max-width: 1700px;
+}
+
+.text-title {
+    color: rgba(207,35,56,1);
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 2rem;
+}
+
+.pointer:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.disable {
+    opacity: 0.5;
+}
+
+.border {
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    height: calc(1.5em + .75rem + 2px);
+}
+
+.w-md {
+    width: 12rem;
+}
+
+.w-ld {
+    width: 16rem;
+}
+
+.icon-md {
+    font-size: 35px;
+}

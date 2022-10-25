@@ -1,0 +1,114 @@
+# .NET Core Web App to Windows on Azure
+# Build a .NET Core Web App and deploy it to Azure as a Windows Web App.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- none
+
+variables:
+  # Azure Resource Manager connection created during pipeline creation
+  azureSubscription: 'MSDN Subscription (fa2bf0da-a501-4aa7-81c7-fd4ee9594753)'
+
+  # Web App name
+  webAppName: 'asset-management-team3'
+  
+  # Environment
+  environment: 'QC'
+
+  # Agent VM image name
+  vmImageName: 'windows-latest'
+
+  # Working Directory
+  workingDirectory: '$(System.DefaultWorkingDirectory)'
+
+  # Build Configuration
+  buildConfiguration: 'Release'
+
+  # Build Projects
+  buildProjects: "./Rookie.AssetManagement/Rookie.AssetManagement.csproj"
+
+  # Test Projects
+  testProjects: "./Rookie.AssetManagement.sln"
+  
+stages:
+- stage: Build
+  displayName: Build stage
+
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: 'restore'
+        publishWebProjects: true
+        projects: $(buildProjects)
+
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        command: 'build'
+        projects: $(buildProjects)
+        arguments: --configuration $(buildConfiguration)
+
+    - task: DotNetCoreCLI@2
+      displayName: Test
+      inputs:
+        command: "test"
+        projects: $(testProjects)
+        arguments: '/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
+
+    - task: reportgenerator@4
+      displayName: Generate Test Report
+      inputs:
+        reports: '$(Build.SourcesDirectory)/**/*.cobertura.xml'
+        targetdir: '$(Build.SourcesDirectory)/CoverageResults'
+        assemblyfilters: '-*Tests*'
+
+    - task: PublishCodeCoverageResults@1
+      displayName: 'Publish Code Coverage'
+      inputs:
+        codeCoverageTool: Cobertura
+        summaryFileLocation: '$(Build.SourcesDirectory)/CoverageResults/Cobertura.xml'
+
+    - task: DotNetCoreCLI@2
+      displayName: Publish
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
+        zipAfterPublish: true
+
+    - publish: $(Build.ArtifactStagingDirectory)
+      artifact: drop
+
+- stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Build
+  condition: succeeded()
+
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy
+    environment: $(webAppName)
+    pool:
+      vmImage: $(vmImageName)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureRMWebAppDeployment@4
+            displayName: "Deploy Azure Web App"
+            inputs:
+              ConnectionType: "AzureRM"
+              ConnectedServiceName: $(azureSubscription)
+              WebAppName: $(webAppName)
+              WebAppKind: webApp
+              Package: $(Pipeline.Workspace)/**/*.zip
+              DeploymentType: "webDeploy"
+              

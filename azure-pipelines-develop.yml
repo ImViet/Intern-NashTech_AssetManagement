@@ -1,0 +1,71 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+
+trigger:
+  - validate
+
+pool:
+  vmImage: "windows-latest"
+
+variables:
+  # Agent VM image name
+  vmImageName: "windows-latest"
+
+  # Working Directory
+  workingDirectory: "$(System.DefaultWorkingDirectory)"
+
+  # Build Configuration
+  buildConfiguration: "Release"
+
+  # Build Projects
+  buildProjects: "./Rookie.AssetManagement.sln"
+
+  # Test Projects
+  testProjects: "./Rookie.AssetManagement.sln"
+
+stages:
+  - stage: Build
+    displayName: Build stage
+
+    jobs:
+      - job: Build
+        displayName: Build
+        pool:
+          vmImage: $(vmImageName)
+
+        steps:
+          - task: DotNetCoreCLI@2
+            displayName: Restore
+            inputs:
+              command: "restore"
+              publishWebProjects: false
+              projects: $(buildProjects)
+
+          - task: DotNetCoreCLI@2
+            displayName: Build
+            inputs:
+              command: "build"
+              projects: $(buildProjects)
+              arguments: --configuration $(buildConfiguration)
+
+          - task: DotNetCoreCLI@2
+            displayName: Test
+            inputs:
+              command: "test"
+              projects: $(testProjects)
+              arguments: "/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura"
+
+          - task: reportgenerator@4
+            displayName: Generate Test Report
+            inputs:
+              reports: "$(Build.SourcesDirectory)/**/*.cobertura.xml"
+              targetdir: "$(Build.SourcesDirectory)/CoverageResults"
+              assemblyfilters: "-*Tests*"
+
+          - task: PublishCodeCoverageResults@1
+            displayName: "Publish Code Coverage"
+            inputs:
+              codeCoverageTool: Cobertura
+              summaryFileLocation: "$(Build.SourcesDirectory)/CoverageResults/Cobertura.xml"

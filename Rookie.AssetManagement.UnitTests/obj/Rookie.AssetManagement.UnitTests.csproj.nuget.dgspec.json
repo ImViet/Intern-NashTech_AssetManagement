@@ -1,0 +1,530 @@
+{
+  "format": 1,
+  "restore": {
+    "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.UnitTests\\Rookie.AssetManagement.UnitTests.csproj": {}
+  },
+  "projects": {
+    "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Business\\Rookie.AssetManagement.Business.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Business\\Rookie.AssetManagement.Business.csproj",
+        "projectName": "Rookie.AssetManagement.Business",
+        "projectPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Business\\Rookie.AssetManagement.Business.csproj",
+        "packagesPath": "C:\\Users\\toanleh\\.nuget\\packages\\",
+        "outputPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Business\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\toanleh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\FrameworkGitKendo\\Eversheds.Framework\\HvNNuget": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Contracts\\Rookie.AssetManagement.Contracts.csproj": {
+                "projectPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Contracts\\Rookie.AssetManagement.Contracts.csproj"
+              },
+              "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.DataAccessor\\Rookie.AssetManagement.DataAccessor.csproj": {
+                "projectPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.DataAccessor\\Rookie.AssetManagement.DataAccessor.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
+            "NPOI": {
+              "target": "Package",
+              "version": "[2.5.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Contracts\\Rookie.AssetManagement.Contracts.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Contracts\\Rookie.AssetManagement.Contracts.csproj",
+        "projectName": "Rookie.AssetManagement.Contracts",
+        "projectPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Contracts\\Rookie.AssetManagement.Contracts.csproj",
+        "packagesPath": "C:\\Users\\toanleh\\.nuget\\packages\\",
+        "outputPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Contracts\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\toanleh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\FrameworkGitKendo\\Eversheds.Framework\\HvNNuget": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.DataAccessor\\Rookie.AssetManagement.DataAccessor.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.DataAccessor\\Rookie.AssetManagement.DataAccessor.csproj",
+        "projectName": "Rookie.AssetManagement.DataAccessor",
+        "projectPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.DataAccessor\\Rookie.AssetManagement.DataAccessor.csproj",
+        "packagesPath": "C:\\Users\\toanleh\\.nuget\\packages\\",
+        "outputPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.DataAccessor\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\toanleh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\FrameworkGitKendo\\Eversheds.Framework\\HvNNuget": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Ensure.That": {
+              "target": "Package",
+              "version": "[9.2.0, )"
+            },
+            "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Tests\\Rookie.AssetManagement.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Tests\\Rookie.AssetManagement.Tests.csproj",
+        "projectName": "Rookie.AssetManagement.Tests",
+        "projectPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Tests\\Rookie.AssetManagement.Tests.csproj",
+        "packagesPath": "C:\\Users\\toanleh\\.nuget\\packages\\",
+        "outputPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Tests\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\toanleh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\FrameworkGitKendo\\Eversheds.Framework\\HvNNuget": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Business\\Rookie.AssetManagement.Business.csproj": {
+                "projectPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Business\\Rookie.AssetManagement.Business.csproj"
+              },
+              "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Contracts\\Rookie.AssetManagement.Contracts.csproj": {
+                "projectPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Contracts\\Rookie.AssetManagement.Contracts.csproj"
+              },
+              "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.DataAccessor\\Rookie.AssetManagement.DataAccessor.csproj": {
+                "projectPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.DataAccessor\\Rookie.AssetManagement.DataAccessor.csproj"
+              },
+              "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement\\Rookie.AssetManagement.csproj": {
+                "projectPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement\\Rookie.AssetManagement.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Ensure.That": {
+              "target": "Package",
+              "version": "[9.2.0, )"
+            },
+            "FluentAssertions": {
+              "target": "Package",
+              "version": "[5.10.3, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.5.0, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.16.0, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.UnitTests\\Rookie.AssetManagement.UnitTests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.UnitTests\\Rookie.AssetManagement.UnitTests.csproj",
+        "projectName": "Rookie.AssetManagement.UnitTests",
+        "projectPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.UnitTests\\Rookie.AssetManagement.UnitTests.csproj",
+        "packagesPath": "C:\\Users\\toanleh\\.nuget\\packages\\",
+        "outputPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.UnitTests\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\toanleh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\FrameworkGitKendo\\Eversheds.Framework\\HvNNuget": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Tests\\Rookie.AssetManagement.Tests.csproj": {
+                "projectPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Tests\\Rookie.AssetManagement.Tests.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "MSTest.TestAdapter": {
+              "target": "Package",
+              "version": "[2.2.7, )"
+            },
+            "MSTest.TestFramework": {
+              "target": "Package",
+              "version": "[2.2.7, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.11.0, )"
+            },
+            "MockQueryable.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "MockQueryable.Moq": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "coverlet.msbuild": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
+            "xunit.runner.visualstudio": {
+              "target": "Package",
+              "version": "[2.4.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement\\Rookie.AssetManagement.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement\\Rookie.AssetManagement.csproj",
+        "projectName": "Rookie.AssetManagement",
+        "projectPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement\\Rookie.AssetManagement.csproj",
+        "packagesPath": "C:\\Users\\toanleh\\.nuget\\packages\\",
+        "outputPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\toanleh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\FrameworkGitKendo\\Eversheds.Framework\\HvNNuget": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Business\\Rookie.AssetManagement.Business.csproj": {
+                "projectPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Business\\Rookie.AssetManagement.Business.csproj"
+              },
+              "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Contracts\\Rookie.AssetManagement.Contracts.csproj": {
+                "projectPath": "d:\\Rookie-final-assignment\\batch5\\final-assignment-June-2022\\Rookie.AssetManagement.Contracts\\Rookie.AssetManagement.Contracts.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Duende.IdentityServer.EntityFramework.Storage": {
+              "target": "Package",
+              "version": "[6.1.0, )"
+            },
+            "FluentValidation.AspNetCore": {
+              "target": "Package",
+              "version": "[9.5.1, )"
+            },
+            "Microsoft.AspNetCore.ApiAuthorization.IdentityServer": {
+              "target": "Package",
+              "version": "[6.0.7, )"
+            },
+            "Microsoft.AspNetCore.SpaServices.Extensions": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.1.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
