@@ -36,6 +36,10 @@ stages:
       vmImage: $(vmImageName)
 
     steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '14.x'
+    
     - task: DotNetCoreCLI@2
       displayName: Restore
       inputs:
@@ -57,7 +61,7 @@ stages:
         projects: $(testProjects)
         arguments: '/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
 
-    - task: reportgenerator@4
+    - task: reportgenerator@5
       displayName: Generate Test Report
       inputs:
         reports: '$(Build.SourcesDirectory)/**/*.cobertura.xml'
