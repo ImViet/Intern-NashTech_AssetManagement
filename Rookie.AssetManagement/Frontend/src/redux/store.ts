@@ -1,28 +1,34 @@
-import { configureStore, getDefaultMiddleware, combineReducers } from '@reduxjs/toolkit';
-import createSagaMiddleware from 'redux-saga';
+import {
+  configureStore,
+  getDefaultMiddleware,
+  combineReducers,
+} from "@reduxjs/toolkit";
+import createSagaMiddleware from "redux-saga";
 
-import authReducer from 'src/containers/Authorize/reducer';
+import authReducer from "src/containers/Authorize/reducer";
+import userReducer from "src/containers/User/reducer";
 
-import rootSaga from './sagas/rootSaga';
+import rootSaga from "./sagas/rootSaga";
 
 const reducer = combineReducers({
-    authReducer
+  authReducer,
+  userReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
-    reducer,
-    middleware: [
-        ...getDefaultMiddleware({
-            thunk: false,
-            serializableCheck: false,
-        }),
-        sagaMiddleware
-    ],
+  reducer,
+  middleware: [
+    ...getDefaultMiddleware({
+      thunk: false,
+      serializableCheck: false,
+    }),
+    sagaMiddleware,
+  ],
 });
 
-rootSaga.map(saga => sagaMiddleware.run(saga))  // Register all sagas
+rootSaga.map((saga) => sagaMiddleware.run(saga)); // Register all sagas
 
 // sagaMiddleware.run(watcherSaga);
 
