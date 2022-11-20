@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿        using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+using Rookie.AssetManagement.Business.Interfaces;
+using EnsureThat;
+using Rookie.AssetManagement.Constants;
 
 namespace Rookie.AssetManagement.Controllers
 {
@@ -11,29 +14,21 @@ namespace Rookie.AssetManagement.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        [HttpGet]
-        public async Task<ActionResult<List<UserDto>>> GetUsers()
+
+        private readonly IUserService _userService;
+        public UsersController(IUserService userService)
         {
-            return new List<UserDto>() {
-                new UserDto(){StaffCode = "SD0001", FullName = "Binh Nguyen Van", 
-                    JoinedDate = new DateTime(), UserName = "binhnv", Type = "Staff"},
-                new UserDto(){StaffCode = "SD0002", FullName = "Nam Nguyen Van",
-                    JoinedDate = new DateTime(), UserName = "namnv", Type = "Staff"},
-            };
+            _userService = userService;
         }
 
         [HttpPost]
-        public async Task<ActionResult<UserDto>> CreateUser(UserCreateDto request)
+        public async Task<ActionResult<UserDto>> AddUser([FromBody] UserCreateDto userRequest)
         {
-            return new UserDto()
-            {
-                Id = 1,
-                StaffCode = "SD0001",
-                FullName = "Binh Nguyen Van",
-                JoinedDate = new DateTime(),
-                UserName = "binhnv",
-                Type = "Staff"
-            };
+            var user = await _userService.AddAsync(userRequest);
+            return Created(Endpoints.User, user);
         }
-    }
+
+
+
+     }
 }
