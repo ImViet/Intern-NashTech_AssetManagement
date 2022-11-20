@@ -50,6 +50,9 @@ namespace Rookie.AssetManagement.DataAccessor.Data
             {
                 entity.ToTable("UserTokens");
             });
+
+            builder.Entity<User>()
+                .HasIndex(x => x.StaffCode).IsUnique();
         }
     }
 }
