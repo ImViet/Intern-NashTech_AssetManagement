@@ -23,7 +23,7 @@ using System.Collections.Generic;
 
 namespace Rookie.AssetManagement.IntegrationTests
 {
-    public class AssetControllerShould : IClassFixture<SqliteInMemoryFixture>
+    public class UserControllerShould : IClassFixture<SqliteInMemoryFixture>
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly BaseRepository<User> _userRepository;
@@ -31,7 +31,7 @@ namespace Rookie.AssetManagement.IntegrationTests
         private readonly UserService _userService;
         private readonly UsersController _userController;
 
-        public AssetControllerShould(SqliteInMemoryFixture fixture)
+        public UserControllerShould(SqliteInMemoryFixture fixture)
         {
             fixture.CreateDatabase();
             _dbContext = fixture.Context;
