@@ -54,6 +54,7 @@ const Header = () => {
 
   const handleConfirmedLogout = () => {
     navigate(HOME);
+    setShowConfirmLogout(false);
     dispatch(logout());
   };
 
