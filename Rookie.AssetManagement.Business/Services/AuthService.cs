@@ -8,6 +8,7 @@ using Microsoft.VisualBasic;
 using Rookie.AssetManagement.Business.Interfaces;
 using Rookie.AssetManagement.Constants;
 using Rookie.AssetManagement.Contracts;
+using Rookie.AssetManagement.Contracts.Constants;
 using Rookie.AssetManagement.Contracts.Dtos.AuthDtos;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
@@ -18,6 +19,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Rookie.AssetManagement.Contracts.Constants;
 //using System.Web.Http.ModelBinding;
 //using System.Web.Http.Results;
 
@@ -83,15 +85,16 @@ namespace Rookie.AssetManagement.Business.Services
             {
                 new Claim("UserName", user.UserName),
                 new Claim("Type", user.Type),
-                new Claim("Location",user.Location )
+                new Claim("Location",user.Location)
             };
 
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
-                _configuration.GetSection("AppSettings:Token").Value));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWTSettings.Key));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
 
             var token = new JwtSecurityToken(
+                JWTSettings.Issuer,
+                JWTSettings.Audience,
                 claims: claims,
                 expires: DateTime.Now.AddDays(1),
                 signingCredentials: creds
@@ -100,6 +103,20 @@ namespace Rookie.AssetManagement.Business.Services
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
+        }
+
+        public async Task<AccountDto> GetAccountByUserName(string UserName)
+        {
+            var User = await _userManager.FindByNameAsync(UserName);
+
+            if (User == null)
+            {
+                throw new NotFoundException("Not Found!");
+            }
+
+            var account = _mapper.Map<AccountDto>(User);
+
+            return account;
         }
     }
 }
