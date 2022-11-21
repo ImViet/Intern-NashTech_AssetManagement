@@ -42,7 +42,7 @@ namespace Rookie.AssetManagement.Controllers
         public async Task<ActionResult<ChangePasswordDto>> ChangePassWord(
            [FromBody] ChangePasswordDto brandRequest)
         {
-            var userId =  Convert.ToInt32(userManager.GetUserId(User));
+            var userId = Convert.ToInt32(userManager.GetUserId(User));
 
             Ensure.Any.IsNotNull(brandRequest, nameof(brandRequest));
 
