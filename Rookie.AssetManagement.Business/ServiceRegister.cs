@@ -12,6 +12,8 @@ namespace Rookie.AssetManagement.Business
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IUserService,UserService>();
+            services.AddTransient<IAuthService,AuthService>();
+
         }
     }
 }
