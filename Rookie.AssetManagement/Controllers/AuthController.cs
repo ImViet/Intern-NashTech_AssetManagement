@@ -33,7 +33,6 @@ namespace Rookie.AssetManagement.Controllers
         [HttpGet("me")]
         public async Task<ActionResult<AccountDto>> GetMe()
         {
-            //Filter specific claim    
             var username = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
             var account = await _authService.GetAccountByUserName(username);
             if (account == null)
@@ -46,6 +45,11 @@ namespace Rookie.AssetManagement.Controllers
         [HttpPost]
         public async Task<ActionResult<AccountDto>> LoginUser([FromBody] LoginDto userRequest)
         {
+            var isDeleted = await _authService.IsUserDeleted(userRequest.UserName);
+            if (isDeleted)
+            {
+                return BadRequest("Your account is disabled. Please contact with IT Team");
+            }
             var account = await _authService.LoginAsync(userRequest);
             if (account == null)
             {
@@ -56,16 +60,26 @@ namespace Rookie.AssetManagement.Controllers
 
         [HttpPut("change-password")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult<ChangePasswordDto>> ChangePassWord(
-           [FromBody] ChangePasswordDto brandRequest)
+        public async Task<ActionResult<AccountDto>> ChangePassWord(
+           [FromBody] ChangePasswordDto changePasswordDto)
         {
-            var userId = Convert.ToInt32(userManager.GetUserId(User));
+            var username = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
 
-            Ensure.Any.IsNotNull(brandRequest, nameof(brandRequest));
+            var account = await _authService.ChangePasswordAsync(username, changePasswordDto);
 
-            var updatedBrand = await _authService.ChangePasswordAsync(userId, brandRequest);
+            return Ok(account);
+        }
 
-            return Ok(updatedBrand);
+        [HttpPut("change-password-first-login")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<AccountDto>> ChangePassWordFirstLogin(
+            [FromBody] ChangePasswordFirstLoginDto changePasswordDto)
+        {
+            var username = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
+
+            var account = await _authService.ChangePasswordFirstLoginAsync(username, changePasswordDto);
+
+            return Ok(account);
         }
     }
 }

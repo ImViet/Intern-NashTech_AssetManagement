@@ -19,7 +19,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Rookie.AssetManagement.Contracts.Constants;
 //using System.Web.Http.ModelBinding;
 //using System.Web.Http.Results;
 
@@ -60,9 +59,9 @@ namespace Rookie.AssetManagement.Business.Services
             return account;
         }
 
-        public async Task<bool> ChangePasswordAsync(int id, ChangePasswordDto passwordRequest)
+        public async Task<AccountDto> ChangePasswordAsync(string username, ChangePasswordDto passwordRequest)
         {
-            var User = await _userRepository.Entities.FirstOrDefaultAsync(x => x.Id == id);
+            var User = await _userManager.FindByNameAsync(username);
 
             if (User == null)
             {
@@ -73,10 +72,62 @@ namespace Rookie.AssetManagement.Business.Services
 
             if (!result.Succeeded)
             {
-                return false;
+                return null;
             }
 
-            return true;
+            var account = _mapper.Map<AccountDto>(User);
+
+            return account;
+        }
+
+        public async Task<AccountDto> GetAccountByUserName(string UserName)
+        {
+            var User = await _userManager.FindByNameAsync(UserName);
+
+            if (User == null)
+            {
+                throw new NotFoundException("Not Found!");
+            }
+
+            var account = _mapper.Map<AccountDto>(User);
+
+            return account;
+        }
+
+        public async Task<AccountDto> ChangePasswordFirstLoginAsync(string username, ChangePasswordFirstLoginDto passwordRequest)
+        {
+            var User = await _userManager.FindByNameAsync(username);
+
+            if (User == null)
+            {
+                throw new NotFoundException("Not Found!");
+            }
+            //Generate Token
+            var token = await _userManager.GeneratePasswordResetTokenAsync(User);
+
+            //Set new Password
+            var result = await _userManager.ResetPasswordAsync(User, token, passwordRequest.PasswordNew);
+
+            if (!result.Succeeded)
+            {
+                return null;
+            }
+
+            if (User.IsNewUser)
+            {
+                User.IsNewUser = false;
+                await _userRepository.Update(User);
+            }
+
+            var account = _mapper.Map<AccountDto>(User);
+
+            return account;
+        }
+
+        public async Task<bool> IsUserDeleted(string UserName)
+        {
+            var User = await _userManager.FindByNameAsync(UserName);
+            return User.IsDeleted;
         }
 
         private string CreateToKen(User user)
@@ -105,18 +156,6 @@ namespace Rookie.AssetManagement.Business.Services
             return jwt;
         }
 
-        public async Task<AccountDto> GetAccountByUserName(string UserName)
-        {
-            var User = await _userManager.FindByNameAsync(UserName);
 
-            if (User == null)
-            {
-                throw new NotFoundException("Not Found!");
-            }
-
-            var account = _mapper.Map<AccountDto>(User);
-
-            return account;
-        }
     }
 }

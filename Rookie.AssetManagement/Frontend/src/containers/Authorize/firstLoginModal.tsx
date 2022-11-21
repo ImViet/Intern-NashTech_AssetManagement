@@ -6,32 +6,22 @@ import Header from "../Layout/Header";
 import TextField from "src/components/FormInputs/TextField";
 import ILoginModel from "src/interfaces/ILoginModel";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
-import { cleanUp, login } from "./reducer";
+import { changePasswordFirstLogin, cleanUp, login } from "./reducer";
 import * as Yup from 'yup';
-import { useNavigate } from "react-router-dom";
-import { HOME, LOGIN } from "src/constants/pages";
+import IChangePasswordFirstLogin from "src/interfaces/IChangePasswordFirstLogin";
+import { handleChangePasswordFirstLogin } from "./sagas/handles";
  
 const LoginSchema = Yup.object().shape({
-  userName: Yup.string().required('Required'),
-  password: Yup.string().required('Required'),
+  passwordNew: Yup.string().required('Required'),
 });
 
-const initialValues: ILoginModel = {
-  userName: '',
-  password: '',
+const initialValues: IChangePasswordFirstLogin = {
+  passwordNew: '',
 }
 
-const Login = () => {
-  const navigate = useNavigate();
+const FirstLoginModal = ({show}) => {
   const dispatch = useAppDispatch();
-  const { loading, error, isAuth } = useAppSelector(state => state.authReducer);
-
-
-  useEffect(() => {
-    if(isAuth){
-      navigate(HOME)
-    }
-  }, [isAuth]);
+  const { loading, error } = useAppSelector(state => state.authReducer);
 
   useEffect(() => {
     return () => {
@@ -39,13 +29,9 @@ const Login = () => {
     }
   }, []);
 
-  const isDisableLoginButton = (loading, isValid,touched)=>{
+  const isDisableSaveButton = (loading, isValid)=>{
     
     if(loading){
-      return true;
-    }
-
-    if(Object.keys(touched).length < 1){
       return true;
     }
 
@@ -59,12 +45,13 @@ const Login = () => {
   return (
     <>
       <div className='container'>
-        <Modal.Dialog
+        <Modal
+          show={show}
           aria-labelledby="login-modal"
         >
           <Modal.Header >
             <Modal.Title id="login-modal">
-              Login
+              Change Password
           </Modal.Title>
 
           </Modal.Header>
@@ -73,25 +60,25 @@ const Login = () => {
             <Formik
               initialValues={initialValues}
               onSubmit={(values) => {
-                dispatch(login(values));
+                dispatch(changePasswordFirstLogin(values));
               }}
               validationSchema={LoginSchema}
             >
               {({ isValid, touched }) => (
                 <Form className='intro-y'>
-                  <TextField name="userName" label="Username" placeholder="john" isrequired={true}/>
-                  <TextField name="password" label="Password" type="password" isrequired={true} />
+                  <p>This is the first time you logged in you have to change you password to continue</p>
+                  <TextField name="passwordNew" label="New Password" type="password" isrequired={true} />
 
-                  {error && (
-                    <div className="invalid text-center">
-                      {error}
+                  {error?.error && (
+                    <div className="invalid">
+                      {error.message}
                     </div>
                   )}
 
-                  <div className="text-center mt-5">
+                  <div className="text-right mt-5">
                     <button className="btn btn-danger"
-                      type="submit" disabled={isDisableLoginButton(loading, isValid,touched)}>
-                      Login
+                      type="submit" disabled={isDisableSaveButton(loading, isValid)}>
+                      Save
                       {(loading) && <img src="/oval.svg" className='w-4 h-4 ml-2 inline-block' />}
                     </button>
                   </div>
@@ -99,10 +86,10 @@ const Login = () => {
               )}
             </Formik>
           </Modal.Body>
-        </Modal.Dialog>
+        </Modal>
       </div>
     </>
   );
 };
 
-export default Login;
+export default FirstLoginModal;
