@@ -13,6 +13,7 @@ namespace Rookie.AssetManagement.Business.Interfaces
     {
         Task<AccountDto> GetAccountByUserName(string UserName);
         Task<AccountDto> LoginAsync(LoginDto request);
-        Task<bool> ChangePasswordAsync(int id, ChangePasswordDto assetUpdateDto);
+        Task<AccountDto> ChangePasswordAsync(string username, ChangePasswordDto passwordRequest);
+        Task<AccountDto> ChangePasswordFirstLoginAsync(string username, ChangePasswordFirstLoginDto passwordRequest);
     }
 }

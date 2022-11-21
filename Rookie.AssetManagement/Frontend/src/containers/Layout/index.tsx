@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { NotificationContainer } from 'react-notifications';
 
 import Header from "./Header";
 import SideBar from "./SideBar";
 import { Route, Outlet } from "react-router-dom";
+import { useAppSelector } from "src/hooks/redux";
+import FirstLoginModal from "../Authorize/firstLoginModal";
 
 const Layout = ({ children, showSideBar = true }) => {
+  const { account } = useAppSelector(state => state.authReducer);
+
   return (
     <>
       <NotificationContainer />
@@ -26,6 +30,7 @@ const Layout = ({ children, showSideBar = true }) => {
         </div>
 
       </div>
+      <FirstLoginModal show={account?.isNewUser}/>
     </>
   );
 };

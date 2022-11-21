@@ -7,4 +7,5 @@ export default interface IAccount {
   staffCode: string;
   location: string;
   isConfirmed?: boolean;
+  isNewUser?: boolean;
 }
