@@ -124,6 +124,12 @@ namespace Rookie.AssetManagement.Business.Services
             return account;
         }
 
+        public async Task<bool> IsUserDeleted(string UserName)
+        {
+            var User = await _userManager.FindByNameAsync(UserName);
+            return User.IsDeleted;
+        }
+
         private string CreateToKen(User user)
         {
             List<Claim> claims = new List<Claim>
@@ -149,5 +155,7 @@ namespace Rookie.AssetManagement.Business.Services
 
             return jwt;
         }
+
+
     }
 }

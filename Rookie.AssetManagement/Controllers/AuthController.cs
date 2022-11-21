@@ -45,6 +45,11 @@ namespace Rookie.AssetManagement.Controllers
         [HttpPost]
         public async Task<ActionResult<AccountDto>> LoginUser([FromBody] LoginDto userRequest)
         {
+            var isDeleted = await _authService.IsUserDeleted(userRequest.UserName);
+            if (isDeleted)
+            {
+                return BadRequest("Your account is disabled. Please contact with IT Team");
+            }
             var account = await _authService.LoginAsync(userRequest);
             if (account == null)
             {

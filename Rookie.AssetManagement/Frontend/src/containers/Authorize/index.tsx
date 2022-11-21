@@ -82,9 +82,9 @@ const Login = () => {
                   <TextField name="userName" label="Username" placeholder="john" isrequired={true}/>
                   <TextField name="password" label="Password" type="password" isrequired={true} />
 
-                  {error?.error && (
-                    <div className="invalid">
-                      {error.message}
+                  {error && (
+                    <div className="invalid text-center">
+                      {error}
                     </div>
                   )}
 
