@@ -51,8 +51,18 @@ body {
 
 .w-md {
     width: 12rem;
-}
 
+}
+.intro{
+    .w-md{
+        div{
+            div{
+                border: 1px solid #0000001c;
+                margin-top: 0;
+            }
+        }
+    }
+}
 .w-ld {
     width: 16rem;
 }

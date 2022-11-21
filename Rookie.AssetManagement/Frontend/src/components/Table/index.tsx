@@ -41,7 +41,10 @@ const Table: React.FC<Props> = ({ columns, children, page, sortState, handleSort
                   <th key={i}>
                     <a className="btn" onClick={() => handleSort!(col.columnValue)}>
                       {col.columnName}
-                      <ColumnIcon colValue={col.columnValue} sortState={sortState} />
+                      
+                      {col.columnValue!=="" && (
+                       <ColumnIcon colValue={col.columnValue} sortState={sortState} />
+                    )}
                     </a>
                   </th>
                 ))
