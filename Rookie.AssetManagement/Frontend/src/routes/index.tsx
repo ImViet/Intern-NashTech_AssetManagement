@@ -24,7 +24,6 @@ const AppRoutes = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    debugger
     if (isAuth) {
       dispatch(me());
     } else {

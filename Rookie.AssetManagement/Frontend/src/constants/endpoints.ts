@@ -1,6 +1,6 @@
 const Endpoints = {
-  authorize: "api/authorize",
-  me: "api/authorize/me",
+  authorize: "api/auth",
+  me: "api/auth/me",
   user: "api/users",
 };
 

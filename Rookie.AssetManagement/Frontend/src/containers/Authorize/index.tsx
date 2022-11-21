@@ -8,6 +8,8 @@ import ILoginModel from "src/interfaces/ILoginModel";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import { cleanUp, login } from "./reducer";
 import * as Yup from 'yup';
+import { useNavigate } from "react-router-dom";
+import { HOME, LOGIN } from "src/constants/pages";
  
 const LoginSchema = Yup.object().shape({
   userName: Yup.string().required('Required'),
@@ -20,14 +22,16 @@ const initialValues: ILoginModel = {
 }
 
 const Login = () => {
-  const [isShow, setShow] = useState(true);
-
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { loading, error } = useAppSelector(state => state.authReducer);
+  const { loading, error, isAuth } = useAppSelector(state => state.authReducer);
 
-  const handleHide = () => {
-    setShow(false);
-  }
+
+  useEffect(() => {
+    if(isAuth){
+      navigate(HOME)
+    }
+  }, [isAuth]);
 
   useEffect(() => {
     return () => {
