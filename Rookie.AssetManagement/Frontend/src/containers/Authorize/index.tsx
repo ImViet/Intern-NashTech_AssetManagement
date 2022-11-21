@@ -54,17 +54,11 @@ const Login = () => {
 
   return (
     <>
-      <div className="row">
-        <Header />
-      </div>
-
       <div className='container'>
-        <Modal
-          show={isShow}
-          dialogClassName="modal-90w"
+        <Modal.Dialog
           aria-labelledby="login-modal"
         >
-          <Modal.Header closeButton>
+          <Modal.Header >
             <Modal.Title id="login-modal">
               Login
           </Modal.Title>
@@ -101,7 +95,7 @@ const Login = () => {
               )}
             </Formik>
           </Modal.Body>
-        </Modal>
+        </Modal.Dialog>
       </div>
     </>
   );

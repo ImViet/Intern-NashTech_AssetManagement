@@ -4,9 +4,9 @@ import { Route, Outlet } from "react-router-dom";
 import InLineLoader from "../components/InlineLoader";
 import Layout from "src/containers/Layout";
 
-export default function PublicRoute({ children, ...rest }) {
+export default function PublicRoute({ children, showSideBar = true }) {
     return (
-        <Layout>
+        <Layout showSideBar={showSideBar}>
             {children}
         </Layout>
     );

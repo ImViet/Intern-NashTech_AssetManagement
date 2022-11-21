@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import { HOME, LOGIN, USER } from "../constants/pages";
 import InLineLoader from "../components/InlineLoader";
@@ -21,9 +21,15 @@ const SusspenseLoading = ({ children }) => (
 const AppRoutes = () => {
   const { isAuth, account } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(me());
+    debugger
+    if (isAuth) {
+      dispatch(me());
+    } else {
+      navigate(LOGIN)
+    }
   }, []);
 
   return (
@@ -48,9 +54,15 @@ const AppRoutes = () => {
         <Route
           path={LOGIN}
           element={
-            <LayoutRoute>
+            <LayoutRoute showSideBar={false}>
               <Login />
             </LayoutRoute>
+          }
+        />
+        <Route
+          path={"/*"}
+          element={
+            <NotFound />
           }
         />
       </Routes>
