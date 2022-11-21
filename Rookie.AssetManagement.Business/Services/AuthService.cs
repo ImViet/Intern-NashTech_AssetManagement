@@ -8,6 +8,7 @@ using Microsoft.VisualBasic;
 using Rookie.AssetManagement.Business.Interfaces;
 using Rookie.AssetManagement.Constants;
 using Rookie.AssetManagement.Contracts;
+using Rookie.AssetManagement.Contracts.Constants;
 using Rookie.AssetManagement.Contracts.Dtos.AuthDtos;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
@@ -18,6 +19,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Rookie.AssetManagement.Contracts.Constants;
 //using System.Web.Http.ModelBinding;
 //using System.Web.Http.Results;
 
@@ -41,30 +43,26 @@ namespace Rookie.AssetManagement.Business.Services
             _mapper = mapper;
         }
 
-        public async Task<string> LoginAsync(LoginDto request)
+        public async Task<AccountDto> LoginAsync(LoginDto request)
         {
             var result = await _signInManager.PasswordSignInAsync(request.UserName, request.Password, true, true);
-    
-            if (result.Succeeded)
+
+            if (!result.Succeeded)
             {
-                //if (request.IsNewUser == true)
-                //{
-                //    request.Password = input;
-                   
-                //}
-
-
-                var user = await _userManager.FindByNameAsync(request.UserName);
-                string token = CreateToKen(user);
-                return token;
+                return null;
             }
-            return "";
+            var user = await _userManager.FindByNameAsync(request.UserName);
+            string token = CreateToKen(user);
 
+            var account = _mapper.Map<AccountDto>(user);
+            account.Token = token;
+
+            return account;
         }
 
         public async Task<bool> ChangePasswordAsync(int id, ChangePasswordDto passwordRequest)
         {
-            var User = await _userRepository!.Entities.FirstOrDefaultAsync(x => x.Id == id);
+            var User = await _userRepository.Entities.FirstOrDefaultAsync(x => x.Id == id);
 
             if (User == null)
             {
@@ -85,17 +83,18 @@ namespace Rookie.AssetManagement.Business.Services
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim("UserName", user.UserName),             
+                new Claim("UserName", user.UserName),
                 new Claim("Type", user.Type),
-                new Claim("Location",user.Location )
+                new Claim("Location",user.Location)
             };
 
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
-                _configuration.GetSection("AppSettings:Token").Value));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWTSettings.Key));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
 
             var token = new JwtSecurityToken(
+                JWTSettings.Issuer,
+                JWTSettings.Audience,
                 claims: claims,
                 expires: DateTime.Now.AddDays(1),
                 signingCredentials: creds
@@ -106,6 +105,18 @@ namespace Rookie.AssetManagement.Business.Services
             return jwt;
         }
 
-     
+        public async Task<AccountDto> GetAccountByUserName(string UserName)
+        {
+            var User = await _userManager.FindByNameAsync(UserName);
+
+            if (User == null)
+            {
+                throw new NotFoundException("Not Found!");
+            }
+
+            var account = _mapper.Map<AccountDto>(User);
+
+            return account;
+        }
     }
 }

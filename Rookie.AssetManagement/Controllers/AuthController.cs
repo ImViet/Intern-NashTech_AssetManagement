@@ -1,4 +1,5 @@
 ﻿using EnsureThat;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +10,8 @@ using Rookie.AssetManagement.Contracts.Dtos.AuthDtos;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
 using System;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Rookie.AssetManagement.Controllers
@@ -26,23 +29,37 @@ namespace Rookie.AssetManagement.Controllers
             this.userManager = userManager;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<string>> LoginUser([FromBody] LoginDto userRequest)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("me")]
+        public async Task<ActionResult<AccountDto>> GetMe()
         {
-            var user = await _authService.LoginAsync(userRequest);
-            if(user == "")
+            //Filter specific claim    
+            var username = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
+            var account = await _authService.GetAccountByUserName(username);
+            if (account == null)
             {
-                return BadRequest("account or password is incorrect!");
+                return BadRequest("Username or password is incorrect!");
             }
-            return Ok(user);
+            return Ok(account);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<AccountDto>> LoginUser([FromBody] LoginDto userRequest)
+        {
+            var account = await _authService.LoginAsync(userRequest);
+            if (account == null)
+            {
+                return BadRequest("Username or password is incorrect!");
+            }
+            return Ok(account);
         }
 
         [HttpPut("change-password")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<ChangePasswordDto>> ChangePassWord(
            [FromBody] ChangePasswordDto brandRequest)
         {
-            var userId =  Convert.ToInt32(userManager.GetUserId(User));
+            var userId = Convert.ToInt32(userManager.GetUserId(User));
 
             Ensure.Any.IsNotNull(brandRequest, nameof(brandRequest));
 

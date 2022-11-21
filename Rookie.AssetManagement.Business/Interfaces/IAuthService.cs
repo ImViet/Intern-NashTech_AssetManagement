@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 
 namespace Rookie.AssetManagement.Business.Interfaces
 {
-    public  interface IAuthService
+    public interface IAuthService
     {
-        Task<string> LoginAsync(LoginDto request);
+        Task<AccountDto> GetAccountByUserName(string UserName);
+        Task<AccountDto> LoginAsync(LoginDto request);
         Task<bool> ChangePasswordAsync(int id, ChangePasswordDto assetUpdateDto);
     }
 }

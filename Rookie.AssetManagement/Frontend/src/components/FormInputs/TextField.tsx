@@ -10,7 +10,7 @@ type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
 };
 
 const TextField: React.FC<InputFieldProps> = (props) => {
-    const [field, { error, touched }, meta] = useField(props);
+    const [field, { error, touched }] = useField(props);
     const { label, isrequired, notvalidate } = props;
 
     const validateClass = () => {
