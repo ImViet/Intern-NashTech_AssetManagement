@@ -41,30 +41,26 @@ namespace Rookie.AssetManagement.Business.Services
             _mapper = mapper;
         }
 
-        public async Task<string> LoginAsync(LoginDto request)
+        public async Task<AccountDto> LoginAsync(LoginDto request)
         {
             var result = await _signInManager.PasswordSignInAsync(request.UserName, request.Password, true, true);
-    
-            if (result.Succeeded)
+
+            if (!result.Succeeded)
             {
-                //if (request.IsNewUser == true)
-                //{
-                //    request.Password = input;
-                   
-                //}
-
-
-                var user = await _userManager.FindByNameAsync(request.UserName);
-                string token = CreateToKen(user);
-                return token;
+                return null;
             }
-            return "";
+            var user = await _userManager.FindByNameAsync(request.UserName);
+            string token = CreateToKen(user);
 
+            var account = _mapper.Map<AccountDto>(user);
+            account.Token = token;
+
+            return account;
         }
 
         public async Task<bool> ChangePasswordAsync(int id, ChangePasswordDto passwordRequest)
         {
-            var User = await _userRepository!.Entities.FirstOrDefaultAsync(x => x.Id == id);
+            var User = await _userRepository.Entities.FirstOrDefaultAsync(x => x.Id == id);
 
             if (User == null)
             {
@@ -85,7 +81,7 @@ namespace Rookie.AssetManagement.Business.Services
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim("UserName", user.UserName),             
+                new Claim("UserName", user.UserName),
                 new Claim("Type", user.Type),
                 new Claim("Location",user.Location )
             };
@@ -105,7 +101,5 @@ namespace Rookie.AssetManagement.Business.Services
 
             return jwt;
         }
-
-     
     }
 }
