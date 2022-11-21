@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -25,33 +26,38 @@ namespace Rookie.AssetManagement.Business.Services
         private readonly IConfiguration _configuration;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly IMapper mapper;
 
-        public AuthService(IConfiguration configuration, SignInManager<User> signInManager, UserManager<User> userManager)
+        public AuthService(IConfiguration configuration, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper)
         {
             _configuration = configuration;
             this._signInManager = signInManager;
             this._userManager = userManager;
+            this.mapper = mapper;
         }
 
-        public async Task<string> LoginAsync(LoginDto request)
+        public async Task<AccountDto> LoginAsync(LoginDto request)
         {
             var result = await _signInManager.PasswordSignInAsync(request.UserName, request.Password, true, true);
-    
-            if (result.Succeeded)
-            {
-                var user = await _userManager.FindByNameAsync(request.UserName);
-                string token = CreateToKen(user);
-                return token;
-            }
-                return "";
 
+            if (!result.Succeeded)
+            {
+                return null;
+            }
+            var user = await _userManager.FindByNameAsync(request.UserName);
+            string token = CreateToKen(user);
+
+            var account = mapper.Map<AccountDto>(user);
+            account.Token = token;
+
+            return account;
         }
 
         private string CreateToKen(User user)
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim("UserName", user.UserName),             
+                new Claim("UserName", user.UserName),
                 new Claim("Type", user.Type),
                 new Claim("Location",user.Location )
             };
@@ -72,6 +78,6 @@ namespace Rookie.AssetManagement.Business.Services
             return jwt;
         }
 
-       
+
     }
 }

@@ -19,14 +19,14 @@ namespace Rookie.AssetManagement.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<string>> LoginUser([FromBody] LoginDto userRequest)
+        public async Task<ActionResult<AccountDto>> LoginUser([FromBody] LoginDto userRequest)
         {
-            var user = await _authService.LoginAsync(userRequest);
-            if(user == "")
+            var account = await _authService.LoginAsync(userRequest);
+            if (account == null)
             {
-                return BadRequest("account or password is incorrect!");
+                return BadRequest("Username or password is incorrect!");
             }
-            return Ok(user);
+            return Ok(account);
         }
     }
 }
