@@ -19,18 +19,6 @@ const SusspenseLoading = ({ children }) => (
 );
 
 const AppRoutes = () => {
-  const { isAuth, account } = useAppSelector((state) => state.authReducer);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isAuth) {
-      dispatch(me());
-    } else {
-      navigate(LOGIN)
-    }
-  }, []);
-
   return (
     <SusspenseLoading>
       <Routes>
