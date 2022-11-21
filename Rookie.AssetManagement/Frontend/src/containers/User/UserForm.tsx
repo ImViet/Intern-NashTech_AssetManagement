@@ -16,13 +16,14 @@ import IUserForm from 'src/interfaces/User/IUserForm';
 import { Status } from 'src/constants/status';
 import { GenderOptions, UserTypeOptions } from 'src/constants/selectOptions';
 import { HOME } from 'src/constants/pages';
+import Gender from 'src/constants/gender';
 
 
 const initialFormValues: IUserForm = {
     firstName: '',
     lastName: '',
     dateOfBirth: undefined,
-    gender: 'Female',
+    gender: Gender.Female,
     joinedDate: undefined,
     type: '',
 };
@@ -30,7 +31,7 @@ const initialFormValues: IUserForm = {
 const validationSchema = Yup.object().shape({
     firstName: Yup.string().required('Required'),
     lastName: Yup.string().required('Required'),
-    gender: Yup.string().required('Required'),
+    // gender: Yup.string().required('Required'),
     type: Yup.string().required('Required'),
     dateOfBirth: Yup.date().required("Required"),
     joinedDate: Yup.date().required("Required"),
