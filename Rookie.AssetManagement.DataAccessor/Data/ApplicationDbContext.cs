@@ -51,8 +51,10 @@ namespace Rookie.AssetManagement.DataAccessor.Data
                 entity.ToTable("UserTokens");
             });
 
+            //add auto generated format for user 'StaffCode'
             builder.Entity<User>()
-                .HasIndex(x => x.StaffCode).IsUnique();
+                .Property(c => c.StaffCode)
+                .HasComputedColumnSql("'SD' + format([Id], 'd4')");
         }
     }
 }
