@@ -1,9 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using EnsureThat;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Rookie.AssetManagement.Business.Interfaces;
 using Rookie.AssetManagement.Constants;
 using Rookie.AssetManagement.Contracts.Dtos.AuthDtos;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
+using Rookie.AssetManagement.DataAccessor.Entities;
+using System;
 using System.Threading.Tasks;
 
 namespace Rookie.AssetManagement.Controllers
@@ -13,9 +18,12 @@ namespace Rookie.AssetManagement.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        public AuthController(IAuthService authService)
+        private readonly UserManager<User> userManager;
+
+        public AuthController(IAuthService authService, UserManager<User> userManager)
         {
             _authService = authService;
+            this.userManager = userManager;
         }
 
         [HttpPost]
@@ -27,6 +35,20 @@ namespace Rookie.AssetManagement.Controllers
                 return BadRequest("account or password is incorrect!");
             }
             return Ok(user);
+        }
+
+        [HttpPut("change-password")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<ActionResult<ChangePasswordDto>> ChangePassWord(
+           [FromBody] ChangePasswordDto brandRequest)
+        {
+            var userId =  Convert.ToInt32(userManager.GetUserId(User));
+
+            Ensure.Any.IsNotNull(brandRequest, nameof(brandRequest));
+
+            var updatedBrand = await _authService.ChangePasswordAsync(userId, brandRequest);
+
+            return Ok(updatedBrand);
         }
     }
 }

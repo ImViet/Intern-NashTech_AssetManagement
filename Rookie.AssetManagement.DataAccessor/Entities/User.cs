@@ -17,5 +17,6 @@ namespace Rookie.AssetManagement.DataAccessor.Entities
         public string Type { get; set; }
         public bool IsDeleted { get; set; }
         public string Location { get; set; }
+        public bool IsNewUser { get; set; }
     }
 }

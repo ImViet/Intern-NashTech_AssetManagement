@@ -12,5 +12,6 @@ namespace Rookie.AssetManagement.Business.Interfaces
     public  interface IAuthService
     {
         Task<string> LoginAsync(LoginDto request);
+        Task<bool> ChangePasswordAsync(int id, ChangePasswordDto assetUpdateDto);
     }
 }

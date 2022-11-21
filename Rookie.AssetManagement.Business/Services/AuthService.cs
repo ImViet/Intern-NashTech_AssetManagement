@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualBasic;
 using Rookie.AssetManagement.Business.Interfaces;
 using Rookie.AssetManagement.Constants;
+using Rookie.AssetManagement.Contracts;
 using Rookie.AssetManagement.Contracts.Dtos.AuthDtos;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
@@ -25,12 +28,17 @@ namespace Rookie.AssetManagement.Business.Services
         private readonly IConfiguration _configuration;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly IBaseRepository<User> _userRepository;
+        private readonly IMapper _mapper;
 
-        public AuthService(IConfiguration configuration, SignInManager<User> signInManager, UserManager<User> userManager)
+
+        public AuthService(IBaseRepository<User> userRepository, IConfiguration configuration, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper)
         {
             _configuration = configuration;
             this._signInManager = signInManager;
             this._userManager = userManager;
+            this._userRepository = userRepository;
+            _mapper = mapper;
         }
 
         public async Task<string> LoginAsync(LoginDto request)
@@ -39,12 +47,38 @@ namespace Rookie.AssetManagement.Business.Services
     
             if (result.Succeeded)
             {
+                //if (request.IsNewUser == true)
+                //{
+                //    request.Password = input;
+                   
+                //}
+
+
                 var user = await _userManager.FindByNameAsync(request.UserName);
                 string token = CreateToKen(user);
                 return token;
             }
-                return "";
+            return "";
 
+        }
+
+        public async Task<bool> ChangePasswordAsync(int id, ChangePasswordDto passwordRequest)
+        {
+            var User = await _userRepository!.Entities.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (User == null)
+            {
+                throw new NotFoundException("Not Found!");
+            }
+
+            var result = await _userManager.ChangePasswordAsync(User, passwordRequest.PasswordOld, passwordRequest.PasswordNew);
+
+            if (!result.Succeeded)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private string CreateToKen(User user)
@@ -72,6 +106,6 @@ namespace Rookie.AssetManagement.Business.Services
             return jwt;
         }
 
-       
+     
     }
 }
