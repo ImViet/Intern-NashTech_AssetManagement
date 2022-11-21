@@ -7,6 +7,12 @@ import TextField from "src/components/FormInputs/TextField";
 import ILoginModel from "src/interfaces/ILoginModel";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import { cleanUp, login } from "./reducer";
+import * as Yup from 'yup';
+ 
+const LoginSchema = Yup.object().shape({
+  userName: Yup.string().required('Required'),
+  password: Yup.string().required('Required'),
+});
 
 const initialValues: ILoginModel = {
   userName: '',
@@ -28,6 +34,23 @@ const Login = () => {
       dispatch(cleanUp());
     }
   }, []);
+
+  const isDisableLoginButton = (loading, isValid,touched)=>{
+    
+    if(loading){
+      return true;
+    }
+
+    if(Object.keys(touched).length < 1){
+      return true;
+    }
+
+    if(!isValid){
+      return true
+    }
+
+    return false;
+  }
 
   return (
     <>
@@ -54,11 +77,12 @@ const Login = () => {
               onSubmit={(values) => {
                 dispatch(login(values));
               }}
+              validationSchema={LoginSchema}
             >
-              {(actions) => (
+              {({ isValid, touched }) => (
                 <Form className='intro-y'>
-                  <TextField name="userName" label="Username" placeholder="john" isrequired />
-                  <TextField name="password" label="Password" type="password" isrequired />
+                  <TextField name="userName" label="Username" placeholder="john" isrequired={true}/>
+                  <TextField name="password" label="Password" type="password" isrequired={true} />
 
                   {error?.error && (
                     <div className="invalid">
@@ -68,7 +92,7 @@ const Login = () => {
 
                   <div className="text-center mt-5">
                     <button className="btn btn-danger"
-                      type="submit" disabled={loading}>
+                      type="submit" disabled={isDisableLoginButton(loading, isValid,touched)}>
                       Login
                       {(loading) && <img src="/oval.svg" className='w-4 h-4 ml-2 inline-block' />}
                     </button>
