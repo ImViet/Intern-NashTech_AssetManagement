@@ -47,7 +47,7 @@ namespace Rookie.AssetManagement.IntegrationTests
         public async Task AddUsersAsync_Success()
         {
             //Arrange
-            var userRequest = UserArrangeData.GetCreateUserDto();
+            var userRequest = ArrangeData.GetCreateUserDto();
 
             // Act
             var result = await _userController.AddUser(userRequest);

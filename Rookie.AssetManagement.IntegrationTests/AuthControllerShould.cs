@@ -48,8 +48,8 @@ namespace Rookie.AssetManagement.IntegrationTests
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
             _mapper = config.CreateMapper();
 
-            _authService = new AuthService(_configuration,_signInManager, _userManager);
-            _authController = new AuthController(_authService);
+            _authService = new AuthService(_authRepository,_signInManager, _userManager,_mapper);
+            _authController = new AuthController(_authService,_userManager);
 
             //fix
         }
@@ -58,8 +58,8 @@ namespace Rookie.AssetManagement.IntegrationTests
         public async Task Login_Success()
         {
             //Arrange
-            var createResult = await _userManager.CreateAsync(UserArrangeData.Create(), "123456");
-            var loginRequest = UserArrangeData.GetLogin();
+            var createResult = await _userManager.CreateAsync(ArrangeData.Create(), "123456");
+            var loginRequest = ArrangeData.GetLogin();
 
             // Act
             var result = await _authController.LoginUser(loginRequest);
