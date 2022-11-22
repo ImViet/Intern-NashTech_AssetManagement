@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { USER_PARENT_ROOT } from "src/constants/pages";
 
-const CreateBrandContainer = () => {
+const CreateUserContainer = () => {
   return (
     <div className="ml-5">
       <div className="primaryColor text-title intro-x">Create New User</div>
@@ -16,4 +16,4 @@ const CreateBrandContainer = () => {
   );
 };
 
-export default CreateBrandContainer;
+export default CreateUserContainer;

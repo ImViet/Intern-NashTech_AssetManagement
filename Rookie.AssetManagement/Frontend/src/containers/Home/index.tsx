@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <>
       <div className='primaryColor text-title intro-x'>
-        My Home
+        My Assignment
       </div>
     </>
   );
