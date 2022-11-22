@@ -12,6 +12,6 @@ export const FilterUserTypeOptions: ISelectOption[] = [
 ];
 
 export const GenderOptions: ISelectOption[] = [
-    { id: 1, label: "Female", value: 0},
-    { id: 2, label: "Male", value: 1},
+    { id: 1, label: "Female", value: "Female"},
+    { id: 2, label: "Male", value: "Male"},
 ];

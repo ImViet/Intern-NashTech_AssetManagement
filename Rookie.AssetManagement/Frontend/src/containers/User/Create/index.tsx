@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import UserFormContainer from "../UserForm";
 
-const CreateBrandContainer = () => {
+const CreateUserContainer = () => {
   return (
     <div className="ml-5">
       <div className="primaryColor text-title intro-x">Create New User</div>
@@ -14,4 +14,4 @@ const CreateBrandContainer = () => {
   );
 };
 
-export default CreateBrandContainer;
+export default CreateUserContainer;
