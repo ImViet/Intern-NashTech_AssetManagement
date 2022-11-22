@@ -1,4 +1,5 @@
 import ISelectOption from "src/interfaces/ISelectOption";
+import Gender from "./gender";
 
 export const UserTypeOptions: ISelectOption[] = [
   { id: 1, label: "Admin", value: "admin" },
@@ -12,6 +13,6 @@ export const FilterUserTypeOptions: ISelectOption[] = [
 ];
 
 export const GenderOptions: ISelectOption[] = [
-  { id: 1, label: "Female", value: "Female" },
-  { id: 2, label: "Male", value: "Male" },
+  { id: 1, label: "Female", value: Gender.Female },
+  { id: 2, label: "Male", value: Gender.Male },
 ];

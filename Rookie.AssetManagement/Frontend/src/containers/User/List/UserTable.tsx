@@ -147,7 +147,7 @@ const UserTable: React.FC<Props> = ({
             <td>{data.fullName}</td>
             <td>{data.userName}</td>
             <td>{data.joinedDate}</td>
-            <td>{getUserTypeName(data.roleType)}</td>
+            <td>{getUserTypeName(data.type)}</td>
 
             <td className="d-flex">
               <ButtonIcon onClick={() => handleEdit(data.id)}>

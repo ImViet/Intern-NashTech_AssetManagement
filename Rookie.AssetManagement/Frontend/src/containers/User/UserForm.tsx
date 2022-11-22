@@ -24,7 +24,7 @@ const initialFormValues: IUserForm = {
     firstName: '',
     lastName: '',
     dateOfBirth: undefined,
-    gender: "Female",
+    gender: Gender.Female,
     joinedDate: undefined,
     type: '',
 };
@@ -121,7 +121,7 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
                         label="Gender"
                         isrequired
                         options={GenderOptions}
-                        disabled={isUpdate ? true : false}/>
+                        disabled={false}/>
 
                     <DateField
                         label="Joined Date"

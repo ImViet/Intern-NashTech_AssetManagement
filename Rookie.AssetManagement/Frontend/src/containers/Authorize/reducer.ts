@@ -37,7 +37,6 @@ const AuthSlice = createSlice({
       state: AuthState,
       action: PayloadAction<IAccount>
     ): AuthState => {
-      debugger;
       const account = action.payload;
       if (account?.token) {
         setLocalStorage("token", account.token);
