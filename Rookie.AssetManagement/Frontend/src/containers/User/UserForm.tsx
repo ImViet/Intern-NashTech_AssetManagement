@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
 import IUserForm from 'src/interfaces/User/IUserForm';
 import { Status } from 'src/constants/status';
 import { GenderOptions, UserTypeOptions } from 'src/constants/selectOptions';
-import { HOME } from 'src/constants/pages';
+import { HOME, USER } from 'src/constants/pages';
 import Gender from 'src/constants/gender';
 
 
@@ -145,7 +145,7 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
                                 Save {(loading) && <img src="/oval.svg" className='w-4 h-4 ml-2 inline-block' />}
                             </button>
 
-                            <Link to={HOME} className="btn btn-outline-secondary ml-2">
+                            <Link to={USER} className="btn btn-outline-secondary ml-2">
                                 Cancel
                             </Link>
                         </div>
