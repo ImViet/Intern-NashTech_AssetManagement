@@ -1,12 +1,8 @@
 using System;
-<<<<<<< HEAD
-using Rookie.AssetManagement.Constants;
-=======
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Rookie.AssetManagement.DataAccessor.Data;
 using Rookie.AssetManagement.DataAccessor.Enum;
->>>>>>> 621820f (Integration Test)
 using Rookie.AssetManagement.DataAccessor.Entities;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using Microsoft.AspNetCore.Identity;
@@ -19,9 +15,6 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
 {
     public static class ArrangeData
     {
-<<<<<<< HEAD
-  
-=======
         public static List<User> GetSeedUsersData()
         {
             return new List<User>()
@@ -53,8 +46,6 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     JoinedDate = new DateTime(2022, 11, 10, 0, 0, 0),
                     Type = "Staff",
                 },
-                
-                
             };
         }
 
@@ -105,6 +96,5 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
 
         }
 
->>>>>>> 621820f (Integration Test)
     }
 }
