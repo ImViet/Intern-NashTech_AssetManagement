@@ -7,6 +7,14 @@ import TextField from "src/components/FormInputs/TextField";
 import ILoginModel from "src/interfaces/ILoginModel";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import { cleanUp, login } from "./reducer";
+import * as Yup from 'yup';
+import { useNavigate } from "react-router-dom";
+import { HOME, LOGIN } from "src/constants/pages";
+ 
+const LoginSchema = Yup.object().shape({
+  userName: Yup.string().required('Required'),
+  password: Yup.string().required('Required'),
+});
 
 const initialValues: ILoginModel = {
   userName: '',
@@ -14,14 +22,16 @@ const initialValues: ILoginModel = {
 }
 
 const Login = () => {
-  const [isShow, setShow] = useState(true);
-
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { loading, error } = useAppSelector(state => state.authReducer);
+  const { loading, error, isAuth } = useAppSelector(state => state.authReducer);
 
-  const handleHide = () => {
-    setShow(false);
-  }
+
+  useEffect(() => {
+    if(isAuth){
+      navigate(HOME)
+    }
+  }, [isAuth]);
 
   useEffect(() => {
     return () => {
@@ -29,19 +39,30 @@ const Login = () => {
     }
   }, []);
 
+  const isDisableLoginButton = (loading, isValid,touched)=>{
+    
+    if(loading){
+      return true;
+    }
+
+    if(Object.keys(touched).length < 1){
+      return true;
+    }
+
+    if(!isValid){
+      return true
+    }
+
+    return false;
+  }
+
   return (
     <>
-      <div className="row">
-        <Header />
-      </div>
-
       <div className='container'>
-        <Modal
-          show={isShow}
-          dialogClassName="modal-90w"
+        <Modal.Dialog
           aria-labelledby="login-modal"
         >
-          <Modal.Header closeButton>
+          <Modal.Header >
             <Modal.Title id="login-modal">
               Login
           </Modal.Title>
@@ -54,21 +75,22 @@ const Login = () => {
               onSubmit={(values) => {
                 dispatch(login(values));
               }}
+              validationSchema={LoginSchema}
             >
-              {(actions) => (
+              {({ isValid, touched }) => (
                 <Form className='intro-y'>
-                  <TextField name="userName" label="Username" placeholder="john" isrequired />
-                  <TextField name="password" label="Password" type="password" isrequired />
+                  <TextField name="userName" label="Username" placeholder="john" isrequired={true}/>
+                  <TextField name="password" label="Password" type="password" isrequired={true} />
 
-                  {error?.error && (
-                    <div className="invalid">
-                      {error.message}
+                  {error && (
+                    <div className="invalid text-center">
+                      {error}
                     </div>
                   )}
 
                   <div className="text-center mt-5">
                     <button className="btn btn-danger"
-                      type="submit" disabled={loading}>
+                      type="submit" disabled={isDisableLoginButton(loading, isValid,touched)}>
                       Login
                       {(loading) && <img src="/oval.svg" className='w-4 h-4 ml-2 inline-block' />}
                     </button>
@@ -77,7 +99,7 @@ const Login = () => {
               )}
             </Formik>
           </Modal.Body>
-        </Modal>
+        </Modal.Dialog>
       </div>
     </>
   );

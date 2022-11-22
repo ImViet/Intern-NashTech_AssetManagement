@@ -24,7 +24,7 @@ const CustomToggle = React.forwardRef<any, any>(({ children, onClick }, ref): an
 const Header = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { account } = useAppSelector(state => state.authReducer);
+  const { account , isAuth} = useAppSelector(state => state.authReducer);
   const dispatch = useAppDispatch();
 
   const [showModalChangePasswod, setShowModalChangePasswod] = useState(false);
@@ -54,6 +54,7 @@ const Header = () => {
 
   const handleConfirmedLogout = () => {
     navigate(HOME);
+    setShowConfirmLogout(false);
     dispatch(logout());
   };
 
@@ -63,18 +64,20 @@ const Header = () => {
         <div className="container-lg-min container-fluid d-flex pt-2">
           <p className='headText'>{`${headerName()}`}</p>
 
-          <div className='ml-auto text-white'>
-            <Dropdown>
-              <Dropdown.Toggle as={CustomToggle}>
-                {account?.userName}
-              </Dropdown.Toggle>
+          {isAuth && (
+            <div className='ml-auto text-white'>
+              <Dropdown>
+                <Dropdown.Toggle as={CustomToggle}>
+                  {account?.userName}
+                </Dropdown.Toggle>
 
-              <Dropdown.Menu>
-                <Dropdown.Item onClick={openModal}>Change Password</Dropdown.Item>
-                <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={openModal}>Change Password</Dropdown.Item>
+                  <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          )}
         </div>
       </div>
 
