@@ -30,7 +30,7 @@ const columns: IColumnOption[] = [
   { columnName: "Full Name ", columnValue: "fullName" },
   { columnName: "Username ", columnValue: "userName" },
   { columnName: "Joined Date ", columnValue: "joinedDate" },
-  { columnName: "roleType ", columnValue: "Type" },
+  { columnName: "Role Type ", columnValue: "Type" },
 ];
 
 type Props = {
@@ -78,7 +78,7 @@ const UserTable: React.FC<Props> = ({
       id,
       isOpen: true,
       title: 'Are you sure',
-      message: 'Do you want to disable this Brand?',
+      message: 'Do you want to disable this User?',
       isDisable: true,
     });
   };

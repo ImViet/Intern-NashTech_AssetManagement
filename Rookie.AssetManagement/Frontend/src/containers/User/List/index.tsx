@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { FunnelFill } from "react-bootstrap-icons";
 import { Search } from "react-feather";
 import ReactMultiSelectCheckboxes from "react-multiselect-checkboxes";
-
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import UserTable from "./UserTable";
 import IUserForm from "src/interfaces/User/IUserForm";
@@ -108,6 +107,8 @@ const ListUser = () => {
   useEffect(() => {
     fetchData();
   }, [query]);
+
+
   return (
     <>
       <div className="primaryColor text-title intro-x">User List</div>
@@ -122,7 +123,6 @@ const ListUser = () => {
               value={selectedType}
               onChange={handleType}
             />
-
             <div className="border p-2">
               <FunnelFill />
             </div>
