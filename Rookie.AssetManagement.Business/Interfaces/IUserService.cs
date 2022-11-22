@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 namespace Rookie.AssetManagement.Business.Interfaces
 {
     public interface IUserService
-    {
-       
+    {      
         Task<UserDto> AddAsync(UserCreateDto assetRequest);
-    
+        Task<UserDto> UpdateAsnyc(int id, UserUpdateDto assetRequest);
     }
 }
