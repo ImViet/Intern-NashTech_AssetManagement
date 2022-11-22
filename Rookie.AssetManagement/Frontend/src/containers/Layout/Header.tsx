@@ -3,7 +3,7 @@ import { Dropdown } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import ConfirmModal from "src/components/ConfirmModal";
 import { HOME } from "src/constants/pages";
-
+import logo from '../../../public/images/Logo_lk.png'
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import { logout } from "../Authorize/reducer";
 
@@ -24,7 +24,7 @@ const CustomToggle = React.forwardRef<any, any>(({ children, onClick }, ref): an
 const Header = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { account , isAuth} = useAppSelector(state => state.authReducer);
+  const { account, isAuth } = useAppSelector(state => state.authReducer);
   const dispatch = useAppDispatch();
 
   const [showModalChangePasswod, setShowModalChangePasswod] = useState(false);
@@ -62,8 +62,14 @@ const Header = () => {
     <>
       <div className='header align-items-center font-weight-bold'>
         <div className="container-lg-min container-fluid d-flex pt-2">
-          <p className='headText'>{`${headerName()}`}</p>
+          {(headerName().toLowerCase() === "login") ? (
+            <div className="" style={{ marginLeft: 70 }}>
 
+              <p className='headText'>ádasds</p>
+            </div>
+          ) : (
+            <p className='headText'>{`${headerName()}`}</p>
+          )}
           {isAuth && (
             <div className='ml-auto text-white'>
               <Dropdown>
