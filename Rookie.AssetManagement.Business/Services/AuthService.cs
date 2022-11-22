@@ -84,7 +84,7 @@ namespace Rookie.AssetManagement.Business.Services
 
             if (User == null)
             {
-                throw new NotFoundException("Not Found!");
+                return null;
             }
 
             var account = _mapper.Map<AccountDto>(User);

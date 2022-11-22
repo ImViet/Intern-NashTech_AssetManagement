@@ -37,7 +37,7 @@ namespace Rookie.AssetManagement.Controllers
             var account = await _authService.GetAccountByUserName(username);
             if (account == null)
             {
-                return BadRequest("Username or password is incorrect!");
+                return BadRequest("No user");
             }
             return Ok(account);
         }
@@ -45,12 +45,19 @@ namespace Rookie.AssetManagement.Controllers
         [HttpPost]
         public async Task<ActionResult<AccountDto>> LoginUser([FromBody] LoginDto userRequest)
         {
+            var account = await _authService.GetAccountByUserName(userRequest.UserName);
+            if (account == null)
+            {
+                return BadRequest("Username or password is incorrect!");
+            }
+
             var isDeleted = await _authService.IsUserDeleted(userRequest.UserName);
             if (isDeleted)
             {
                 return BadRequest("Your account is disabled. Please contact with IT Team");
             }
-            var account = await _authService.LoginAsync(userRequest);
+
+            account = await _authService.LoginAsync(userRequest);
             if (account == null)
             {
                 return BadRequest("Username or password is incorrect!");
