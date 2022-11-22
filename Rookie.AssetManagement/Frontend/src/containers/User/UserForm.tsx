@@ -49,14 +49,15 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
 
     const dispatch = useAppDispatch();
 
-    const isUpdate = initialUserForm.userId ? true : false;
+    const isUpdate = initialUserForm.id ? true : false;
 
     const navigate = useNavigate();
 
-    const handleResult = (result: boolean, message: string) => {
+    const handleResult = (result: boolean, res) => {
         if (result) {
+            debugger
             NotificationManager.success(
-                `${isUpdate ? 'Updated' : 'Created'} Successful User ${message}`,
+                `${isUpdate ? 'Updated' : 'Created'} Successful User ${res.firstName}`,
                 `${isUpdate ? 'Update' : 'Create'} Successful`,
                 2000,
             );
@@ -66,7 +67,7 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
             }, 1000);
 
         } else {
-            NotificationManager.error(message, 'Create failed', 2000);
+            NotificationManager.error(res, 'Failed', 2000);
         }
     }
 
@@ -146,7 +147,7 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
                                 Save {(loading) && <img src="/oval.svg" className='w-4 h-4 ml-2 inline-block' />}
                             </button>
 
-                            <Link to={USER} className="btn btn-outline-secondary ml-2">
+                            <Link to={`/${USER}`} className="btn btn-outline-secondary ml-2">
                                 Cancel
                             </Link>
                         </div>

@@ -39,7 +39,7 @@ namespace Rookie.AssetManagement.Business.Services
         }
         public async Task<UserDto> GetByIdAsync(int id)
         {
-             return _mapper.Map<UserDto>(await _userRepository.Entities.Where(c=>c.Id==id).FirstOrDefaultAsync());           
+            return _mapper.Map<UserDto>(await _userRepository.Entities.Where(c => c.Id == id).FirstOrDefaultAsync());
         }
         public async Task<UserDto> AddAsync(UserCreateDto userRequest, string location)
         {
@@ -68,7 +68,7 @@ namespace Rookie.AssetManagement.Business.Services
             string year = newUser.DateOfBirth.Year.ToString();
             string password = newUser.UserName.ToLower() + '@' + day + month + year;
             //default isNewUser
-            newUser.IsNewUser=true;
+            newUser.IsNewUser = true;
             //default location
             newUser.Location = location;
             //default staffcode            
@@ -84,17 +84,17 @@ namespace Rookie.AssetManagement.Business.Services
 
             return _mapper.Map<UserDto>(user);
         }
-        public async Task<UserDto> UpdateAsnyc(int id, UserUpdateDto assetRequest)
+        public async Task<UserDto> UpdateAsnyc(UserUpdateDto userUpdateDto)
         {
-            var user = await _userRepository.Entities.FirstOrDefaultAsync(c => c.Id == id);
+            var user = await _userRepository.Entities.FirstOrDefaultAsync(c => c.Id == userUpdateDto.Id);
             if (user == null)
             {
                 throw new NotFoundException("User Not Found!");
             }
-            user.DateOfBirth = assetRequest.DateOfBirth;
-            user.Gender = (UserGenderEnum)assetRequest.Gender;
-            user.JoinedDate = assetRequest.JoinedDate;
-            user.Type = assetRequest.Type;
+            user.DateOfBirth = userUpdateDto.DateOfBirth;
+            user.Gender = (UserGenderEnum)userUpdateDto.Gender;
+            user.JoinedDate = userUpdateDto.JoinedDate;
+            user.Type = userUpdateDto.Type;
 
             var userUpdated = await _userRepository.Update(user);
             var userUpdatedDto = _mapper.Map<UserDto>(userUpdated);
@@ -104,7 +104,7 @@ namespace Rookie.AssetManagement.Business.Services
         public string DefaultValueForStaffCodeFirst()
         {
             string staffcode = "";
-            var lastuser = _userRepository.Entities.OrderByDescending(c=>c.Id).FirstOrDefault();        
+            var lastuser = _userRepository.Entities.OrderByDescending(c => c.Id).FirstOrDefault();
             int newuserid = lastuser.Id + 1;
             if (newuserid < 10)
             {
@@ -117,7 +117,7 @@ namespace Rookie.AssetManagement.Business.Services
             else if (newuserid < 1000)
             {
                 staffcode = "SD0" + newuserid;
-            }            
+            }
             else
             {
                 staffcode = "SD" + newuserid;

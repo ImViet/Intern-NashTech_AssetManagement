@@ -1,7 +1,7 @@
 import Gender from "src/constants/gender";
 
 export default interface IUserForm {
-  userId?: number;
+  id?: number;
   firstName: string;
   lastName: string;
   dateOfBirth?: Date;

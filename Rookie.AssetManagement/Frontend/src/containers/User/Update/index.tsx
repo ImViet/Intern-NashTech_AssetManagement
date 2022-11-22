@@ -15,7 +15,7 @@ const UpdateUserContainer = () => {
   useEffect(()=>{
     if (existUser) {
       setUser({
-        userId: existUser.id,
+        id: existUser.id,
         firstName: existUser.firstName,
         lastName: existUser.lastName,
         dateOfBirth: new Date(existUser.dateOfBirth),

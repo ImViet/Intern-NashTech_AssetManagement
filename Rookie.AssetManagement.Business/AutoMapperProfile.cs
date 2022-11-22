@@ -63,6 +63,8 @@ namespace Rookie.AssetManagement.Business
             CreateMap<User, AccountDto>()
                 .ForMember(d => d.FullName, t => t.MapFrom(src => src.FirstName + " " + src.LastName))
                 .ForMember(d => d.Token, t => t.Ignore());
+            CreateMap<UserUpdateDto, User>()
+                .ForMember(d => d.Id, t => t.Ignore());
         }
     }
 }
