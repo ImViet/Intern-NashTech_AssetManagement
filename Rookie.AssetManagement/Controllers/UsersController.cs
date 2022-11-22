@@ -1,4 +1,4 @@
-﻿        using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using System.Collections.Generic;
@@ -7,6 +7,7 @@ using System;
 using Rookie.AssetManagement.Business.Interfaces;
 using EnsureThat;
 using Rookie.AssetManagement.Constants;
+using System.Linq;
 
 namespace Rookie.AssetManagement.Controllers
 {
@@ -24,7 +25,8 @@ namespace Rookie.AssetManagement.Controllers
         [HttpPost]
         public async Task<ActionResult<UserDto>> AddUser([FromBody] UserCreateDto userRequest)
         {
-            var user = await _userService.AddAsync(userRequest);
+            var location = User.Claims.FirstOrDefault(x => x.Type.Equals("Location", StringComparison.OrdinalIgnoreCase))?.Value;
+            var user = await _userService.AddAsync(userRequest, location);
             return Created(Endpoints.User, user);
         }
         [HttpPut]

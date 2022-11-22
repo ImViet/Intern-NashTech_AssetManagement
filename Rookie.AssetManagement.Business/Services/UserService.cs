@@ -30,7 +30,7 @@ namespace Rookie.AssetManagement.Business.Services
             _mapper = mapper;
         }
 
-        public async Task<UserDto> AddAsync(UserCreateDto userRequest)
+        public async Task<UserDto> AddAsync(UserCreateDto userRequest, string location)
         {
             Ensure.Any.IsNotNull(userRequest);
             var newUser = _mapper.Map<User>(userRequest);
@@ -61,7 +61,7 @@ namespace Rookie.AssetManagement.Business.Services
                 return null;
             }
             //default location
-            newUser.Location = "HCM";
+            newUser.Location = location;
 
             var user = await _userRepository.GetById(newUser.Id);
 
