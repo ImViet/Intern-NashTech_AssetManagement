@@ -43,7 +43,7 @@ namespace Rookie.AssetManagement.Middlewares
 
                     default:
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                        errMessage = "Something go wrong";
+                        errMessage = error.Message;
                         break;
                 }
 
