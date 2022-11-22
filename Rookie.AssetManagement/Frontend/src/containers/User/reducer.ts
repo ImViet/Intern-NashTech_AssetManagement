@@ -81,9 +81,26 @@ const UserReducerSlice = createSlice({
         loading: false,
       };
     },
+    setStatus: (state, action: PayloadAction<SetStatusType>) => {
+      const { status, error } = action.payload;
+
+      return {
+        ...state,
+        status,
+        error,
+        loading: false,
+      };
+    },
   },
 });
 
-export const { createUser, updateUser, setUser } = UserReducerSlice.actions;
+export const {
+  createUser,
+  updateUser,
+  setUser,
+  setUserList,
+  setStatus,
+  getUserList,
+} = UserReducerSlice.actions;
 
 export default UserReducerSlice.reducer;

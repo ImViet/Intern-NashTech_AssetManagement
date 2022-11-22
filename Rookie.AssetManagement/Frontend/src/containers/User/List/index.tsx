@@ -17,6 +17,7 @@ import {
 import { FilterUserTypeOptions } from "src/constants/selectOptions";
 import IUser from "src/interfaces/User/IUser";
 import IPagedModel from "src/interfaces/IPagedModel";
+import { getUserList } from "../reducer";
 
 const ListUser = () => {
   const dispatch = useAppDispatch();
@@ -101,7 +102,7 @@ const ListUser = () => {
   };
 
   const fetchData = () => {
-
+    dispatch(getUserList(query))
   };
 
   useEffect(() => {

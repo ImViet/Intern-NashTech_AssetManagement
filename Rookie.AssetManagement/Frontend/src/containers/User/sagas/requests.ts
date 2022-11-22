@@ -6,6 +6,7 @@ import EndPoints from "src/constants/endpoints";
 import IUserForm from "src/interfaces/User/IUserForm";
 import IUser from "src/interfaces/User/IUser";
 import IPagedModel from "src/interfaces/IPagedModel";
+import IQueryUserModel from "src/interfaces/User/IQueryUserModel";
 
 export function createUserRequest(
   userForm: IUserForm
@@ -24,9 +25,7 @@ export function updateUserRequest(
 }
 
 export function getUsersRequest(
-  userForm: IUserForm
-): Promise<AxiosResponse<IPagedModel<IUser>>> {
-  return RequestService.axios.put(EndPoints.user, userForm, {
-    paramsSerializer: (params) => qs.stringify(params),
-  });
+  userQuery: IQueryUserModel
+): Promise<AxiosResponse<IUser[]>> {
+  return RequestService.axios.get(EndPoints.user);
 }
