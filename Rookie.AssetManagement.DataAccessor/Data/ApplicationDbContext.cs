@@ -1,4 +1,5 @@
-﻿using Rookie.AssetManagement.DataAccessor.Entities;
+﻿
+using Rookie.AssetManagement.DataAccessor.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

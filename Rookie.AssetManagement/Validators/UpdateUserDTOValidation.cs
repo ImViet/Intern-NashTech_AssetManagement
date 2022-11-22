@@ -6,9 +6,8 @@ using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 public class UpdateUserDTOValidator : AbstractValidator<UserUpdateDto> {
     public UpdateUserDTOValidator(){
         
-        RuleFor(user=>user.FirstName).NotEmpty().WithMessage("First Name is empty");
-           
-        RuleFor(user=>user.LastName).NotEmpty().WithMessage("Last Name is empty");
+        // RuleFor(user=>user.FirstName).NotEmpty().WithMessage("First Name is empty");          
+        // RuleFor(user=>user.LastName).NotEmpty().WithMessage("Last Name is empty");
 
         RuleFor(user=>user.DateOfBirth)
             .Cascade(CascadeMode.Stop)
