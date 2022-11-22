@@ -52,13 +52,13 @@ namespace Rookie.AssetManagement.IntegrationTests
             _authController = new AuthController(_authService,_userManager);
 
             //fix
+            _userManager.CreateAsync(ArrangeData.Create(), "123456");
         }
 
         // [Fact]
         // public async Task Login_Success()
         // {
         //     //Arrange
-        //     var createResult = await _userManager.CreateAsync(ArrangeData.Create(), "123456");
         //     var loginRequest = ArrangeData.GetLogin();
 
         //     // Act
