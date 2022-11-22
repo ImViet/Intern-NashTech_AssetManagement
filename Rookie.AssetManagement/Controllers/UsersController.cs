@@ -27,8 +27,12 @@ namespace Rookie.AssetManagement.Controllers
             var user = await _userService.AddAsync(userRequest);
             return Created(Endpoints.User, user);
         }
+        [HttpPut]
+        public async Task<ActionResult<UserDto>> UpdateUser(int id, [FromBody] UserUpdateDto userRequest)
+        {
+            var user = await _userService.UpdateAsnyc(id, userRequest);
+            return Created(Endpoints.User, user);
+        }
 
-
-
-     }
+    }
 }

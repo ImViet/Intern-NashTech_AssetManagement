@@ -8,6 +8,7 @@ using Rookie.AssetManagement.Contracts;
 using Rookie.AssetManagement.Contracts.Dtos.EnumDtos;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
+using Rookie.AssetManagement.DataAccessor.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,18 +55,36 @@ namespace Rookie.AssetManagement.Business.Services
             string day = newUser.DateOfBirth.Day.ToString();
             string month = newUser.DateOfBirth.Month.ToString();
             string year = newUser.DateOfBirth.Year.ToString();
-            //default location
-            newUser.Location = "HCM";
-
             var createResult = await userManager.CreateAsync(newUser, newUser.FirstName.ToLower() + '@' + day + month + year);
             if (!createResult.Succeeded)
             {
                 return null;
             }
+            //default location
+            newUser.Location = "HCM";
 
             var user = await _userRepository.GetById(newUser.Id);
 
             return _mapper.Map<UserDto>(user);
+        }
+
+        public async Task<UserDto> UpdateAsnyc(int id, UserUpdateDto assetRequest)
+        {
+            var user = await _userRepository.Entities.FirstOrDefaultAsync(c => c.Id == id);
+            if (user == null)
+            {
+                throw new NotFoundException("User Not Found!");
+            }
+            user.FirstName = assetRequest.FirstName;
+            user.LastName = assetRequest.LastName;
+            user.DateOfBirth = assetRequest.DateOfBirth;
+            user.Gender = (UserGenderEnum)assetRequest.Gender;
+            user.JoinedDate = assetRequest.JoinedDate;
+            user.Type = assetRequest.Type;
+
+            var userUpdated = await _userRepository.Update(user);
+            var userUpdatedDto = _mapper.Map<UserDto>(userUpdated);
+            return userUpdatedDto;
         }
     }
 }
