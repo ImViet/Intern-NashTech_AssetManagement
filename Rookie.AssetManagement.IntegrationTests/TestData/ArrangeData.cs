@@ -9,7 +9,11 @@ using Rookie.AssetManagement.DataAccessor.Enum;
 >>>>>>> 621820f (Integration Test)
 using Rookie.AssetManagement.DataAccessor.Entities;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
+using Microsoft.AspNetCore.Identity;
 using Rookie.AssetManagement.Contracts.Dtos.EnumDtos;
+using Rookie.AssetManagement.Contracts.Dtos.AuthDtos;
+using System.Linq;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Rookie.AssetManagement.IntegrationTests.TestData
 {
@@ -68,11 +72,37 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
             };
         }
 
-        public static void InitUsersData(ApplicationDbContext dbContext)
+        public static User Create()
+        {
+            return new User
+            {
+                UserName = "adminhcm"
+            };
+
+        }
+
+        public static LoginDto GetLogin()
+        {
+            return new LoginDto() {
+
+                UserName = "adminhcm",
+                Password = "123456"
+
+            };
+        }
+
+
+
+        public static void InitUsersData(ApplicationDbContext dbContext, UserManager<User> userManager)
         {
             var users = GetSeedUsersData();
             dbContext.Users.AddRange(users);
             dbContext.SaveChanges();
+
+
+            //fix
+            userManager.CreateAsync(Create(), "123456");
+
         }
 
 >>>>>>> 621820f (Integration Test)
