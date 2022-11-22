@@ -8,15 +8,24 @@ type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
     name: string;
     isrequired?: boolean;
     options: ISelectOption[];
+    notvalidate?: boolean;
 };
 
 const SelectField: React.FC<InputFieldProps> = (props) => {
     const [field, { error, touched, value }, { setValue }] = useField(props);
 
-    const { name, options, label, isrequired } = props;
+    const { name, options, label, isrequired, notvalidate } = props;
 
     const handleChange = (e) => {
         setValue(e.target.value)
+    };
+
+    const validateClass = () => {
+        if (touched && error) return 'is-invalid';
+        if (notvalidate) return '';
+        if (touched) return 'is-valid';
+
+        return '';
     };
 
     return (
@@ -25,13 +34,13 @@ const SelectField: React.FC<InputFieldProps> = (props) => {
                 <label className="col-4 col-form-label d-flex">
                     {label}
                     {isrequired && (
-                        <div className="invalid ml-1">(*)</div>
+                        <div className="invalid ml-1"></div>
                     )}
                 </label>
 
                 <div className="col">
-                    <select className="custom-select" onChange={handleChange}>
-                        <option selected hidden>Open this select menu</option>
+                    <select className={`custom-select ${validateClass()}`} onChange={handleChange}>
+                        <option selected hidden></option>
                         {
                             options.map(({ id, label: optionLabel, value: optionValue }) => (
                                 <option key={id} value={optionValue} selected = {optionValue === value}>
@@ -40,6 +49,9 @@ const SelectField: React.FC<InputFieldProps> = (props) => {
                             ))
                         }
                     </select>
+                    {error && touched && (
+                        <div className='invalid'>{error}</div>
+                    )}
                 </div>
             </div>
         </>
