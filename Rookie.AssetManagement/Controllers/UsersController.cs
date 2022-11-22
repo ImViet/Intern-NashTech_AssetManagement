@@ -21,7 +21,16 @@ namespace Rookie.AssetManagement.Controllers
         {
             _userService = userService;
         }
-
+        [HttpGet]
+        public async Task<ActionResult<UserDto>> GetAllUser()
+        {
+            return Ok(await _userService.GetAllAsync());
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserDto>> GetById(int id)
+        {
+            return Ok(await _userService.GetByIdAsync(id));
+        }
         [HttpPost]
         public async Task<ActionResult<UserDto>> AddUser([FromBody] UserCreateDto userRequest)
         {

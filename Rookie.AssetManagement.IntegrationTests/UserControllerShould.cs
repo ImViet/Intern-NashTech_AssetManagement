@@ -39,7 +39,7 @@ namespace Rookie.AssetManagement.IntegrationTests
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
             _mapper = config.CreateMapper();
 
-            _userService = new UserService(_userRepository, _mapper);
+            //_userService = new UserService(_userRepository, _mapper);
             _userController = new UsersController(_userService);
         }
 
