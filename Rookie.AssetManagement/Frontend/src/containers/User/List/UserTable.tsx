@@ -160,51 +160,6 @@ const UserTable: React.FC<Props> = ({
           </tr>
 
         ))}
-        <tr >
-          <td>SD0001</td>
-          <td>abc</td>
-          <td>an</td>
-          <td>11/10/2001</td>
-          <td>staff</td>
-          <td className="d-flex">
-            <ButtonIcon >
-              <PencilFill className="text-black" />
-            </ButtonIcon>
-            <ButtonIcon >
-              <XCircle className="text-danger mx-2" />
-            </ButtonIcon>
-          </td>
-        </tr>
-        <tr >
-          <td>SD0002</td>
-          <td>abc</td>
-          <td>an</td>
-          <td>11/10/2001</td>
-          <td>staff</td>
-          <td className="d-flex">
-            <ButtonIcon >
-              <PencilFill className="text-black" />
-            </ButtonIcon>
-            <ButtonIcon >
-              <XCircle className="text-danger mx-2" />
-            </ButtonIcon>
-          </td>
-        </tr>
-        <tr >
-          <td>SD0003</td>
-          <td>abc</td>
-          <td>an</td>
-          <td>11/10/2001</td>
-          <td>staff</td>
-          <td className="d-flex">
-            <ButtonIcon >
-              <PencilFill className="text-black" />
-            </ButtonIcon>
-            <ButtonIcon >
-              <XCircle className="text-danger mx-2" />
-            </ButtonIcon>
-          </td>
-        </tr>
       </Table>
       {userDetail && showDetail && (
         <Info user={userDetail} handleClose={handleCloseDetail} />

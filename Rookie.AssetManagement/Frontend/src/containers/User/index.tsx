@@ -7,11 +7,13 @@ import LayoutRoute from "src/routes/LayoutRoute";
 const NotFound = lazy(() => import("../NotFound"));
 const ListUser = lazy(() => import("./List"));
 const CreateUser = lazy(() => import("./Create"));
+const UpdateUser = lazy(() => import("./Update"));
 const User = () => {
   return (
     <Routes>
       <Route path={USER_LIST} element={<ListUser />} />
       <Route path={CREATE_USER} element={<CreateUser />} />
+      <Route path={EDIT_USER} element={<UpdateUser />} />
     </Routes>
   );
 };
