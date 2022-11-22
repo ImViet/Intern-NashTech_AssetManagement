@@ -34,7 +34,10 @@ const validationSchema = Yup.object().shape({
     // gender: Yup.string().required('Required'),
     type: Yup.string().required('Required'),
     dateOfBirth: Yup.date().required("Required"),
-    joinedDate: Yup.date().required("Required"),
+    joinedDate: Yup.date().when("dateOfBirth", {
+        is: false,
+        then: Yup.date().required("ádsa")
+    }).required("Required")
 });
 
 type Props = {
@@ -51,7 +54,6 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
     const isUpdate = initialUserForm.userId ? true : false;
 
     const navigate = useNavigate();
-
     const handleResult = (result: boolean, message: string) => {
         if (result) {
             NotificationManager.success(
@@ -74,11 +76,10 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
             initialValues={initialUserForm}
             enableReinitialize
             validationSchema={validationSchema}
-            
+
             onSubmit={(values) => {
                 console.log(values)
                 setLoading(true);
-
                 setTimeout(() => {
                     if (isUpdate) {
                         // dispatch(updateBrand({ handleResult, formValues: values }));
@@ -93,46 +94,43 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
         >
             {(actions) => (
                 <Form className='intro-y col-lg-6 col-12'>
-                    <TextField 
-                        name="firstName" 
-                        label="First Name" 
-                        placeholder="" 
-                        isrequired 
+                    <TextField
+                        name="firstName"
+                        label="First Name"
+                        placeholder=""
                         disabled={isUpdate ? true : false} />
 
-                    <TextField 
-                        name="lastName" 
-                        label="Last Name" 
-                        placeholder="" 
-                        isrequired 
+                    <TextField
+                        name="lastName"
+                        label="Last Name"
+                        placeholder=""
                         disabled={isUpdate ? true : false} />
 
                     <DateField
                         label="Date of Birth"
-                        id="dateOfBirth"
                         name="dateOfBirth"
-                        placeholder="" 
-                        isrequired
+                        placeholder=""
+                        maxDate={new Date()}
                         disabled={isUpdate ? true : false} />
 
-                    <CheckboxField 
-                        name="gender" 
+                    <CheckboxField
+                        name="gender"
                         label="Gender"
                         isrequired
                         options={GenderOptions}
-                        disabled={isUpdate ? true : false}/>
+                        disabled={isUpdate ? true : false} />
 
                     <DateField
                         label="Joined Date"
                         id="joinedDate"
                         name="joinedDate"
-                        placeholder="" 
-                        isrequired
+                        placeholder=""
+                        maxDate={new Date()}
                         disabled={isUpdate ? true : false} />
 
-                    <SelectField 
-                        name="type" 
-                        label="Type" 
+                    <SelectField
+                        name="type"
+                        label="Type"
                         options={UserTypeOptions}
                         isrequired
                         disabled={isUpdate ? true : false} />

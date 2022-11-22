@@ -65,7 +65,7 @@ const Login = () => {
           aria-labelledby="login-modal"
         >
           <Modal.Header >
-            <Modal.Title id="login-modal" className="text-center w-100">
+            <Modal.Title id="login-modal" className="text-center h5 w-100">
               Welcome to Online Asset Management
             </Modal.Title>
 
@@ -81,7 +81,7 @@ const Login = () => {
             >
               {({ isValid, touched }) => (
                 <Form className='intro-y'>
-                  <TextField name="userName" label="Username" placeholder="john" isrequired={true} />
+                  <TextField name="userName" label="Username" isrequired={true} />
                   <TextFieldPassword name="password" label="Password" isrequired={true} />
 
                   {error && (
@@ -90,7 +90,7 @@ const Login = () => {
                     </div>
                   )}
 
-                  <div className="text-center mt-3">
+                  <div className="float-right mt-2 pb-3">
                     <button className="btn btn-danger"
                       type="submit" disabled={isDisableLoginButton(loading, isValid, touched)}>
                       Login

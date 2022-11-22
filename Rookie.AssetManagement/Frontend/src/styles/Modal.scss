@@ -9,13 +9,22 @@
         }
     }
 }
+
 .modal-content{
+    border:none;
     .modal-header {
         background-color: rgba(239,241,245,1);
-        
+        border: 2px solid rgb(164,166,168);
+        border-radius: 10px ;
         .modal-title {
             color: rgba(207,35,56,1);
             font-weight: bold;
         }
+    }
+    .modal-body{
+        background-color: rgb(250,252,252);
+        margin-top: -1px;
+        padding: 30px 80px;
+        border: 2px solid rgb(143,145,147)
     }
 }
