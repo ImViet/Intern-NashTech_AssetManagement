@@ -13,5 +13,6 @@ namespace Rookie.AssetManagement.Business.Interfaces
     {
         Task<UserDto> AddAsync(UserCreateDto assetRequest, string location);
         Task<UserDto> UpdateAsnyc(int id, UserUpdateDto assetRequest);
+        string GetLocationInClaim(ClaimsPrincipal claimsPrincipal);
     }
 }
