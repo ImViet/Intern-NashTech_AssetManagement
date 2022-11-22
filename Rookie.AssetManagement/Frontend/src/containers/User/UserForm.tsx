@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
 import IUserForm from 'src/interfaces/User/IUserForm';
 import { Status } from 'src/constants/status';
 import { GenderOptions, UserTypeOptions } from 'src/constants/selectOptions';
-import { HOME, USER } from 'src/constants/pages';
+import { HOME, USER, USER_PARENT_ROOT } from 'src/constants/pages';
 import Gender from 'src/constants/gender';
 import { createUser, updateUser } from './reducer';
 
@@ -53,21 +53,22 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
 
     const navigate = useNavigate();
 
-    const handleResult = (result: boolean, res) => {
+    const handleResult = (result: boolean, message: string) => {
+        debugger
+
         if (result) {
-            debugger
             NotificationManager.success(
-                `${isUpdate ? 'Updated' : 'Created'} Successful User ${res.firstName}`,
+                `${isUpdate ? 'Updated' : 'Created'} Successful User ${message}`,
                 `${isUpdate ? 'Update' : 'Create'} Successful`,
                 2000,
             );
 
             setTimeout(() => {
-                // navigate(USER_PARENT_ROOT);
+                navigate(USER_PARENT_ROOT);
             }, 1000);
 
         } else {
-            NotificationManager.error(res, 'Failed', 2000);
+            NotificationManager.error(message, "Failed", 2000);
         }
     }
 

@@ -83,7 +83,6 @@ const UserReducerSlice = createSlice({
     },
     setStatus: (state, action: PayloadAction<SetStatusType>) => {
       const { status, error } = action.payload;
-
       return {
         ...state,
         status,

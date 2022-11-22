@@ -33,9 +33,15 @@ export function* handleCreateUser(action: PayloadAction<CreateAction>) {
 
     yield put(setUser(data));
   } catch (error: any) {
-    const errorModel = error.response.data as IError;
-
-    handleResult(false, errorModel.message);
+    const errors = error.response.data.errors;
+    const firstError = errors[Object.keys(errors)[0]][0];
+    handleResult(false, firstError);
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: firstError,
+      })
+    );
   }
 }
 
@@ -48,14 +54,20 @@ export function* handleUpdateUser(action: PayloadAction<UpdateAction>) {
     const { data } = yield call(updateUserRequest, formValues);
 
     if (data) {
-      handleResult(true, data);
+      handleResult(true, data.firstName);
     }
 
     yield put(setUser(data));
   } catch (error: any) {
-    const errorModel = error.response.data as IError;
-
-    handleResult(false, errorModel.message);
+    const errors = error.response.data.errors;
+    const firstError = errors[Object.keys(errors)[0]][0];
+    handleResult(false, firstError);
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: firstError,
+      })
+    );
   }
 }
 
