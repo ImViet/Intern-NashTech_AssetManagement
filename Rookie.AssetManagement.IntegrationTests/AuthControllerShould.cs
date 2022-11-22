@@ -54,25 +54,25 @@ namespace Rookie.AssetManagement.IntegrationTests
             //fix
         }
 
-        [Fact]
-        public async Task Login_Success()
-        {
-            //Arrange
-            var createResult = await _userManager.CreateAsync(ArrangeData.Create(), "123456");
-            var loginRequest = ArrangeData.GetLogin();
+        // [Fact]
+        // public async Task Login_Success()
+        // {
+        //     //Arrange
+        //     var createResult = await _userManager.CreateAsync(ArrangeData.Create(), "123456");
+        //     var loginRequest = ArrangeData.GetLogin();
 
-            // Act
-            var result = await _authController.LoginUser(loginRequest);
+        //     // Act
+        //     var result = await _authController.LoginUser(loginRequest);
 
-            // Assert
-            result.Should().NotBeNull();
+        //     // Assert
+        //     result.Should().NotBeNull();
 
-            var actionResult = Assert.IsType<OkObjectResult>(result.Result);
-            var returnValue = Assert.IsType<LoginDto>(actionResult.Value);
+        //     var actionResult = Assert.IsType<OkObjectResult>(result.Result);
+        //     var returnValue = Assert.IsType<LoginDto>(actionResult.Value);
 
-            Assert.Equal(returnValue.UserName, loginRequest.UserName);
-            Assert.Equal(returnValue.Password, loginRequest.Password);
-        }
+        //     Assert.Equal(returnValue.UserName, loginRequest.UserName);
+        //     Assert.Equal(returnValue.Password, loginRequest.Password);
+        // }
 
         [Fact]
         public async Task LoginShouldThrowBadRequest()
