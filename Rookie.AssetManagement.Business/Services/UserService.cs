@@ -12,6 +12,7 @@ using Rookie.AssetManagement.DataAccessor.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -66,6 +67,11 @@ namespace Rookie.AssetManagement.Business.Services
             var user = await _userRepository.GetById(newUser.Id);
 
             return _mapper.Map<UserDto>(user);
+        }
+
+        public string GetLocationInClaim(ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal.Claims.FirstOrDefault(x => x.Type.Equals("Location", StringComparison.OrdinalIgnoreCase))?.Value;
         }
 
         public async Task<UserDto> UpdateAsnyc(int id, UserUpdateDto assetRequest)

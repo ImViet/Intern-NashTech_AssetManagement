@@ -53,8 +53,8 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
         {
             return new UserCreateDto() {
 
-                FirstName = "First Name 4",
-                LastName = "Last Name 4",
+                FirstName = "Duong",
+                LastName = "Trieu",
                 DateOfBirth = new DateTime(2000, 02, 17, 0, 0, 0),
                 Gender = UserGenderEnumDto.Female,
                 JoinedDate = new DateTime(2022, 11, 10, 0, 0, 0),
@@ -67,7 +67,9 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
         {
             return new User
             {
-                UserName = "adminhcm"
+                UserName = "adminhcm",
+                Location = "HCM",
+                Type = "ADMIN",
             };
 
         }

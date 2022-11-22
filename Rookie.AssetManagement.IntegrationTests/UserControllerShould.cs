@@ -21,6 +21,11 @@ using System.Threading.Tasks;
 using Xunit;
 using System.Threading;
 using System.Collections.Generic;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Rookie.AssetManagement.Contracts.Constants;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Rookie.AssetManagement.IntegrationTests
 {
@@ -31,19 +36,36 @@ namespace Rookie.AssetManagement.IntegrationTests
         private readonly IMapper _mapper;
         private readonly UserService _userService;
         private readonly UsersController _userController;
-
         private readonly UserManager<User> _userManager;
+        private ControllerContext _controllerContext;
+
+        private ClaimsIdentity _identity;
+        private ClaimsPrincipal _user;
 
         public UserControllerShould(SqliteInMemoryFixture fixture)
         {
             fixture.CreateDatabase();
             _dbContext = fixture.Context;
+            _userManager = fixture.UserManager;
             _userRepository = new BaseRepository<User>(_dbContext);
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
             _mapper = config.CreateMapper();
 
+
             _userService = new UserService(_userRepository,_userManager, _mapper);
             _userController = new UsersController(_userService);
+
+            _identity = new ClaimsIdentity();
+            _identity.AddClaims(new[]
+            {
+                new Claim("UserName", "admin"),
+                new Claim("Type", "ADMIN"),
+                new Claim("Location","HCM")
+            });
+
+            _user = new ClaimsPrincipal(_identity);
+            _userController.ControllerContext.HttpContext = new DefaultHttpContext() { User = _user };
+
         }
 
         [Fact]

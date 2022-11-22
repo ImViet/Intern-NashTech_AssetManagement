@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace Rookie.AssetManagement.Business.Interfaces
 {
@@ -12,5 +13,6 @@ namespace Rookie.AssetManagement.Business.Interfaces
     {
         Task<UserDto> AddAsync(UserCreateDto assetRequest, string location);
         Task<UserDto> UpdateAsnyc(int id, UserUpdateDto assetRequest);
+        string GetLocationInClaim(ClaimsPrincipal claimsPrincipal);
     }
 }
