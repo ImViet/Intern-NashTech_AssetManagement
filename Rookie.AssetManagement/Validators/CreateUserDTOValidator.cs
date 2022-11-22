@@ -6,9 +6,19 @@ using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 public class CreateUserDTOValidator : AbstractValidator<UserCreateDto> {
     public CreateUserDTOValidator(){
         
-        RuleFor(user=>user.FirstName).NotEmpty().WithMessage("First Name is empty");
-           
-        RuleFor(user=>user.LastName).NotEmpty().WithMessage("Last Name is empty");
+        RuleFor(user=>user.FirstName)
+            .Cascade(CascadeMode.Stop)
+            .NotEmpty()
+            .WithMessage("First Name is empty")
+            .Matches(@"^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s_ ]+$")
+            .WithMessage("Name cannot contain number or special charater");
+
+        RuleFor(user=>user.LastName)
+            .Cascade(CascadeMode.Stop)
+            .NotEmpty()
+            .WithMessage("Last Name is empty")
+            .Matches(@"^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s_ ]+$")
+            .WithMessage("Name cannot contain number or special charater");
 
         RuleFor(user=>user.DateOfBirth)
             .Cascade(CascadeMode.Stop)
