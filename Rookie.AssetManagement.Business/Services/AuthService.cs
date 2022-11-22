@@ -26,16 +26,14 @@ namespace Rookie.AssetManagement.Business.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly IConfiguration _configuration;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly IBaseRepository<User> _userRepository;
         private readonly IMapper _mapper;
 
 
-        public AuthService(IBaseRepository<User> userRepository, IConfiguration configuration, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper)
+        public AuthService(IBaseRepository<User> userRepository, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper)
         {
-            _configuration = configuration;
             this._signInManager = signInManager;
             this._userManager = userManager;
             this._userRepository = userRepository;
