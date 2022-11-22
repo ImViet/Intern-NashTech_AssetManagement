@@ -1,7 +1,7 @@
 import React, { lazy, Suspense, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
-import { HOME, LOGIN, USER } from "../constants/pages";
+import { HOME, LOGIN, USER, USER_LIST_LINK } from "../constants/pages";
 import InLineLoader from "../components/InlineLoader";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import LayoutRoute from "./LayoutRoute";
@@ -31,7 +31,7 @@ const AppRoutes = () => {
           }
         />
         <Route
-          path={USER}
+          path={USER_LIST_LINK}
           element={
             <PrivateRoute>
               <User />

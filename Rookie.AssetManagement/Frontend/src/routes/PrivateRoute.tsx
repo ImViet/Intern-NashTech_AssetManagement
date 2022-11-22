@@ -8,11 +8,10 @@ import InLineLoader from "../components/InlineLoader";
 
 export default function PrivateRoute({ children, ...rest }) {
     const { isAuth } = useAppSelector(state => state.authReducer);
-
     return (
         isAuth ?
                 <Layout>
-                    <Outlet />
+                    {children}
                 </Layout>
             :   <Navigate to={LOGIN} />
 
