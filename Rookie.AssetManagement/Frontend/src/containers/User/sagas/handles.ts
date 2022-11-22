@@ -15,6 +15,7 @@ import {
 } from "../reducer";
 import {
   createUserRequest,
+  getUserByIdRequest,
   getUsersRequest,
   updateUserRequest,
 } from "./requests";
@@ -85,6 +86,26 @@ export function* handleGetUserList(action: PayloadAction<IQueryUserModel>) {
     };
 
     yield put(setUserList(pageModel));
+  } catch (error: any) {
+    const errorModel = error.response.data as IError;
+
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: errorModel,
+      })
+    );
+  }
+}
+
+export function* handleGetUserById(action: PayloadAction<number>) {
+  const id = action.payload;
+
+  try {
+    const { data } = yield call(getUserByIdRequest, id);
+    data.dateOfBirth = new Date(data.dateOfBirth);
+    data.joinedDate = new Date(data.joinedDate);
+    yield put(setUser(data));
   } catch (error: any) {
     const errorModel = error.response.data as IError;
 

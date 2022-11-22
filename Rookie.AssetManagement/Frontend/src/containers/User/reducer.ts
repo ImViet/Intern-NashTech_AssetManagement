@@ -100,6 +100,7 @@ export const {
   setUserList,
   setStatus,
   getUserList,
+  getUser,
 } = UserReducerSlice.actions;
 
 export default UserReducerSlice.reducer;

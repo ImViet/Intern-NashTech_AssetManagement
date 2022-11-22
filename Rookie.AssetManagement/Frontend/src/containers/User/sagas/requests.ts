@@ -29,3 +29,7 @@ export function getUsersRequest(
 ): Promise<AxiosResponse<IUser[]>> {
   return RequestService.axios.get(EndPoints.user);
 }
+
+export function getUserByIdRequest(id: number): Promise<AxiosResponse<IUser>> {
+  return RequestService.axios.get(EndPoints.user + "/" + id);
+}
