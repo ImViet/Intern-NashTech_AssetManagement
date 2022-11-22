@@ -5,7 +5,7 @@ export default interface IUserForm {
   firstName: string;
   lastName: string;
   dateOfBirth?: Date;
-  gender: Gender;
+  gender: string;
   joinedDate?: Date;
   type: string;
 }

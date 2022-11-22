@@ -34,7 +34,7 @@ const CheckboxField: React.FC<InputFieldProps> = (props) => {
                     {
                         options.map(({ id, label: optionLabel, value: optionValue }) => (
                             <div className="form-check form-check-inline" key={id}>
-                                <input className="form-check-input"
+                                <input className="form-check-input input-radio"
                                     id={id.toString()}
                                     type="radio"
                                     name={name}

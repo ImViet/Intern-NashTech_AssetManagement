@@ -45,7 +45,7 @@ const DateField: React.FC<DateFieldProps> = (props) => {
                     <div className="d-flex align-items-center w-100">
                         <DatePicker
                             placeholderText=''
-                            className={`border w-100 text-center ${validateClass()}`}
+                            className={`border w-100 p-2 ${validateClass()}`}
                             dateFormat='MM/dd/yyyy'
                             selected={value}
                             onChange={date => handleChangeAssignedDate(date as Date)}

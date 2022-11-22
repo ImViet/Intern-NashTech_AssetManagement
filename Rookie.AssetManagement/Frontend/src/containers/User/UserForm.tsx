@@ -23,7 +23,7 @@ const initialFormValues: IUserForm = {
     firstName: '',
     lastName: '',
     dateOfBirth: undefined,
-    gender: Gender.Female,
+    gender: "Female",
     joinedDate: undefined,
     type: '',
 };
