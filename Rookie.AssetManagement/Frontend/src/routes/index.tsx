@@ -31,7 +31,7 @@ const AppRoutes = () => {
           }
         />
         <Route
-          path={USER_LIST_LINK}
+          path={USER}
           element={
             <PrivateRoute>
               <User />
