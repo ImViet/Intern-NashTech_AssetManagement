@@ -17,6 +17,7 @@ import { Status } from 'src/constants/status';
 import { GenderOptions, UserTypeOptions } from 'src/constants/selectOptions';
 import { HOME, USER } from 'src/constants/pages';
 import Gender from 'src/constants/gender';
+import { createUser, updateUser } from './reducer';
 
 
 const initialFormValues: IUserForm = {
@@ -81,10 +82,10 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
 
                 setTimeout(() => {
                     if (isUpdate) {
-                        // dispatch(updateBrand({ handleResult, formValues: values }));
+                        dispatch(updateUser({ handleResult, formValues: values }));
                     }
                     else {
-                        // dispatch(createBrand({ handleResult, formValues: values }));
+                        dispatch(createUser({ handleResult, formValues: values }));
                     }
 
                     setLoading(false);
