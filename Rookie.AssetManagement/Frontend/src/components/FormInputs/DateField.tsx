@@ -38,14 +38,14 @@ const DateField: React.FC<DateFieldProps> = (props) => {
                 <label className="col-4 col-form-label d-flex">
                     {label}
                     {isrequired && (
-                        <div className="invalid ml-1">(*)</div>
+                        <div className="invalid ml-1"></div>
                     )}
                 </label>
                 <div className="col">
                     <div className="d-flex align-items-center w-100">
                         <DatePicker
-                            placeholderText={label}
-                            className='border w-100 text-center is-invalid'
+                            placeholderText=''
+                            className={`border w-100 p-2 ${validateClass()}`}
                             dateFormat='MM/dd/yyyy'
                             selected={value}
                             onChange={date => handleChangeAssignedDate(date as Date)}
@@ -54,12 +54,17 @@ const DateField: React.FC<DateFieldProps> = (props) => {
                             maxDate={maxDate}
                             minDate={minDate}
                             filterDate={filterDate}
+                            wrapperClassName={`form-control`}
                         />
 
-                        <div className="border p-2">
+                        <div className="" style={{position: 'absolute', right: 40, top: 4}}>
                             <CalendarDateFill />
                         </div>
+
                     </div>
+                    {error && touched && (
+                        <div className='invalid'>{error}</div>
+                        )}
                 </div>
             </div>
         </>
