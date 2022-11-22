@@ -27,6 +27,8 @@ export function* handleCreateUser(action: PayloadAction<CreateAction>) {
     console.log(formValues);
 
     const { data } = yield call(createUserRequest, formValues);
+    data.dateOfBirth = new Date(data.dateOfBirth);
+    data.joinedDate = new Date(data.joinedDate);
 
     if (data) {
       handleResult(true, data);
@@ -53,6 +55,8 @@ export function* handleUpdateUser(action: PayloadAction<UpdateAction>) {
     console.log(formValues);
 
     const { data } = yield call(updateUserRequest, formValues);
+    data.dateOfBirth = new Date(data.dateOfBirth);
+    data.joinedDate = new Date(data.joinedDate);
 
     if (data) {
       handleResult(true, data.firstName);
