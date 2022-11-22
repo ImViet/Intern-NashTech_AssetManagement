@@ -15,6 +15,7 @@ using Rookie.AssetManagement.IntegrationTests.Common;
 using Rookie.AssetManagement.IntegrationTests.TestData;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using Rookie.AssetManagement.Tests;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -31,6 +32,8 @@ namespace Rookie.AssetManagement.IntegrationTests
         private readonly UserService _userService;
         private readonly UsersController _userController;
 
+        private readonly UserManager<User> _userManager;
+
         public UserControllerShould(SqliteInMemoryFixture fixture)
         {
             fixture.CreateDatabase();
@@ -39,7 +42,7 @@ namespace Rookie.AssetManagement.IntegrationTests
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
             _mapper = config.CreateMapper();
 
-            _userService = new UserService(_userRepository, _mapper);
+            _userService = new UserService(_userRepository,_userManager, _mapper);
             _userController = new UsersController(_userService);
         }
 
