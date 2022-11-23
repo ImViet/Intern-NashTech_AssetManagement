@@ -14,9 +14,11 @@ using Rookie.AssetManagement.DataAccessor.Enum;
 using Rookie.AssetManagement.DataAccessor.Migrations;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Rookie.AssetManagement.Business.Services
@@ -135,6 +137,53 @@ namespace Rookie.AssetManagement.Business.Services
                 }
             }         
             return staffcode;
+        }
+
+        public async Task<PagedResponseModel<UserDto>> GetByPageAsync(
+            UserQueryCriteriaDto UserQueryCriteria, 
+            CancellationToken cancellationToken)
+        {
+            var brandQuery = BrandFilter(
+               _userRepository.Entities.Where(x => !x.IsDeleted).AsQueryable(),
+               UserQueryCriteria);
+
+            var User = await brandQuery
+                .AsNoTracking()
+                .PaginateAsync(
+                    UserQueryCriteria.Page,
+                    UserQueryCriteria.Limit,
+                    cancellationToken);
+
+            var brandssDto = _mapper.Map<IEnumerable<UserDto>>(User.Items);
+
+            return new PagedResponseModel<UserDto>
+            {
+                CurrentPage = User.CurrentPage,
+                TotalPages = User.TotalPages,
+                TotalItems = User.TotalItems,
+                Items = brandssDto
+            };
+        }
+        
+        private IQueryable<User> BrandFilter(
+            IQueryable<User> brandQuery,
+            UserQueryCriteriaDto brandQueryCriteria)
+        {
+            if (!String.IsNullOrEmpty(brandQueryCriteria.Search))
+            {
+                brandQuery = brandQuery.Where(b =>
+                    b.UserName.Contains(brandQueryCriteria.Search));
+            }
+
+            //if (brandQueryCriteria.Types != null &&
+            //    brandQueryCriteria.Types.Count() > 0 &&
+            //   !brandQueryCriteria.Types.Any(x => x == brandQueryCriteria.Types))
+            //{
+            //    brandQuery = brandQuery.Where(x =>
+            //        brandQueryCriteria.Types.Any(t => t == (int)x.Type));
+            //}
+
+            return brandQuery;
         }
     }
 }

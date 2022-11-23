@@ -8,6 +8,8 @@ using Rookie.AssetManagement.Business.Interfaces;
 using EnsureThat;
 using Rookie.AssetManagement.Constants;
 using System.Linq;
+using Rookie.AssetManagement.Contracts;
+using System.Threading;
 
 namespace Rookie.AssetManagement.Controllers
 {
@@ -43,6 +45,18 @@ namespace Rookie.AssetManagement.Controllers
         {
             var user = await _userService.UpdateAsnyc(userRequest);
             return Created(Endpoints.User, user);
+        }
+
+        [HttpGet]
+        [Route("GetBrands")]
+        public async Task<ActionResult<PagedResponseModel<UserDto>>> GetBrands(
+           [FromQuery] UserQueryCriteriaDto brandCriteriaDto,
+           CancellationToken cancellationToken)
+        {
+            var brandResponses = await _userService.GetByPageAsync(
+                                            brandCriteriaDto,
+                                            cancellationToken);
+            return Ok(brandResponses);
         }
 
     }
