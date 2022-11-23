@@ -14,6 +14,8 @@ import LayoutRoute from "./LayoutRoute";
 import Roles from "src/constants/roles";
 import { me } from "src/containers/Authorize/reducer";
 import PrivateRoute from "./PrivateRoute";
+import AdminRoute from "./AdminRoute";
+import UnAuthorization from "src/containers/UnAuthorization";
 
 const Home = lazy(() => import("../containers/Home"));
 const Login = lazy(() => import("../containers/Authorize"));
@@ -43,9 +45,9 @@ const AppRoutes = () => {
         <Route
           path={USER}
           element={
-            <PrivateRoute>
+            <AdminRoute>
               <User />
-            </PrivateRoute>
+            </AdminRoute>
           }
         />
         <Route
@@ -92,6 +94,12 @@ const AppRoutes = () => {
           path={"/*"}
           element={
             <NotFound />
+          }
+        />
+        <Route
+          path={"/unAuthorization"}
+          element={
+            <UnAuthorization />
           }
         />
       </Routes>
