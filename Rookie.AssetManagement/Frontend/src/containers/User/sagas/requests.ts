@@ -18,6 +18,16 @@ export function createUserRequest(
   });
 }
 
+export function updateUserRequest(
+  userForm: IUserForm
+): Promise<AxiosResponse<IUser>> {
+  userForm.joinedDate = toUTC(userForm.joinedDate);
+  userForm.dateOfBirth = toUTC(userForm.dateOfBirth);
+  return RequestService.axios.put(EndPoints.user, userForm, {
+    paramsSerializer: (params) => JSON.stringify(params),
+  });
+}
+
 function toUTC(date) {
   return new Date(
     Date.UTC(
@@ -28,14 +38,6 @@ function toUTC(date) {
       date.getMinutes()
     )
   );
-}
-
-export function updateUserRequest(
-  userForm: IUserForm
-): Promise<AxiosResponse<IUser>> {
-  return RequestService.axios.put(EndPoints.user, userForm, {
-    paramsSerializer: (params) => JSON.stringify(params),
-  });
 }
 
 export function getUsersRequest(

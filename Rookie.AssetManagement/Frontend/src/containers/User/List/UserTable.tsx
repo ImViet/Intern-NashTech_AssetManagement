@@ -23,6 +23,7 @@ import {
   StaffUserTypeLabel,
   AllUserTypeLabel,
 } from "src/constants/User/UserContants";
+import { resultsAriaMessage } from "react-select/src/accessibility";
 
 
 const columns: IColumnOption[] = [
@@ -35,6 +36,7 @@ const columns: IColumnOption[] = [
 
 type Props = {
   users: IPagedModel<IUser> | null;
+  results: IUser[] | null;
   handlePage: (page: number) => void;
   handleSort: (colValue: string) => void;
   sortState: SortType;
@@ -43,6 +45,7 @@ type Props = {
 
 const UserTable: React.FC<Props> = ({
   users,
+  results,
   handlePage,
   handleSort,
   sortState,
@@ -129,6 +132,13 @@ const UserTable: React.FC<Props> = ({
     navigate(EDIT_USER_ID(id));
   };
 
+  let rows
+  if(results && users){
+    rows = [...results, ...users.items]
+  }else if(users){
+    rows = [...users.items]
+  }
+
   return (
     <>
       <Table
@@ -141,7 +151,7 @@ const UserTable: React.FC<Props> = ({
           handleChange: handlePage,
         }}
       >
-        {users?.items.map((data, index) => (
+        {rows?.map((data, index) => (
           <tr key={index} className="" onClick={() => handleShowInfo(data.id)}>
             <td>{data.staffCode}</td>
             <td>{data.fullName}</td>

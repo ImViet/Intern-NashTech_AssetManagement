@@ -22,7 +22,7 @@ import { getUserList } from "../reducer";
 const ListUser = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const { users, loading } = useAppSelector((state) => state.userReducer);
+  const { users, actionResult } = useAppSelector((state) => state.userReducer);
 
   const [query, setQuery] = useState({
     page: users?.currentPage ?? 1,
@@ -160,6 +160,7 @@ const ListUser = () => {
 
         <UserTable
           users={users}
+          results={actionResult}
           handlePage={handlePage}
           handleSort={handleSort}
           sortState={{
