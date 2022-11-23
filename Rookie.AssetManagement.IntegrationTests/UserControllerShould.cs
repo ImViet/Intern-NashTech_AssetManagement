@@ -55,6 +55,8 @@ namespace Rookie.AssetManagement.IntegrationTests
             _userService = new UserService(_userRepository, _userManager, _mapper);
             _userController = new UsersController(_userService);
 
+            ArrangeData.InitUsersData(_dbContext);
+
             _identity = new ClaimsIdentity();
             _identity.AddClaims(new[]
             {
@@ -65,6 +67,24 @@ namespace Rookie.AssetManagement.IntegrationTests
 
             _user = new ClaimsPrincipal(_identity);
             _userController.ControllerContext.HttpContext = new DefaultHttpContext() { User = _user };
+
+        }
+
+        [Fact]
+        public async Task GetAll_Success()
+        {
+            //Arrange
+
+            // Act
+            var result = await _userController.GetAllUser();
+
+            // Assert
+            result.Should().NotBeNull();
+
+            var actionResult = Assert.IsType<OkObjectResult>(result.Result);
+            var returnValue = Assert.IsType<List<UserDto>>(actionResult.Value);
+            Assert.Equal(returnValue.Count, 3);
+
 
         }
 
@@ -84,6 +104,7 @@ namespace Rookie.AssetManagement.IntegrationTests
             var returnValue = Assert.IsType<UserDto>(actionResult.Value);
 
             Assert.Equal(returnValue.FirstName, userRequest.FirstName);
+            Assert.Equal(returnValue.Id, 4);
         }
         [Fact]
         public async Task AddAsyncShouldThrowExceptionAsync()
