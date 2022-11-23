@@ -94,7 +94,7 @@ const AuthSlice = createSlice({
     logout: (state: AuthState) => {
       removeLocalStorage("token");
       request.setAuthentication("");
-
+      window.location.reload();
       return {
         ...state,
         isAuth: false,
