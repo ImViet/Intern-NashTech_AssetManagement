@@ -3,7 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import { NotificationManager } from 'react-notifications';
-
+import differenceInYears from "date-fns/differenceInYears";
 import TextField from 'src/components/FormInputs/TextField';
 import DateField from 'src/components/FormInputs/DateField';
 import CheckboxField from 'src/components/FormInputs/CheckboxField';
@@ -34,8 +34,51 @@ const validationSchema = Yup.object().shape({
     lastName: Yup.string().required('Required'),
     // gender: Yup.string().required('Required'),
     type: Yup.string().required('Required'),
-    dateOfBirth: Yup.date().required("Required"),
-    joinedDate: Yup.date().required("Required")
+    dateOfBirth: Yup.date().required("Required")
+        .test("dateOfBirth", "User is under 18. Please select a different date", function (value) {
+            if (value) {
+                return differenceInYears(new Date(), value) >= 18;
+            }
+            return true;
+
+        }),
+    joinedDate: Yup.date()
+        .required("Required")
+        .test("joinedDate", "User under the age of 18 may not join company. Please select a different date",
+            (value, ctx) => {
+                if (value) {
+                    const condition = new Date(ctx.parent.dateOfBirth);
+                    condition.setFullYear(condition.getFullYear() + 18);
+                    if (value < condition)
+                        return false;
+                }
+                return true;
+            })
+        .test("joinedDate", "Joined date is Saturday or Sunday. Please select a different date", (value) => {
+            if (value) {
+                if (value.getDay() === 6)
+                    return false;
+            }
+            return true;
+        })
+        .test("joinedDate", "Joined date is Saturday or Sunday. Please select a different date", (value) => {
+            if (value) {
+                if (value.getDay() === 0)
+                    return false;
+            }
+            return true;
+        })
+        .test("joinedDate", "Please Select Date of Birth",
+            (value, ctx) => {
+                if (value) {
+                    if (ctx.parent.dateOfBirth === undefined) {
+                        return false;
+                    }
+
+                }
+                return true;
+            })
+
 });
 
 type Props = {
@@ -75,7 +118,6 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
         }
     }
     const handleLanguage = (date) => {
-        console.log(date)
         setDateOfBirth(date);
     }
 
@@ -100,11 +142,7 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
             }}
         >
             {(actions) => {
-                actions.handleBlur = () => {
-                    console.log("adaw")
-                }
                 return (
-
                     <Form className='intro-y col-lg-6 col-12'>
                         <TextField
                             name="firstName"
