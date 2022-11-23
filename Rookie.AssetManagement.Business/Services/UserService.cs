@@ -109,24 +109,31 @@ namespace Rookie.AssetManagement.Business.Services
         public string DefaultValueForStaffCodeFirst()
         {
             string staffcode = "";
-            var lastuser = _userRepository.Entities.OrderByDescending(c => c.Id).FirstOrDefault();
-            int newuserid = lastuser.Id + 1;
-            if (newuserid < 10)
+            if (_userRepository.Entities.Count() == 0)
             {
-                staffcode = "SD000" + newuserid;
-            }
-            else if (newuserid < 100)
-            {
-                staffcode = "SD00" + newuserid;
-            }
-            else if (newuserid < 1000)
-            {
-                staffcode = "SD0" + newuserid;
+                staffcode = "SD0001";
             }
             else
             {
-                staffcode = "SD" + newuserid;
-            }
+                var lastuser = _userRepository.Entities.OrderByDescending(c => c.Id).FirstOrDefault();
+                int newuserid = lastuser.Id + 1;
+                if (newuserid < 10)
+                {
+                    staffcode = "SD000" + newuserid;
+                }
+                else if (newuserid < 100)
+                {
+                    staffcode = "SD00" + newuserid;
+                }
+                else if (newuserid < 1000)
+                {
+                    staffcode = "SD0" + newuserid;
+                }
+                else
+                {
+                    staffcode = "SD" + newuserid;
+                }
+            }         
             return staffcode;
         }
     }
