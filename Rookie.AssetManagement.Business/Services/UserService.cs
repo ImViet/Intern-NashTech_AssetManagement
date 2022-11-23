@@ -135,25 +135,25 @@ namespace Rookie.AssetManagement.Business.Services
             CancellationToken cancellationToken,
             string location)
         {
-            var brandQuery = UserFilter(
+            var userQuery = UserFilter(
                _userRepository.Entities.Where(x => !x.IsDeleted).Where(x => x.Location == location).AsQueryable(),
                UserQueryCriteria);
 
-            var User = await brandQuery
+            var User = await userQuery
                 .AsNoTracking()
                 .PaginateAsync<User>(
                     UserQueryCriteria.Page,
                     UserQueryCriteria.Limit,
                     cancellationToken);
 
-            var brandssDto = _mapper.Map<IEnumerable<UserDto>>(User.Items);
+            var usersDto = _mapper.Map<IEnumerable<UserDto>>(User.Items);
 
             return new PagedResponseModel<UserDto>
             {
                 CurrentPage = User.CurrentPage,
                 TotalPages = User.TotalPages,
                 TotalItems = User.TotalItems,
-                Items = brandssDto
+                Items = usersDto
             };
         }
         
@@ -173,31 +173,77 @@ namespace Rookie.AssetManagement.Business.Services
                 userQueryCriteria.Types.Count() > 0                
                 )              
             {
-                var type = userQueryCriteria.Types;
+                var type = userQueryCriteria.Types.ToUpper();
                 switch (type)
                 {
-                    case "admin":
+                    case "ADMIN":
                         userQuery = userQuery.Where(b =>
                         b.Type.Contains(userQueryCriteria.Types));
                         break;
-                    case "staff":
+                    case "STAFF":
                         userQuery = userQuery.Where(b =>
                         b.Type.Contains(userQueryCriteria.Types));
                         break;
-                    case "all":
-                        return userQuery; ;
-                        
+                    case "ALL":
+                        userQuery = userQuery;
+                        break;  
                    default:
-                        return userQuery;
+                        userQuery = userQuery;
+                        break;
 
                 }
-               
-                
-
-                //userQuery = userQuery.Where(b =>
-                //b.Type.Contains(userQueryCriteria.Types));
             }
+            if(userQueryCriteria.SortColumn != null)
+            {
+                var sortColumn = userQueryCriteria.SortColumn.ToUpper();
+                switch (sortColumn)
+                {
+                    case "STAFFCODE":
+                        if(userQueryCriteria.SortOrder == 0)
+                        {
+                            userQuery = userQuery.OrderBy(x => x.StaffCode);
+                        }
+                        else
+                        {
+                            userQuery = userQuery.OrderByDescending(x => x.StaffCode);
+                        }
+                        break;
+                    case "FULLNAME":
+                        if (userQueryCriteria.SortOrder == 0)
+                        {
+                            userQuery = userQuery.OrderBy(x => x.FirstName);
+                        }
+                        else
+                        {
+                            userQuery = userQuery.OrderByDescending(x => x.FirstName);
+                        }
+                        break;
+                    case "JOINEDDATE":
+                        if (userQueryCriteria.SortOrder == 0)
+                        {
+                            userQuery = userQuery.OrderBy(x => x.JoinedDate);
+                        }
+                        else
+                        {
+                            userQuery = userQuery.OrderByDescending(x => x.JoinedDate);
+                        }
+                        break;
+                    case "TYPE":
+                        if (userQueryCriteria.SortOrder == 0)
+                        {
+                            userQuery = userQuery.OrderBy(x => x.Type);
+                        }
+                        else
+                        {
+                            userQuery = userQuery.OrderByDescending(x => x.Type);
+                        }
+                        break;
+                    default:
+                        userQuery = userQuery.OrderBy(x => x.StaffCode);
+                        break;
+                }
 
+            }
             return userQuery;
         }
     }

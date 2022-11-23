@@ -54,7 +54,6 @@ namespace Rookie.AssetManagement.Controllers
            CancellationToken cancellationToken)
         {
             var location = User.Claims.FirstOrDefault(x => x.Type.Equals("Location", StringComparison.OrdinalIgnoreCase))?.Value;
-            //var location = "hcm";
 
             var userResponses = await _userService.GetByPageAsync(
                                             userCriteriaDto,
