@@ -68,23 +68,23 @@ namespace Rookie.AssetManagement.IntegrationTests
 
         }
 
-        [Fact]
-        public async Task AddUsersAsync_Success()
-        {
-            //Arrange
-            var userRequest = ArrangeData.GetCreateUserDto();
+        //[Fact]
+        //public async Task AddUsersAsync_Success()
+        //{
+        //    //Arrange
+        //    var userRequest = ArrangeData.GetCreateUserDto();
 
-            // Act
-            var result = await _userController.AddUser(userRequest);
+        //    // Act
+        //    var result = await _userController.AddUser(userRequest);
 
-            // Assert
-            result.Should().NotBeNull();
+        //    // Assert
+        //    result.Should().NotBeNull();
 
-            var actionResult = Assert.IsType<CreatedResult>(result.Result);
-            var returnValue = Assert.IsType<UserDto>(actionResult.Value);
+        //    var actionResult = Assert.IsType<CreatedResult>(result.Result);
+        //    var returnValue = Assert.IsType<UserDto>(actionResult.Value);
 
-            Assert.Equal(returnValue.FirstName, userRequest.FirstName);
-        }
+        //    Assert.Equal(returnValue.FirstName, userRequest.FirstName);
+        //}
         [Fact]
         public async Task AddAsyncShouldThrowExceptionAsync()
         {
