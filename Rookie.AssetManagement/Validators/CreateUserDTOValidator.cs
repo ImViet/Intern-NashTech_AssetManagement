@@ -6,13 +6,24 @@ using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 public class CreateUserDTOValidator : AbstractValidator<UserCreateDto> {
     public CreateUserDTOValidator(){
         
-        RuleFor(user=>user.FirstName).NotEmpty().WithMessage("First Name is empty");
-           
-        RuleFor(user=>user.LastName).NotEmpty().WithMessage("Last Name is empty");
+        RuleFor(user=>user.FirstName)
+            .Cascade(CascadeMode.Stop)
+            .NotEmpty()
+            .WithMessage("First Name is empty")
+            .Matches(@"^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s_ ]+$")
+            .WithMessage("Name cannot contain number or special charater");
+
+        RuleFor(user=>user.LastName)
+            .Cascade(CascadeMode.Stop)
+            .NotEmpty()
+            .WithMessage("Last Name is empty")
+            .Matches(@"^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s_ ]+$")
+            .WithMessage("Name cannot contain number or special charater");
 
         RuleFor(user=>user.DateOfBirth)
             .Cascade(CascadeMode.Stop)
             .NotNull()
+            .WithMessage("Please Select Date of Birth")
             .LessThan(DateTime.Now.AddYears(-18))
             .WithMessage("User is under 18, please select different date");
 
@@ -25,9 +36,9 @@ public class CreateUserDTOValidator : AbstractValidator<UserCreateDto> {
         
         RuleFor(user=>user.JoinedDate.DayOfWeek)
             .NotEqual(DayOfWeek.Saturday)
-            .WithMessage("Joined day is saturday, please select a different date")
+            .WithMessage("Joined date is Saturday or Sunday. Please select a different date")
             .NotEqual( DayOfWeek.Sunday)
-            .WithMessage("Joined day is sunday, please select a different date");
+            .WithMessage("Joined date is Saturday or Sunday. Please select a different date");
         
         RuleFor(user=>user.Type).NotEmpty().WithMessage("Type is empty");
     }   
