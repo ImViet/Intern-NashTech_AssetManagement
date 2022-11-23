@@ -112,7 +112,9 @@ const ListUser = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    if(!users){
+      fetchData();
+    }
   }, []);
 
 

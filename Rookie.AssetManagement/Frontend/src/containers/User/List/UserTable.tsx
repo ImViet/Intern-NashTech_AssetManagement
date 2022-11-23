@@ -8,7 +8,7 @@ import Table, { SortType } from "src/components/Table";
 import IColumnOption from "src/interfaces/IColumnOption";
 import IPagedModel from "src/interfaces/IPagedModel";
 import IUser from "src/interfaces/User/IUser";
-import formatDateTime from "src/utils/formatDateTime";
+import formatDateTime, { convertDDMMYYYY } from "src/utils/formatDateTime";
 import Info from "../Info";
 //import { disableUser } from "../reducer";
 
@@ -146,7 +146,7 @@ const UserTable: React.FC<Props> = ({
             <td>{data.staffCode}</td>
             <td>{data.fullName}</td>
             <td>{data.userName}</td>
-            <td>{data.joinedDate}</td>
+            <td>{convertDDMMYYYY(data.joinedDate)}</td>
             <td>{getUserTypeName(data.type)}</td>
 
             <td className="d-flex">

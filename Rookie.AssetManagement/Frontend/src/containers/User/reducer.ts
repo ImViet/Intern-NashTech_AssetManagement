@@ -90,6 +90,9 @@ const UserReducerSlice = createSlice({
         loading: false,
       };
     },
+    addToTopList: (state, action: PayloadAction<IUser>) => {
+      state.users?.items.unshift(action.payload);
+    },
   },
 });
 
@@ -101,6 +104,7 @@ export const {
   setStatus,
   getUserList,
   getUser,
+  addToTopList,
 } = UserReducerSlice.actions;
 
 export default UserReducerSlice.reducer;
