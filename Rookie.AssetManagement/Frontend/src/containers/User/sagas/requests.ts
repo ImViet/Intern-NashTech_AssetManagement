@@ -11,11 +11,23 @@ import IQueryUserModel from "src/interfaces/User/IQueryUserModel";
 export function createUserRequest(
   userForm: IUserForm
 ): Promise<AxiosResponse<IUser>> {
-  userForm.joinedDate?.setDate(userForm.joinedDate.getDate() + 1);
-  userForm.dateOfBirth?.setDate(userForm.dateOfBirth.getDate() + 1);
+  userForm.joinedDate = toUTC(userForm.joinedDate);
+  userForm.dateOfBirth = toUTC(userForm.dateOfBirth);
   return RequestService.axios.post(EndPoints.user, userForm, {
     paramsSerializer: (params) => JSON.stringify(params),
   });
+}
+
+function toUTC(date) {
+  return new Date(
+    Date.UTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes()
+    )
+  );
 }
 
 export function updateUserRequest(
