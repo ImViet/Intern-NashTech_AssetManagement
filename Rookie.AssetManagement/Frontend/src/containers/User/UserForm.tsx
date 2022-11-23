@@ -154,7 +154,7 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
                                     Save {(loading) && <img src="/oval.svg" className='w-4 h-4 ml-2 inline-block' />}
                                 </button>
 
-                                <Link to={USER} className="btn btn-outline-secondary ml-2">
+                                <Link to={"/" + USER} className="btn btn-outline-secondary ml-2">
                                     Cancel
                                 </Link>
                             </div>

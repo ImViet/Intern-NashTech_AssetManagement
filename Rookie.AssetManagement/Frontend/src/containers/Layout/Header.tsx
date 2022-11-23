@@ -23,7 +23,7 @@ const CustomToggle = React.forwardRef<any, any>(({ children, onClick }, ref): an
 
 const Header = () => {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const location= useLocation();
   const { account, isAuth } = useAppSelector(state => state.authReducer);
   const dispatch = useAppDispatch();
 
@@ -31,8 +31,10 @@ const Header = () => {
   const [showConfirmLogout, setShowConfirmLogout] = useState(false);
 
   const headerName = () => {
-    const pathnameSplit = pathname.split('/');
+    console.log(location)
+    const pathnameSplit = location.pathname.split('/');
     pathnameSplit.shift();
+
     return pathnameSplit.join(' > ').toString() || 'Home';
   }
 

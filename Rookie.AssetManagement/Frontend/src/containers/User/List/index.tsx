@@ -7,7 +7,7 @@ import UserTable from "./UserTable";
 import IUserForm from "src/interfaces/User/IUserForm";
 import IQueryUserModel from "src/interfaces/User/IQueryUserModel";
 import ISelectOption from "src/interfaces/ISelectOption";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   ACCSENDING,
   DECSENDING,
@@ -20,6 +20,7 @@ import IPagedModel from "src/interfaces/IPagedModel";
 import { getUserList } from "../reducer";
 
 const ListUser = () => {
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const { users, loading } = useAppSelector((state) => state.userReducer);
 
@@ -107,7 +108,7 @@ const ListUser = () => {
 
   useEffect(() => {
     fetchData();
-  }, [query]);
+  }, [location.key]);
 
 
   return (
