@@ -14,6 +14,7 @@ using Rookie.AssetManagement.DataAccessor.Enum;
 using Rookie.AssetManagement.DataAccessor.Migrations;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -71,7 +72,10 @@ namespace Rookie.AssetManagement.Business.Services
             string day = newUser.DateOfBirth.Day.ToString();
             string month = newUser.DateOfBirth.Month.ToString();
             string year = newUser.DateOfBirth.Year.ToString();
-            string password = newUser.UserName.ToLower() + '@' + day + month + year;
+            DateTime dt = new DateTime(int.Parse(year), int.Parse(month), int.Parse(day));
+            string dateofbirthformmat = dt.ToString("ddMMyyyy");
+            string password = newUser.UserName.ToLower() + '@' + dateofbirthformmat;
+            //string password = newUser.UserName.ToLower() + '@' + day + month + year;
             //default isNewUser
             newUser.IsNewUser = true;
             //default location
