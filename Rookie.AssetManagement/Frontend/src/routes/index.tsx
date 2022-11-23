@@ -53,33 +53,33 @@ const AppRoutes = () => {
         <Route
           path={ASSET}
           element={
-            <PrivateRoute>
+            <AdminRoute>
               <Asset />
-            </PrivateRoute>
+            </AdminRoute>
           }
         />
         <Route
           path={ASSIGNMENT}
           element={
-            <PrivateRoute>
+            <AdminRoute>
               <Assignment />
-            </PrivateRoute>
+            </AdminRoute>
           }
         />
         <Route
           path={RETURNING}
           element={
-            <PrivateRoute>
+            <AdminRoute>
               <Returning />
-            </PrivateRoute>
+            </AdminRoute>
           }
         />
         <Route
           path={REPORT}
           element={
-            <PrivateRoute>
+            <AdminRoute>
               <Report />
-            </PrivateRoute>
+            </AdminRoute>
           }
         />
         <Route
