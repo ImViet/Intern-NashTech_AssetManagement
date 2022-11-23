@@ -26,7 +26,11 @@ namespace Rookie.AssetManagement.Business.Services
         private readonly IBaseRepository<User> _userRepository;
         private readonly UserManager<User> userManager;
         private readonly IMapper _mapper;
-
+        public UserService(IBaseRepository<User> userRepository, IMapper mapper)
+        {
+            _userRepository = userRepository;
+            _mapper = mapper;
+        }
         public UserService(IBaseRepository<User> userRepository, UserManager<User> userManager, IMapper mapper)
         {
             _userRepository = userRepository;

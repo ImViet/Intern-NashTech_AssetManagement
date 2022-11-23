@@ -24,4 +24,8 @@
     <ProjectReference Include="..\Rookie.AssetManagement.Tests\Rookie.AssetManagement.Tests.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 </Project>
