@@ -15,21 +15,37 @@ type DateFieldProps = InputHTMLAttributes<HTMLInputElement> & {
 };
 
 const DateField: React.FC<DateFieldProps> = (props) => {
-    const [{ value }, { error, touched }, { setValue }] = useField(props);
+    const [{ value, }, { error, touched }, { setValue, setTouched, setError },] = useField(props);
     const {
-        label, isrequired, notvalidate, maxDate, minDate, filterDate,
+        name, label, isrequired, notvalidate, maxDate, minDate, filterDate,
     } = props;
 
     const validateClass = () => {
         if (touched && error) return 'is-invalid';
         if (notvalidate) return '';
         if (touched) return 'is-valid';
-
         return '';
     };
 
+    const handleTouched = () => {
+        setTouched(true);
+    }
     const handleChangeAssignedDate = (assignDate: Date) => {
-        setValue(assignDate);
+        if (!assignDate) {
+            setError("required")
+            setValue(undefined);
+        }
+        else
+            if (name.toLowerCase() == "dateofbirth" &&
+                (new Date().getFullYear()) - assignDate.getFullYear() < 18) {
+                setError("User is under 18. Please select a different date")
+            }
+            else
+                if (name.toLowerCase() == "joineddate" && (assignDate.getDay() == 0 || assignDate.getDay() == 6)) {
+                    setError("Joined date is Saturday or Sunday. Please select a different date")
+                }
+                else
+                    setValue(assignDate);
     };
 
     return (
@@ -57,14 +73,13 @@ const DateField: React.FC<DateFieldProps> = (props) => {
                             wrapperClassName={`form-control`}
                         />
 
-                        <div className="" style={{position: 'absolute', right: 40, top: 4}}>
+                        <div className="" style={{ position: 'absolute', right: 40, top: 4 }}>
                             <CalendarDateFill />
                         </div>
-
                     </div>
                     {error && touched && (
                         <div className='invalid'>{error}</div>
-                        )}
+                    )}
                 </div>
             </div>
         </>

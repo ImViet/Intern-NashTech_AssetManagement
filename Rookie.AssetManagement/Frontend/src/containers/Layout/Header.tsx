@@ -3,7 +3,7 @@ import { Dropdown } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import ConfirmModal from "src/components/ConfirmModal";
 import { HOME } from "src/constants/pages";
-import logo from '../../../public/images/Logo_lk.png'
+
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import { logout } from "../Authorize/reducer";
 
@@ -61,11 +61,11 @@ const Header = () => {
   return (
     <>
       <div className='header align-items-center font-weight-bold'>
-        <div className="container-lg-min container-fluid d-flex pt-2">
+        <div className="container-lg-min container-fluid d-flex ">
           {(headerName().toLowerCase() === "login") ? (
-            <div className="" style={{ marginLeft: 70 }}>
-
-              <p className='headText'>ádasds</p>
+            <div className="d-flex" style={{ marginLeft: 110 }}>
+              <img src={window.location.origin + '/images/Logo_lk.png'} alt="" width={45} height={45} className="logo" style={{ marginTop: 2, marginRight: 50 }} />
+              <p className='headText'>Online Asset Management</p>
             </div>
           ) : (
             <p className='headText'>{`${headerName()}`}</p>

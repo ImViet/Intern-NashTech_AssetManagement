@@ -24,13 +24,13 @@ const Layout = ({ children, showSideBar = true }) => {
             </div>
           )}
 
-          <div className={`${showSideBar?"col-lg-9 col-md-7":"col-12"} ms-5`}>
+          <div className={`${showSideBar ? "col-lg-9 col-md-7" : "col-12"} ms-5`}>
             {children}
           </div>
         </div>
 
       </div>
-      <FirstLoginModal show={account?.isNewUser}/>
+      <FirstLoginModal show={account?.isNewUser} />
     </>
   );
 };
