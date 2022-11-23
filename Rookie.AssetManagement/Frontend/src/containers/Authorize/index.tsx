@@ -60,7 +60,7 @@ const Login = () => {
 
   return (
     <>
-      <div className='container '>
+      <div className='container login-modal'>
         <Modal.Dialog
           aria-labelledby="login-modal"
         >
@@ -90,7 +90,7 @@ const Login = () => {
                     </div>
                   )}
 
-                  <div className="float-right mt-2 pb-3">
+                  <div className="text-right mt-2 pb-3">
                     <button className="btn btn-danger"
                       type="submit" disabled={isDisableLoginButton(loading, isValid, touched)}>
                       Login

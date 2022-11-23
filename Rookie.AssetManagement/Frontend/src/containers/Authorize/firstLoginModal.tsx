@@ -10,6 +10,7 @@ import { changePasswordFirstLogin, cleanUp, login } from "./reducer";
 import * as Yup from 'yup';
 import IChangePasswordFirstLogin from "src/interfaces/IChangePasswordFirstLogin";
 import { handleChangePasswordFirstLogin } from "./sagas/handles";
+import TextFieldPassword from "src/components/FormInputs/TextFieldPassword";
  
 const LoginSchema = Yup.object().shape({
   passwordNew: Yup.string().required('Required'),
@@ -49,43 +50,44 @@ const FirstLoginModal = ({show}) => {
           show={show}
           aria-labelledby="login-modal"
         >
-          <Modal.Header >
-            <Modal.Title id="login-modal">
-              Change Password
-          </Modal.Title>
+          <div className="first-login-modal">
+            <Modal.Header >
+              <Modal.Title id="login-modal">
+                Change Password
+            </Modal.Title>
 
-          </Modal.Header>
+            </Modal.Header>
+              <Modal.Body>
+                <Formik
+                  initialValues={initialValues}
+                  onSubmit={(values) => {
+                    dispatch(changePasswordFirstLogin(values));
+                  }}
+                  validationSchema={LoginSchema}
+                >
+                  {({ isValid, touched }) => (
+                    <Form className='intro-y'>
+                      <p>This is the first time you logged in you have to change you password to continue</p>
+                      <TextFieldPassword name="passwordNew" label="New Password" isrequired={true} />
+                      
+                      {error?.error && (
+                        <div className="invalid">
+                          {error.message}
+                        </div>
+                      )}
 
-          <Modal.Body>
-            <Formik
-              initialValues={initialValues}
-              onSubmit={(values) => {
-                dispatch(changePasswordFirstLogin(values));
-              }}
-              validationSchema={LoginSchema}
-            >
-              {({ isValid, touched }) => (
-                <Form className='intro-y'>
-                  <p>This is the first time you logged in you have to change you password to continue</p>
-                  <TextField name="passwordNew" label="New Password" type="password" isrequired={true} />
-
-                  {error?.error && (
-                    <div className="invalid">
-                      {error.message}
-                    </div>
+                      <div className="text-right mt-5">
+                        <button className="btn btn-danger"
+                          type="submit" disabled={isDisableSaveButton(loading, isValid)}>
+                          Save
+                          {(loading) && <img src="/oval.svg" className='w-4 h-4 ml-2 inline-block' />}
+                        </button>
+                      </div>
+                    </Form>
                   )}
-
-                  <div className="text-right mt-5">
-                    <button className="btn btn-danger"
-                      type="submit" disabled={isDisableSaveButton(loading, isValid)}>
-                      Save
-                      {(loading) && <img src="/oval.svg" className='w-4 h-4 ml-2 inline-block' />}
-                    </button>
-                  </div>
-                </Form>
-              )}
-            </Formik>
-          </Modal.Body>
+                </Formik>
+              </Modal.Body>
+          </div>
         </Modal>
       </div>
     </>
