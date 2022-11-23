@@ -33,17 +33,18 @@ const ListUser = () => {
   const [search, setSearch] = useState("");
 
   const [selectedType, setSelectedType] = useState([
-    { id: 1, label: "Type", value: "all" },
+    { id: 1, label: "Type", value: "ALL" },
   ] as ISelectOption[]);
 
   const handleType = (selected: ISelectOption[]) => {
     if (selected.length === 0) {
       setQuery({
         ...query,
-        types: [],
+        types: ["ALL"],
       });
 
       setSelectedType([FilterUserTypeOptions[0]]);
+
       return;
     }
 
@@ -53,7 +54,7 @@ const ListUser = () => {
       if (!prevSelected.some((item) => item.id === 1) && selectedAll) {
         setQuery({
           ...query,
-          types: [],
+          types: ["ALL"],
         });
 
         return [selectedAll];
@@ -69,6 +70,7 @@ const ListUser = () => {
 
       return newSelected;
     });
+    console.log(query)
   };
 
   const handleChangeSearch = (e) => {
@@ -76,6 +78,7 @@ const ListUser = () => {
 
     const search = e.target.value;
     setSearch(search);
+    console.log(query)
   };
 
   const handlePage = (page: number) => {
@@ -83,6 +86,7 @@ const ListUser = () => {
       ...query,
       page,
     });
+    console.log(query)
   };
 
   const handleSearch = () => {
@@ -90,6 +94,7 @@ const ListUser = () => {
       ...query,
       search,
     });
+    console.log(query)
   };
 
   const handleSort = (orderByColumn: string) => {

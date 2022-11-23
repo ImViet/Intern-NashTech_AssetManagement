@@ -10,7 +10,7 @@ export default function AdminRoute({ children, ...rest }) {
     const { isAuth, account } = useAppSelector(state => state.authReducer);
     return (
         <>
-            {(isAuth && account?.type.toUpperCase() === "ADMIN") ?
+            {(account?.type.toUpperCase() === "ADMIN") ?
                 (<Layout>
                     {children}
                 </Layout>

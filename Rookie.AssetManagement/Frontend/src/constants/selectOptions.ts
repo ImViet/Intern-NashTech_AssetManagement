@@ -7,7 +7,7 @@ export const UserTypeOptions: ISelectOption[] = [
 ];
 
 export const FilterUserTypeOptions: ISelectOption[] = [
-  { id: 1, label: "All", value: "all" },
+  { id: 1, label: "All", value: "ALL" },
   { id: 2, label: "Admin", value: "ADMIN" },
   { id: 3, label: "Staff", value: "STAFF" },
 ];
