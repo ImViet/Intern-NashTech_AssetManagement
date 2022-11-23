@@ -12,14 +12,17 @@ type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
 };
 
 const SelectField: React.FC<InputFieldProps> = (props) => {
-    const [field, { error, touched, value }, { setValue }] = useField(props);
+    const [field, { error, touched, value }, { setValue, setTouched }] = useField(props);
 
     const { name, options, label, isrequired, notvalidate } = props;
 
     const handleChange = (e) => {
         setValue(e.target.value)
     };
-
+    const handleTouched = () => {
+        setTouched(true);
+        console.log(touched, error)
+    }
     const validateClass = () => {
         if (touched && error) return 'is-invalid';
         if (notvalidate) return '';
@@ -39,11 +42,11 @@ const SelectField: React.FC<InputFieldProps> = (props) => {
                 </label>
 
                 <div className="col">
-                    <select className={`custom-select ${validateClass()}`} onChange={handleChange}>
+                    <select className={`custom-select ${validateClass()}`} onClick={handleTouched} onChange={handleChange}>
                         <option selected hidden></option>
                         {
                             options.map(({ id, label: optionLabel, value: optionValue }) => (
-                                <option key={id} value={optionValue} selected = {optionValue === value}>
+                                <option key={id} value={optionValue} selected={optionValue === value}>
                                     {optionLabel}
                                 </option>
                             ))

@@ -35,17 +35,9 @@ const DateField: React.FC<DateFieldProps> = (props) => {
             setError("required")
             setValue(undefined);
         }
-        else
-            if (name.toLowerCase() == "dateofbirth" &&
-                (new Date().getFullYear()) - assignDate.getFullYear() < 18) {
-                setError("User is under 18. Please select a different date")
-            }
-            else
-                if (name.toLowerCase() == "joineddate" && (assignDate.getDay() == 0 || assignDate.getDay() == 6)) {
-                    setError("Joined date is Saturday or Sunday. Please select a different date")
-                }
-                else
-                    setValue(assignDate);
+        else {
+            setValue(assignDate)
+        }
     };
 
     return (
@@ -63,7 +55,7 @@ const DateField: React.FC<DateFieldProps> = (props) => {
                             <DatePicker
                                 placeholderText=''
                                 className={`form-control  w-100 p-2 ${validateClass()}`}
-                                dateFormat='MM/dd/yyyy'
+                                dateFormat='dd/MM/yyyy'
                                 selected={value}
                                 onChange={date => handleChangeAssignedDate(date as Date)}
                                 isClearable

@@ -34,14 +34,12 @@ const validationSchema = Yup.object().shape({
     // gender: Yup.string().required('Required'),
     type: Yup.string().required('Required'),
     dateOfBirth: Yup.date().required("Required"),
-    joinedDate: Yup.date().when("dateOfBirth", {
-        is: false,
-        then: Yup.date().required("ádsa")
-    }).required("Required")
+    joinedDate: Yup.date().required("Required")
 });
 
 type Props = {
     initialUserForm?: IUserForm;
+
 };
 
 const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
@@ -52,6 +50,8 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
     const dispatch = useAppDispatch();
 
     const isUpdate = initialUserForm.userId ? true : false;
+
+    const [dateOfBirth, setDateOfBirth] = useState();
 
     const navigate = useNavigate();
     const handleResult = (result: boolean, message: string) => {
@@ -69,6 +69,10 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
         } else {
             NotificationManager.error(message, 'Create failed', 2000);
         }
+    }
+    const handleLanguage = (date) => {
+        console.log(date)
+        setDateOfBirth(date);
     }
 
     return (
@@ -92,64 +96,69 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
                 }, 1000);
             }}
         >
-            {(actions) => (
-                <Form className='intro-y col-lg-6 col-12'>
-                    <TextField
-                        name="firstName"
-                        label="First Name"
-                        placeholder=""
-                        disabled={isUpdate ? true : false} />
+            {(actions) => {
+                actions.handleBlur = () => {
+                    console.log("adaw")
+                }
+                return (
 
-                    <TextField
-                        name="lastName"
-                        label="Last Name"
-                        placeholder=""
-                        disabled={isUpdate ? true : false} />
+                    <Form className='intro-y col-lg-6 col-12'>
+                        <TextField
+                            name="firstName"
+                            label="First Name"
+                            placeholder=""
+                            disabled={isUpdate ? true : false} />
 
-                    <DateField
-                        label="Date of Birth"
-                        name="dateOfBirth"
-                        placeholder=""
-                        maxDate={new Date()}
-                        disabled={isUpdate ? true : false} />
+                        <TextField
+                            name="lastName"
+                            label="Last Name"
+                            placeholder=""
+                            disabled={isUpdate ? true : false} />
 
-                    <CheckboxField
-                        name="gender"
-                        label="Gender"
-                        isrequired
-                        options={GenderOptions}
-                        disabled={isUpdate ? true : false} />
+                        <DateField
+                            label="Date of Birth"
+                            name="dateOfBirth"
+                            placeholder=""
+                            onChangeCapture={handleLanguage}
+                            disabled={isUpdate ? true : false} />
 
-                    <DateField
-                        label="Joined Date"
-                        id="joinedDate"
-                        name="joinedDate"
-                        placeholder=""
-                        maxDate={new Date()}
-                        disabled={isUpdate ? true : false} />
+                        <CheckboxField
+                            name="gender"
+                            label="Gender"
+                            isrequired
+                            options={GenderOptions}
+                            disabled={isUpdate ? true : false} />
 
-                    <SelectField
-                        name="type"
-                        label="Type"
-                        options={UserTypeOptions}
-                        isrequired
-                        disabled={isUpdate ? true : false} />
+                        <DateField
+                            label="Joined Date"
+                            id="joinedDate"
+                            name="joinedDate"
+                            placeholder=""
+                            disabled={isUpdate ? true : false} />
 
-                    <div className="d-flex">
-                        <div className="ml-auto">
-                            <button className="btn btn-danger"
-                                type="submit" disabled={!(actions.dirty && actions.isValid)}
-                            >
-                                Save {(loading) && <img src="/oval.svg" className='w-4 h-4 ml-2 inline-block' />}
-                            </button>
+                        <SelectField
+                            name="type"
+                            label="Type"
+                            options={UserTypeOptions}
+                            isrequired
+                            disabled={isUpdate ? true : false} />
 
-                            <Link to={USER} className="btn btn-outline-secondary ml-2">
-                                Cancel
-                            </Link>
+                        <div className="d-flex">
+                            <div className="ml-auto">
+                                <button className="btn btn-danger"
+                                    type="submit" disabled={!(actions.dirty && actions.isValid)}
+                                >
+                                    Save {(loading) && <img src="/oval.svg" className='w-4 h-4 ml-2 inline-block' />}
+                                </button>
+
+                                <Link to={USER} className="btn btn-outline-secondary ml-2">
+                                    Cancel
+                                </Link>
+                            </div>
                         </div>
-                    </div>
-                </Form>
-            )}
+                    </Form>
+                )
+            }}
         </Formik>
     );
 }
