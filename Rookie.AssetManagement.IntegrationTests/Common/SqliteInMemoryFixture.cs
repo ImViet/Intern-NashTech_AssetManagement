@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Rookie.AssetManagement.DataAccessor.Data;
 using Rookie.AssetManagement.DataAccessor.Entities;
 using System;
+using System.Security.Claims;
 
 namespace Rookie.AssetManagement.IntegrationTests.Common
 {
@@ -29,6 +30,7 @@ namespace Rookie.AssetManagement.IntegrationTests.Common
         public virtual ApplicationDbContext Context => ServiceProvider.GetRequiredService<ApplicationDbContext>();
         public virtual UserManager<User> UserManager => ServiceProvider.GetRequiredService<UserManager<User>>();
         public virtual SignInManager<User> SignInManager => ServiceProvider.GetRequiredService<SignInManager<User>>();
+
 
         public virtual void CreateDatabase()
         {
@@ -61,7 +63,7 @@ namespace Rookie.AssetManagement.IntegrationTests.Common
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
+            services.AddHttpContextAccessor();
             services.AddLogging();
 
             return services;

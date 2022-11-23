@@ -1,6 +1,6 @@
 export default interface IQueryUserModel {
     page: number;
-    type: string[];
+    types: string[];
     search: string;
     orderBy: string;
     orderByColumn: string;

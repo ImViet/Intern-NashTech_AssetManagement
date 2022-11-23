@@ -5,6 +5,7 @@ import ConfirmModal from "src/components/ConfirmModal";
 import { HOME } from "src/constants/pages";
 
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
+import { isNumber } from "util";
 import { logout } from "../Authorize/reducer";
 
 // eslint-disable-next-line react/display-name
@@ -23,17 +24,36 @@ const CustomToggle = React.forwardRef<any, any>(({ children, onClick }, ref): an
 
 const Header = () => {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const { account , isAuth} = useAppSelector(state => state.authReducer);
+  const location= useLocation();
+  const { account, isAuth } = useAppSelector(state => state.authReducer);
   const dispatch = useAppDispatch();
 
   const [showModalChangePasswod, setShowModalChangePasswod] = useState(false);
   const [showConfirmLogout, setShowConfirmLogout] = useState(false);
 
   const headerName = () => {
-    const pathnameSplit = pathname.split('/');
+    const pathnameSplit = location.pathname.split('/');
     pathnameSplit.shift();
-    return pathnameSplit.join(' > ').toString() || 'Home';
+
+    pathnameSplit.forEach(split=>{
+      if(split == "user"){
+        const index = pathnameSplit.findIndex(s=>s== split)
+        pathnameSplit[index] = "Manage User";
+      }
+      else if(split == "create"){
+        const index = pathnameSplit.findIndex(s=>s== split)
+        pathnameSplit[index] = "Create User";
+      }
+      else if(split == "edit"){
+        const index = pathnameSplit.findIndex(s=>s== split)
+        pathnameSplit[index] = "Edit User";
+      }else if(!isNaN(Number(split))){
+        const index = pathnameSplit.findIndex(s=>s== split)
+        pathnameSplit.splice(index,1)
+      }
+    })
+    
+    return pathnameSplit.join(' > ').toString() || 'Home' ;
   }
 
   const openModal = () => {
@@ -61,9 +81,15 @@ const Header = () => {
   return (
     <>
       <div className='header align-items-center font-weight-bold'>
-        <div className="container-lg-min container-fluid d-flex pt-2">
-          <p className='headText'>{`${headerName()}`}</p>
-
+        <div className="container-lg-min container-fluid d-flex ">
+          {(headerName().toLowerCase() === "login") ? (
+            <div className="d-flex" style={{ marginLeft: 110 }}>
+              <img src={window.location.origin + '/images/Logo_lk.png'} alt="" width={45} height={45} className="logo" style={{ marginTop: 2, marginRight: 50 }} />
+              <p className='headText'>Online Asset Management</p>
+            </div>
+          ) : (
+            <p className='headText'>{`${headerName()}`}</p>
+          )}
           {isAuth && (
             <div className='ml-auto text-white'>
               <Dropdown>

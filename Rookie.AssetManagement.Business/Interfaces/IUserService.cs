@@ -5,12 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace Rookie.AssetManagement.Business.Interfaces
 {
     public interface IUserService
-    {    
-        Task<UserDto> AddAsync(UserCreateDto assetRequest);
-       
+    {
+        Task<IEnumerable<UserDto>> GetAllAsync();
+        Task<UserDto> GetByIdAsync(int id);
+        Task<UserDto> AddAsync(UserCreateDto assetRequest, string location);
+        Task<UserDto> UpdateAsnyc(UserUpdateDto assetRequest);
     }
 }

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { Modal } from 'react-bootstrap';
 import { Form, Formik } from 'formik';
@@ -10,7 +11,8 @@ import { cleanUp, login } from "./reducer";
 import * as Yup from 'yup';
 import { useNavigate } from "react-router-dom";
 import { HOME, LOGIN } from "src/constants/pages";
- 
+import TextFieldPassword from "src/components/FormInputs/TextFieldPassword";
+
 const LoginSchema = Yup.object().shape({
   userName: Yup.string().required('Required'),
   password: Yup.string().required('Required'),
@@ -28,7 +30,7 @@ const Login = () => {
 
 
   useEffect(() => {
-    if(isAuth){
+    if (isAuth) {
       navigate(HOME)
     }
   }, [isAuth]);
@@ -39,17 +41,17 @@ const Login = () => {
     }
   }, []);
 
-  const isDisableLoginButton = (loading, isValid,touched)=>{
-    
-    if(loading){
+  const isDisableLoginButton = (loading, isValid, touched) => {
+
+    if (loading) {
       return true;
     }
 
-    if(Object.keys(touched).length < 1){
+    if (Object.keys(touched).length < 1) {
       return true;
     }
 
-    if(!isValid){
+    if (!isValid) {
       return true
     }
 
@@ -58,14 +60,14 @@ const Login = () => {
 
   return (
     <>
-      <div className='container'>
+      <div className='container login-modal'>
         <Modal.Dialog
           aria-labelledby="login-modal"
         >
           <Modal.Header >
-            <Modal.Title id="login-modal">
-              Login
-          </Modal.Title>
+            <Modal.Title id="login-modal" className="text-center h5 w-100">
+              Welcome to Online Asset Management
+            </Modal.Title>
 
           </Modal.Header>
 
@@ -79,8 +81,8 @@ const Login = () => {
             >
               {({ isValid, touched }) => (
                 <Form className='intro-y'>
-                  <TextField name="userName" label="Username" placeholder="john" isrequired={true}/>
-                  <TextField name="password" label="Password" type="password" isrequired={true} />
+                  <TextField name="userName" label="Username" isrequired={true} />
+                  <TextFieldPassword name="password" label="Password" isrequired={true} />
 
                   {error && (
                     <div className="invalid text-center">
@@ -88,9 +90,9 @@ const Login = () => {
                     </div>
                   )}
 
-                  <div className="text-center mt-5">
+                  <div className="text-right mt-2 pb-3">
                     <button className="btn btn-danger"
-                      type="submit" disabled={isDisableLoginButton(loading, isValid,touched)}>
+                      type="submit" disabled={isDisableLoginButton(loading, isValid, touched)}>
                       Login
                       {(loading) && <img src="/oval.svg" className='w-4 h-4 ml-2 inline-block' />}
                     </button>

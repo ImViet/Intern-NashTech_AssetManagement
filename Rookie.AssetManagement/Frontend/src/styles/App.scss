@@ -51,6 +51,7 @@ body {
 
 .w-md {
     width: 12rem;
+
 }
 
 .w-ld {
@@ -59,4 +60,26 @@ body {
 
 .icon-md {
     font-size: 35px;
+}
+
+.input-radio{
+    appearance: none;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #999;
+    transition: 0.2s all linear;
+    position: relative;
+    top: 3px;
+}
+
+.input-radio:checked {
+    border: 5px solid red;
+}
+
+.icon-eye{
+    left: 86%;
+}
+.is-invalid,.is-valid{
+    background-image:none !important;
 }

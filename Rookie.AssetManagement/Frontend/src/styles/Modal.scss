@@ -9,3 +9,35 @@
         }
     }
 }
+
+.modal-content{
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid rgb(164,166,168);
+
+    .modal-header {
+        background-color: rgba(239,241,245,1);
+        border-bottom: 2px solid rgb(164,166,168);
+        .modal-title {
+            color: rgba(207,35,56,1);
+            font-weight: bold;
+        }
+    }
+    .modal-body{
+        background-color: rgb(250,252,252);
+        margin-top: -1px;
+        padding: 30px 80px;
+    }
+}
+
+// .login-modal{
+//     .modal-content{
+//         border-radius: 10px;
+//     }
+// }
+
+.first-login-modal{ 
+    .modal-body{
+        padding: 30px 30px; 
+    }    
+}

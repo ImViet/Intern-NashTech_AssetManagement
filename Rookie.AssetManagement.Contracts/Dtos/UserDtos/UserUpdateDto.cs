@@ -10,8 +10,6 @@ namespace Rookie.AssetManagement.Contracts.Dtos.UserDtos
     public class UserUpdateDto
     {
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public UserGenderEnumDto Gender { get; set; }
         public DateTime JoinedDate { get; set; }

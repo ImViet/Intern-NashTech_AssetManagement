@@ -3,6 +3,7 @@ import { SetStatusType } from "src/constants/status";
 
 import IError from "src/interfaces/IError";
 import IPagedModel from "src/interfaces/IPagedModel";
+import IQueryUserModel from "src/interfaces/User/IQueryUserModel";
 import IUser from "src/interfaces/User/IUser";
 import IUserForm from "src/interfaces/User/IUserForm";
 
@@ -16,6 +17,11 @@ type UserState = {
 };
 
 export type CreateAction = {
+  handleResult: Function;
+  formValues: IUserForm;
+};
+
+export type UpdateAction = {
   handleResult: Function;
   formValues: IUserForm;
 };
@@ -36,6 +42,36 @@ const UserReducerSlice = createSlice({
         loading: true,
       };
     },
+    updateUser: (state, action: PayloadAction<UpdateAction>): UserState => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+    getUser: (state, action: PayloadAction<number>): UserState => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+    getUserList: (state, action: PayloadAction<IQueryUserModel>): UserState => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+    setUserList: (
+      state,
+      action: PayloadAction<IPagedModel<IUser>>
+    ): UserState => {
+      const users = action.payload;
+
+      return {
+        ...state,
+        users,
+        loading: false,
+      };
+    },
     setUser: (state, action: PayloadAction<IUser>): UserState => {
       const userResult = action.payload;
 
@@ -45,9 +81,26 @@ const UserReducerSlice = createSlice({
         loading: false,
       };
     },
+    setStatus: (state, action: PayloadAction<SetStatusType>) => {
+      const { status, error } = action.payload;
+      return {
+        ...state,
+        status,
+        error,
+        loading: false,
+      };
+    },
   },
 });
 
-export const { createUser, setUser } = UserReducerSlice.actions;
+export const {
+  createUser,
+  updateUser,
+  setUser,
+  setUserList,
+  setStatus,
+  getUserList,
+  getUser,
+} = UserReducerSlice.actions;
 
 export default UserReducerSlice.reducer;

@@ -41,6 +41,9 @@ const AuthSlice = createSlice({
       if (account?.token) {
         setLocalStorage("token", account.token);
         request.setAuthentication(account.token);
+      } else if (token) {
+        account.token = token;
+        request.setAuthentication(token);
       }
       account.isNewUser = account.isNewUser?.toString() == "True";
       return {

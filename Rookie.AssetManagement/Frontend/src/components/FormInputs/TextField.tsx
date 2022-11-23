@@ -17,7 +17,6 @@ const TextField: React.FC<InputFieldProps> = (props) => {
         if (touched && error) return 'is-invalid';
         if (notvalidate) return '';
         if (touched) return 'is-valid';
-
         return '';
     };
 
@@ -27,11 +26,12 @@ const TextField: React.FC<InputFieldProps> = (props) => {
                 <label className="col-4 col-form-label d-flex">
                     {label}
                     {isrequired && (
-                        <div className="invalid ml-1">(*)</div>
+                        <div className="invalid ml-1">*</div>
                     )}
                 </label>
                 <div className="col">
-                    <input className={`form-control ${validateClass()}`} {...field} {...props} />
+                    <input className={`form-control ${validateClass()}`} {...field} {...props}
+                    />
                     {error && touched && (
                         <div className='invalid'>{error}</div>
                     )}
