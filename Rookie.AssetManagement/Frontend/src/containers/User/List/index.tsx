@@ -108,7 +108,7 @@ const ListUser = () => {
 
   useEffect(() => {
     fetchData();
-  }, [location.key]);
+  }, []);
 
 
   return (

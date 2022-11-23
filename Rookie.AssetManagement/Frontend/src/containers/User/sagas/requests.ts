@@ -41,7 +41,10 @@ export function updateUserRequest(
 export function getUsersRequest(
   userQuery: IQueryUserModel
 ): Promise<AxiosResponse<IUser[]>> {
-  return RequestService.axios.get(EndPoints.user);
+  return RequestService.axios.get(EndPoints.user, {
+    params: userQuery,
+    paramsSerializer: (params) => qs.stringify(params),
+  });
 }
 
 export function getUserByIdRequest(id: number): Promise<AxiosResponse<IUser>> {
