@@ -48,6 +48,7 @@ namespace Rookie.AssetManagement.IntegrationTests
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
             _mapper = config.CreateMapper();
 
+            _signInManager.Context = new DefaultHttpContext { RequestServices = fixture.ServiceProvider };
             _authService = new AuthService(_authRepository,_signInManager, _userManager,_mapper);
             _authController = new AuthController(_authService,_userManager);
 
@@ -55,24 +56,25 @@ namespace Rookie.AssetManagement.IntegrationTests
             _userManager.CreateAsync(ArrangeData.Create(), "123456");
         }
 
-        // [Fact]
-        // public async Task Login_Success()
-        // {
-        //     //Arrange
-        //     var loginRequest = ArrangeData.GetLogin();
+        [Fact]
+        public async Task Login_Success()
+        {
+            //Arrange
+            var loginRequest = ArrangeData.GetLogin();
 
-        //     // Act
-        //     var result = await _authController.LoginUser(loginRequest);
+            // Act
+            var result = await _authController.LoginUser(loginRequest);
 
-        //     // Assert
-        //     result.Should().NotBeNull();
+            // Assert
+            result.Should().NotBeNull();
 
-        //     var actionResult = Assert.IsType<OkObjectResult>(result.Result);
-        //     var returnValue = Assert.IsType<LoginDto>(actionResult.Value);
+            var actionResult = Assert.IsType<OkObjectResult>(result.Result);
+            var returnValue = Assert.IsType<AccountDto>(actionResult.Value);
+            var token = returnValue.Token;
+            Assert.Equal(returnValue.UserName, loginRequest.UserName);
+            
 
-        //     Assert.Equal(returnValue.UserName, loginRequest.UserName);
-        //     Assert.Equal(returnValue.Password, loginRequest.Password);
-        // }
+        }
 
         [Fact]
         public async Task LoginShouldThrowBadRequest()
