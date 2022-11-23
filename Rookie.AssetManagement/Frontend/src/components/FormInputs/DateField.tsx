@@ -35,17 +35,9 @@ const DateField: React.FC<DateFieldProps> = (props) => {
             setError("required")
             setValue(undefined);
         }
-        else
-            if (name.toLowerCase() == "dateofbirth" &&
-                (new Date().getFullYear()) - assignDate.getFullYear() < 18) {
-                setError("User is under 18. Please select a different date")
-            }
-            else
-                if (name.toLowerCase() == "joineddate" && (assignDate.getDay() == 0 || assignDate.getDay() == 6)) {
-                    setError("Joined date is Saturday or Sunday. Please select a different date")
-                }
-                else
-                    setValue(assignDate);
+        else {
+            setValue(assignDate)
+        }
     };
 
     return (
@@ -59,19 +51,20 @@ const DateField: React.FC<DateFieldProps> = (props) => {
                 </label>
                 <div className="col">
                     <div className="d-flex align-items-center w-100">
-                        <DatePicker
-                            placeholderText=''
-                            className={`border w-100 p-2 ${validateClass()}`}
-                            dateFormat='dd/MM/yyyy'
-                            selected={value}
-                            onChange={date => handleChangeAssignedDate(date as Date)}
-                            isClearable
-                            showDisabledMonthNavigation
-                            maxDate={maxDate}
-                            minDate={minDate}
-                            filterDate={filterDate}
-                            wrapperClassName={`form-control`}
-                        />
+                            <DatePicker
+                                placeholderText=''
+                                className={`form-control  w-100 p-2 ${validateClass()}`}
+                                dateFormat='dd/MM/yyyy'
+                                selected={value}
+                                onChange={date => handleChangeAssignedDate(date as Date)}
+                                isClearable
+                                showDisabledMonthNavigation
+                                maxDate={maxDate}
+                                minDate={minDate}
+                                onInputClick={handleTouched}
+                                filterDate={filterDate}
+                                wrapperClassName={`w-100`}
+                            />
 
                         <div className="" style={{ position: 'absolute', right: 40, top: 4 }}>
                             <CalendarDateFill />
