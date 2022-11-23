@@ -11,8 +11,10 @@ import IQueryUserModel from "src/interfaces/User/IQueryUserModel";
 export function createUserRequest(
   userForm: IUserForm
 ): Promise<AxiosResponse<IUser>> {
+  userForm.joinedDate?.setDate(userForm.joinedDate.getDate() + 1);
+  userForm.dateOfBirth?.setDate(userForm.dateOfBirth.getDate() + 1);
   return RequestService.axios.post(EndPoints.user, userForm, {
-    paramsSerializer: (params) => qs.stringify(params),
+    paramsSerializer: (params) => JSON.stringify(params),
   });
 }
 
@@ -20,7 +22,7 @@ export function updateUserRequest(
   userForm: IUserForm
 ): Promise<AxiosResponse<IUser>> {
   return RequestService.axios.put(EndPoints.user, userForm, {
-    paramsSerializer: (params) => qs.stringify(params),
+    paramsSerializer: (params) => JSON.stringify(params),
   });
 }
 

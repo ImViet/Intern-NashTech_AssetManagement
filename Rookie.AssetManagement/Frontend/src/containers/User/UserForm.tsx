@@ -51,13 +51,14 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
     const dispatch = useAppDispatch();
 
     const isUpdate = initialUserForm.id ? true : false;
+    // if(!isUpdate){
+    //     initialFormValues.joinedDate = new Date();
+    // }
 
     const [dateOfBirth, setDateOfBirth] = useState();
 
     const navigate = useNavigate();
     const handleResult = (result: boolean, message: string) => {
-        debugger
-
         if (result) {
             NotificationManager.success(
                 `${isUpdate ? 'Updated' : 'Created'} Successful User ${message}`,
@@ -85,7 +86,6 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
             validationSchema={validationSchema}
 
             onSubmit={(values) => {
-                console.log(values)
                 setLoading(true);
                 setTimeout(() => {
                     if (isUpdate) {

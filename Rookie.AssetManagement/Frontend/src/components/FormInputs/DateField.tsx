@@ -57,7 +57,6 @@ const DateField: React.FC<DateFieldProps> = (props) => {
                                 dateFormat='dd/MM/yyyy'
                                 selected={value}
                                 onChange={date => handleChangeAssignedDate(date as Date)}
-                                isClearable
                                 showDisabledMonthNavigation
                                 maxDate={maxDate}
                                 minDate={minDate}
