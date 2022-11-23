@@ -48,15 +48,19 @@ namespace Rookie.AssetManagement.Controllers
         }
 
         [HttpGet]
-        [Route("GetBrands")]
-        public async Task<ActionResult<PagedResponseModel<UserDto>>> GetBrands(
-           [FromQuery] UserQueryCriteriaDto brandCriteriaDto,
+        [Route("GetUser")]
+        public async Task<ActionResult<PagedResponseModel<UserDto>>> GetUser(
+           [FromQuery] UserQueryCriteriaDto userCriteriaDto,
            CancellationToken cancellationToken)
         {
-            var brandResponses = await _userService.GetByPageAsync(
-                                            brandCriteriaDto,
-                                            cancellationToken);
-            return Ok(brandResponses);
+            var location = User.Claims.FirstOrDefault(x => x.Type.Equals("Location", StringComparison.OrdinalIgnoreCase))?.Value;
+            //var location = "hcm";
+
+            var userResponses = await _userService.GetByPageAsync(
+                                            userCriteriaDto,
+                                            cancellationToken,
+                                            location);
+            return Ok(userResponses);
         }
 
     }
