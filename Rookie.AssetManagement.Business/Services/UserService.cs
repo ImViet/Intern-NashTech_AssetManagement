@@ -20,6 +20,8 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper.QueryableExtensions;
+using AutoMapper;
 
 namespace Rookie.AssetManagement.Business.Services
 {
@@ -28,11 +30,7 @@ namespace Rookie.AssetManagement.Business.Services
         private readonly IBaseRepository<User> _userRepository;
         private readonly UserManager<User> userManager;
         private readonly IMapper _mapper;
-        public UserService(IBaseRepository<User> userRepository, IMapper mapper)
-        {
-            _userRepository = userRepository;
-            _mapper = mapper;
-        }
+
         public UserService(IBaseRepository<User> userRepository, UserManager<User> userManager, IMapper mapper)
         {
             _userRepository = userRepository;
@@ -111,79 +109,142 @@ namespace Rookie.AssetManagement.Business.Services
         public string DefaultValueForStaffCodeFirst()
         {
             string staffcode = "";
-            if (_userRepository.Entities.Count() == 0)
+            var lastuser = _userRepository.Entities.OrderByDescending(c => c.Id).FirstOrDefault();
+            int newuserid = lastuser.Id + 1;
+            if (newuserid < 10)
             {
-                staffcode = "SD0001";
+                staffcode = "SD000" + newuserid;
+            }
+            else if (newuserid < 100)
+            {
+                staffcode = "SD00" + newuserid;
+            }
+            else if (newuserid < 1000)
+            {
+                staffcode = "SD0" + newuserid;
             }
             else
             {
-                var lastuser = _userRepository.Entities.OrderByDescending(c => c.Id).FirstOrDefault();
-                int newuserid = lastuser.Id + 1;
-                if (newuserid < 10)
-                {
-                    staffcode = "SD000" + newuserid;
-                }
-                else if (newuserid < 100)
-                {
-                    staffcode = "SD00" + newuserid;
-                }
-                else if (newuserid < 1000)
-                {
-                    staffcode = "SD0" + newuserid;
-                }
-                else
-                {
-                    staffcode = "SD" + newuserid;
-                }
-            }         
+                staffcode = "SD" + newuserid;
+            }
             return staffcode;
         }
 
         public async Task<PagedResponseModel<UserDto>> GetByPageAsync(
             UserQueryCriteriaDto UserQueryCriteria, 
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string location)
         {
-            var brandQuery = BrandFilter(
-               _userRepository.Entities.Where(x => !x.IsDeleted).AsQueryable(),
+            var userQuery = UserFilter(
+               _userRepository.Entities.Where(x => !x.IsDeleted).Where(x => x.Location == location).AsQueryable(),
                UserQueryCriteria);
 
-            var User = await brandQuery
+            var User = await userQuery
                 .AsNoTracking()
-                .PaginateAsync(
+                .PaginateAsync<User>(
                     UserQueryCriteria.Page,
                     UserQueryCriteria.Limit,
                     cancellationToken);
 
-            var brandssDto = _mapper.Map<IEnumerable<UserDto>>(User.Items);
+            var usersDto = _mapper.Map<IEnumerable<UserDto>>(User.Items);
 
             return new PagedResponseModel<UserDto>
             {
                 CurrentPage = User.CurrentPage,
                 TotalPages = User.TotalPages,
                 TotalItems = User.TotalItems,
-                Items = brandssDto
+                Items = usersDto
             };
         }
         
-        private IQueryable<User> BrandFilter(
-            IQueryable<User> brandQuery,
-            UserQueryCriteriaDto brandQueryCriteria)
+        private IQueryable<User> UserFilter(
+            IQueryable<User> userQuery,
+            UserQueryCriteriaDto userQueryCriteria)
         {
-            if (!String.IsNullOrEmpty(brandQueryCriteria.Search))
+           
+
+            if (!String.IsNullOrEmpty(userQueryCriteria.Search))
             {
-                brandQuery = brandQuery.Where(b =>
-                    b.UserName.Contains(brandQueryCriteria.Search));
+                userQuery = userQuery.Where(b =>
+                  (b.LastName+ " " + b.FirstName).Contains(userQueryCriteria.Search));
             }
 
-            //if (brandQueryCriteria.Types != null &&
-            //    brandQueryCriteria.Types.Count() > 0 &&
-            //   !brandQueryCriteria.Types.Any(x => x == brandQueryCriteria.Types))
-            //{
-            //    brandQuery = brandQuery.Where(x =>
-            //        brandQueryCriteria.Types.Any(t => t == (int)x.Type));
-            //}
+            if (userQueryCriteria.Types != null &&
+                userQueryCriteria.Types.Count() > 0                
+                )              
+            {
+                var type = userQueryCriteria.Types.ToUpper();
+                switch (type)
+                {
+                    case "ADMIN":
+                        userQuery = userQuery.Where(b =>
+                        b.Type.Contains(userQueryCriteria.Types));
+                        break;
+                    case "STAFF":
+                        userQuery = userQuery.Where(b =>
+                        b.Type.Contains(userQueryCriteria.Types));
+                        break;
+                    case "ALL":
+                        userQuery = userQuery;
+                        break;  
+                   default:
+                        userQuery = userQuery;
+                        break;
 
-            return brandQuery;
+                }
+            }
+            if(userQueryCriteria.SortColumn != null)
+            {
+                var sortColumn = userQueryCriteria.SortColumn.ToUpper();
+                switch (sortColumn)
+                {
+                    case "STAFFCODE":
+                        if(userQueryCriteria.SortOrder == 0)
+                        {
+                            userQuery = userQuery.OrderBy(x => x.StaffCode);
+                        }
+                        else
+                        {
+                            userQuery = userQuery.OrderByDescending(x => x.StaffCode);
+                        }
+                        break;
+                    case "FULLNAME":
+                        if (userQueryCriteria.SortOrder == 0)
+                        {
+                            userQuery = userQuery.OrderBy(x => x.FirstName);
+                        }
+                        else
+                        {
+                            userQuery = userQuery.OrderByDescending(x => x.FirstName);
+                        }
+                        break;
+                    case "JOINEDDATE":
+                        if (userQueryCriteria.SortOrder == 0)
+                        {
+                            userQuery = userQuery.OrderBy(x => x.JoinedDate);
+                        }
+                        else
+                        {
+                            userQuery = userQuery.OrderByDescending(x => x.JoinedDate);
+                        }
+                        break;
+                    case "TYPE":
+                        if (userQueryCriteria.SortOrder == 0)
+                        {
+                            userQuery = userQuery.OrderBy(x => x.Type);
+                        }
+                        else
+                        {
+                            userQuery = userQuery.OrderByDescending(x => x.Type);
+                        }
+                        break;
+                    default:
+                        userQuery = userQuery.OrderBy(x => x.StaffCode);
+                        break;
+                }
+
+            }
+            return userQuery;
         }
     }
 }
