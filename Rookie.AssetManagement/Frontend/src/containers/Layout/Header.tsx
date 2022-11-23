@@ -5,6 +5,7 @@ import ConfirmModal from "src/components/ConfirmModal";
 import { HOME } from "src/constants/pages";
 
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
+import { isNumber } from "util";
 import { logout } from "../Authorize/reducer";
 
 // eslint-disable-next-line react/display-name
@@ -31,11 +32,28 @@ const Header = () => {
   const [showConfirmLogout, setShowConfirmLogout] = useState(false);
 
   const headerName = () => {
-    console.log(location)
     const pathnameSplit = location.pathname.split('/');
     pathnameSplit.shift();
 
-    return pathnameSplit.join(' > ').toString() || 'Home';
+    pathnameSplit.forEach(split=>{
+      if(split == "user"){
+        const index = pathnameSplit.findIndex(s=>s== split)
+        pathnameSplit[index] = "Manage User";
+      }
+      else if(split == "create"){
+        const index = pathnameSplit.findIndex(s=>s== split)
+        pathnameSplit[index] = "Create User";
+      }
+      else if(split == "edit"){
+        const index = pathnameSplit.findIndex(s=>s== split)
+        pathnameSplit[index] = "Edit User";
+      }else if(!isNaN(Number(split))){
+        const index = pathnameSplit.findIndex(s=>s== split)
+        pathnameSplit.splice(index,1)
+      }
+    })
+    
+    return pathnameSplit.join(' > ').toString() || 'Home' ;
   }
 
   const openModal = () => {
