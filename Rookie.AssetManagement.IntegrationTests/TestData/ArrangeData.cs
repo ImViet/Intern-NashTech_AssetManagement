@@ -63,6 +63,18 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
             };
         }
 
+        public static UserUpdateDto GetUserUpdateDto()
+        {
+            return new UserUpdateDto() {
+                Id = 3,
+                DateOfBirth = new DateTime(2000, 02, 17, 0, 0, 0),
+                Gender = UserGenderEnumDto.Female,
+                JoinedDate = new DateTime(2022, 11, 10, 0, 0, 0),
+                Type = "Admin",
+
+            };
+        }
+
         public static User Create()
         {
             return new User

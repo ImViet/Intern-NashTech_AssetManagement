@@ -112,5 +112,34 @@ namespace Rookie.AssetManagement.IntegrationTests
             await Assert.ThrowsAsync<ArgumentNullException>(() => _userController.AddUser(null));
         }
 
+        [Fact]
+        public async Task UpdateUsersAsync_Success()
+        {
+            //Arrange
+            var userRequest = ArrangeData.GetUserUpdateDto();
+
+            // Act
+            var result = await _userController.UpdateUser(userRequest);
+
+            // Assert
+            result.Should().NotBeNull();
+
+            var actionResult = Assert.IsType<CreatedResult>(result.Result);
+            var returnValue = Assert.IsType<UserDto>(actionResult.Value);
+
+            Assert.Equal(returnValue.Id, 3);
+            Assert.Equal(returnValue.Type, "Admin");
+        }
+
+        [Fact]
+        public async Task EditAsyncShouldThrowNotFoundExceptionAsync()
+        {
+            var unExistedId = 5;
+            var userRequest = ArrangeData.GetUserUpdateDto();
+            userRequest.Id = unExistedId;
+
+            await Assert.ThrowsAsync<NotFoundException>(() => _userController.UpdateUser(userRequest));
+        }
+
     }
 }
