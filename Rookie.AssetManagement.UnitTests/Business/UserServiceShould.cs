@@ -25,9 +25,6 @@ using FluentAssertions.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Rewrite;
-
 
 
 
