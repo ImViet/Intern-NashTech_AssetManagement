@@ -43,7 +43,7 @@ function toUTC(date) {
 export function getUsersRequest(
   userQuery: IQueryUserModel
 ): Promise<AxiosResponse<IUser[]>> {
-  return RequestService.axios.get(EndPoints.user, {
+  return RequestService.axios.get(EndPoints.search, {
     params: userQuery,
     paramsSerializer: (params) => qs.stringify(params),
   });

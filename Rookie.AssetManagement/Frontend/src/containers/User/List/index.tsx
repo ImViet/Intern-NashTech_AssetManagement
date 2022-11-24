@@ -20,7 +20,6 @@ import IPagedModel from "src/interfaces/IPagedModel";
 import { getUserList } from "../reducer";
 
 const ListUser = () => {
-  const location = useLocation();
   const dispatch = useAppDispatch();
   const { users, actionResult } = useAppSelector((state) => state.userReducer);
 
@@ -112,10 +111,8 @@ const ListUser = () => {
   };
 
   useEffect(() => {
-    if(!users){
-      fetchData();
-    }
-  }, []);
+    fetchData();
+  }, [query]);
 
 
   return (

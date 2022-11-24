@@ -84,15 +84,7 @@ export function* handleGetUserList(action: PayloadAction<IQueryUserModel>) {
 
   try {
     const { data } = yield call(getUsersRequest, queryUserModel);
-
-    const pageModel: IPagedModel<IUser> = {
-      currentPage: 1,
-      totalItems: 100,
-      totalPages: 10,
-      items: data,
-    };
-
-    yield put(setUserList(pageModel));
+    yield put(setUserList(data));
   } catch (error: any) {
     const errorModel = error.response.data as IError;
 
