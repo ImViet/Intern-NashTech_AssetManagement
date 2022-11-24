@@ -15,6 +15,9 @@ using Xunit;
 using Rookie.AssetManagement.Business;
 using MockQueryable.Moq;
 using Rookie.AssetManagement.Contracts;
+using System.Threading;
+using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
+using NPOI.SS.Formula.Functions;
 
 namespace Rookie.AssetManagement.UnitTests.Business
 {
@@ -26,12 +29,27 @@ namespace Rookie.AssetManagement.UnitTests.Business
 
         private readonly IMapper _mapper;
 
+        private readonly CancellationToken _cancellationToken;
+
         public UserServiceShould()
         {
             _userRepository = new Mock<IBaseRepository<User>>();
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
             _mapper = config.CreateMapper();
             _userService = new UserService(_userRepository.Object, null,_mapper);
+            _cancellationToken = new CancellationToken();
+        }
+        [Fact]
+        public async Task GetByPageAsyncShouldSuccess()
+        {
+            //Arrange
+            var usersMock = UserTestData.GetUsers().AsEnumerable().BuildMock();
+            _userRepository.Setup(x => x.Entities).Returns(usersMock);
+            _userRepository.Setup(x => x.Entities).Returns(usersMock);
+            //Act
+            var result = await _userService.GetByPageAsync(UserTestData.userQueryCriteriaDto , _cancellationToken, "HCM");
+            //Assert
+            Assert.Equal(1, result.TotalItems);
         }
         [Fact]
         public async Task UpdateAsyncShouldThrowNotFoundException()
