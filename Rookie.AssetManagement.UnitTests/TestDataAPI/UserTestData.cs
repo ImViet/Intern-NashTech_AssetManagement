@@ -1,7 +1,9 @@
-﻿using Rookie.AssetManagement.Contracts.Dtos.EnumDtos;
+﻿using Rookie.AssetManagement.Contracts;
+using Rookie.AssetManagement.Contracts.Dtos.EnumDtos;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +15,10 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
     {
         public static int UnExistedUserId = 3;
         public static int ExistedUserId = 1;
+        public static UserQueryCriteriaDto userQueryCriteriaDto = new UserQueryCriteriaDto()
+        {
+            Search = "Trieu",
+        };
         public static UserUpdateDto GetUpdateUserDtoFail()
         {
             return new UserUpdateDto()
@@ -59,16 +65,18 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                     FirstName = "Trieu",
                     LastName = "Duong",
                     Type = "STAFF",
-                    IsDeleted = false
+                    IsDeleted = false,
+                    Location="HCM"
                 },
                 new User() {
                     Id = 2,
                     FirstName = "Dong",
                     LastName = "Hoang Huu",
                     Type = "STAFF",
-                    IsDeleted = false
+                    IsDeleted = false,
+                    Location="HCM"
                 }
             };
-        }
+        }    
     }
 }
