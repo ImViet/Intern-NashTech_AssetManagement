@@ -20,10 +20,13 @@ using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using NPOI.SS.Formula.Functions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Rewrite;
+<<<<<<< HEAD
 using Rookie.AssetManagement.DataAccessor.Migrations;
 using FluentAssertions.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+=======
+>>>>>>> 9d21c86 (change new uesername and unitest create)
 
 
 
@@ -97,6 +100,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
         public async Task AddAsyncShouldBeSuccessfullyAsync()
         {
             //Arrange
+<<<<<<< HEAD
             var ListUser = UserTestData.ListUser().ToList().BuildMock();
             var newUser = _mapper.Map<User>(UserTestData.GetCreateUserDto());
             _userRepository.Setup(x => x.Entities).Returns(ListUser);
@@ -107,6 +111,18 @@ namespace Rookie.AssetManagement.UnitTests.Business
             var result = await _userService.AddAsync(UserTestData.GetCreateUserDto(), "HCM");
             //Assert
             Assert.Equal("Trieu", result.FirstName);
+=======
+            var newUserId = 1;
+            var user = UserTestData.GetCreateUserDto();
+            var userCreate = await _userService.AddAsync(UserTestData.GetCreateUserDto(), "hcm");
+            //Act
+
+            var result = _userRepository
+               .Setup(x => x.GetById(newUserId))
+              .Returns(Task.FromResult<User>(UserTestData.GetUser(newUserId)));
+            //Assert
+            //Assert.Equal(, );
+>>>>>>> 9d21c86 (change new uesername and unitest create)
         }
 
         [Fact]
