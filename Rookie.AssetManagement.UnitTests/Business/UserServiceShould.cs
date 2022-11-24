@@ -18,6 +18,8 @@ using Rookie.AssetManagement.Contracts;
 using System.Threading;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using NPOI.SS.Formula.Functions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace Rookie.AssetManagement.UnitTests.Business
 {
@@ -27,6 +29,8 @@ namespace Rookie.AssetManagement.UnitTests.Business
 
         private readonly Mock<IBaseRepository<User>> _userRepository;
 
+        private readonly Mock<UserManager<User>> _userManager;
+
         private readonly IMapper _mapper;
 
         private readonly CancellationToken _cancellationToken;
@@ -34,6 +38,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
         public UserServiceShould()
         {
             _userRepository = new Mock<IBaseRepository<User>>();
+            _userManager = new Mock<UserManager<User>>();
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
             _mapper = config.CreateMapper();
             _userService = new UserService(_userRepository.Object, null,_mapper);
@@ -51,6 +56,29 @@ namespace Rookie.AssetManagement.UnitTests.Business
             //Assert
             Assert.Equal(1, result.TotalItems);
         }
+        [Fact]
+        public async Task AddAsyncShouldThrowExceptionAsync()
+        {
+            Func<Task> act = async () => await _userService.AddAsync(null, null);
+            await act.Should().ThrowAsync<ArgumentNullException>();
+        }
+
+        [Fact]
+        public async Task AddAsyncShouldBeSuccessfullyAsync()
+        {
+            //Arrange
+            var newUserId = 1;
+            var user = UserTestData.GetCreateUserDto();
+            var userCreate = await _userService.AddAsync(UserTestData.GetCreateUserDto(), "hcm");
+            //Act
+
+            var result = _userRepository
+               .Setup(x => x.GetById(newUserId))
+              .Returns(Task.FromResult<User>(UserTestData.GetUser(newUserId)));
+            //Assert
+            //Assert.Equal(, );
+        }
+
         [Fact]
         public async Task UpdateAsyncShouldThrowNotFoundException()
         {

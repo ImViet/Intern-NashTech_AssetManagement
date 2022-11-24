@@ -77,6 +77,18 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                     Location="HCM"
                 }
             };
-        }    
+        }
+        public static UserCreateDto GetCreateUserDto()
+        {
+            return new UserCreateDto()
+            {
+                FirstName = "Trieu",
+                LastName = "Duong",
+                DateOfBirth = DateTime.Parse("2000-11-21"),
+                Gender = UserGenderEnumDto.Male,
+                JoinedDate = DateTime.Parse("2021-11-21"),
+                Type = "STAFF",
+            };
+        }
     }
 }
