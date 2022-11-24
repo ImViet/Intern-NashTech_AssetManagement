@@ -22,7 +22,7 @@ import { DefaultLimit } from "src/constants/User/UserContants";
 
 const ListUser = () => {
   const dispatch = useAppDispatch();
-  const { users, actionResult } = useAppSelector((state) => state.userReducer);
+  const { users, userResult } = useAppSelector((state) => state.userReducer);
 
   const [query, setQuery] = useState({
     page: users?.currentPage ?? 1,
@@ -118,7 +118,7 @@ const ListUser = () => {
 
   return (
     <>
-      <div className="primaryColor text-title intro-x">User List</div>
+      <div className="primaryColor text-title intro-x ">User List</div>
 
       <div>
         <div className="d-flex mb-5 intro-x">
@@ -135,15 +135,15 @@ const ListUser = () => {
             </div>
           </div>
 
-          <div className="d-flex align-items-center w-ld ml-auto">
+          <div className="d-flex align-items-center w-ld ml-auto mr-2">
             <div className="input-group">
               <input
                 onChange={handleChangeSearch}
                 value={search}
                 type="text"
-                className="form-control"
+                className="input-search  form-control"
               />
-              <span onClick={handleSearch} className="border p-2 pointer">
+              <span onClick={handleSearch} className=" search-icon p-1 pointer">
                 <Search />
               </span>
             </div>
@@ -158,7 +158,7 @@ const ListUser = () => {
 
         <UserTable
           users={users}
-          results={actionResult}
+          result={userResult}
           handlePage={handlePage}
           handleSort={handleSort}
           sortState={{

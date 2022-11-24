@@ -45,9 +45,9 @@ const AppRoutes = () => {
         <Route
           path={USER}
           element={
-            <PrivateRoute>
+            <AdminRoute>
               <User />
-            </PrivateRoute>
+            </AdminRoute>
           }
         />
         <Route

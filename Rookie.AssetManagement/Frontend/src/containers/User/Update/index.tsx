@@ -18,7 +18,7 @@ const UpdateUserContainer = () => {
 
   return (
     <div className="ml-5">
-      <div className="primaryColor text-title intro-x">Update User</div>
+      <div className="primaryColor text-title intro-x">Edit User</div>
 
       <div className="row">
         {userResult && <UserFormContainer initialUserForm={userResult}/>}
