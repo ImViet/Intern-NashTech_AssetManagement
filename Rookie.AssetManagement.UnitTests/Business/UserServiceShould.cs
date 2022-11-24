@@ -19,6 +19,11 @@ using System.Threading;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using NPOI.SS.Formula.Functions;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Rewrite;
+using Rookie.AssetManagement.DataAccessor.Migrations;
+using FluentAssertions.Common;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace Rookie.AssetManagement.UnitTests.Business
 {
@@ -32,13 +37,13 @@ namespace Rookie.AssetManagement.UnitTests.Business
 
         private readonly CancellationToken _cancellationToken;
 
-         public UserServiceShould()
+        public UserServiceShould()
         {
             _userRepository = new Mock<IBaseRepository<User>>();
             _userManager = new Mock<UserManager<User>>();
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
             _mapper = config.CreateMapper();
-            _userService = new UserService(_userRepository.Object, null,_mapper);
+            _userService = new UserService(_userRepository.Object, null, _mapper);
             _cancellationToken = new CancellationToken();
         }
         [Fact]
@@ -64,7 +69,6 @@ namespace Rookie.AssetManagement.UnitTests.Business
         public async Task AddAsyncShouldBeSuccessfullyAsync()
         {
             //Arrange
-
             var ListUser = UserTestData.ListUser().ToList().BuildMock();
             var newUser = _mapper.Map<User>(UserTestData.GetCreateUserDto());
             _userRepository.Setup(x => x.Entities).Returns(ListUser);
@@ -75,6 +79,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
             var result = await _userService.AddAsync(UserTestData.GetCreateUserDto(), "HCM");
             //Assert
             Assert.Equal("Trieu", result.FirstName);
+
         }
 
         [Fact]
