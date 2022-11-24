@@ -31,7 +31,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
             _userRepository = new Mock<IBaseRepository<User>>();
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
             _mapper = config.CreateMapper();
-            _userService = new UserService(_userRepository.Object, _mapper);
+            _userService = new UserService(_userRepository.Object, null,_mapper);
         }
         [Fact]
         public async Task UpdateAsyncShouldThrowNotFoundException()
