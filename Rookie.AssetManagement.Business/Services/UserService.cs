@@ -113,25 +113,32 @@ namespace Rookie.AssetManagement.Business.Services
 
         public string DefaultValueForStaffCodeFirst()
         {
-            string staffcode = "";
+            string staffcode = "";          
             var lastuser = _userRepository.Entities.OrderByDescending(c => c.Id).FirstOrDefault();
-            int newuserid = lastuser.Id + 1;
-            if (newuserid < 10)
+            if (_userRepository.Entities.Count() == 0)
             {
-                staffcode = "SD000" + newuserid;
-            }
-            else if (newuserid < 100)
-            {
-                staffcode = "SD00" + newuserid;
-            }
-            else if (newuserid < 1000)
-            {
-                staffcode = "SD0" + newuserid;
+                staffcode = "SD0001";
             }
             else
             {
-                staffcode = "SD" + newuserid;
-            }
+                int newuserid = lastuser.Id + 1;
+                if (newuserid < 10)
+                {
+                    staffcode = "SD000" + newuserid;
+                }
+                else if (newuserid < 100)
+                {
+                    staffcode = "SD00" + newuserid;
+                }
+                else if (newuserid < 1000)
+                {
+                    staffcode = "SD0" + newuserid;
+                }
+                else
+                {
+                    staffcode = "SD" + newuserid;
+                }
+            }            
             return staffcode;
         }
 
@@ -171,7 +178,9 @@ namespace Rookie.AssetManagement.Business.Services
             if (!String.IsNullOrEmpty(userQueryCriteria.Search))
             {
                 userQuery = userQuery.Where(b =>
-                  (b.LastName.ToLower() + " " + b.FirstName.ToLower()).Contains(userQueryCriteria.Search.ToLower()));
+                  (b.LastName.ToLower() + " " + b.FirstName.ToLower()).Contains(userQueryCriteria.Search.ToLower())
+                   || b.StaffCode.ToLower().Contains(userQueryCriteria.Search.ToLower())
+                   || (b.FirstName.ToLower() + " " + b.LastName.ToLower()).Contains(userQueryCriteria.Search.ToLower()));
             }
 
             if (userQueryCriteria.Types != null && !userQueryCriteria.Types.Any(e => e == "ALL"))

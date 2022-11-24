@@ -70,9 +70,9 @@ const FirstLoginModal = ({show}) => {
                       <p>This is the first time you logged in you have to change you password to continue</p>
                       <TextFieldPassword name="passwordNew" label="New Password" isrequired={true} />
                       
-                      {error?.error && (
-                        <div className="invalid">
-                          {error.message}
+                      {error && (
+                        <div className="invalid text-center">
+                          {error}
                         </div>
                       )}
 

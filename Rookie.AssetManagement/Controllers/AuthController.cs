@@ -72,6 +72,12 @@ namespace Rookie.AssetManagement.Controllers
         {
             var username = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
 
+            var result = await _authService.IsUsingOldPassword(username, changePasswordDto.PasswordNew);
+            if (result == true)
+            {
+                return BadRequest("Your new password cannot be same as old password.");
+            }
+
             var account = await _authService.ChangePasswordAsync(username, changePasswordDto);
 
             return Ok(account);
@@ -83,6 +89,12 @@ namespace Rookie.AssetManagement.Controllers
             [FromBody] ChangePasswordFirstLoginDto changePasswordDto)
         {
             var username = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
+
+            var result = await _authService.IsUsingOldPassword(username, changePasswordDto.PasswordNew);
+            if (result == true)
+            {
+                return BadRequest("Your new password cannot be same as old password.");
+            }
 
             var account = await _authService.ChangePasswordFirstLoginAsync(username, changePasswordDto);
 

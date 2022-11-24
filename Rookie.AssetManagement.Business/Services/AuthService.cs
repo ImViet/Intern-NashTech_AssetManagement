@@ -128,6 +128,27 @@ namespace Rookie.AssetManagement.Business.Services
             return User.IsDeleted;
         }
 
+        public async Task<bool> IsUsingOldPassword(string userName, string password)
+        {
+            var User = await _userManager.FindByNameAsync(userName);
+
+            if (User == null)
+            {
+                throw new NotFoundException("Not Found!");
+            }
+
+            var result = await _signInManager.CheckPasswordSignInAsync(User, password, false);
+
+            if (result.Succeeded)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private string CreateToKen(User user)
         {
             List<Claim> claims = new List<Claim>

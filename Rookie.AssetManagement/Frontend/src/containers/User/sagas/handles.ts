@@ -7,9 +7,7 @@ import IPagedModel from "src/interfaces/IPagedModel";
 import IQueryUserModel from "src/interfaces/User/IQueryUserModel";
 import IUser from "src/interfaces/User/IUser";
 import {
-  addToTopList,
   CreateAction,
-  setActionResult,
   setStatus,
   setUser,
   setUserList,
@@ -36,7 +34,7 @@ export function* handleCreateUser(action: PayloadAction<CreateAction>) {
       handleResult(true, data);
     }
 
-    yield put(setActionResult(data));
+    yield put(setUser(data));
   } catch (error: any) {
     const errors = error.response.data.errors;
     const firstError = errors[Object.keys(errors)[0]][0];
@@ -64,7 +62,7 @@ export function* handleUpdateUser(action: PayloadAction<UpdateAction>) {
       handleResult(true, data.firstName);
     }
 
-    yield put(setActionResult(data));
+    yield put(setUser(data));
   } catch (error: any) {
     debugger;
     const errors = error.response.data.errors;

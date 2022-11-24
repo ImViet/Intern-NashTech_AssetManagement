@@ -36,7 +36,7 @@ const columns: IColumnOption[] = [
 
 type Props = {
   users: IPagedModel<IUser> | null;
-  results: IUser[] | null;
+  result: IUser | null;
   handlePage: (page: number) => void;
   handleSort: (colValue: string) => void;
   sortState: SortType;
@@ -45,7 +45,7 @@ type Props = {
 
 const UserTable: React.FC<Props> = ({
   users,
-  results,
+  result,
   handlePage,
   handleSort,
   sortState,
@@ -133,8 +133,13 @@ const UserTable: React.FC<Props> = ({
   };
 
   let rows
-  if (results && users) {
-    rows = [...results, ...users.items]
+  if (result && users) {
+    rows = [...users.items]
+    const index = rows.findIndex(r=>r.id === result.id)
+    if(index >= 0){
+      rows.splice(index, 1)
+    }
+    rows.unshift(result)  
   } else if (users) {
     rows = [...users.items]
   }
