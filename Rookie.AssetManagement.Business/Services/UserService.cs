@@ -180,7 +180,7 @@ namespace Rookie.AssetManagement.Business.Services
                 userQuery = userQuery.Where(b =>
                   (b.LastName.ToLower() + " " + b.FirstName.ToLower()).Contains(userQueryCriteria.Search.ToLower())
                    || b.StaffCode.ToLower().Contains(userQueryCriteria.Search.ToLower())
-                   || (b.LastName.ToLower() + " " + b.FirstName.ToLower()).Contains(userQueryCriteria.Search.ToLower()));
+                   || (b.FirstName.ToLower() + " " + b.LastName.ToLower()).Contains(userQueryCriteria.Search.ToLower()));
             }
 
             if (userQueryCriteria.Types != null && !userQueryCriteria.Types.Any(e => e == "ALL"))
