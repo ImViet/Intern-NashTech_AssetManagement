@@ -65,6 +65,7 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                     FirstName = "Trieu",
                     LastName = "Duong",
                     Type = "STAFF",
+                    StaffCode = "SD0001",
                     IsDeleted = false,
                     Location="HCM"
                 },
@@ -73,6 +74,7 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                     FirstName = "Dong",
                     LastName = "Hoang Huu",
                     Type = "STAFF",
+                    StaffCode = "SD0002",
                     IsDeleted = false,
                     Location="HCM"
                 }
