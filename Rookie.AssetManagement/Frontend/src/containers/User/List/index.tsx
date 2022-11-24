@@ -18,6 +18,7 @@ import { FilterUserTypeOptions } from "src/constants/selectOptions";
 import IUser from "src/interfaces/User/IUser";
 import IPagedModel from "src/interfaces/IPagedModel";
 import { getUserList } from "../reducer";
+import { DefaultLimit } from "src/constants/User/UserContants";
 
 const ListUser = () => {
   const dispatch = useAppDispatch();
@@ -25,8 +26,9 @@ const ListUser = () => {
 
   const [query, setQuery] = useState({
     page: users?.currentPage ?? 1,
-    orderBy: DECSENDING,
-    orderByColumn: DEFAULT_USER_SORT_COLUMN_NAME,
+    limit: DefaultLimit,
+    sortOrder: DECSENDING,
+    sortColumn: DEFAULT_USER_SORT_COLUMN_NAME,
   } as IQueryUserModel);
 
   const [search, setSearch] = useState("");
@@ -96,13 +98,12 @@ const ListUser = () => {
     console.log(query)
   };
 
-  const handleSort = (orderByColumn: string) => {
-    const orderBy = query.orderBy === ACCSENDING ? DECSENDING : ACCSENDING;
-
+  const handleSort = (sortColumn: string) => {
+    const sortOrder = query.sortOrder === ACCSENDING ? DECSENDING : ACCSENDING;
     setQuery({
       ...query,
-      orderByColumn,
-      orderBy,
+      sortColumn,
+      sortOrder,
     });
   };
 
@@ -161,8 +162,8 @@ const ListUser = () => {
           handlePage={handlePage}
           handleSort={handleSort}
           sortState={{
-            columnValue: query.orderByColumn,
-            orderBy: query.orderBy,
+            columnValue: query.sortColumn,
+            orderBy: query.sortOrder,
           }}
           fetchData={fetchData}
         />
