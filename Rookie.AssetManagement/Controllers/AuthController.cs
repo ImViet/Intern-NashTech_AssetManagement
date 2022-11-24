@@ -75,7 +75,7 @@ namespace Rookie.AssetManagement.Controllers
             var result = await _authService.IsUsingOldPassword(username, changePasswordDto.PasswordNew);
             if (result == true)
             {
-                return BadRequest("Please using new password!");
+                return BadRequest("Your new password cannot be same as old password.");
             }
 
             var account = await _authService.ChangePasswordAsync(username, changePasswordDto);
@@ -93,7 +93,7 @@ namespace Rookie.AssetManagement.Controllers
             var result = await _authService.IsUsingOldPassword(username, changePasswordDto.PasswordNew);
             if (result == true)
             {
-                return BadRequest("Please using new password!");
+                return BadRequest("Your new password cannot be same as old password.");
             }
 
             var account = await _authService.ChangePasswordFirstLoginAsync(username, changePasswordDto);
