@@ -51,6 +51,8 @@ namespace Rookie.AssetManagement.Business.Services
             Ensure.Any.IsNotNull(userRequest);
             var newUser = _mapper.Map<User>(userRequest);
             //default username
+            newUser.FirstName=newUser.FirstName.Trim();
+            newUser.LastName=newUser.LastName.Trim();
             string[] detailoflastname = newUser.LastName.Split(' ');
             string firstcharofeachdetaillastname = "";
             foreach (var item in detailoflastname)
