@@ -15,6 +15,7 @@ using Xunit;
 using Rookie.AssetManagement.Business;
 using MockQueryable.Moq;
 using Rookie.AssetManagement.Contracts;
+<<<<<<< HEAD
 using System.Threading;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using NPOI.SS.Formula.Functions;
@@ -24,6 +25,15 @@ using Rookie.AssetManagement.DataAccessor.Migrations;
 using FluentAssertions.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 9d21c86 (change new uesername and unitest create)
+=======
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Rewrite;
+>>>>>>> c4ce9e9 (change new uesername and unitest create)
+>>>>>>> 5f07611(change new uesername and unitest create)
 
 
 
@@ -85,6 +95,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
             Assert.Equal("Trieu", result.FirstName);
 
         }
+
 
         [Fact]
         public async Task UpdateAsyncShouldThrowNotFoundException()
