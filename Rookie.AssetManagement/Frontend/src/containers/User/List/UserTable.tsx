@@ -31,7 +31,7 @@ const columns: IColumnOption[] = [
   { columnName: "Full Name ", columnValue: "fullName" },
   { columnName: "Username ", columnValue: "userName" },
   { columnName: "Joined Date ", columnValue: "joinedDate" },
-  { columnName: "Role Type ", columnValue: "Type" },
+  { columnName: "Type ", columnValue: "Type" },
 ];
 
 type Props = {
@@ -133,9 +133,9 @@ const UserTable: React.FC<Props> = ({
   };
 
   let rows
-  if(results && users){
+  if (results && users) {
     rows = [...results, ...users.items]
-  }else if(users){
+  } else if (users) {
     rows = [...users.items]
   }
 

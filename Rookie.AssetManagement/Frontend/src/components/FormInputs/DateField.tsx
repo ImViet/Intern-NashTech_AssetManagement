@@ -65,7 +65,7 @@ const DateField: React.FC<DateFieldProps> = (props) => {
                             wrapperClassName={`w-100`}
                         />
 
-                        <div className="" style={{ position: 'absolute', right: 40, top: 4 }}>
+                        <div className="" style={{ position: 'absolute', right: 30, top: 4 }}>
                             <CalendarDateFill />
                         </div>
                     </div>
