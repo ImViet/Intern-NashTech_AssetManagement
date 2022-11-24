@@ -59,7 +59,8 @@ stages:
       inputs:
         command: "test"
         projects: $(testProjects)
-        arguments: '--collect "XPlat Code Coverage"'
+        publishTestResults: false
+        arguments: '--logger trx --results-directory $(Agent.TempDirectory) --collect "XPlat Code Coverage" --DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover,cobertura'
 
     - task: reportgenerator@5
       displayName: Generate Test Report
