@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Rookie.AssetManagement.IntegrationTests\Rookie.AssetManagement.IntegrationTests.csproj" />
     <ProjectReference Include="..\Rookie.AssetManagement.Tests\Rookie.AssetManagement.Tests.csproj" />
   </ItemGroup>
 
