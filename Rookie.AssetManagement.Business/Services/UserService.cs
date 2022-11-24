@@ -131,7 +131,7 @@ namespace Rookie.AssetManagement.Business.Services
         }
 
         public async Task<PagedResponseModel<UserDto>> GetByPageAsync(
-            UserQueryCriteriaDto UserQueryCriteria, 
+            UserQueryCriteriaDto UserQueryCriteria,
             CancellationToken cancellationToken,
             string location)
         {
@@ -156,50 +156,31 @@ namespace Rookie.AssetManagement.Business.Services
                 Items = usersDto
             };
         }
-        
+
         private IQueryable<User> UserFilter(
             IQueryable<User> userQuery,
             UserQueryCriteriaDto userQueryCriteria)
         {
-           
+
 
             if (!String.IsNullOrEmpty(userQueryCriteria.Search))
             {
                 userQuery = userQuery.Where(b =>
-                  (b.LastName+ " " + b.FirstName).Contains(userQueryCriteria.Search));
+                  (b.LastName + " " + b.FirstName).Contains(userQueryCriteria.Search));
             }
 
-            if (userQueryCriteria.Types != null &&
-                userQueryCriteria.Types.Count() > 0                
-                )              
+            if (userQueryCriteria.Types != null && !userQueryCriteria.Types.Any(e => e == "ALL"))
             {
-                var type = userQueryCriteria.Types.ToUpper();
-                switch (type)
-                {
-                    case "ADMIN":
-                        userQuery = userQuery.Where(b =>
-                        b.Type.Contains(userQueryCriteria.Types));
-                        break;
-                    case "STAFF":
-                        userQuery = userQuery.Where(b =>
-                        b.Type.Contains(userQueryCriteria.Types));
-                        break;
-                    case "ALL":
-                        userQuery = userQuery;
-                        break;  
-                   default:
-                        userQuery = userQuery;
-                        break;
-
-                }
+                userQuery = userQuery.Where(x => userQueryCriteria.Types.Any(e => e == x.Type));
             }
-            if(userQueryCriteria.SortColumn != null)
+
+            if (userQueryCriteria.SortColumn != null)
             {
                 var sortColumn = userQueryCriteria.SortColumn.ToUpper();
                 switch (sortColumn)
                 {
                     case "STAFFCODE":
-                        if(userQueryCriteria.SortOrder == 0)
+                        if (userQueryCriteria.SortOrder == 0)
                         {
                             userQuery = userQuery.OrderBy(x => x.StaffCode);
                         }

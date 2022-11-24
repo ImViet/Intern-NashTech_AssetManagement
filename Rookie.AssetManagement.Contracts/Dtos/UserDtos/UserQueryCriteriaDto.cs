@@ -8,7 +8,7 @@ namespace Rookie.AssetManagement.Contracts.Dtos.UserDtos
 {
     public class UserQueryCriteriaDto : BaseQueryCriteria
     {
-        public string Types { get; set; }
+        public string[] Types { get; set; }
         public int Id { get; set; }
     }
 }
