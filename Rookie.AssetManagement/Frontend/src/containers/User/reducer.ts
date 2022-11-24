@@ -10,6 +10,7 @@ import IUserForm from "src/interfaces/User/IUserForm";
 type UserState = {
   loading: boolean;
   userResult?: IUser;
+  actionResult: IUser[];
   users: IPagedModel<IUser> | null;
   status?: number;
   error?: IError;
@@ -30,6 +31,7 @@ const initialState: UserState = {
   users: null,
   loading: false,
   disable: false,
+  actionResult: [],
 };
 
 const UserReducerSlice = createSlice({
@@ -90,6 +92,12 @@ const UserReducerSlice = createSlice({
         loading: false,
       };
     },
+    addToTopList: (state, action: PayloadAction<IUser>) => {
+      state.users?.items.unshift(action.payload);
+    },
+    setActionResult: (state, action: PayloadAction<IUser>) => {
+      state.actionResult.unshift(action.payload);
+    },
   },
 });
 
@@ -101,6 +109,8 @@ export const {
   setStatus,
   getUserList,
   getUser,
+  addToTopList,
+  setActionResult,
 } = UserReducerSlice.actions;
 
 export default UserReducerSlice.reducer;

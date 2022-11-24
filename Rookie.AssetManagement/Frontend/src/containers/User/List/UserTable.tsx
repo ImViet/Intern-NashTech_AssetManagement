@@ -8,7 +8,7 @@ import Table, { SortType } from "src/components/Table";
 import IColumnOption from "src/interfaces/IColumnOption";
 import IPagedModel from "src/interfaces/IPagedModel";
 import IUser from "src/interfaces/User/IUser";
-import formatDateTime from "src/utils/formatDateTime";
+import formatDateTime, { convertDDMMYYYY } from "src/utils/formatDateTime";
 import Info from "../Info";
 //import { disableUser } from "../reducer";
 
@@ -23,6 +23,7 @@ import {
   StaffUserTypeLabel,
   AllUserTypeLabel,
 } from "src/constants/User/UserContants";
+import { resultsAriaMessage } from "react-select/src/accessibility";
 
 
 const columns: IColumnOption[] = [
@@ -30,11 +31,12 @@ const columns: IColumnOption[] = [
   { columnName: "Full Name ", columnValue: "fullName" },
   { columnName: "Username ", columnValue: "userName" },
   { columnName: "Joined Date ", columnValue: "joinedDate" },
-  { columnName: "Role Type ", columnValue: "Type" },
+  { columnName: "Type ", columnValue: "Type" },
 ];
 
 type Props = {
   users: IPagedModel<IUser> | null;
+  results: IUser[] | null;
   handlePage: (page: number) => void;
   handleSort: (colValue: string) => void;
   sortState: SortType;
@@ -43,6 +45,7 @@ type Props = {
 
 const UserTable: React.FC<Props> = ({
   users,
+  results,
   handlePage,
   handleSort,
   sortState,
@@ -129,6 +132,13 @@ const UserTable: React.FC<Props> = ({
     navigate(EDIT_USER_ID(id));
   };
 
+  let rows
+  if (results && users) {
+    rows = [...results, ...users.items]
+  } else if (users) {
+    rows = [...users.items]
+  }
+
   return (
     <>
       <Table
@@ -141,12 +151,12 @@ const UserTable: React.FC<Props> = ({
           handleChange: handlePage,
         }}
       >
-        {users?.items.map((data, index) => (
+        {rows?.map((data, index) => (
           <tr key={index} className="" onClick={() => handleShowInfo(data.id)}>
             <td>{data.staffCode}</td>
             <td>{data.fullName}</td>
             <td>{data.userName}</td>
-            <td>{data.joinedDate}</td>
+            <td>{convertDDMMYYYY(data.joinedDate)}</td>
             <td>{getUserTypeName(data.type)}</td>
 
             <td className="d-flex">

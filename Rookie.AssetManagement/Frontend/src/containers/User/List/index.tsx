@@ -18,32 +18,34 @@ import { FilterUserTypeOptions } from "src/constants/selectOptions";
 import IUser from "src/interfaces/User/IUser";
 import IPagedModel from "src/interfaces/IPagedModel";
 import { getUserList } from "../reducer";
+import { DefaultLimit } from "src/constants/User/UserContants";
 
 const ListUser = () => {
-  const location = useLocation();
   const dispatch = useAppDispatch();
-  const { users, loading } = useAppSelector((state) => state.userReducer);
+  const { users, actionResult } = useAppSelector((state) => state.userReducer);
 
   const [query, setQuery] = useState({
     page: users?.currentPage ?? 1,
-    orderBy: DECSENDING,
-    orderByColumn: DEFAULT_USER_SORT_COLUMN_NAME,
+    limit: DefaultLimit,
+    sortOrder: DECSENDING,
+    sortColumn: DEFAULT_USER_SORT_COLUMN_NAME,
   } as IQueryUserModel);
 
   const [search, setSearch] = useState("");
 
   const [selectedType, setSelectedType] = useState([
-    { id: 1, label: "Type", value: "all" },
+    { id: 1, label: "Type", value: "ALL" },
   ] as ISelectOption[]);
 
   const handleType = (selected: ISelectOption[]) => {
     if (selected.length === 0) {
       setQuery({
         ...query,
-        types: [],
+        types: ["ALL"],
       });
 
       setSelectedType([FilterUserTypeOptions[0]]);
+
       return;
     }
 
@@ -53,7 +55,7 @@ const ListUser = () => {
       if (!prevSelected.some((item) => item.id === 1) && selectedAll) {
         setQuery({
           ...query,
-          types: [],
+          types: ["ALL"],
         });
 
         return [selectedAll];
@@ -69,6 +71,7 @@ const ListUser = () => {
 
       return newSelected;
     });
+    console.log(query)
   };
 
   const handleChangeSearch = (e) => {
@@ -76,6 +79,7 @@ const ListUser = () => {
 
     const search = e.target.value;
     setSearch(search);
+    console.log(query)
   };
 
   const handlePage = (page: number) => {
@@ -83,6 +87,7 @@ const ListUser = () => {
       ...query,
       page,
     });
+    console.log(query)
   };
 
   const handleSearch = () => {
@@ -90,15 +95,15 @@ const ListUser = () => {
       ...query,
       search,
     });
+    console.log(query)
   };
 
-  const handleSort = (orderByColumn: string) => {
-    const orderBy = query.orderBy === ACCSENDING ? DECSENDING : ACCSENDING;
-
+  const handleSort = (sortColumn: string) => {
+    const sortOrder = query.sortOrder === ACCSENDING ? DECSENDING : ACCSENDING;
     setQuery({
       ...query,
-      orderByColumn,
-      orderBy,
+      sortColumn,
+      sortOrder,
     });
   };
 
@@ -108,12 +113,12 @@ const ListUser = () => {
 
   useEffect(() => {
     fetchData();
-  }, [location.key]);
+  }, [query]);
 
 
   return (
     <>
-      <div className="primaryColor text-title intro-x">User List</div>
+      <div className="primaryColor text-title intro-x ">User List</div>
 
       <div>
         <div className="d-flex mb-5 intro-x">
@@ -125,20 +130,20 @@ const ListUser = () => {
               value={selectedType}
               onChange={handleType}
             />
-            <div className="border p-2">
+            <div className="border incon-filter p-2">
               <FunnelFill />
             </div>
           </div>
 
-          <div className="d-flex align-items-center w-ld ml-auto">
+          <div className="d-flex align-items-center w-ld ml-auto mr-2">
             <div className="input-group">
               <input
                 onChange={handleChangeSearch}
                 value={search}
                 type="text"
-                className="form-control"
+                className="input-search  form-control"
               />
-              <span onClick={handleSearch} className="border p-2 pointer">
+              <span onClick={handleSearch} className=" search-icon p-1 pointer">
                 <Search />
               </span>
             </div>
@@ -153,11 +158,12 @@ const ListUser = () => {
 
         <UserTable
           users={users}
+          results={actionResult}
           handlePage={handlePage}
           handleSort={handleSort}
           sortState={{
-            columnValue: query.orderByColumn,
-            orderBy: query.orderBy,
+            columnValue: query.sortColumn,
+            orderBy: query.sortOrder,
           }}
           fetchData={fetchData}
         />

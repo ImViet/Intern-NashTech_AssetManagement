@@ -1,9 +1,21 @@
 export default (date: Date | string): string => {
-    return new Date(date).toLocaleString().split(',')[0];
-}
+  return new Date(date).toLocaleString().split(",")[0];
+};
 
 export const subYear = (date: Date, year: number) => {
-    date.setFullYear(date.getFullYear() - year);
+  date.setFullYear(date.getFullYear() - year);
 
-    return date;
+  return date;
+};
+
+export function convertDDMMYYYY(input) {
+  const date = new Date(input);
+  const yyyy = date.getFullYear();
+  let mm: any = date.getMonth() + 1; // Months start at 0!
+  let dd: any = date.getDate();
+
+  if (dd < 10) dd = "0" + dd;
+  if (mm < 10) mm = "0" + mm;
+
+  return dd + "/" + mm + "/" + yyyy;
 }

@@ -2,7 +2,7 @@ import React, { InputHTMLAttributes } from 'react';
 import { useField } from 'formik';
 import { Form } from 'react-bootstrap';
 import ISelectOption from 'src/interfaces/ISelectOption';
-
+import { CaretDownFill} from "react-bootstrap-icons";
 type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
     label: string;
     name: string;
@@ -42,7 +42,7 @@ const SelectField: React.FC<InputFieldProps> = (props) => {
                 </label>
 
                 <div className="col">
-                    <select className={`custom-select ${validateClass()}`} onClick={handleTouched} onChange={handleChange}>
+                    <select style={{background: "none"}} className={`custom-select ${validateClass()}`} onClick={handleTouched} onChange={handleChange}>
                         <option selected hidden></option>
                         {
                             options.map(({ id, label: optionLabel, value: optionValue }) => (
@@ -52,6 +52,9 @@ const SelectField: React.FC<InputFieldProps> = (props) => {
                             ))
                         }
                     </select>
+                    <div className="" style={{ position: 'absolute', right: 30, top: 4 }}>
+                            <CaretDownFill />
+                        </div>
                     {error && touched && (
                         <div className='invalid'>{error}</div>
                     )}

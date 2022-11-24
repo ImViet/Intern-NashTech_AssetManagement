@@ -24,13 +24,12 @@ const Home = () => {
       page,
     });
   };
-  const handleSort = (orderByColumn: string) => {
-    const orderBy = query.orderBy === ACCSENDING ? DECSENDING : ACCSENDING;
-
+  const handleSort = (sortColumn: string) => {
+    const sortOrder = query.sortOrder === ACCSENDING ? DECSENDING : ACCSENDING;
     setQuery({
       ...query,
-      orderByColumn,
-      orderBy,
+      sortColumn,
+      sortOrder,
     });
   };
   const fetchData = () => {
@@ -39,8 +38,8 @@ const Home = () => {
 
   const [query, setQuery] = useState({
     page: users?.currentPage ?? 1,
-    orderBy: DECSENDING,
-    orderByColumn: DEFAULT_USER_SORT_COLUMN_NAME,
+    sortOrder: DECSENDING,
+    sortColumn: DEFAULT_USER_SORT_COLUMN_NAME,
   } as IQueryUserModel);
 
   useEffect(() => {
@@ -62,8 +61,8 @@ const Home = () => {
           handlePage={handlePage}
           handleSort={handleSort}
           sortState={{
-            columnValue: query.orderByColumn,
-            orderBy: query.orderBy,
+            columnValue: query.sortColumn,
+            orderBy: query.sortOrder,
           }}
           fetchData={fetchData}
         />

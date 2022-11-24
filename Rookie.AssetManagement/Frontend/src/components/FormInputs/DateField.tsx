@@ -51,21 +51,21 @@ const DateField: React.FC<DateFieldProps> = (props) => {
                 </label>
                 <div className="col">
                     <div className="d-flex align-items-center w-100">
-                            <DatePicker
-                                placeholderText=''
-                                className={`form-control  w-100 p-2 ${validateClass()}`}
-                                dateFormat='dd/MM/yyyy'
-                                selected={value}
-                                onChange={date => handleChangeAssignedDate(date as Date)}
-                                showDisabledMonthNavigation
-                                maxDate={maxDate}
-                                minDate={minDate}
-                                onInputClick={handleTouched}
-                                filterDate={filterDate}
-                                wrapperClassName={`w-100`}
-                            />
+                        <DatePicker
+                            placeholderText=''
+                            className={`form-control  w-100 p-2 ${validateClass()}`}
+                            dateFormat='dd/MM/yyyy'
+                            selected={value}
+                            onChange={date => handleChangeAssignedDate(date as Date)}
+                            showDisabledMonthNavigation
+                            maxDate={maxDate}
+                            minDate={minDate}
+                            onInputClick={handleTouched}
+                            filterDate={filterDate}
+                            wrapperClassName={`w-100`}
+                        />
 
-                        <div className="" style={{ position: 'absolute', right: 40, top: 4 }}>
+                        <div className="" style={{ position: 'absolute', right: 30, top: 4 }}>
                             <CalendarDateFill />
                         </div>
                     </div>

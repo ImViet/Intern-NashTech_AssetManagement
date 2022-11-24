@@ -31,7 +31,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
             _userRepository = new Mock<IBaseRepository<User>>();
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
             _mapper = config.CreateMapper();
-            _userService = new UserService(_userRepository.Object, _mapper);
+            _userService = new UserService(_userRepository.Object, null,_mapper);
         }
         [Fact]
         public async Task UpdateAsyncShouldThrowNotFoundException()
@@ -62,6 +62,41 @@ namespace Rookie.AssetManagement.UnitTests.Business
             Assert.Equal("STAFF", result.Type);
         }
 
+        [Fact]
+        public async Task GetByIdAsyncShouldThrowException()
+        {
+            //Arrange
+            var UnExistedUserId = 3;
+            var usersMock = UserTestData.GetUsers().AsQueryable().BuildMock();
 
+            _userRepository
+                  .Setup(x => x.Entities)
+                  .Returns(usersMock);
+
+            //Act 
+            var result = await _userService.GetByIdAsync(UnExistedUserId);
+
+            //Assert
+            result.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task GetByIdAsyncShouldReturnObjectAsync()
+        {
+            //Arrange
+            var ExistedUserId = 1;
+            var usersMock = UserTestData.GetUsers().AsQueryable().BuildMock();
+
+            _userRepository
+                  .Setup(x => x.Entities)
+                  .Returns(usersMock);
+
+            //Act
+            var result = await _userService.GetByIdAsync(ExistedUserId);
+
+            //Assert
+            result.Should().NotBeNull();
+            _userRepository.Verify(mock => mock.Entities, Times.Once());
+        }
     }
 }
