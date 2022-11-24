@@ -84,7 +84,6 @@ namespace Rookie.AssetManagement.UnitTests.Business
             var result = await _userService.AddAsync(UserTestData.GetCreateUserDto(), "HCM");
             //Assert
             Assert.Equal("Trieu", result.FirstName);
-
         }
 
 
