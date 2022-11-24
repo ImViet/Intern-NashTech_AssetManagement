@@ -130,7 +130,7 @@ const ListUser = () => {
               value={selectedType}
               onChange={handleType}
             />
-            <div className="border p-2">
+            <div className="border incon-filter p-2">
               <FunnelFill />
             </div>
           </div>
