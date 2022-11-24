@@ -15,12 +15,9 @@ using Xunit;
 using Rookie.AssetManagement.Business;
 using MockQueryable.Moq;
 using Rookie.AssetManagement.Contracts;
-<<<<<<< HEAD
 using System.Threading;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using NPOI.SS.Formula.Functions;
-=======
->>>>>>> c4ce9e9 (change new uesername and unitest create)
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Rewrite;
 
