@@ -92,6 +92,7 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                 Type = "STAFF",
             };
         }
+<<<<<<< HEAD
         public static User GetCreateUser()
         {
             return new User()
@@ -131,5 +132,7 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
             }
             };
         }
+=======
+>>>>>>> 9d21c86 (change new uesername and unitest create)
     }
 }
