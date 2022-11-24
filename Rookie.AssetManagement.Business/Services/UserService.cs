@@ -14,7 +14,7 @@ using Rookie.AssetManagement.DataAccessor.Enum;
 using Rookie.AssetManagement.DataAccessor.Migrations;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Drawing2D;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -51,6 +51,8 @@ namespace Rookie.AssetManagement.Business.Services
             Ensure.Any.IsNotNull(userRequest);
             var newUser = _mapper.Map<User>(userRequest);
             //default username
+            newUser.FirstName=newUser.FirstName.Trim();
+            newUser.LastName=newUser.LastName.Trim();
             string[] detailoflastname = newUser.LastName.Split(' ');
             string firstcharofeachdetaillastname = "";
             foreach (var item in detailoflastname)
@@ -71,7 +73,10 @@ namespace Rookie.AssetManagement.Business.Services
             string day = newUser.DateOfBirth.Day.ToString();
             string month = newUser.DateOfBirth.Month.ToString();
             string year = newUser.DateOfBirth.Year.ToString();
-            string password = newUser.UserName.ToLower() + '@' + day + month + year;
+            DateTime dt = new DateTime(int.Parse(year), int.Parse(month), int.Parse(day));
+            string dateofbirthformmat = dt.ToString("ddMMyyyy");
+            string password = newUser.UserName.ToLower() + '@' + dateofbirthformmat;
+            //string password = newUser.UserName.ToLower() + '@' + day + month + year;
             //default isNewUser
             newUser.IsNewUser = true;
             //default location
