@@ -15,7 +15,6 @@ using Xunit;
 using Rookie.AssetManagement.Business;
 using MockQueryable.Moq;
 using Rookie.AssetManagement.Contracts;
-<<<<<<< HEAD
 using System.Threading;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using NPOI.SS.Formula.Functions;
@@ -89,7 +88,6 @@ namespace Rookie.AssetManagement.UnitTests.Business
             var result = await _userService.AddAsync(UserTestData.GetCreateUserDto(), "HCM");
             //Assert
             Assert.Equal("Trieu", result.FirstName);
-
         }
 
 
