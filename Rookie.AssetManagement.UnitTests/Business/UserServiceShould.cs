@@ -48,7 +48,6 @@ namespace Rookie.AssetManagement.UnitTests.Business
             _cancellationToken = new CancellationToken();
         }
         [Fact]
-<<<<<<< HEAD
         public async Task GetByPageAsyncShouldSuccess()
         {
             //Arrange
@@ -61,8 +60,6 @@ namespace Rookie.AssetManagement.UnitTests.Business
             Assert.Equal(1, result.TotalItems);
         }
         [Fact]
-=======
->>>>>>> c4ce9e99eaae9e702b9a5b1551ceb925d5d62546
         public async Task AddAsyncShouldThrowExceptionAsync()
         {
             Func<Task> act = async () => await _userService.AddAsync(null, null);
