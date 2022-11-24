@@ -39,7 +39,14 @@ stages:
     - task: NodeTool@0
       inputs:
         versionSpec: '14.x'
-    
+
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk'
+      inputs:
+        packageType: sdk
+        version: 6.0.402
+        installationPath: $(Agent.ToolsDirectory)/dotnet
+
     - task: DotNetCoreCLI@2
       displayName: Restore
       inputs:
@@ -59,8 +66,7 @@ stages:
       inputs:
         command: "test"
         projects: $(testProjects)
-        publishTestResults: false
-        arguments: '--logger trx --results-directory $(Agent.TempDirectory) --Enablecodecoverage true --DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover,cobertura'
+        arguments: '/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
 
     - task: reportgenerator@5
       displayName: Generate Test Report
