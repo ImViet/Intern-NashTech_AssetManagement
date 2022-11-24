@@ -12,13 +12,14 @@ namespace Rookie.AssetManagement.Business.Interfaces
     public interface IAuthService
     {
         Task<bool> IsUserDeleted(string UserName);
-        
+
         Task<AccountDto> GetAccountByUserName(string UserName);
-        
+
         Task<AccountDto> LoginAsync(LoginDto request);
-        
+
         Task<AccountDto> ChangePasswordAsync(string username, ChangePasswordDto passwordRequest);
-        
+
         Task<AccountDto> ChangePasswordFirstLoginAsync(string username, ChangePasswordFirstLoginDto passwordRequest);
+        Task<bool> IsUsingOldPassword(string userName, string password);
     }
 }
