@@ -92,7 +92,6 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                 Type = "STAFF",
             };
         }
-
         public static User GetCreateUser()
         {
             return new User()
