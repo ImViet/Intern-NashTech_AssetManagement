@@ -45,7 +45,6 @@ namespace Rookie.AssetManagement.UnitTests.Business
             //Arrange
             var usersMock = UserTestData.GetUsers().AsEnumerable().BuildMock();
             _userRepository.Setup(x => x.Entities).Returns(usersMock);
-            _userRepository.Setup(x => x.Entities).Returns(usersMock);
             //Act
             var result = await _userService.GetByPageAsync(UserTestData.userQueryCriteriaDto , _cancellationToken, "HCM");
             //Assert
