@@ -10,7 +10,8 @@ import { toUTC } from "src/utils/formatDateTime";
 import {
   CreateAction,
   setStatus,
-  setUser,
+  setUserResult,
+  setActionResult,
   setUserList,
   UpdateAction,
 } from "../reducer";
@@ -39,7 +40,7 @@ export function* handleCreateUser(action: PayloadAction<CreateAction>) {
       handleResult(true, data.firstName);
     }
 
-    yield put(setUser(data));
+    yield put(setActionResult(data));
   } catch (error: any) {
     const errors = error.response.data.errors;
     const firstError = errors[Object.keys(errors)[0]][0];
@@ -71,7 +72,7 @@ export function* handleUpdateUser(action: PayloadAction<UpdateAction>) {
       handleResult(true, data.firstName);
     }
 
-    yield put(setUser(data));
+    yield put(setActionResult(data));
   } catch (error: any) {
     const errors = error.response.data.errors;
     const firstError = errors[Object.keys(errors)[0]][0];
@@ -110,7 +111,7 @@ export function* handleGetUserById(action: PayloadAction<number>) {
     const { data } = yield call(getUserByIdRequest, id);
     data.dateOfBirth = new Date(data.dateOfBirth);
     data.joinedDate = new Date(data.joinedDate);
-    yield put(setUser(data));
+    yield put(setUserResult(data));
   } catch (error: any) {
     const errorModel = error.response.data as IError;
 

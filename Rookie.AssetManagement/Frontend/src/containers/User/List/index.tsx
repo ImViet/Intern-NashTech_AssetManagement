@@ -22,7 +22,7 @@ import { DefaultLimit } from "src/constants/User/UserContants";
 
 const ListUser = () => {
   const dispatch = useAppDispatch();
-  const { users, userResult } = useAppSelector((state) => state.userReducer);
+  const { users, actionResult } = useAppSelector((state) => state.userReducer);
 
   const [query, setQuery] = useState({
     page: users?.currentPage ?? 1,
@@ -159,7 +159,7 @@ const ListUser = () => {
 
         <UserTable
           users={users}
-          result={userResult}
+          result={actionResult}
           handlePage={handlePage}
           handleSort={handleSort}
           sortState={{
