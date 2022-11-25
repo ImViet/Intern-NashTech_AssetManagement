@@ -13,7 +13,7 @@ import { handleChangePasswordFirstLogin } from "./sagas/handles";
 import TextFieldPassword from "src/components/FormInputs/TextFieldPassword";
  
 const LoginSchema = Yup.object().shape({
-  passwordNew: Yup.string().required('Required'),
+  passwordNew: Yup.string().required(""),
 });
 
 const initialValues: IChangePasswordFirstLogin = {

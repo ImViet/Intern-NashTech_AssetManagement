@@ -157,7 +157,7 @@ const UserTable: React.FC<Props> = ({
         }}
       >
         {rows?.map((data, index) => (
-          <tr key={index} className="" onClick={() => handleShowInfo(data.id)}>
+          <tr key={index} className="">
             <td>{data.staffCode}</td>
             <td>{data.fullName}</td>
             <td>{data.userName}</td>

@@ -30,11 +30,10 @@ const initialFormValues: IUserForm = {
 };
 
 const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required('Required'),
-    lastName: Yup.string().required('Required'),
-    // gender: Yup.string().required('Required'),
-    type: Yup.string().required('Required'),
-    dateOfBirth: Yup.date().required("Required")
+    firstName: Yup.string().required(""),
+    lastName: Yup.string().required(""),
+    type: Yup.string().required(""),
+    dateOfBirth: Yup.date().required("")
         .test("dateOfBirth", "User is under 18. Please select a different date", function (value) {
             if (value) {
                 return differenceInYears(new Date(), value) >= 18;
@@ -43,7 +42,7 @@ const validationSchema = Yup.object().shape({
 
         }),
     joinedDate: Yup.date()
-        .required("Required")
+        .required("")
         .test("joinedDate", "User under the age of 18 may not join company. Please select a different date",
             (value, ctx) => {
                 if (value) {
