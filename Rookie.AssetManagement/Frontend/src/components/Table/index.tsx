@@ -64,7 +64,7 @@ const Table: React.FC<Props> = ({ columns, children, page, sortState, handleSort
       </div>
 
       {
-        (page && page.totalPage && page.totalPage > 1) && <Paging {...page} />
+        (!!(page && page.totalPage && page.totalPage > 1)) && <Paging {...page} />
       }
     </>
   );
