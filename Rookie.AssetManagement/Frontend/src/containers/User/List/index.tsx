@@ -94,6 +94,7 @@ const ListUser = () => {
     setQuery({
       ...query,
       search,
+      page: 1
     });
     console.log(query)
   };
