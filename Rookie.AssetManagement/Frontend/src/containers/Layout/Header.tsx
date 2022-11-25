@@ -47,7 +47,7 @@ const Header = () => {
       else if(split == "edit"){
         const index = pathnameSplit.findIndex(s=>s== split)
         pathnameSplit[index] = "Edit User";
-      }else if(!isNaN(Number(split))){
+      }else if(!isNaN(Number(split)) || split == "*"){
         const index = pathnameSplit.findIndex(s=>s== split)
         pathnameSplit.splice(index,1)
       }

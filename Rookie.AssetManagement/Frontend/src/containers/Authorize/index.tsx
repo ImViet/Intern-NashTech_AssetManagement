@@ -14,8 +14,8 @@ import { HOME, LOGIN } from "src/constants/pages";
 import TextFieldPassword from "src/components/FormInputs/TextFieldPassword";
 
 const LoginSchema = Yup.object().shape({
-  userName: Yup.string().required('Required'),
-  password: Yup.string().required('Required'),
+  userName: Yup.string().required(""),
+  password: Yup.string().required(""),
 });
 
 const initialValues: ILoginModel = {
