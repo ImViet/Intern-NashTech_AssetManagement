@@ -7,12 +7,11 @@ import IUserForm from "src/interfaces/User/IUserForm";
 import IUser from "src/interfaces/User/IUser";
 import IPagedModel from "src/interfaces/IPagedModel";
 import IQueryUserModel from "src/interfaces/User/IQueryUserModel";
+import { toUTC } from "src/utils/formatDateTime";
 
 export function createUserRequest(
   userForm: IUserForm
 ): Promise<AxiosResponse<IUser>> {
-  userForm.joinedDate = toUTC(userForm.joinedDate);
-  userForm.dateOfBirth = toUTC(userForm.dateOfBirth);
   return RequestService.axios.post(EndPoints.user, userForm, {
     paramsSerializer: (params) => JSON.stringify(params),
   });
@@ -21,23 +20,9 @@ export function createUserRequest(
 export function updateUserRequest(
   userForm: IUserForm
 ): Promise<AxiosResponse<IUser>> {
-  userForm.joinedDate = toUTC(userForm.joinedDate);
-  userForm.dateOfBirth = toUTC(userForm.dateOfBirth);
   return RequestService.axios.put(EndPoints.user, userForm, {
     paramsSerializer: (params) => JSON.stringify(params),
   });
-}
-
-function toUTC(date) {
-  return new Date(
-    Date.UTC(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate(),
-      date.getHours(),
-      date.getMinutes()
-    )
-  );
 }
 
 export function getUsersRequest(
