@@ -9,17 +9,13 @@ public class CreateUserDTOValidator : AbstractValidator<UserCreateDto> {
         RuleFor(user=>user.FirstName)
             .Cascade(CascadeMode.Stop)
             .NotEmpty()
-            .WithMessage("First Name is empty")
-            .Matches(@"^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s_ ]+$")
-            .WithMessage("Name cannot contain number or special charater");
+            .WithMessage("First Name is empty");
 
         RuleFor(user=>user.LastName)
             .Cascade(CascadeMode.Stop)
             .NotEmpty()
-            .WithMessage("Last Name is empty")
-            .Matches(@"^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s_ ]+$")
-            .WithMessage("Name cannot contain number or special charater");
-
+            .WithMessage("Last Name is empty");
+        
         RuleFor(user=>user.DateOfBirth)
             .Cascade(CascadeMode.Stop)
             .NotNull()
@@ -29,7 +25,6 @@ public class CreateUserDTOValidator : AbstractValidator<UserCreateDto> {
 
         RuleFor(user=>user.JoinedDate)
             .Cascade(CascadeMode.Stop)
-            .LessThanOrEqualTo(DateTime.Now)
             .GreaterThanOrEqualTo(user=>user.DateOfBirth
             .AddYears(+18))
             .WithMessage("User under the age of 18 may not join company. Please select a different date");
