@@ -79,6 +79,10 @@ namespace Rookie.AssetManagement.Controllers
             }
 
             var account = await _authService.ChangePasswordAsync(username, changePasswordDto);
+            if (account == null)
+            {
+                return BadRequest("Password is incorrect!");
+            }
 
             return Ok(account);
         }

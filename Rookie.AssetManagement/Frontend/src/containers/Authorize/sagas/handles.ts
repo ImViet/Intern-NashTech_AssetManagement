@@ -8,7 +8,7 @@ import IError from "src/interfaces/IError";
 import ILoginModel from "src/interfaces/ILoginModel";
 import ISubmitAction from "src/interfaces/ISubmitActions";
 
-import { setAccount, setStatus } from "../reducer";
+import { ChangePasswordAction, setAccount, setStatus } from "../reducer";
 import {
   loginRequest,
   getMeRequest,
@@ -47,27 +47,29 @@ export function* handleGetMe() {
 }
 
 export function* handleChangePassword(
-  action: PayloadAction<ISubmitAction<IChangePassword>>
+  action: PayloadAction<ChangePasswordAction>
 ) {
-  const { values, formikActions } = action.payload;
+  const {handleResult, formValues} = action.payload;
 
   try {
-    const { data } = yield call(putChangePassword, values);
+    const { data } = yield call(putChangePassword, formValues);
+    handleResult(true);
 
-    yield put(setAccount(data));
     yield put(
       setStatus({
         status: Status.Success,
       })
     );
+    
   } catch (error: any) {
     const errorModel = error.response.data as IError;
-
-    formikActions.setErrors({
-      currentPassword: errorModel.message,
-    });
-
-    yield put(setStatus({}));
+    handleResult(false, "");
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: errorModel,
+      })
+    );
   }
 }
 
