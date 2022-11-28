@@ -41,7 +41,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
 
         private readonly CancellationToken _cancellationToken;
 
-         public UserServiceShould()
+        public UserServiceShould()
         {
             _userRepository = new Mock<IBaseRepository<User>>();
             _userManager = new Mock<UserManager<User>>(Mock.Of<IUserStore<User>>(), null, null, null, null, null, null, null, null);
@@ -57,7 +57,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
             var usersMock = UserTestData.GetUsers().AsEnumerable().BuildMock();
             _userRepository.Setup(x => x.Entities).Returns(usersMock);
             //Act
-            var result = await _userService.GetByPageAsync(UserTestData.userQueryCriteriaDto , _cancellationToken, "HCM");
+            var result = await _userService.GetByPageAsync(UserTestData.userQueryCriteriaDto, _cancellationToken, "HCM");
             //Assert
             Assert.Equal(1, result.TotalItems);
         }
