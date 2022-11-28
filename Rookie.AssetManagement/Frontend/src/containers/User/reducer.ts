@@ -102,6 +102,19 @@ const UserReducerSlice = createSlice({
         loading: false,
       };
     },
+    disableUser: (state, action: PayloadAction<number>): UserState =>{
+      return {
+        ...state,
+        loading: true,
+      }; 
+    },
+    removeUserFromList: (state, action: PayloadAction<number>) =>{
+      const id = action.payload;
+      const index = state.users?.items.findIndex(u=>u.id == id)
+      if(index){
+        state.users?.items.splice(index, 1)
+      }
+    }
   },
 });
 
@@ -114,6 +127,8 @@ export const {
   setStatus,
   getUserList,
   getUser,
+  disableUser,
+  removeUserFromList,
 } = UserReducerSlice.actions;
 
 export default UserReducerSlice.reducer;
