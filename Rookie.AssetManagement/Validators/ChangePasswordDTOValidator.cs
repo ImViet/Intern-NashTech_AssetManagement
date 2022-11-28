@@ -12,9 +12,7 @@ public class ChangePasswordDTOValidator: AbstractValidator<ChangePasswordDto>
 
         RuleFor(password => password.PasswordNew)
             .NotEmpty()
-            .WithMessage("New password cannot be empty")
-            .NotEqual(password => password.PasswordOld)
-            .WithMessage("new password cannot be the same as old password");
+            .WithMessage("New password is required");
     }
 
 }

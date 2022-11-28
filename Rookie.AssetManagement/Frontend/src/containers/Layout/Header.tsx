@@ -7,7 +7,7 @@ import { HOME } from "src/constants/pages";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import { isNumber } from "util";
 import { logout } from "../Authorize/reducer";
-import ChangePassword from "../User/ChangePassword";
+import ChangePassword from "../Authorize/ChangePassword";
 
 // eslint-disable-next-line react/display-name
 const CustomToggle = React.forwardRef<any, any>(({ children, onClick }, ref): any => (

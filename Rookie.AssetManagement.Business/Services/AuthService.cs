@@ -128,7 +128,7 @@ namespace Rookie.AssetManagement.Business.Services
             return User.IsDeleted;
         }
 
-        public async Task<bool> IsUsingOldPassword(string userName, string password)
+        public async Task<bool> IsMatchPassword(string userName, string password)
         {
             var User = await _userManager.FindByNameAsync(userName);
 

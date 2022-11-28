@@ -49,21 +49,20 @@ export function* handleGetMe() {
 export function* handleChangePassword(
   action: PayloadAction<ChangePasswordAction>
 ) {
-  const {handleResult, formValues} = action.payload;
+  const { handleResult, formValues } = action.payload;
 
   try {
     const { data } = yield call(putChangePassword, formValues);
-    handleResult(true);
+    handleResult(data);
 
     yield put(
       setStatus({
         status: Status.Success,
       })
     );
-    
   } catch (error: any) {
     const errorModel = error.response.data as IError;
-    handleResult(false, "");
+    handleResult(false, errorModel);
     yield put(
       setStatus({
         status: Status.Failed,

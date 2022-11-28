@@ -132,8 +132,8 @@ namespace Rookie.AssetManagement.IntegrationTests
             result.Should().NotBeNull();
 
             var actionResult = Assert.IsType<BadRequestObjectResult>(result.Result);
-
-            Assert.Equal("Your new password cannot be same as old password.", actionResult.Value);
+            var error = Assert.IsType<ChangePasswordErrorDto>(actionResult.Value);
+            Assert.Equal("Your new password cannot be same as old password.", error.PasswordNew);
         }
 
 
