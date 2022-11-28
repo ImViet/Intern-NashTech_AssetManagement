@@ -21,12 +21,12 @@ namespace Rookie.AssetManagement.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        private readonly UserManager<User> userManager;
+        private readonly UserManager<User> _userManager;
 
         public AuthController(IAuthService authService, UserManager<User> userManager)
         {
             _authService = authService;
-            this.userManager = userManager;
+            _userManager = userManager;
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
