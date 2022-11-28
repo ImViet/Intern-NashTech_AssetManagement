@@ -28,13 +28,13 @@ namespace Rookie.AssetManagement.Business.Services
     public class UserService : IUserService
     {
         private readonly IBaseRepository<User> _userRepository;
-        private readonly UserManager<User> userManager;
+        private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
 
         public UserService(IBaseRepository<User> userRepository, UserManager<User> userManager, IMapper mapper)
         {
             _userRepository = userRepository;
-            this.userManager = userManager;
+            _userManager = userManager;
             _mapper = mapper;
         }
         public async Task<IEnumerable<UserDto>> GetAllAsync()
@@ -54,13 +54,13 @@ namespace Rookie.AssetManagement.Business.Services
             //default username
             newUser.FirstName = newUser.FirstName.Trim();
             newUser.LastName = newUser.LastName.Trim();
-            string[] detailoflastname = newUser.LastName.Split(' ');
-            string firstcharofeachdetaillastname = "";
-            foreach (var item in detailoflastname)
+            string[] detailOfLastname = newUser.LastName.Split(' ');
+            string firstCharOfEachDetailLastname = "";
+            foreach (var item in detailOfLastname)
             {
-                firstcharofeachdetaillastname += item.Substring(0, 1).ToLower();
+                firstCharOfEachDetailLastname += item.Substring(0, 1).ToLower();
             }
-            string username = newUser.FirstName.ToLower() + firstcharofeachdetaillastname;
+            string username = newUser.FirstName.ToLower() + firstCharOfEachDetailLastname;
             var countUsername = await _userRepository.Entities.Where(u =>
             u.UserName.Contains(username + '1') ||
             u.UserName.Contains(username + '2') ||
@@ -85,8 +85,8 @@ namespace Rookie.AssetManagement.Business.Services
             string month = newUser.DateOfBirth.Month.ToString();
             string year = newUser.DateOfBirth.Year.ToString();
             DateTime dt = new DateTime(int.Parse(year), int.Parse(month), int.Parse(day));
-            string dateofbirthformmat = dt.ToString("ddMMyyyy");
-            string password = newUser.UserName.ToLower() + '@' + dateofbirthformmat;
+            string dateOfBirthFormmat = dt.ToString("ddMMyyyy");
+            string password = newUser.UserName.ToLower() + '@' + dateOfBirthFormmat;
             //string password = newUser.UserName.ToLower() + '@' + day + month + year;
             //default isNewUser
             newUser.IsNewUser = true;
@@ -94,7 +94,7 @@ namespace Rookie.AssetManagement.Business.Services
             newUser.Location = location;
             //default staffcode            
             newUser.StaffCode = DefaultValueForStaffCodeFirst();
-            var createResult = await userManager.CreateAsync(newUser, password);
+            var createResult = await _userManager.CreateAsync(newUser, password);
             if (!createResult.Succeeded)
             {
                 return null;
