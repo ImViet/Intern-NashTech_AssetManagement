@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rookie.AssetManagement.DataAccessor.Data;
 
@@ -11,9 +12,10 @@ using Rookie.AssetManagement.DataAccessor.Data;
 namespace Rookie.AssetManagement.DataAccessor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221128070816_AssetTableChangeCategoryAndState")]
+    partial class AssetTableChangeCategoryAndState
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,7 +157,7 @@ namespace Rookie.AssetManagement.DataAccessor.Migrations
                     b.ToTable("UserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Rookie.AssetManagement.DataAccessor.Entities.Asset", b =>
+            modelBuilder.Entity("Rookie.AssetManagement.DataAccessor.Data.Asset", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -169,8 +171,8 @@ namespace Rookie.AssetManagement.DataAccessor.Migrations
                     b.Property<string>("AssetName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("InstalledDate")
                         .HasColumnType("datetime2");
@@ -184,54 +186,12 @@ namespace Rookie.AssetManagement.DataAccessor.Migrations
                     b.Property<string>("Specification")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StateId")
-                        .HasColumnType("int");
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("StateId");
 
                     b.ToTable("Assets");
-                });
-
-            modelBuilder.Entity("Rookie.AssetManagement.DataAccessor.Entities.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CategoryName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IsDelete")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("Rookie.AssetManagement.DataAccessor.Entities.State", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("IsDelete")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StateName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("States");
                 });
 
             modelBuilder.Entity("Rookie.AssetManagement.DataAccessor.Entities.User", b =>
@@ -381,31 +341,6 @@ namespace Rookie.AssetManagement.DataAccessor.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Rookie.AssetManagement.DataAccessor.Entities.Asset", b =>
-                {
-                    b.HasOne("Rookie.AssetManagement.DataAccessor.Entities.Category", "Category")
-                        .WithMany("Assets")
-                        .HasForeignKey("CategoryId");
-
-                    b.HasOne("Rookie.AssetManagement.DataAccessor.Entities.State", "State")
-                        .WithMany("Assets")
-                        .HasForeignKey("StateId");
-
-                    b.Navigation("Category");
-
-                    b.Navigation("State");
-                });
-
-            modelBuilder.Entity("Rookie.AssetManagement.DataAccessor.Entities.Category", b =>
-                {
-                    b.Navigation("Assets");
-                });
-
-            modelBuilder.Entity("Rookie.AssetManagement.DataAccessor.Entities.State", b =>
-                {
-                    b.Navigation("Assets");
                 });
 #pragma warning restore 612, 618
         }

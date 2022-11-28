@@ -25,6 +25,8 @@ using FluentAssertions.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
+
+
 namespace Rookie.AssetManagement.UnitTests.Business
 {
     public class UserServiceShould
@@ -39,7 +41,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
 
         private readonly CancellationToken _cancellationToken;
 
-        public UserServiceShould()
+         public UserServiceShould()
         {
             _userRepository = new Mock<IBaseRepository<User>>();
             _userManager = new Mock<UserManager<User>>(Mock.Of<IUserStore<User>>(), null, null, null, null, null, null, null, null);
@@ -60,6 +62,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
             Assert.Equal(1, result.TotalItems);
         }
         [Fact]
+
         public async Task AddAsyncShouldThrowExceptionAsync()
         {
             Func<Task> act = async () => await _userService.AddAsync(null, null);
@@ -70,6 +73,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
         public async Task AddAsyncShouldBeSuccessfullyAsync()
         {
             //Arrange
+
             var ListUser = UserTestData.ListUser().ToList().BuildMock();
             var newUser = _mapper.Map<User>(UserTestData.GetCreateUserDto());
             _userRepository.Setup(x => x.Entities).Returns(ListUser);
@@ -95,6 +99,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
             //Assert
             await act.Should().ThrowAsync<NotFoundException>();
         }
+
         [Fact]
         public async Task UpdateAsyncShouldSuccess()
         {

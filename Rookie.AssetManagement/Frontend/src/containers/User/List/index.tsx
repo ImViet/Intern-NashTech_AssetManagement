@@ -132,7 +132,7 @@ const ListUser = () => {
 
       <div>
         <div className="d-flex mb-5 intro-x">
-          <div className="d-flex align-items-center w-md mr-5">
+          <div className="d-flex align-items-center w-md filter-css mr-5">
             <ReactMultiSelectCheckboxes
               options={FilterUserTypeOptions}
               hideSearch={true}

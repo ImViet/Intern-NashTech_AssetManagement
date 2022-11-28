@@ -136,18 +136,21 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
                             name="firstName"
                             label="First Name"
                             placeholder=""
+                            isrequired
                             disabled={isUpdate ? true : false} />
 
                         <TextField
                             name="lastName"
                             label="Last Name"
                             placeholder=""
+                            isrequired
                             disabled={isUpdate ? true : false} />
 
                         <DateField
                             label="Date of Birth"
                             name="dateOfBirth"
                             placeholder=""
+                            isrequired
                             onChangeCapture={handleLanguage}
                             disabled={isUpdate ? true : false} />
 
@@ -163,6 +166,7 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
                             id="joinedDate"
                             name="joinedDate"
                             placeholder=""
+                            isrequired
                             disabled={isUpdate ? true : false} />
 
                         <SelectField
