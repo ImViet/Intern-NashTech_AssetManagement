@@ -83,7 +83,7 @@ const UserTable: React.FC<Props> = ({
       id,
       isOpen: true,
       title: 'Are you sure?',
-      message: 'Do you want to disable this User?',
+      message: 'Do you want to disable this user?',
       isDisable: true,
     });
   };
