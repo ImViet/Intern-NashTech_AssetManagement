@@ -13,7 +13,7 @@ namespace Rookie.AssetManagement.Business
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IUserService,UserService>();
             services.AddTransient<IAuthService,AuthService>();
-
+            services.AddTransient<IAssetService,AssetService>();
         }
     }
 }

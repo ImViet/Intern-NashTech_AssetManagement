@@ -23,6 +23,8 @@ using Swashbuckle.AspNetCore.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Rookie.AssetManagement.Business.Interfaces;
+using Rookie.AssetManagement.Business.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -72,7 +74,6 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var serviceProvider = scope.ServiceProvider;
-    
     try
     {
         var userManager = serviceProvider.GetRequiredService<UserManager<User>>();

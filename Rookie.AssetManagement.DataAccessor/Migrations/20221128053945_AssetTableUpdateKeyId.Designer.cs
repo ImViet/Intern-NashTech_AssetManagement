@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rookie.AssetManagement.DataAccessor.Data;
 
@@ -11,9 +12,10 @@ using Rookie.AssetManagement.DataAccessor.Data;
 namespace Rookie.AssetManagement.DataAccessor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221128053945_AssetTableUpdateKeyId")]
+    partial class AssetTableUpdateKeyId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,8 +171,8 @@ namespace Rookie.AssetManagement.DataAccessor.Migrations
                     b.Property<string>("AssetName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Category")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("InstalledDate")
                         .HasColumnType("datetime2");
@@ -184,8 +186,8 @@ namespace Rookie.AssetManagement.DataAccessor.Migrations
                     b.Property<string>("Specification")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("State")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
