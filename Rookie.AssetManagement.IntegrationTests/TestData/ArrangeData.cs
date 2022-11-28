@@ -75,6 +75,24 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
             };
         }
 
+        public static ChangePasswordDto GetChangePasswordDto()
+        {
+            return new ChangePasswordDto()
+            {
+                PasswordOld = "123456",
+                PasswordNew = "1234567"
+            };
+        }
+
+        public static ChangePasswordDto GetChangePasswordFailseDto()
+        {
+            return new ChangePasswordDto()
+            {
+                PasswordOld = "123456",
+                PasswordNew = "123456"
+            };
+        }
+
         public static User Create()
         {
             return new User
