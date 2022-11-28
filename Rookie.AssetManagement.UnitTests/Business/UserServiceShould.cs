@@ -35,10 +35,10 @@ namespace Rookie.AssetManagement.UnitTests.Business
         public UserServiceShould()
         {
             _userRepository = new Mock<IBaseRepository<User>>();
-            _userManager = new Mock<UserManager<User>>(Mock.Of<IUserStore<User>>(), null, null, null, null, null, null, null, null);
+            _userManager = new Mock<UserManager<User>>();
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
             _mapper = config.CreateMapper();
-            _userService = new UserService(_userRepository.Object, _userManager.Object, _mapper);
+            _userService = new UserService(_userRepository.Object, null,_mapper);
             _cancellationToken = new CancellationToken();
         }
         [Fact]
