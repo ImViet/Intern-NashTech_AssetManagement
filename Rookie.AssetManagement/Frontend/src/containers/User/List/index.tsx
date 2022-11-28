@@ -117,8 +117,13 @@ const ListUser = () => {
     fetchData();
   }, [query]);
 
-  const handleDisable = (id) => {
-    dispatch(disableUser(id))
+  const handleDisable = (id) => { 
+    dispatch(disableUser({
+      id: id,
+      handleResult:(result, message)=>{
+        if(result) fetchData();
+      }
+    }))
   };
 
   return (
