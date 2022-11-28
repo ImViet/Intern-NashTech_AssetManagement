@@ -12,13 +12,11 @@ import {
   ACCSENDING,
   DECSENDING,
   DEFAULT_USER_SORT_COLUMN_NAME,
-  DEFAULT_PAGE_LIMIT,
 } from "src/constants/paging";
 import { FilterUserTypeOptions } from "src/constants/selectOptions";
-import IUser from "src/interfaces/User/IUser";
-import IPagedModel from "src/interfaces/IPagedModel";
 import { getUserList, disableUser } from "../reducer";
 import { DefaultLimit } from "src/constants/User/UserContants";
+import SelectBox from "src/components/SelectBox";
 
 const ListUser = () => {
   const dispatch = useAppDispatch();
@@ -132,18 +130,11 @@ const ListUser = () => {
 
       <div>
         <div className="d-flex mb-5 intro-x">
-          <div className="d-flex align-items-center w-md mr-5">
-            <ReactMultiSelectCheckboxes
-              options={FilterUserTypeOptions}
-              hideSearch={true}
-              placeholderButtonLabel="Type"
-              value={selectedType}
-              onChange={handleType}
-            />
-            <div className="border incon-filter p-2">
-              <FunnelFill />
-            </div>
-          </div>
+          <SelectBox               
+            options={FilterUserTypeOptions}
+            placeholderButtonLabel="Type"
+            value={selectedType}
+            onChange={handleType}/>
 
           <div className="d-flex align-items-center w-ld ml-auto mr-2">
             <div className="input-group">
