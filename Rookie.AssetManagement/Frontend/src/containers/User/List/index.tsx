@@ -116,11 +116,11 @@ const ListUser = () => {
     fetchData();
   }, [query]);
 
-  const handleDisable = (id) => { 
+  const handleDisable = (id) => {
     dispatch(disableUser({
       id: id,
-      handleResult:(result, message)=>{
-        if(result){
+      handleResult: (result, message) => {
+        if (result) {
           setQuery({
             ...query,
             page: 1,
@@ -139,11 +139,11 @@ const ListUser = () => {
 
       <div>
         <div className="d-flex mb-5 intro-x">
-          <SelectBox               
+          <SelectBox
             options={FilterUserTypeOptions}
             placeholderButtonLabel="Type"
             value={selectedType}
-            onChange={handleType}/>
+            onChange={handleType} />
 
           <div className="d-flex align-items-center w-ld ml-auto mr-2">
             <div className="input-group">
