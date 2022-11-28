@@ -66,7 +66,7 @@ namespace Rookie.AssetManagement.Controllers
         public async Task<ActionResult> DisableUserAsync([FromRoute] int id)
         {
             var disableResult = await _userService.DisableAsync(id);
-
+            
             return Ok(disableResult);
         }
 
