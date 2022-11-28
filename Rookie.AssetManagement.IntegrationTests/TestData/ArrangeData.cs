@@ -27,6 +27,7 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     Gender = UserGenderEnum.Male,
                     JoinedDate = new DateTime(2022, 11, 10, 0, 0, 0),
                     Type = "Staff",
+                    IsDeleted = false
                 },
                 new User()
                 {
@@ -36,6 +37,7 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     Gender = UserGenderEnum.Male,
                     JoinedDate = new DateTime(2022, 11, 10, 0, 0, 0),
                     Type = "Staff",
+                    IsDeleted = false
                 },
                 new User()
                 {
@@ -45,6 +47,7 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     Gender = UserGenderEnum.Female,
                     JoinedDate = new DateTime(2022, 11, 10, 0, 0, 0),
                     Type = "Staff",
+                    IsDeleted = false
                 },
             };
         }
@@ -75,6 +78,24 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
             };
         }
 
+        public static ChangePasswordDto GetChangePasswordDto()
+        {
+            return new ChangePasswordDto()
+            {
+                PasswordOld = "123456",
+                PasswordNew = "1234567"
+            };
+        }
+
+        public static ChangePasswordDto GetChangePasswordFailseDto()
+        {
+            return new ChangePasswordDto()
+            {
+                PasswordOld = "123456",
+                PasswordNew = "123456"
+            };
+        }
+
         public static User Create()
         {
             return new User
@@ -95,8 +116,6 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
 
             };
         }
-
-
 
         public static void InitUsersData(ApplicationDbContext dbContext)
         {

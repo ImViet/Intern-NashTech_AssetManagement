@@ -23,6 +23,8 @@ using System.Threading.Tasks;
 using Xunit;
 using System.Threading;
 using System.Collections.Generic;
+using System.Security.Claims;
+using System.Web.Http.Results;
 
 namespace Rookie.AssetManagement.IntegrationTests
 {
@@ -95,5 +97,58 @@ namespace Rookie.AssetManagement.IntegrationTests
 
         }
 
+        [Fact]
+        public async Task ChangePasswordAsync_Success()
+        {
+            //Arrange
+            loginTestUser("adminhcm", "ADMIN", "HCM");
+
+            var changePasswordRequest = ArrangeData.GetChangePasswordDto();
+
+            // Act
+            var result = await _authController.ChangePassWord(changePasswordRequest);
+
+            // Assert
+            result.Should().NotBeNull();
+
+            var actionResult = Assert.IsType<OkObjectResult>(result.Result);
+            var returnValue = Assert.IsType<AccountDto>(actionResult.Value);
+
+            Assert.Equal("adminhcm", returnValue.UserName);
+        }
+
+        [Fact]
+        public async Task ChangePasswordShouldThrowBadRequest()
+        {
+            //Arrange
+            loginTestUser("adminhcm", "ADMIN", "HCM");
+
+            var changePasswordRequest = ArrangeData.GetChangePasswordFailseDto();
+
+            // Act
+            var result = await _authController.ChangePassWord(changePasswordRequest);
+
+            // Assert
+            result.Should().NotBeNull();
+
+            var actionResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+            var error = Assert.IsType<ChangePasswordErrorDto>(actionResult.Value);
+            Assert.Equal("Your new password cannot be same as old password.", error.PasswordNew);
+        }
+
+
+        private void loginTestUser(string username, string type, string location)
+        {
+            var _identity = new ClaimsIdentity();
+            _identity.AddClaims(new[]
+            {
+                new Claim("UserName", username),
+                new Claim("Type", type),
+                new Claim("Location",location)
+            });
+
+            var _user = new ClaimsPrincipal(_identity);
+            _authController.ControllerContext.HttpContext = new DefaultHttpContext() { User = _user };
+        }
     }
 }

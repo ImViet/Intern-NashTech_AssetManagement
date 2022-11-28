@@ -127,8 +127,8 @@ namespace Rookie.AssetManagement.IntegrationTests
             var actionResult = Assert.IsType<CreatedResult>(result.Result);
             var returnValue = Assert.IsType<UserDto>(actionResult.Value);
 
-            Assert.Equal(returnValue.Id, 3);
-            Assert.Equal(returnValue.Type, "Admin");
+            Assert.Equal(3, returnValue.Id);
+            Assert.Equal("Admin", returnValue.Type);
         }
 
         [Fact]
@@ -139,6 +139,24 @@ namespace Rookie.AssetManagement.IntegrationTests
             userRequest.Id = unExistedId;
 
             await Assert.ThrowsAsync<NotFoundException>(() => _userController.UpdateUser(userRequest));
+        }
+        [Fact]
+        public async Task DisableAsyncShouldReturnTrue()
+        {
+            //Arrange
+            var userRequestId = 3;
+
+            // Act
+            var result = await _userController.DisableUserAsync(userRequestId);
+
+            // Assert
+            result.Should().Equals(true);
+
+        }
+        [Fact]
+        public async Task DisableAsyncShouldThrowExceptionAsync()
+        {
+            await Assert.ThrowsAsync<NotFoundException>(() => _userController.DisableUserAsync(4));
         }
 
     }

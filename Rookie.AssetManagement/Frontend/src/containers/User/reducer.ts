@@ -27,6 +27,11 @@ export type UpdateAction = {
   formValues: IUserForm;
 };
 
+export type DisableAction = {
+  handleResult: Function;
+  id: number;
+};
+
 const initialState: UserState = {
   users: null,
   loading: false,
@@ -102,6 +107,12 @@ const UserReducerSlice = createSlice({
         loading: false,
       };
     },
+    disableUser: (state, action: PayloadAction<DisableAction>): UserState => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
   },
 });
 
@@ -114,6 +125,7 @@ export const {
   setStatus,
   getUserList,
   getUser,
+  disableUser,
 } = UserReducerSlice.actions;
 
 export default UserReducerSlice.reducer;

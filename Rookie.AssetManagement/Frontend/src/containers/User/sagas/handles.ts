@@ -14,12 +14,14 @@ import {
   setActionResult,
   setUserList,
   UpdateAction,
+  DisableAction,
 } from "../reducer";
 import {
   createUserRequest,
   getUserByIdRequest,
   getUsersRequest,
   updateUserRequest,
+  disableUserRequest,
 } from "./requests";
 
 export function* handleCreateUser(action: PayloadAction<CreateAction>) {
@@ -59,9 +61,6 @@ export function* handleUpdateUser(action: PayloadAction<UpdateAction>) {
   try {
     console.log("handleUpdateUser");
     console.log(formValues);
-
-    formValues.joinedDate = toUTC(formValues.joinedDate);
-    formValues.dateOfBirth = toUTC(formValues.dateOfBirth);
 
     const { data } = yield call(updateUserRequest, formValues);
 
@@ -114,6 +113,27 @@ export function* handleGetUserById(action: PayloadAction<number>) {
     yield put(setUserResult(data));
   } catch (error: any) {
     const errorModel = error.response.data as IError;
+
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: errorModel,
+      })
+    );
+  }
+}
+
+export function* handleDisableUser(action: PayloadAction<DisableAction>) {
+  const { id, handleResult } = action.payload;
+  try {
+    const { data } = yield call(disableUserRequest, id);
+
+    if (data) {
+      handleResult(true, "");
+    }
+  } catch (error: any) {
+    const errorModel = error.response.data as IError;
+    handleResult(false, errorModel);
 
     yield put(
       setStatus({

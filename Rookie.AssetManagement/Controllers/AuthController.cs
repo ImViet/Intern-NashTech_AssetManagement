@@ -68,17 +68,27 @@ namespace Rookie.AssetManagement.Controllers
         [HttpPut("change-password")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<AccountDto>> ChangePassWord(
-           [FromBody] ChangePasswordDto changePasswordDto)
+        [FromBody] ChangePasswordDto changePasswordDto)
         {
             var username = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
 
-            var result = await _authService.IsUsingOldPassword(username, changePasswordDto.PasswordNew);
+            var result = await _authService.IsMatchPassword(username, changePasswordDto.PasswordOld);
+            if (result == false)
+            {
+                return BadRequest(new ChangePasswordErrorDto() { PasswordOld = "Password is incorrect!" });
+            }
+
+            result = await _authService.IsMatchPassword(username, changePasswordDto.PasswordNew);
             if (result == true)
             {
-                return BadRequest("Your new password cannot be same as old password.");
+                return BadRequest(new ChangePasswordErrorDto() { PasswordNew = "Your new password cannot be same as old password." });
             }
 
             var account = await _authService.ChangePasswordAsync(username, changePasswordDto);
+            if (account == null)
+            {
+                return BadRequest(new ChangePasswordErrorDto() { PasswordOld = "Password is incorrect!" });
+            }
 
             return Ok(account);
         }
@@ -90,7 +100,7 @@ namespace Rookie.AssetManagement.Controllers
         {
             var username = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
 
-            var result = await _authService.IsUsingOldPassword(username, changePasswordDto.PasswordNew);
+            var result = await _authService.IsMatchPassword(username, changePasswordDto.PasswordNew);
             if (result == true)
             {
                 return BadRequest("Your new password cannot be same as old password.");
