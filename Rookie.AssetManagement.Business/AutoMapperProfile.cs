@@ -71,7 +71,9 @@ namespace Rookie.AssetManagement.Business
 
         private void MapperAssetFromPresentationLayer()
         {
-            CreateMap<Asset, AssetDto>();
+            CreateMap<Asset, AssetDto>()
+                .ForMember(d => d.Category, t=>t.MapFrom(c=>c.Category.CategoryName))
+                .ForMember(d => d.State, t => t.MapFrom(c => c.State.StateName));
         }
     }
 }

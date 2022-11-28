@@ -39,7 +39,7 @@ namespace Rookie.AssetManagement.Business.Services
               _assetRepository.Entities
               .Include(a=>a.Category)
               .Include(a=> a.State)
-              .Where(x => !x.IsDeleted && x.Location == location).AsQueryable(),
+              .Where(x => !x.IsDeleted).AsQueryable(),
               assetQueryCriteria);
 
             var asset = await assetQuery
