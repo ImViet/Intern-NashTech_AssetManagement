@@ -50,9 +50,10 @@ namespace Rookie.AssetManagement.Business.Services
         {
             Ensure.Any.IsNotNull(userRequest);
             var newUser = _mapper.Map<User>(userRequest);
+
             //default username
-            newUser.FirstName=newUser.FirstName.Trim();
-            newUser.LastName=newUser.LastName.Trim();
+            newUser.FirstName = newUser.FirstName.Trim();
+            newUser.LastName = newUser.LastName.Trim();
             string[] detailoflastname = newUser.LastName.Split(' ');
             string firstcharofeachdetaillastname = "";
             foreach (var item in detailoflastname)
@@ -60,7 +61,17 @@ namespace Rookie.AssetManagement.Business.Services
                 firstcharofeachdetaillastname += item.Substring(0, 1).ToLower();
             }
             string username = newUser.FirstName.ToLower() + firstcharofeachdetaillastname;
-            var countUsername = await _userRepository.Entities.Where(u => EF.Functions.Like(u.UserName, username + "[0-9]%") || EF.Functions.Like(u.UserName, username)).CountAsync();
+            var countUsername = await _userRepository.Entities.Where(u =>
+            u.UserName.Equals(username + '1') ||
+            u.UserName.Equals(username + '2') ||
+            u.UserName.Equals(username + '3') ||
+            u.UserName.Equals(username + '4') ||
+            u.UserName.Equals(username + '5') ||
+            u.UserName.Equals(username + '6') ||
+            u.UserName.Equals(username + '7') ||
+            u.UserName.Equals(username + '8') ||
+            u.UserName.Equals(username + '9') ||
+            u.UserName.StartsWith(username)).CountAsync();
             if (countUsername == 0)
             {
                 newUser.UserName = username;
@@ -83,13 +94,11 @@ namespace Rookie.AssetManagement.Business.Services
             newUser.Location = location;
             //default staffcode            
             newUser.StaffCode = DefaultValueForStaffCodeFirst();
-
             var createResult = await userManager.CreateAsync(newUser, password);
             if (!createResult.Succeeded)
             {
                 return null;
             }
-
             var user = await _userRepository.GetById(newUser.Id);
 
             return _mapper.Map<UserDto>(user);
@@ -113,7 +122,7 @@ namespace Rookie.AssetManagement.Business.Services
 
         public string DefaultValueForStaffCodeFirst()
         {
-            string staffcode = "";          
+            string staffcode = "";
             var lastuser = _userRepository.Entities.OrderByDescending(c => c.Id).FirstOrDefault();
             if (_userRepository.Entities.Count() == 0)
             {
@@ -121,24 +130,8 @@ namespace Rookie.AssetManagement.Business.Services
             }
             else
             {
-                int newuserid = lastuser.Id + 1;
-                if (newuserid < 10)
-                {
-                    staffcode = "SD000" + newuserid;
-                }
-                else if (newuserid < 100)
-                {
-                    staffcode = "SD00" + newuserid;
-                }
-                else if (newuserid < 1000)
-                {
-                    staffcode = "SD0" + newuserid;
-                }
-                else
-                {
-                    staffcode = "SD" + newuserid;
-                }
-            }            
+                staffcode = "SD" + (lastuser.Id + 1).ToString("D4");
+            }
             return staffcode;
         }
 

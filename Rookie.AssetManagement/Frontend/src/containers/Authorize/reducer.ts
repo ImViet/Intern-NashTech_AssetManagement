@@ -75,7 +75,7 @@ const AuthSlice = createSlice({
     }),
     changePassword: (
       state: AuthState,
-      action: PayloadAction<ISubmitAction<IChangePassword>>
+      action: PayloadAction<IChangePassword>
     ) => {
       return {
         ...state,
