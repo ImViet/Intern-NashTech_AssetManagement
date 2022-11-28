@@ -35,22 +35,80 @@ const Header = () => {
     const pathnameSplit = location.pathname.split('/');
     pathnameSplit.shift();
 
+    // pathnameSplit.forEach(split=>{
+    //   if(split == "asset"){
+    //     const index = pathnameSplit.findIndex(s=>s== split)
+    //     pathnameSplit[index] = "Manage Asset";
+    //   }
+      
+    //   else if(split == "create"){
+    //     const index = pathnameSplit.findIndex(s=>s== split)
+    //     pathnameSplit[index] = "Create Asset";
+    //   }
+    //   else if(split == "edit"){
+    //     const index = pathnameSplit.findIndex(s=>s== split)
+    //     pathnameSplit[index] = "Edit Asset";
+    //   }else if(!isNaN(Number(split)) || split == "*"){
+    //     const index = pathnameSplit.findIndex(s=>s== split)
+    //     pathnameSplit.splice(index,1)
+    //   }
+    //   if(split == "user"){
+    //     const index = pathnameSplit.findIndex(s=>s== split)
+    //     pathnameSplit[index] = "Manage User";
+    //   }
+    //   else if(split == "create"){
+    //     const index = pathnameSplit.findIndex(s=>s== split)
+    //     pathnameSplit[index] = "Create User";
+    //   }
+    //   else if(split == "edit"){
+    //     const index = pathnameSplit.findIndex(s=>s== split)
+    //     pathnameSplit[index] = "Edit User";
+    //   }else if(!isNaN(Number(split)) || split == "*"){
+    //     const index = pathnameSplit.findIndex(s=>s== split)
+    //     pathnameSplit.splice(index,1)
+    //   }
+      
+    // })
+    let type="";
     pathnameSplit.forEach(split=>{
       if(split == "user"){
         const index = pathnameSplit.findIndex(s=>s== split)
         pathnameSplit[index] = "Manage User";
+        type="user";
       }
-      else if(split == "create"){
+      if(split == "asset"){
         const index = pathnameSplit.findIndex(s=>s== split)
-        pathnameSplit[index] = "Create User";
-      }
-      else if(split == "edit"){
-        const index = pathnameSplit.findIndex(s=>s== split)
-        pathnameSplit[index] = "Edit User";
-      }else if(!isNaN(Number(split)) || split == "*"){
-        const index = pathnameSplit.findIndex(s=>s== split)
-        pathnameSplit.splice(index,1)
-      }
+        pathnameSplit[index] = "Manage Asset";
+        type="asset"
+      } 
+      if(type=="user")
+      {
+        if(split == "create"){
+          const index = pathnameSplit.findIndex(s=>s== split)
+          pathnameSplit[index] = "Create User";
+        }
+        else if(split == "edit"){
+          const index = pathnameSplit.findIndex(s=>s== split)
+          pathnameSplit[index] = "Edit User";
+        }else if(!isNaN(Number(split)) || split == "*"){
+          const index = pathnameSplit.findIndex(s=>s== split)
+          pathnameSplit.splice(index,1)
+        }
+      }    
+      else if(type="asset")
+      {
+        if(split == "create"){
+          const index = pathnameSplit.findIndex(s=>s== split)
+          pathnameSplit[index] = "Create New Asset";
+        }
+        else if(split == "edit"){
+          const index = pathnameSplit.findIndex(s=>s== split)
+          pathnameSplit[index] = "Edit Asset";
+        }else if(!isNaN(Number(split)) || split == "*"){
+          const index = pathnameSplit.findIndex(s=>s== split)
+          pathnameSplit.splice(index,1)
+        }     
+      }    
     })
     
     return pathnameSplit.join(' > ').toString() || 'Home' ;
