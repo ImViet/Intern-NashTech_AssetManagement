@@ -234,5 +234,20 @@ namespace Rookie.AssetManagement.Business.Services
             }
             return userQuery;
         }
+
+        public async Task<bool> DisableAsync(int id)
+        {
+            var user = await _userRepository.Entities.SingleOrDefaultAsync(b => b.Id.Equals(id));
+            if (user == null)
+            {
+                throw new NotFoundException("User Not Found!");
+            }
+            user.IsDeleted = true ;
+
+            await _userRepository.Update(user);
+
+            return await Task.FromResult(true);
+        }
     }
+
 }
