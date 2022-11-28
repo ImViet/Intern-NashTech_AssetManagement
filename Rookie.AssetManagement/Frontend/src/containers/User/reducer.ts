@@ -27,6 +27,11 @@ export type UpdateAction = {
   formValues: IUserForm;
 };
 
+export type DisableAction = {
+  handleResult: Function;
+  id: number;
+};
+
 const initialState: UserState = {
   users: null,
   loading: false,
@@ -102,19 +107,12 @@ const UserReducerSlice = createSlice({
         loading: false,
       };
     },
-    disableUser: (state, action: PayloadAction<number>): UserState =>{
+    disableUser: (state, action: PayloadAction<DisableAction>): UserState => {
       return {
         ...state,
         loading: true,
-      }; 
+      };
     },
-    removeUserFromList: (state, action: PayloadAction<number>) =>{
-      const id = action.payload;
-      const index = state.users?.items.findIndex(u=>u.id == id)
-      if(index){
-        state.users?.items.splice(index, 1)
-      }
-    }
   },
 });
 
@@ -128,7 +126,6 @@ export const {
   getUserList,
   getUser,
   disableUser,
-  removeUserFromList,
 } = UserReducerSlice.actions;
 
 export default UserReducerSlice.reducer;

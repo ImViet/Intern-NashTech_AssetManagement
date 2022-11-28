@@ -14,7 +14,7 @@ import {
   setActionResult,
   setUserList,
   UpdateAction,
-  removeUserFromList,
+  DisableAction,
 } from "../reducer";
 import {
   createUserRequest,
@@ -123,13 +123,17 @@ export function* handleGetUserById(action: PayloadAction<number>) {
   }
 }
 
-export function* handleDisableUser(action: PayloadAction<number>){
-  const id = action.payload;
+export function* handleDisableUser(action: PayloadAction<DisableAction>) {
+  const { id, handleResult } = action.payload;
   try {
-    const {data} = yield call(disableUserRequest, id);
-    yield put (removeUserFromList(id))
+    const { data } = yield call(disableUserRequest, id);
+
+    if (data) {
+      handleResult(true, "");
+    }
   } catch (error: any) {
     const errorModel = error.response.data as IError;
+    handleResult(false, errorModel);
 
     yield put(
       setStatus({
