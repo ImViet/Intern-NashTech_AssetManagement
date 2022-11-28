@@ -131,6 +131,5 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
             }
             };
         }
-
     }
 }

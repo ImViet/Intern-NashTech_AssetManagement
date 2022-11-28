@@ -44,10 +44,10 @@ namespace Rookie.AssetManagement.UnitTests.Business
          public UserServiceShould()
         {
             _userRepository = new Mock<IBaseRepository<User>>();
-            _userManager = new Mock<UserManager<User>>();
+            _userManager = new Mock<UserManager<User>>(Mock.Of<IUserStore<User>>(), null, null, null, null, null, null, null, null);
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
             _mapper = config.CreateMapper();
-            _userService = new UserService(_userRepository.Object, null,_mapper);
+            _userService = new UserService(_userRepository.Object, _userManager.Object, _mapper);
             _cancellationToken = new CancellationToken();
         }
         [Fact]
@@ -97,16 +97,16 @@ namespace Rookie.AssetManagement.UnitTests.Business
         public async Task AddAsyncShouldBeSuccessfullyAsync()
         {
             //Arrange
-            var newUserId = 1;
-            var user = UserTestData.GetCreateUserDto();
-            var userCreate = await _userService.AddAsync(UserTestData.GetCreateUserDto(), "hcm");
+            var ListUser = UserTestData.ListUser().ToList().BuildMock();
+            var newUser = _mapper.Map<User>(UserTestData.GetCreateUserDto());
+            _userRepository.Setup(x => x.Entities).Returns(ListUser);
+            _userRepository.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(newUser);
+            _userManager.Setup(x => x.Users).Returns(ListUser);
+            _userManager.Setup(x => x.CreateAsync(It.IsAny<User>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success).Verifiable();
             //Act
-
-            var result = _userRepository
-               .Setup(x => x.GetById(newUserId))
-              .Returns(Task.FromResult<User>(UserTestData.GetUser(newUserId)));
+            var result = await _userService.AddAsync(UserTestData.GetCreateUserDto(), "HCM");
             //Assert
-            //Assert.Equal(, );
+            Assert.Equal("Trieu", result.FirstName);
         }
 
         [Fact]
