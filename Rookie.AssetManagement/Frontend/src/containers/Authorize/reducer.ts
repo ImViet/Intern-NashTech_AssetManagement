@@ -22,6 +22,11 @@ type AuthState = {
   error?: IError;
 };
 
+export type ChangePasswordAction = {
+  handleResult: Function;
+  formValues: IChangePassword;
+};
+
 const token = getLocalStorage("token");
 
 const initialState: AuthState = {
@@ -73,10 +78,7 @@ const AuthSlice = createSlice({
       ...state,
       loading: true,
     }),
-    changePassword: (
-      state: AuthState,
-      action: PayloadAction<IChangePassword>
-    ) => {
+    changePassword: (state: AuthState , action: PayloadAction<ChangePasswordAction>) => {
       return {
         ...state,
         loading: true,

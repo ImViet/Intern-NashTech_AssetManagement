@@ -25,7 +25,6 @@ const TextFieldPassword: React.FC<InputFieldProps> = (props) => {
     const [showPass, setShowPass] = useState(true)
     const clickHandler = () => {
         setShowPass(!showPass);
-        console.log(showPass)
     }
 
     return (
