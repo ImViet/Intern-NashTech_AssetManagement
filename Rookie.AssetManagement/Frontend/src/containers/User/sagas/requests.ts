@@ -37,3 +37,7 @@ export function getUsersRequest(
 export function getUserByIdRequest(id: number): Promise<AxiosResponse<IUser>> {
   return RequestService.axios.get(EndPoints.user + "/" + id);
 }
+
+export function disableUserRequest(id: number): Promise<AxiosResponse<IUser>> {
+  return RequestService.axios.delete(EndPoints.user + "/" + id);
+}

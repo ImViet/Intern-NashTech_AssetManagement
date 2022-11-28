@@ -41,6 +41,7 @@ type Props = {
   handleSort: (colValue: string) => void;
   sortState: SortType;
   fetchData: Function;
+  handleDisable: Function;
 };
 
 const UserTable: React.FC<Props> = ({
@@ -50,6 +51,7 @@ const UserTable: React.FC<Props> = ({
   handleSort,
   sortState,
   fetchData,
+  handleDisable
 }) => {
   const dispatch = useAppDispatch();
 
@@ -80,7 +82,7 @@ const UserTable: React.FC<Props> = ({
     setDisable({
       id,
       isOpen: true,
-      title: 'Are you sure',
+      title: 'Are you sure?',
       message: 'Do you want to disable this User?',
       isDisable: true,
     });
@@ -95,6 +97,17 @@ const UserTable: React.FC<Props> = ({
       isDisable: true,
     });
   };
+
+  const onDisable= ()=>{
+    handleDisable(disableState.id)
+    setDisable({
+      isOpen: false,
+      id: 0,
+      title: '',
+      message: '',
+      isDisable: true,
+    });
+  }
 
   // const handleConfirmDisable = () => {
   //   dispatch(disableUser({
@@ -186,15 +199,16 @@ const UserTable: React.FC<Props> = ({
       >
         <div>
 
-          <div className="text-center">
+          <div className="text-start ">
             {disableState.message}
           </div>
           {
             disableState.isDisable && (
-              <div className="text-center mt-3">
+              <div className="text-start mt-3">
                 <button
                   className="btn btn-danger mr-3"
                   type="button"
+                  onClick={onDisable}
                 >
                   Disable
                 </button>

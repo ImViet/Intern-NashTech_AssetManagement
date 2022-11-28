@@ -14,12 +14,14 @@ import {
   setActionResult,
   setUserList,
   UpdateAction,
+  removeUserFromList,
 } from "../reducer";
 import {
   createUserRequest,
   getUserByIdRequest,
   getUsersRequest,
   updateUserRequest,
+  disableUserRequest,
 } from "./requests";
 
 export function* handleCreateUser(action: PayloadAction<CreateAction>) {
@@ -112,6 +114,23 @@ export function* handleGetUserById(action: PayloadAction<number>) {
     data.dateOfBirth = new Date(data.dateOfBirth);
     data.joinedDate = new Date(data.joinedDate);
     yield put(setUserResult(data));
+  } catch (error: any) {
+    const errorModel = error.response.data as IError;
+
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: errorModel,
+      })
+    );
+  }
+}
+
+export function* handleDisableUser(action: PayloadAction<number>){
+  const id = action.payload;
+  try {
+    const {data} = yield call(disableUserRequest, id);
+    yield put (removeUserFromList(id))
   } catch (error: any) {
     const errorModel = error.response.data as IError;
 
