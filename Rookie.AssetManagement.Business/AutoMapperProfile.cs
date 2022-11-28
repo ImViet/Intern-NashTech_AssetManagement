@@ -4,6 +4,7 @@ using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
 using Rookie.AssetManagement.Contracts.Dtos.CategoryDtos;
 using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
+using Rookie.AssetManagement.DataAccessor.Data;
 
 namespace Rookie.AssetManagement.Business
 {
@@ -83,7 +84,7 @@ namespace Rookie.AssetManagement.Business
         private void MapperAssetFromPresentationLayer()
         {
             CreateMap<Asset, AssetDto>()
-                .ForMember(d => d.Category, t=>t.MapFrom(c=>c.Category.CategoryName))
+                .ForMember(d => d.Category, t => t.MapFrom(c => c.Category.CategoryName))
                 .ForMember(d => d.State, t => t.MapFrom(c => c.State.StateName));
         }
     }

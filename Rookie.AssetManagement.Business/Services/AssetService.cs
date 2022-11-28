@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Rookie.AssetManagement.Business.Services
 {
-    public class AssetService : IAssetService 
+    public class AssetService : IAssetService
     {
         private readonly IBaseRepository<Asset> _assetRepository;
         private readonly IBaseRepository<Category> _categoryRepository;
@@ -43,8 +43,8 @@ namespace Rookie.AssetManagement.Business.Services
         {
             var assetQuery = AssetFilter(
               _assetRepository.Entities
-              .Include(a=>a.Category)
-              .Include(a=> a.State)
+              .Include(a => a.Category)
+              .Include(a => a.State)
               .Where(x => !x.IsDeleted && x.Location == location).AsQueryable(),
               assetQueryCriteria);
 
@@ -70,7 +70,7 @@ namespace Rookie.AssetManagement.Business.Services
             Ensure.Any.IsNotNull(asset);
             var newAsset = _mapper.Map<Asset>(asset);
             var getCategory = _categoryRepository.Entities.Where(x => x.Id == asset.Category).FirstOrDefault();
-            if(getCategory == null)
+            if (getCategory == null)
             {
                 throw new NotFoundException("Category Not Found!");
             }
@@ -94,14 +94,14 @@ namespace Rookie.AssetManagement.Business.Services
             var category = asset.Category.CategoryName.ToUpper();
             var lastAsset = _assetRepository.Entities.Where(x => x.Category == asset.Category)
                                 .OrderByDescending(x => x.AssetCode).FirstOrDefault();
-            if(lastAsset != null)
+            if (lastAsset != null)
             {
-                 code = lastAsset.AssetCode.Substring(2);
+                code = lastAsset.AssetCode.Substring(2);
             }
             switch (category)
             {
                 case "LAPTOP":
-                    assetCode = lastAsset == null ? "LA000001": ("LA" + (Convert.ToInt32(code) + 1).ToString("D6"));
+                    assetCode = lastAsset == null ? "LA000001" : ("LA" + (Convert.ToInt32(code) + 1).ToString("D6"));
                     break;
                 case "MONITOR":
                     assetCode = lastAsset == null ? "MO000001" : ("MO" + (Convert.ToInt32(code) + 1).ToString("D6"));
@@ -126,7 +126,7 @@ namespace Rookie.AssetManagement.Business.Services
 
             if (assetQueryCriteria.Categories != null && !assetQueryCriteria.Categories.Any(e => e == "ALL"))
             {
-                assetQuery = assetQuery.Where(c=> assetQueryCriteria.Categories.Any(e => e == c.Category.CategoryName));
+                assetQuery = assetQuery.Where(c => assetQueryCriteria.Categories.Any(e => e == c.Category.CategoryName));
             }
             if (assetQueryCriteria.States != null && !assetQueryCriteria.States.Any(e => e == "ALL"))
             {
@@ -138,7 +138,7 @@ namespace Rookie.AssetManagement.Business.Services
                 switch (sortColumn)
                 {
                     case "ASSETCODE":
-                        assetQuery = assetQueryCriteria.SortOrder == 0?assetQuery.OrderBy(x => x.AssetCode):assetQuery.OrderByDescending(x => x.AssetCode);
+                        assetQuery = assetQueryCriteria.SortOrder == 0 ? assetQuery.OrderBy(x => x.AssetCode) : assetQuery.OrderByDescending(x => x.AssetCode);
                         break;
                     case "ASSETNAME":
                         assetQuery = assetQueryCriteria.SortOrder == 0 ? assetQuery.OrderBy(x => x.AssetName) : assetQuery.OrderByDescending(x => x.AssetName);
