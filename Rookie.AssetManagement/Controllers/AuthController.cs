@@ -67,8 +67,8 @@ namespace Rookie.AssetManagement.Controllers
 
         [HttpPut("change-password")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult<AccountDto>> ChangePassWord(
-           [FromBody] ChangePasswordDto changePasswordDto)
+        public async Task<ActionResult<AccountDto>> ChangePassWord(   
+        [FromBody] ChangePasswordDto changePasswordDto)
         {
             var username = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
 
