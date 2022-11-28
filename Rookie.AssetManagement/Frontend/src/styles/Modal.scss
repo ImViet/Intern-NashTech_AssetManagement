@@ -10,6 +10,11 @@
     }
 }
 
+.modal-backdrop.show{
+    opacity: 0.4;
+    background-color: #fff;
+}
+
 .modal-content{
     border-radius: 10px;
     overflow: hidden;
