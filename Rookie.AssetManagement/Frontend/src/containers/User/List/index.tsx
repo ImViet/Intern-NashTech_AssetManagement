@@ -66,6 +66,7 @@ const ListUser = () => {
 
       setQuery({
         ...query,
+        page: 1,
         types,
       });
 

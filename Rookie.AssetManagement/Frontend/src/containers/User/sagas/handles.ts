@@ -62,9 +62,6 @@ export function* handleUpdateUser(action: PayloadAction<UpdateAction>) {
     console.log("handleUpdateUser");
     console.log(formValues);
 
-    formValues.joinedDate = toUTC(formValues.joinedDate);
-    formValues.dateOfBirth = toUTC(formValues.dateOfBirth);
-
     const { data } = yield call(updateUserRequest, formValues);
 
     data.dateOfBirth = new Date(data.dateOfBirth);
