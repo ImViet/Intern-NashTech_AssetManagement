@@ -5,7 +5,6 @@ using Rookie.AssetManagement.Contracts;
 using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
 using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
-using Rookie.AssetManagement.DataAccessor.Data;
 using Rookie.AssetManagement.DataAccessor.Entities;
 using System;
 using System.Collections.Generic;
@@ -37,7 +36,10 @@ namespace Rookie.AssetManagement.Business.Services
             CancellationToken cancellationToken, string location)
         {
             var assetQuery = AssetFilter(
-              _assetRepository.Entities.Where(x => !x.IsDeleted && x.Location == location).AsQueryable(),
+              _assetRepository.Entities
+              .Include(a=>a.Category)
+              .Include(a=> a.State)
+              .Where(x => !x.IsDeleted && x.Location == location).AsQueryable(),
               assetQueryCriteria);
 
             var asset = await assetQuery
@@ -70,11 +72,11 @@ namespace Rookie.AssetManagement.Business.Services
 
             if (assetQueryCriteria.Categories != null && !assetQueryCriteria.Categories.Any(e => e == "ALL"))
             {
-                assetQuery = assetQuery.Where(x => assetQueryCriteria.Categories.Any(e => e == x.Category));
+                assetQuery = assetQuery.Where(c=> assetQueryCriteria.Categories.Any(e => e == c.Category.CategoryName));
             }
             if (assetQueryCriteria.States != null && !assetQueryCriteria.States.Any(e => e == "ALL"))
             {
-                assetQuery = assetQuery.Where(x => assetQueryCriteria.States.Any(e => e == x.State));
+                assetQuery = assetQuery.Where(x => assetQueryCriteria.States.Any(e => e == x.State.StateName));
             }
             if (assetQueryCriteria.SortColumn != null)
             {

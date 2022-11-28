@@ -13,6 +13,8 @@ namespace Rookie.AssetManagement.DataAccessor.Data
         {
         }
         public DbSet<Asset> Assets { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<State> States { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
