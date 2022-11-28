@@ -27,6 +27,7 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     Gender = UserGenderEnum.Male,
                     JoinedDate = new DateTime(2022, 11, 10, 0, 0, 0),
                     Type = "Staff",
+                    IsDeleted = false
                 },
                 new User()
                 {
@@ -36,6 +37,7 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     Gender = UserGenderEnum.Male,
                     JoinedDate = new DateTime(2022, 11, 10, 0, 0, 0),
                     Type = "Staff",
+                    IsDeleted = false
                 },
                 new User()
                 {
@@ -45,6 +47,7 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     Gender = UserGenderEnum.Female,
                     JoinedDate = new DateTime(2022, 11, 10, 0, 0, 0),
                     Type = "Staff",
+                    IsDeleted = false
                 },
             };
         }
@@ -113,8 +116,6 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
 
             };
         }
-
-
 
         public static void InitUsersData(ApplicationDbContext dbContext)
         {
