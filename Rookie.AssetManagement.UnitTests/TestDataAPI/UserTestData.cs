@@ -92,10 +92,6 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                 Type = "STAFF",
             };
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 28c7973 (UnitTest Cretae)
         public static User GetCreateUser()
         {
             return new User()
