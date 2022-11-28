@@ -37,7 +37,7 @@ namespace Rookie.AssetManagement.Business.Services
             CancellationToken cancellationToken, string location)
         {
             var assetQuery = AssetFilter(
-              _assetRepository.Entities.Where(x => !x.IsDeleted).AsQueryable(),
+              _assetRepository.Entities.Where(x => !x.IsDeleted && x.Location == location).AsQueryable(),
               assetQueryCriteria);
 
             var asset = await assetQuery
@@ -75,6 +75,29 @@ namespace Rookie.AssetManagement.Business.Services
             if (assetQueryCriteria.States != null && !assetQueryCriteria.States.Any(e => e == "ALL"))
             {
                 assetQuery = assetQuery.Where(x => assetQueryCriteria.States.Any(e => e == x.State));
+            }
+            if (assetQueryCriteria.SortColumn != null)
+            {
+                var sortColumn = assetQueryCriteria.SortColumn.ToUpper();
+                switch (sortColumn)
+                {
+                    case "STAFFCODE":
+                        assetQuery = assetQueryCriteria.SortOrder == 0?assetQuery.OrderBy(x => x.AssetCode):assetQuery.OrderByDescending(x => x.AssetCode);
+                        break;
+                    case "ASSETNAME":
+                        assetQuery = assetQueryCriteria.SortOrder == 0 ? assetQuery.OrderBy(x => x.AssetName) : assetQuery.OrderByDescending(x => x.AssetName);
+                        break;
+                    case "CATEGORY":
+                        assetQuery = assetQueryCriteria.SortOrder == 0 ? assetQuery.OrderBy(x => x.Category) : assetQuery.OrderByDescending(x => x.Category);
+                        break;
+                    case "STATE":
+                        assetQuery = assetQueryCriteria.SortOrder == 0 ? assetQuery.OrderBy(x => x.State) : assetQuery.OrderByDescending(x => x.State);
+                        break;
+                    default:
+                        assetQuery = assetQuery.OrderBy(x => x.AssetCode);
+                        break;
+                }
+
             }
             return assetQuery;
         }
