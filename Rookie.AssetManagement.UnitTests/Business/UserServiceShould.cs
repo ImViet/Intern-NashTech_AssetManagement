@@ -18,6 +18,7 @@ using Rookie.AssetManagement.Contracts;
 using System.Threading;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using NPOI.SS.Formula.Functions;
+using Microsoft.AspNetCore.Identity;
 
 namespace Rookie.AssetManagement.UnitTests.Business
 {
@@ -26,7 +27,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
         private readonly UserService _userService;
 
         private readonly Mock<IBaseRepository<User>> _userRepository;
-
+        private readonly Mock<UserManager<User>> _userManager;
         private readonly IMapper _mapper;
 
         private readonly CancellationToken _cancellationToken;
@@ -34,9 +35,12 @@ namespace Rookie.AssetManagement.UnitTests.Business
         public UserServiceShould()
         {
             _userRepository = new Mock<IBaseRepository<User>>();
+
+            _userManager = new Mock<UserManager<User>>(Mock.Of<IUserStore<User>>(), null, null, null, null, null, null, null, null);
+
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
             _mapper = config.CreateMapper();
-            _userService = new UserService(_userRepository.Object, null,_mapper);
+            _userService = new UserService(_userRepository.Object, _userManager.Object, _mapper);
             _cancellationToken = new CancellationToken();
         }
         [Fact]
@@ -46,10 +50,35 @@ namespace Rookie.AssetManagement.UnitTests.Business
             var usersMock = UserTestData.GetUsers().AsEnumerable().BuildMock();
             _userRepository.Setup(x => x.Entities).Returns(usersMock);
             //Act
-            var result = await _userService.GetByPageAsync(UserTestData.userQueryCriteriaDto , _cancellationToken, "HCM");
+            var result = await _userService.GetByPageAsync(UserTestData.userQueryCriteriaDto, _cancellationToken, "HCM");
             //Assert
             Assert.Equal(1, result.TotalItems);
         }
+        [Fact]
+
+        public async Task AddAsyncShouldThrowExceptionAsync()
+        {
+            Func<Task> act = async () => await _userService.AddAsync(null, null);
+            await act.Should().ThrowAsync<ArgumentNullException>();
+        }
+
+        [Fact]
+        public async Task AddAsyncShouldBeSuccessfullyAsync()
+        {
+            //Arrange
+
+            var ListUser = UserTestData.ListUser().ToList().BuildMock();
+            var newUser = _mapper.Map<User>(UserTestData.GetCreateUserDto());
+            _userRepository.Setup(x => x.Entities).Returns(ListUser);
+            _userRepository.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(newUser);
+            _userManager.Setup(x => x.Users).Returns(ListUser);
+            _userManager.Setup(x => x.CreateAsync(It.IsAny<User>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success).Verifiable();
+            //Act
+            var result = await _userService.AddAsync(UserTestData.GetCreateUserDto(), "HCM");
+            //Assert
+            Assert.Equal("Trieu", result.FirstName);
+        }
+
         [Fact]
         public async Task UpdateAsyncShouldThrowNotFoundException()
         {
