@@ -12,11 +12,11 @@ namespace Rookie.AssetManagement.DataAccessor.Data
             : base(options)
         {
         }
-
+        public DbSet<Asset> Assets { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
+    
             builder.Entity<User>(entity =>
             {
                 entity.ToTable(name: "Users");
