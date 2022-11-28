@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Rookie.AssetManagement.Business.Services
 {
-    public class AssetService : IAssetService 
+    public class AssetService : IAssetService
     {
         private readonly IBaseRepository<Asset> _assetRepository;
         private readonly IMapper _mapper;
@@ -37,8 +37,8 @@ namespace Rookie.AssetManagement.Business.Services
         {
             var assetQuery = AssetFilter(
               _assetRepository.Entities
-              .Include(a=>a.Category)
-              .Include(a=> a.State)
+              .Include(a => a.Category)
+              .Include(a => a.State)
               .Where(x => !x.IsDeleted && x.Location == location).AsQueryable(),
               assetQueryCriteria);
 
@@ -72,7 +72,7 @@ namespace Rookie.AssetManagement.Business.Services
 
             if (assetQueryCriteria.Categories != null && !assetQueryCriteria.Categories.Any(e => e == "ALL"))
             {
-                assetQuery = assetQuery.Where(c=> assetQueryCriteria.Categories.Any(e => e == c.Category.CategoryName));
+                assetQuery = assetQuery.Where(c => assetQueryCriteria.Categories.Any(e => e == c.Category.CategoryName));
             }
             if (assetQueryCriteria.States != null && !assetQueryCriteria.States.Any(e => e == "ALL"))
             {
@@ -84,7 +84,7 @@ namespace Rookie.AssetManagement.Business.Services
                 switch (sortColumn)
                 {
                     case "STAFFCODE":
-                        assetQuery = assetQueryCriteria.SortOrder == 0?assetQuery.OrderBy(x => x.AssetCode):assetQuery.OrderByDescending(x => x.AssetCode);
+                        assetQuery = assetQueryCriteria.SortOrder == 0 ? assetQuery.OrderBy(x => x.AssetCode) : assetQuery.OrderByDescending(x => x.AssetCode);
                         break;
                     case "ASSETNAME":
                         assetQuery = assetQueryCriteria.SortOrder == 0 ? assetQuery.OrderBy(x => x.AssetName) : assetQuery.OrderByDescending(x => x.AssetName);
