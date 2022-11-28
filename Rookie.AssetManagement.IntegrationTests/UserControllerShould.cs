@@ -141,5 +141,24 @@ namespace Rookie.AssetManagement.IntegrationTests
             await Assert.ThrowsAsync<NotFoundException>(() => _userController.UpdateUser(userRequest));
         }
 
+        [Fact]
+        public async Task DisableAsyncShouldReturnTrue()
+        {
+            //Arrange
+            var userRequestId = 3;
+
+            // Act
+            var result = await _userController.DisableUserAsync(userRequestId);
+
+            // Assert
+            result.Should().Equals(true);
+
+        }
+        [Fact]
+        public async Task DisableAsyncShouldThrowExceptionAsync()
+        {
+            await Assert.ThrowsAsync<NotFoundException>(() => _userController.DisableUserAsync(4));
+        }
+
     }
 }
