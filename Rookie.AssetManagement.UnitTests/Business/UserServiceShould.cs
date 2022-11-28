@@ -27,11 +27,6 @@ using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 1b8adfe2cc012920fb82060ac81b1c2419680bb6
 namespace Rookie.AssetManagement.UnitTests.Business
 {
     public class UserServiceShould
