@@ -155,6 +155,29 @@ namespace Rookie.AssetManagement.Business.Services
                 }
 
             }
+            if (assetQueryCriteria.SortColumn != null)
+            {
+                var sortColumn = assetQueryCriteria.SortColumn.ToUpper();
+                switch (sortColumn)
+                {
+                    case "STAFFCODE":
+                        assetQuery = assetQueryCriteria.SortOrder == 0 ? assetQuery.OrderBy(x => x.AssetCode) : assetQuery.OrderByDescending(x => x.AssetCode);
+                        break;
+                    case "ASSETNAME":
+                        assetQuery = assetQueryCriteria.SortOrder == 0 ? assetQuery.OrderBy(x => x.AssetName) : assetQuery.OrderByDescending(x => x.AssetName);
+                        break;
+                    case "CATEGORY":
+                        assetQuery = assetQueryCriteria.SortOrder == 0 ? assetQuery.OrderBy(x => x.Category) : assetQuery.OrderByDescending(x => x.Category);
+                        break;
+                    case "STATE":
+                        assetQuery = assetQueryCriteria.SortOrder == 0 ? assetQuery.OrderBy(x => x.State) : assetQuery.OrderByDescending(x => x.State);
+                        break;
+                    default:
+                        assetQuery = assetQuery.OrderBy(x => x.AssetCode);
+                        break;
+                }
+
+            }
             return assetQuery;
         }
     }
