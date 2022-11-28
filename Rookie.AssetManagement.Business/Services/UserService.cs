@@ -62,16 +62,16 @@ namespace Rookie.AssetManagement.Business.Services
             }
             string username = newUser.FirstName.ToLower() + firstcharofeachdetaillastname;
             var countUsername = await _userRepository.Entities.Where(u =>
-            u.UserName.Equals(username + '1') ||
-            u.UserName.Equals(username + '2') ||
-            u.UserName.Equals(username + '3') ||
-            u.UserName.Equals(username + '4') ||
-            u.UserName.Equals(username + '5') ||
-            u.UserName.Equals(username + '6') ||
-            u.UserName.Equals(username + '7') ||
-            u.UserName.Equals(username + '8') ||
-            u.UserName.Equals(username + '9') ||
-            u.UserName.StartsWith(username)).CountAsync();
+            u.UserName.Contains(username + '1') ||
+            u.UserName.Contains(username + '2') ||
+            u.UserName.Contains(username + '3') ||
+            u.UserName.Contains(username + '4') ||
+            u.UserName.Contains(username + '5') ||
+            u.UserName.Contains(username + '6') ||
+            u.UserName.Contains(username + '7') ||
+            u.UserName.Contains(username + '8') ||
+            u.UserName.Contains(username + '9') ||
+            u.UserName.Equals(username)).CountAsync();
             if (countUsername == 0)
             {
                 newUser.UserName = username;
