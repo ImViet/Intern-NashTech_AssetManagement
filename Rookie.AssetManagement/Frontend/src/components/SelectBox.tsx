@@ -9,7 +9,7 @@ function SelectBox({
     onChange,
 }) {
   return (
-    <div className="dropdown-filter d-flex align-items-center w-md mr-5">
+    <div className="filter-css d-flex align-items-center w-md mr-5">
         <ReactMultiSelectCheckboxes
             options={options}
             hideSearch={true}
