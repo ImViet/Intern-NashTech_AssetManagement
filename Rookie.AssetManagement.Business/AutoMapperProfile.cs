@@ -4,7 +4,6 @@ using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
 using Rookie.AssetManagement.Contracts.Dtos.CategoryDtos;
 using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
-using Rookie.AssetManagement.DataAccessor.Data;
 
 namespace Rookie.AssetManagement.Business
 {
