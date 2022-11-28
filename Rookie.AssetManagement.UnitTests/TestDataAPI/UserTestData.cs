@@ -92,5 +92,44 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                 Type = "STAFF",
             };
         }
+        public static User GetCreateUser()
+        {
+            return new User()
+            {
+                StaffCode = "SD0001",
+                FirstName = "Trieu",
+                LastName = "Duong",
+                UserName = "trieud1",
+                Type = "STAFF",
+            };
+        }
+
+        public static List<User> ListUser()
+        {
+            return new List<User>{
+           new User()  {
+               Id = 0,
+                StaffCode = "SD0001",
+                FirstName = "Binh",
+                LastName = "Nguyen Van",
+                UserName = "binhnv",
+                Type = "STAFF",
+                IsDeleted = false,
+                IsNewUser = true,
+                Location = "HCM"
+            },
+            new User() {
+                Id = 1,
+                StaffCode = "SD0002",
+                FirstName = "Trieu",
+                LastName = "Duong",
+                UserName = "trieud",
+                Type = "ADMIN",
+                IsDeleted = false,
+                IsNewUser = true,
+                Location = "HCM"
+            }
+            };
+        }
     }
 }
