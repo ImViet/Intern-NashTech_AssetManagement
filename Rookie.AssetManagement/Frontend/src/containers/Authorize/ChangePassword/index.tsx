@@ -27,17 +27,17 @@ const ChangePassword = ({show, onClose}) => {
   const { loading, error } = useAppSelector(state => state.authReducer);
   const [ showSuccess, setShowSuccess ] = useState(false);
 
-  useEffect(() => {
-    return () => {
-      dispatch(cleanUp());
-    }
-  }, []);
-
-  const handleResult = (result: boolean, message: string) => {
-    if (result) {
-      onClose()
-      setShowSuccess(true)
-    }
+  const handleSubmit = (values, actions) => {
+    debugger
+    dispatch(changePassword({ handleResult: (result, data) => {
+      if (result) {
+        onClose()
+        setShowSuccess(true)
+      }else{
+        actions.setErrors(data)
+      }
+      actions.setSubmitting(false)
+    }, formValues: values }));
   }
 
   return (
@@ -58,22 +58,20 @@ const ChangePassword = ({show, onClose}) => {
               <Modal.Body style={{paddingLeft:48, paddingRight:48 }}>
                 <Formik
                   initialValues={initialValues}
-                  onSubmit={(values) => {
-                    dispatch(changePassword({ handleResult, formValues: values }));
-                  }}
+                  onSubmit={handleSubmit}
                   validationSchema={ChangePasswordSchema}                 
                 >
                   {(actions) => (
                     <Form className='intro-y'>
                       <TextFieldPassword name="passwordOld" label="Old Password" isrequired={true} />
-                      {error && (
+                      <TextFieldPassword name="passwordNew" label="New Password" isrequired={true} />
+
+                      {/* {error && (
                         <div className="invalid">
                           {error}
                         </div>
-                      )}
+                      )} */}
 
-                      <TextFieldPassword name="passwordNew" label="New Password" isrequired={true} />
-                      
                       <div className="text-right mt-5">
                         <button className="btn btn-danger"
                           type="submit" disabled={!(actions.dirty && actions.isValid)}>
