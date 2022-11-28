@@ -21,6 +21,7 @@ namespace Rookie.AssetManagement.Business.Interfaces
         
         Task<UserDto> UpdateAsnyc(UserUpdateDto assetRequest);
         
+        Task<bool> DisableAsync(int id);
         Task<PagedResponseModel<UserDto>> GetByPageAsync(UserQueryCriteriaDto assetQueryCriteria, CancellationToken cancellationToken, string location);
     }
 }

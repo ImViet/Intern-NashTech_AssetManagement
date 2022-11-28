@@ -62,5 +62,13 @@ namespace Rookie.AssetManagement.Controllers
             return Ok(userResponses);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DisableUserAsync([FromRoute] int id)
+        {
+            var disableResult = await _userService.DisableAsync(id);
+
+            return Ok(disableResult);
+        }
+
     }
 }
