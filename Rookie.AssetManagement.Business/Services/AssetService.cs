@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EnsureThat;
 using Microsoft.EntityFrameworkCore;
 using Rookie.AssetManagement.Business.Interfaces;
 using Rookie.AssetManagement.Contracts;
@@ -18,11 +19,16 @@ namespace Rookie.AssetManagement.Business.Services
     public class AssetService : IAssetService 
     {
         private readonly IBaseRepository<Asset> _assetRepository;
+        private readonly IBaseRepository<Category> _categoryRepository;
+        private readonly IBaseRepository<State> _stateRepository;
         private readonly IMapper _mapper;
 
-        public AssetService(IBaseRepository<Asset> assetRepository, IMapper mapper)
+        public AssetService(IBaseRepository<Asset> assetRepository, IBaseRepository<Category> categoryRepository,
+            IBaseRepository<State> stateRepository, IMapper mapper)
         {
             _assetRepository = assetRepository;
+            _categoryRepository = categoryRepository;
+            _stateRepository = stateRepository;
             _mapper = mapper;
         }
         public async Task<IEnumerable<AssetDto>> GetAllAsync()
@@ -58,6 +64,54 @@ namespace Rookie.AssetManagement.Business.Services
                 TotalItems = asset.TotalItems,
                 Items = assetDto
             };
+        }
+        public async Task<AssetDto> AddAssetAsync(AssetCreateDto asset, string location)
+        {
+            Ensure.Any.IsNotNull(asset);
+            var newAsset = _mapper.Map<Asset>(asset);
+            var getCategory = _categoryRepository.Entities.Where(x => x.Id == asset.Category).FirstOrDefault();
+            if(getCategory == null)
+            {
+                throw new NotFoundException("Category Not Found!");
+            }
+            var getState = _stateRepository.Entities.Where(x => x.Id == asset.State).FirstOrDefault();
+            if (getState == null)
+            {
+                throw new NotFoundException("State Not Found!");
+            }
+            newAsset.Category = getCategory;
+            newAsset.State = getState;
+            newAsset.Location = location;
+            newAsset.IsDeleted = false;
+            newAsset.AssetCode = GenerateAssetCode(newAsset);
+            var createResult = await _assetRepository.Add(newAsset);
+            return _mapper.Map<AssetDto>(newAsset);
+        }
+        private string GenerateAssetCode(Asset asset)
+        {
+            var assetCode = "";
+            var code = "";
+            var category = asset.Category.CategoryName.ToUpper();
+            var lastAsset = _assetRepository.Entities.Where(x => x.Category == asset.Category)
+                                .OrderByDescending(x => x.AssetCode).FirstOrDefault();
+            if(lastAsset != null)
+            {
+                 code = lastAsset.AssetCode.Substring(2);
+            }
+            switch (category)
+            {
+                case "LAPTOP":
+                    assetCode = lastAsset == null ? "LA000001": ("LA" + (Convert.ToInt32(code) + 1).ToString("D6"));
+                    break;
+                case "MONITOR":
+                    assetCode = lastAsset == null ? "MO000001" : ("MO" + (Convert.ToInt32(code) + 1).ToString("D6"));
+                    break;
+                case "PERSONAL COMPUTER":
+                    assetCode = lastAsset == null ? "PC000001" : ("PC" + (Convert.ToInt32(code) + 1).ToString("D6"));
+                    break;
+            }
+            return assetCode;
+
         }
         private IQueryable<Asset> AssetFilter(
            IQueryable<Asset> assetQuery,
