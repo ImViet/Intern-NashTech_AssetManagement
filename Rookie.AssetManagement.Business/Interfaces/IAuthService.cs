@@ -20,6 +20,6 @@ namespace Rookie.AssetManagement.Business.Interfaces
         Task<AccountDto> ChangePasswordAsync(string username, ChangePasswordDto passwordRequest);
 
         Task<AccountDto> ChangePasswordFirstLoginAsync(string username, ChangePasswordFirstLoginDto passwordRequest);
-        Task<bool> IsUsingOldPassword(string userName, string password);
+        Task<bool> IsMatchPassword(string userName, string password);
     }
 }

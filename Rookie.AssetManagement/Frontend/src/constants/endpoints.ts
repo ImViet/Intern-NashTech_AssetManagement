@@ -4,6 +4,7 @@ const Endpoints = {
   changePasswordFirstLogin: "api/auth/change-password-first-login",
   user: "api/users",
   search: "api/users/GetUser",
+  changePassword: "api/Auth/change-password"
 };
 
 export default Endpoints;

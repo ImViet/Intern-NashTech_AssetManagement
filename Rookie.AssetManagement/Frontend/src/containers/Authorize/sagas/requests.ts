@@ -20,7 +20,7 @@ export function getMeRequest(): Promise<AxiosResponse<IAccount>> {
 export function putChangePassword(
   changePasswordModel: IChangePassword
 ): Promise<AxiosResponse<IAccount>> {
-  return RequestService.axios.put(EndPoints.authorize, changePasswordModel);
+  return RequestService.axios.put(EndPoints.changePassword, changePasswordModel);
 }
 
 export function putChangePasswordFirstLogin(

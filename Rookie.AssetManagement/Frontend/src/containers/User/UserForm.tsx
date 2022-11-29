@@ -102,18 +102,7 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
     const navigate = useNavigate();
     const handleResult = (result: boolean, message: string) => {
         if (result) {
-            NotificationManager.success(
-                `${isUpdate ? 'Updated' : 'Created'} Successful User ${message}`,
-                `${isUpdate ? 'Update' : 'Create'} Successful`,
-                2000,
-            );
-
-            setTimeout(() => {
-                navigate(USER_PARENT_ROOT);
-            }, 1000);
-
-        } else {
-            NotificationManager.error(message, "Failed", 2000);
+            navigate(USER_PARENT_ROOT);
         }
     }
     const handleLanguage = (date) => {

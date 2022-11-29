@@ -17,7 +17,7 @@ import {
 import { FilterUserTypeOptions } from "src/constants/selectOptions";
 import IUser from "src/interfaces/User/IUser";
 import IPagedModel from "src/interfaces/IPagedModel";
-import { getUserList } from "../reducer";
+import { getUserList, disableUser } from "../reducer";
 import { DefaultLimit } from "src/constants/User/UserContants";
 
 const ListUser = () => {
@@ -66,6 +66,7 @@ const ListUser = () => {
 
       setQuery({
         ...query,
+        page: 1,
         types,
       });
 
@@ -116,6 +117,14 @@ const ListUser = () => {
     fetchData();
   }, [query]);
 
+  const handleDisable = (id) => { 
+    dispatch(disableUser({
+      id: id,
+      handleResult:(result, message)=>{
+        if(result) fetchData();
+      }
+    }))
+  };
 
   return (
     <>
@@ -162,6 +171,7 @@ const ListUser = () => {
           result={actionResult}
           handlePage={handlePage}
           handleSort={handleSort}
+          handleDisable={handleDisable}
           sortState={{
             columnValue: query.sortColumn,
             orderBy: query.sortOrder,

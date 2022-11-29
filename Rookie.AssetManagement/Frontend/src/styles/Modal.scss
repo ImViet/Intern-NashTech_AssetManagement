@@ -10,6 +10,11 @@
     }
 }
 
+.modal-backdrop.show{
+    opacity: 0.4;
+    background-color: #fff;
+}
+
 .modal-content{
     border-radius: 10px;
     overflow: hidden;
@@ -18,6 +23,7 @@
     .modal-header {
         background-color: rgba(239,241,245,1);
         border-bottom: 2px solid rgb(164,166,168);
+        padding-left: 81px;
         .modal-title {
             color: rgba(207,35,56,1);
             font-weight: bold;

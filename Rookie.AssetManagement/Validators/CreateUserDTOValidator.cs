@@ -25,7 +25,6 @@ public class CreateUserDTOValidator : AbstractValidator<UserCreateDto> {
 
         RuleFor(user=>user.JoinedDate)
             .Cascade(CascadeMode.Stop)
-            .LessThanOrEqualTo(DateTime.Now)
             .GreaterThanOrEqualTo(user=>user.DateOfBirth
             .AddYears(+18))
             .WithMessage("User under the age of 18 may not join company. Please select a different date");

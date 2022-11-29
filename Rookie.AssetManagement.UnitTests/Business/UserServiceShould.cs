@@ -25,8 +25,6 @@ using FluentAssertions.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Rewrite;
 
 
 namespace Rookie.AssetManagement.UnitTests.Business
@@ -36,7 +34,9 @@ namespace Rookie.AssetManagement.UnitTests.Business
         private readonly UserService _userService;
 
         private readonly Mock<IBaseRepository<User>> _userRepository;
+
         private readonly Mock<UserManager<User>> _userManager;
+
         private readonly IMapper _mapper;
 
         private readonly CancellationToken _cancellationToken;
@@ -44,10 +44,10 @@ namespace Rookie.AssetManagement.UnitTests.Business
         public UserServiceShould()
         {
             _userRepository = new Mock<IBaseRepository<User>>();
-            _userManager = new Mock<UserManager<User>>();
+            _userManager = new Mock<UserManager<User>>(Mock.Of<IUserStore<User>>(), null, null, null, null, null, null, null, null);
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
             _mapper = config.CreateMapper();
-            _userService = new UserService(_userRepository.Object, null,_mapper);
+            _userService = new UserService(_userRepository.Object, _userManager.Object, _mapper);
             _cancellationToken = new CancellationToken();
         }
         [Fact]
@@ -85,8 +85,6 @@ namespace Rookie.AssetManagement.UnitTests.Business
             Assert.Equal("Trieu", result.FirstName);
         }
 
-
-
         [Fact]
         public async Task UpdateAsyncShouldThrowNotFoundException()
         {
@@ -100,6 +98,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
             //Assert
             await act.Should().ThrowAsync<NotFoundException>();
         }
+
         [Fact]
         public async Task UpdateAsyncShouldSuccess()
         {

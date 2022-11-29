@@ -7,6 +7,7 @@ import { HOME } from "src/constants/pages";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import { isNumber } from "util";
 import { logout } from "../Authorize/reducer";
+import ChangePassword from "../Authorize/ChangePassword";
 
 // eslint-disable-next-line react/display-name
 const CustomToggle = React.forwardRef<any, any>(({ children, onClick }, ref): any => (
@@ -28,7 +29,7 @@ const Header = () => {
   const { account, isAuth } = useAppSelector(state => state.authReducer);
   const dispatch = useAppDispatch();
 
-  const [showModalChangePasswod, setShowModalChangePasswod] = useState(false);
+  const [showModalChangePassword, setShowModalChangePassword] = useState(false);
   const [showConfirmLogout, setShowConfirmLogout] = useState(false);
 
   const headerName = () => {
@@ -57,11 +58,10 @@ const Header = () => {
   }
 
   const openModal = () => {
-    setShowModalChangePasswod(true);
+    setShowModalChangePassword(true);
   };
-
-  const handleHide = () => {
-    setShowModalChangePasswod(false);
+  const hideChangePass = ()=>{
+    setShowModalChangePassword(false);
   }
 
   const handleLogout = () => {
@@ -77,7 +77,7 @@ const Header = () => {
     setShowConfirmLogout(false);
     dispatch(logout());
   };
-
+  
   return (
     <>
       <div className='header align-items-center font-weight-bold'>
@@ -98,7 +98,9 @@ const Header = () => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={openModal}>Change Password</Dropdown.Item>
+                  <Dropdown.Item onClick={openModal}>
+                    Change Password
+                  </Dropdown.Item>
                   <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -120,6 +122,7 @@ const Header = () => {
           </div>
         </div>
       </ConfirmModal>
+      <ChangePassword show={showModalChangePassword} onClose={hideChangePass} />
     </>
   );
 };
