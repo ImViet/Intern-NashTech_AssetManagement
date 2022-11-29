@@ -1,21 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
-import { NotificationManager } from 'react-notifications';
-import differenceInYears from "date-fns/differenceInYears";
 import TextField from 'src/components/FormInputs/TextField';
 import DateField from 'src/components/FormInputs/DateField';
 import CheckboxField from 'src/components/FormInputs/CheckboxField';
 import SelectField from 'src/components/FormInputs/SelectField';
-// import { BRAND_PARENT_ROOT } from 'src/constants/pages';
-// import { USER_PARENT_ROOT } from 'src/constants/pages';
 import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
-// import { createBrand, updateBrand } from './reducer';
-import { Status } from 'src/constants/status';
-import { CategoryTypeOptions, GenderOptions, StateOptions, UserTypeOptions } from 'src/constants/selectOptions';
 import { ASSET, HOME, USER, USER_PARENT_ROOT } from 'src/constants/pages';
-import Gender from 'src/constants/gender';
 import IAssetForm from 'src/interfaces/Asset/IAssetForm';
 import { createAsset, getCategory, getState, updateAsset } from './reducer';
 
@@ -38,7 +30,6 @@ const validationSchema = Yup.object().shape({
 
 type Props = {
     initialUserForm?: IAssetForm;
-
 };
 
 function AssetFormContainer({ initialUserForm = {
@@ -127,7 +118,7 @@ function AssetFormContainer({ initialUserForm = {
                             name="State"
                             label="State"
                             isrequired
-                            options={StateOptions}
+                            options={states}
                             disabled={isUpdate ? true : false}
                             checked = {false} />
 
