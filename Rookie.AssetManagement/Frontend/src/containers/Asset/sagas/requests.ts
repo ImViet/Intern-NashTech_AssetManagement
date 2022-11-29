@@ -6,7 +6,23 @@ import qs from "qs";
 import EndPoints from "src/constants/endpoints";
 import ICategory from "src/interfaces/Category/ICategory";
 import IState from "src/interfaces/Asset/IState";
+import IAssetForm from "src/interfaces/Asset/IAssetForm";
 
+export function createAssetRequest(
+  assetForm: IAssetForm
+): Promise<AxiosResponse<IAsset>> {
+  return RequestService.axios.post(EndPoints.asset, assetForm, {
+    paramsSerializer: (params) => JSON.stringify(params),
+  });
+}
+
+// export function updateRequest(
+//   userForm: IUserForm
+// ): Promise<AxiosResponse<IUser>> {
+//   return RequestService.axios.put(EndPoints.user, userForm, {
+//     paramsSerializer: (params) => JSON.stringify(params),
+//   });
+// }
 
 export function getAssetsRequest(
     assetQuery: IQueryAssetModel
