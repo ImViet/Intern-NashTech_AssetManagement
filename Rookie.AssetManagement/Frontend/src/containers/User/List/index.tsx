@@ -120,7 +120,15 @@ const ListUser = () => {
     dispatch(disableUser({
       id: id,
       handleResult: (result, message) => {
-        if (result) fetchData();
+        if (result) {
+          setQuery({
+            ...query,
+            page: 1,
+            limit: DefaultLimit,
+            sortOrder: DECSENDING,
+            sortColumn: DEFAULT_USER_SORT_COLUMN_NAME,
+          });
+        }
       }
     }))
   };
