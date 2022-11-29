@@ -1,6 +1,8 @@
 ﻿using Rookie.AssetManagement.Contracts.Dtos.AuthDtos;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
+using Rookie.AssetManagement.Contracts.Dtos.CategoryDtos;
+using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
 
 namespace Rookie.AssetManagement.Business
@@ -67,6 +69,8 @@ namespace Rookie.AssetManagement.Business
             CreateMap<User, AccountDto>()
                 .ForMember(d => d.FullName, t => t.MapFrom(src => src.FirstName + " " + src.LastName))
                 .ForMember(d => d.Token, t => t.Ignore());
+            CreateMap<Category,CategoryDto>();
+            CreateMap<State,StateDto>();
         }
 
         private void MapperAssetFromPresentationLayer()

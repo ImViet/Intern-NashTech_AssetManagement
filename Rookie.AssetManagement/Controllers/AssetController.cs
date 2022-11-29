@@ -4,7 +4,8 @@ using Rookie.AssetManagement.Business.Interfaces;
 using Rookie.AssetManagement.Business.Services;
 using Rookie.AssetManagement.Contracts;
 using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
-using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
+using Rookie.AssetManagement.Contracts.Dtos.CategoryDtos;
+using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
 using System;
 using System.Linq;
 using System.Threading;
@@ -17,30 +18,52 @@ namespace Rookie.AssetManagement.Controllers
     public class AssetController : ControllerBase
     {
         private readonly IAssetService _assetService;
-        public AssetController(IAssetService assetService)
+        private readonly IStateService _stateService;
+        private readonly ICategoryService _categoryService;
+
+        public AssetController(IAssetService assetService, IStateService stateService, ICategoryService categoryService)
         {
             _assetService = assetService;
+            _stateService = stateService;
+            _categoryService = categoryService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<AssetDto>> GetAllUser()
+        [Route("GetAllAsset")]
+        public async Task<ActionResult<AssetDto>> GetAllAsset()
         {
             return Ok(await _assetService.GetAllAsync());
         }
 
         [HttpGet]
+        [Route("GetAllState")]
+        public async Task<ActionResult<StateDto>> GetAllState()
+        {
+            return Ok(await _stateService.GetAllAsync());
+        }
+                
+        [HttpGet]
+        [Route("GetAllCategory")]
+        public async Task<ActionResult<CategoryDto>> GetAllCategory()
+        {
+            return Ok(await _categoryService.GetAllAsync());
+        }
+
+        [HttpGet]
         [Route("GetAsset")]
-        public async Task<ActionResult<PagedResponseModel<AssetDto>>> GetUser(
+        public async Task<ActionResult<PagedResponseModel<AssetDto>>> GetAsset(
         [FromQuery] AssetQueryCriteriaDto assetCriteriaDto,
         CancellationToken cancellationToken)
         {
             var location = User.Claims.FirstOrDefault(x => x.Type.Equals("Location", StringComparison.OrdinalIgnoreCase))?.Value;
 
-            var userResponses = await _assetService.GetByPageAsync(
+            var assetResponses = await _assetService.GetByPageAsync(
                                             assetCriteriaDto,
                                             cancellationToken,
                                             location);
-            return Ok(userResponses);
+            return Ok(assetResponses);
         }
+
+
     }
 }
