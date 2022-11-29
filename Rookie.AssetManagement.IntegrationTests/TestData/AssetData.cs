@@ -1,4 +1,6 @@
 ﻿using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
+using Rookie.AssetManagement.Contracts.Dtos.CategoryDtos;
+using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
 using Rookie.AssetManagement.DataAccessor.Data;
 using Rookie.AssetManagement.DataAccessor.Entities;
 using Rookie.AssetManagement.DataAccessor.Enum;
@@ -35,7 +37,7 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                 new Asset()
                 {
                     AssetCode = "MO000001",
-                    AssetName = "Laptop Asus",
+                    AssetName = "Monitor",
                     Category = new Category()
                     {
                         CategoryName = "Monitor",
@@ -50,11 +52,11 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                 },
                 new Asset()
                 {
-                    AssetCode = "IP000002",
-                    AssetName = "Ipad 1",
+                    AssetCode = "PC000002",
+                    AssetName = "PC 1",
                     Category = new Category()
                     {
-                     CategoryName = "Ipad",
+                     CategoryName = "Personal Computer",
                     },
                     Specification = "",
                     InstalledDate = new DateTime(),
@@ -63,6 +65,39 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                      StateName = "Available",
                     },
                     IsDeleted = false
+                },
+            };
+        }
+        public static List<AssetDto> GetAllAsset()
+        {
+            return new List<AssetDto>()
+            {
+                new AssetDto()
+                {
+                    AssetCode = "LA000001",
+                    AssetName = "Laptop Asus",
+                    Category = "Laptop",
+                    Specification = "",
+                    InstalledDate = new DateTime(),
+                    State =  "",
+                },
+                new AssetDto()
+                {
+                    AssetCode = "MO000001",
+                    AssetName = "Monitor",
+                    Category = "Monitor",
+                    Specification = "",
+                    InstalledDate = new DateTime(),
+                    State =  "",
+                },
+                new AssetDto()
+                {
+                   AssetCode = "PC000001",
+                    AssetName = "Personal Computer",
+                    Category = "Personal Computer",
+                    Specification = "",
+                    InstalledDate = new DateTime(),
+                    State =  "",
                 },
             };
         }
@@ -106,7 +141,7 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                 },
                 new Category()
                 {
-                    CategoryName = "Ipad",
+                    CategoryName = "Personal Computer",
                 },
             };
         }

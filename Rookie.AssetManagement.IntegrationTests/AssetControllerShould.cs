@@ -21,6 +21,8 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Rookie.AssetManagement.Contracts.Dtos.CategoryDtos;
+using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
 
 namespace Rookie.AssetManagement.IntegrationTests
 {
@@ -98,6 +100,43 @@ namespace Rookie.AssetManagement.IntegrationTests
         public async Task AddAsyncShouldThrowExceptionAsync()
         {
             await Assert.ThrowsAsync<ArgumentNullException>(() => _assetController.AddAssetAsync(null));
+        }
+        [Fact]
+        public async Task GetAllAssetShouldReturnAll()
+        {
+            //Arrange
+            var assetList = AssetData.GetAllAsset();
+            //Act
+            var result = await _assetController.GetAllAsset();
+            //Assert
+            result.Should().NotBeNull();
+            var actionResult = Assert.IsType<OkObjectResult>(result.Result);
+            var returnValue = Assert.IsType<List<AssetDto>>(actionResult.Value);
+            Assert.Equal(assetList.Count, returnValue.Count);
+        }
+        [Fact]
+        public async Task GetAllCategoryShouldReturnAll()
+        {
+            //Arrange
+            //Act
+            var result = await _assetController.GetAllCategory();
+            //Assert
+            result.Should().NotBeNull();
+            var actionResult = Assert.IsType<OkObjectResult>(result.Result);
+             var returnValue = Assert.IsType<List<CategoryDto>>(actionResult.Value);
+            Assert.Equal(6, returnValue.Count);
+        }
+        [Fact]
+        public async Task GetAllStateShouldReturnAll()
+        {
+            //Arrange
+            //Act
+            var result = await _assetController.GetAllState();
+            //Assert 
+            result.Should().NotBeNull();
+            var actionResult = Assert.IsType<OkObjectResult>(result.Result);
+            var returnValue = Assert.IsType<List<StateDto>>(actionResult.Value);
+            Assert.Equal(8, returnValue.Count);
         }
 
 
