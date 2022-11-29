@@ -14,6 +14,8 @@ namespace Rookie.AssetManagement.Business
             services.AddTransient<IUserService,UserService>();
             services.AddTransient<IAuthService,AuthService>();
             services.AddTransient<IAssetService,AssetService>();
+            services.AddTransient<IStateService,StateService>();
+            services.AddTransient<ICategoryService,CategoryService>();
         }
     }
 }
