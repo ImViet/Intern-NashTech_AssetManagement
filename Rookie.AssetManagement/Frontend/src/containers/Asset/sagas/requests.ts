@@ -5,6 +5,7 @@ import RequestService from "src/services/request";
 import qs from "qs";
 import EndPoints from "src/constants/endpoints";
 import ICategory from "src/interfaces/Category/ICategory";
+import IState from "src/interfaces/Asset/IState";
 
 
 export function getAssetsRequest(
@@ -22,3 +23,9 @@ export function getCategoryRequest(
 ): Promise<AxiosResponse<ICategory[]>> {
   return RequestService.axios.get(EndPoints.category);
 }
+
+export function getStateRequest(
+  
+  ): Promise<AxiosResponse<IState[]>> {
+    return RequestService.axios.get(EndPoints.state);
+  }

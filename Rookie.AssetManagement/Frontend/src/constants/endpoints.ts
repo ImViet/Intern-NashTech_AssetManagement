@@ -7,7 +7,8 @@ const Endpoints = {
   changePassword: "api/Auth/change-password",
   asset:"api/Asset",
   searchAsset:"api/Asset/GetAsset",
-  category:"api/Asset/GetAllCategory"
+  category:"api/Asset/GetAllCategory",
+  state:"api/Asset/GetAllState"
 };
 
 export default Endpoints;

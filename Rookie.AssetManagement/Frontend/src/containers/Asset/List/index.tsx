@@ -15,7 +15,7 @@ import {
 import { FilterAssetStateOptions, FilterCategoryOptions } from "src/constants/selectOptions";
 import IPagedModel from "src/interfaces/IPagedModel";
 import { DefaultLimit } from "src/constants/User/UserContants";
-import { getAssetList, getCategory } from "../reducer";
+import { getAssetList, getCategory, getState } from "../reducer";
 import IQueryAssetModel from "src/interfaces/Asset/IQueryAssetModel";
 import SelectBox from "src/components/SelectBox";
 
@@ -156,6 +156,10 @@ const ListAsset = () => {
 
   useEffect(() => {
     dispatch(getCategory())
+  }, []);
+
+  useEffect(() => {
+    dispatch(getState())
   }, []);
 
   return (

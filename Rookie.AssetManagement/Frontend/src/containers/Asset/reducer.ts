@@ -11,6 +11,7 @@ import IAssetForm from "src/interfaces/Asset/IAssetForm";
 
 type AssetState = {
   FilterAssetCategoryOptions: ISelectOption[];
+  FilterAssetStateOptions: ISelectOption[];
   loading: boolean;
   assetResult: IAsset | null;
   actionResult: IAsset | null;
@@ -35,6 +36,7 @@ const initialState: AssetState = {
   assetResult: null,
   actionResult: null,
   FilterAssetCategoryOptions: [],
+  FilterAssetStateOptions: [],
 };
 
 const AssetReducerSlice = createSlice({
@@ -98,6 +100,20 @@ const AssetReducerSlice = createSlice({
         loading: false,
       };
     },
+    getState: (state) => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+    setState: (state, action: PayloadAction<ISelectOption[]>) => {
+      const stateOptions = action.payload;
+      return {
+        ...state,
+        FilterAssetStateOptions: stateOptions,
+        loading: false,
+      };
+    },
   },
 });
 
@@ -108,6 +124,8 @@ export const {
   getAssetList,
   getCategory,
   setCategory,
+  getState,
+  setState,
   setStatus,
 } = AssetReducerSlice.actions;
 
