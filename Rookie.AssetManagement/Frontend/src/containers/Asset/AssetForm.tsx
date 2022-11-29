@@ -13,15 +13,15 @@ import { createAsset, getCategory, getState, updateAsset } from './reducer';
 
 
 const initialFormValues: IAssetForm = {
-    Name: '',
-    Category: '',
+    AssetName: '',
+    Category: "",
     Specification: '',
     InstalledDate: undefined,
     State: 2,
 };
 
 const validationSchema = Yup.object().shape({
-    Name: Yup.string().required(""),
+    AssetName: Yup.string().required(""),
     Category: Yup.string().required(""),
     Specification: Yup.string().required(""),
     InstalledDate: Yup.date().required(""),
@@ -29,10 +29,10 @@ const validationSchema = Yup.object().shape({
 });
 
 type Props = {
-    initialUserForm?: IAssetForm;
+    initialAssetForm?: IAssetForm;
 };
 
-function AssetFormContainer({ initialUserForm = {
+function AssetFormContainer({ initialAssetForm = {
     ...initialFormValues
 } }) {
 
@@ -44,7 +44,7 @@ function AssetFormContainer({ initialUserForm = {
 
     const dispatch = useAppDispatch();
 
-    const isUpdate = initialUserForm.id ? true : false;
+    const isUpdate = initialAssetForm.id ? true : false;
     // if(!isUpdate){
     //     initialFormValues.joinedDate = new Date();
     // }
@@ -65,7 +65,7 @@ function AssetFormContainer({ initialUserForm = {
     },[])
     return (
         <Formik
-            initialValues={initialUserForm}
+            initialValues={initialAssetForm}
             enableReinitialize
             validationSchema={validationSchema}
 
@@ -86,8 +86,8 @@ function AssetFormContainer({ initialUserForm = {
                 return (
                     <Form className='intro-y col-lg-6 col-12'>
                         <TextField
-                            name="Name"
-                            label="Name"
+                            name="AssetName"
+                            label="AssetName"
                             placeholder=""
                             isrequired
                             disabled={isUpdate ? true : false} />

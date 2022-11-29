@@ -5,8 +5,76 @@ import { setState, setStatus } from "src/containers/Asset/reducer";
 import IQueryAssetModel from "src/interfaces/Asset/IQueryAssetModel";
 import IError from "src/interfaces/IError";
 import ISelectOption from "src/interfaces/ISelectOption";
-import { setAssetList, setCategory } from "../reducer";
-import { getAssetsRequest, getCategoryRequest, getStateRequest } from "./requests";
+import { toUTC } from "src/utils/formatDateTime";
+import { 
+  setAssetList, 
+  setCategory,
+  CreateAction,
+  UpdateAction,
+  setActionResult,
+} from "../reducer";
+import {
+  createAssetRequest,
+   getAssetsRequest, getCategoryRequest, getStateRequest, 
+ } from "./requests";
+
+export function* handleCreateAsset(action: PayloadAction<CreateAction>) {
+  const { handleResult, formValues } = action.payload;
+  try {
+    console.log(formValues);
+
+    formValues.InstalledDate = toUTC(formValues.InstalledDate);
+
+    const { data } = yield call(createAssetRequest, formValues);
+
+    data.InstalledDate = new Date(data.InstalledDate);
+
+    if (data) {
+      handleResult(true);
+    }
+
+    yield put(setActionResult(data));
+  } catch (error: any) {
+    const errors = error.response.data.errors;
+    const firstError = errors[Object.keys(errors)[0]][0];
+    handleResult(false, firstError);
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: firstError,
+      })
+    );
+  }
+}
+
+// export function* handleUpdateUser(action: PayloadAction<UpdateAction>) {
+//   const { handleResult, formValues } = action.payload;
+//   try {
+//     console.log("handleUpdateUser");
+//     console.log(formValues);
+
+//     const { data } = yield call(updateUserRequest, formValues);
+
+//     data.dateOfBirth = new Date(data.dateOfBirth);
+//     data.joinedDate = new Date(data.joinedDate);
+
+//     if (data) {
+//       handleResult(true, data.firstName);
+//     }
+
+//     yield put(setActionResult(data));
+//   } catch (error: any) {
+//     const errors = error.response.data.errors;
+//     const firstError = errors[Object.keys(errors)[0]][0];
+//     handleResult(false, firstError);
+//     yield put(
+//       setStatus({
+//         status: Status.Failed,
+//         error: firstError,
+//       })
+//     );
+//   }
+// }
 
 export function* handleGetAssetList(action: PayloadAction<IQueryAssetModel>) {
     const queryAssetModel = action.payload;

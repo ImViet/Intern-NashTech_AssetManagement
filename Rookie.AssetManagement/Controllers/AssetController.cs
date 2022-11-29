@@ -66,7 +66,7 @@ namespace Rookie.AssetManagement.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<AssetDto>> AddAssetAsync([FromForm] AssetCreateDto assetCreate)
+        public async Task<ActionResult<AssetDto>> AddAssetAsync([FromBody] AssetCreateDto assetCreate)
         {
             var location = User.Claims.FirstOrDefault(x => x.Type.Equals("Location", StringComparison.OrdinalIgnoreCase))?.Value;
             var asset = await _assetService.AddAssetAsync(assetCreate, location);

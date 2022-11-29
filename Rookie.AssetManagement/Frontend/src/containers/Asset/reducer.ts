@@ -114,12 +114,22 @@ const AssetReducerSlice = createSlice({
         loading: false,
       };
     },
+    setActionResult: (state, action: PayloadAction<IAsset>): AssetState => {
+      const actionResult = action.payload;
+
+      return {
+        ...state,
+        actionResult,
+        loading: false,
+      };
+    },
   },
 });
 
 export const {
   createAsset,
   updateAsset,
+  setActionResult,
   setAssetList,
   getAssetList,
   getCategory,
