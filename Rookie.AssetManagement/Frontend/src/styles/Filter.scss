@@ -88,8 +88,14 @@
         }
 }
 
-
-// State Filter
+//Type Filter
+.filter-type .filter-css div:first-child div:first-child div:first-child:only-child {
+    width: 190px;
+}
+.filter-type .filter-css div:first-child{
+    width: 190px;
+}
+//State Filter
 .filter-state .filter-css div:first-child div:first-child div:first-child:only-child {
     width: 190px;
 }

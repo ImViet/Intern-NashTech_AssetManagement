@@ -139,11 +139,13 @@ const ListUser = () => {
 
       <div>
         <div className="d-flex mb-5 intro-x">
-          <SelectBox
-            options={FilterUserTypeOptions}
-            placeholderButtonLabel="Type"
-            value={selectedType}
-            onChange={handleType} />
+         <div className="filter-type">
+          <SelectBox               
+              options={FilterUserTypeOptions}
+              placeholderButtonLabel="Type"
+              value={selectedType}
+              onChange={handleType}/>
+         </div>
 
           <div className="d-flex align-items-center w-ld ml-auto mr-2">
             <div className="input-group">
