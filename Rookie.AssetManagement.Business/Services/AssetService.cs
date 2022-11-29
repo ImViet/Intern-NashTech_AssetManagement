@@ -83,7 +83,7 @@ namespace Rookie.AssetManagement.Business.Services
                 var sortColumn = assetQueryCriteria.SortColumn.ToUpper();
                 switch (sortColumn)
                 {
-                    case "STAFFCODE":
+                    case "ASSETCODE":
                         assetQuery = assetQueryCriteria.SortOrder == 0?assetQuery.OrderBy(x => x.AssetCode):assetQuery.OrderByDescending(x => x.AssetCode);
                         break;
                     case "ASSETNAME":
