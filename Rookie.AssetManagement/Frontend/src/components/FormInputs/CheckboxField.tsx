@@ -33,7 +33,7 @@ const CheckboxField: React.FC<InputFieldProps> = (props) => {
                 <div className="col">
                     {
                         options.map(({ id, label: optionLabel, value: optionValue }) => (
-                            <div className="form-check form-check-inline" key={id}>
+                            <div className="form-check form-check-inline " key={id}>
                                 <input className="form-check-input input-radio"
                                     id={id.toString()}
                                     type="radio"
