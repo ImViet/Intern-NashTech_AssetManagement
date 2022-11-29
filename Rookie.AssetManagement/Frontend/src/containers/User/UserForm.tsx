@@ -124,7 +124,6 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
                     else {
                         dispatch(createUser({ handleResult, formValues: values }));
                     }
-
                     setLoading(false);
                 }, 1000);
             }}

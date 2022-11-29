@@ -13,12 +13,10 @@ import SelectField from 'src/components/FormInputs/SelectField';
 import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
 // import { createBrand, updateBrand } from './reducer';
 import { Status } from 'src/constants/status';
-import { GenderOptions, StateOptions, UserTypeOptions } from 'src/constants/selectOptions';
-import { HOME, USER, USER_PARENT_ROOT } from 'src/constants/pages';
+import { CategoryTypeOptions, GenderOptions, StateOptions, UserTypeOptions } from 'src/constants/selectOptions';
+import { ASSET, HOME, USER, USER_PARENT_ROOT } from 'src/constants/pages';
 import Gender from 'src/constants/gender';
 import IAssetForm from 'src/interfaces/Asset/IAssetForm';
-
-//import { createUser, updateUser } from './reducer';
 
 
 const initialFormValues: IAssetForm = {
@@ -140,7 +138,7 @@ function AssetFormContainer({ initialUserForm = {
                         <SelectField
                             name="Category"
                             label="Category"
-                            options={UserTypeOptions}
+                            options={CategoryTypeOptions}
                             isrequired
                             disabled={isUpdate ? true : false} />
                         
@@ -174,7 +172,7 @@ function AssetFormContainer({ initialUserForm = {
                                     Save {(loading) && <img src="/oval.svg" className='w-4 h-4 ml-2 inline-block' />}
                                 </button>
 
-                                <Link to={"/" + USER} className="btn btn-outline-secondary ml-2">
+                                <Link to={"/" + ASSET} className="btn btn-outline-secondary ml-2">
                                     Cancel
                                 </Link>
                             </div>

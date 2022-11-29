@@ -5,6 +5,7 @@ import IError from "src/interfaces/IError";
 import IPagedModel from "src/interfaces/IPagedModel";
 import IAsset from "src/interfaces/Asset/IAsset";
 import IQueryAssetModel from "src/interfaces/Asset/IQueryAssetModel";
+import IAssetForm from "src/interfaces/Asset/IAssetForm";
 
 type AssetState = {
   loading: boolean;
@@ -13,6 +14,16 @@ type AssetState = {
   assets: IPagedModel<IAsset> | null;
   status?: number;
   error?: IError;
+};
+
+export type CreateAction = {
+  handleResult: Function;
+  formValues: IAssetForm;
+};
+
+export type UpdateAction = {
+  handleResult: Function;
+  formValues: IAssetForm;
 };
 
 const initialState: AssetState = {
@@ -26,6 +37,20 @@ const AssetReducerSlice = createSlice({
   name: "asset",
   initialState,
   reducers: {
+    createAsset: (state, action: PayloadAction<CreateAction>): AssetState => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+    updateAsset: (state, action: PayloadAction<UpdateAction>): AssetState => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+
+    
     getAssetList: (state, action: PayloadAction<IQueryAssetModel>): AssetState => {
       return {
         ...state,
@@ -57,6 +82,8 @@ const AssetReducerSlice = createSlice({
 });
 
 export const {
+  createAsset,
+  updateAsset,
   setAssetList,
   getAssetList,
   setStatus
