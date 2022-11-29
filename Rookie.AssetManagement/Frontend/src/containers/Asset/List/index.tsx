@@ -32,11 +32,11 @@ const ListAsset = () => {
   const [search, setSearch] = useState("");
 
   const [selectedState, setSelectedState] = useState([
-    { id: 1, label: "State", value: "ALL" },
+    { id: 1, label: "State", value: "" },
   ] as ISelectOption[]);
 
   const [selectedCategory, setSelectedCategory] = useState([
-    { id: 1, label: "Category", value: "ALL" },
+    { id: 1, label: "Category", value: "" },
   ] as ISelectOption[]);
 
   const {FilterAssetCategoryOptions} = useAppSelector(state=> state.assetReducer)
