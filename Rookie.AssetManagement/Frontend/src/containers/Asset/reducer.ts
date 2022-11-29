@@ -5,8 +5,11 @@ import IError from "src/interfaces/IError";
 import IPagedModel from "src/interfaces/IPagedModel";
 import IAsset from "src/interfaces/Asset/IAsset";
 import IQueryAssetModel from "src/interfaces/Asset/IQueryAssetModel";
+import ICategory from "src/interfaces/Category/ICategory";
+import ISelectOption from "src/interfaces/ISelectOption";
 
 type AssetState = {
+  FilterAssetCategoryOptions: ISelectOption[];
   loading: boolean;
   assetResult: IAsset | null;
   actionResult: IAsset | null;
@@ -20,6 +23,7 @@ const initialState: AssetState = {
   loading: false,
   assetResult: null,
   actionResult: null,
+  FilterAssetCategoryOptions:[]
 };
 
 const AssetReducerSlice = createSlice({
@@ -53,12 +57,28 @@ const AssetReducerSlice = createSlice({
         loading: false,
       };
     },
+    getCategory: (state) => {
+      return{
+        ...state,
+        loading: true,
+      };
+    },
+    setCategory: (state, action: PayloadAction<ISelectOption[]>) => {
+      const categoryOptions = action.payload;
+      return{
+        ...state,
+        FilterAssetCategoryOptions:categoryOptions,
+        loading: false,
+      };
+    }
   },
 });
 
 export const {
   setAssetList,
   getAssetList,
+  getCategory,
+  setCategory,
   setStatus
 } = AssetReducerSlice.actions;
 

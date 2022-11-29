@@ -6,7 +6,8 @@ const Endpoints = {
   search: "api/users/GetUser",
   changePassword: "api/Auth/change-password",
   asset:"api/Asset",
-  searchAsset:"api/Asset/GetAsset"
+  searchAsset:"api/Asset/GetAsset",
+  category:"api/Asset/GetAllCategory"
 };
 
 export default Endpoints;
