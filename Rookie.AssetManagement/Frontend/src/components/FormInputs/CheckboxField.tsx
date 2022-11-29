@@ -9,17 +9,24 @@ type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
     name: string;
     isrequired?: boolean;
     options: ISelectOption[];
+    checked? : boolean;
 };
 
 const CheckboxField: React.FC<InputFieldProps> = (props) => {
     const [field, { error, touched, value }, { setValue }] = useField(props);
 
-    const { name, options, label, isrequired } = props;
+    const { name, options, label, isrequired, checked } = props;
 
     const handleChange = (e) => {
         setValue(e.target.value)
     };
-    
+
+    const display = () => {
+        if (checked) return 'form-check-inline';
+
+        return '';
+    };
+
     return (
         <>
             <div className="mb-3 row">
@@ -32,7 +39,7 @@ const CheckboxField: React.FC<InputFieldProps> = (props) => {
                 <div className="col">
                     {
                         options.map(({ id, label: optionLabel, value: optionValue }) => (
-                            <div className="form-check form-check-inline " key={id}>
+                            <div className={`form-check ${display()}`} key={id}>
                                 <input className="form-check-input input-radio"
                                     id={id.toString()}
                                     type="radio"
