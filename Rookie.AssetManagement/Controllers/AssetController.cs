@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Rookie.AssetManagement.Business.Interfaces;
 using Rookie.AssetManagement.Business.Services;
+using Rookie.AssetManagement.Constants;
 using Rookie.AssetManagement.Contracts;
 using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
 using Rookie.AssetManagement.Contracts.Dtos.CategoryDtos;
@@ -41,7 +42,7 @@ namespace Rookie.AssetManagement.Controllers
         {
             return Ok(await _stateService.GetAllAsync());
         }
-                
+
         [HttpGet]
         [Route("GetAllCategory")]
         public async Task<ActionResult<CategoryDto>> GetAllCategory()
@@ -64,6 +65,12 @@ namespace Rookie.AssetManagement.Controllers
             return Ok(assetResponses);
         }
 
-
+        [HttpPost]
+        public async Task<ActionResult<AssetDto>> AddAssetAsync([FromForm] AssetCreateDto assetCreate)
+        {
+            var location = User.Claims.FirstOrDefault(x => x.Type.Equals("Location", StringComparison.OrdinalIgnoreCase))?.Value;
+            var user = await _assetService.AddAssetAsync(assetCreate, location);
+            return Created(Endpoints.User, user);
+        }
     }
 }
