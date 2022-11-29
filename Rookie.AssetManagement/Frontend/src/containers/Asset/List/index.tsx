@@ -4,32 +4,31 @@ import { Search } from "react-feather";
 import ReactMultiSelectCheckboxes from "react-multiselect-checkboxes";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import AssetTable from "./AssetTable";
-import IUserForm from "src/interfaces/User/IUserForm";
-import IQueryUserModel from "src/interfaces/User/IQueryUserModel";
 import ISelectOption from "src/interfaces/ISelectOption";
 import { Link, useLocation } from "react-router-dom";
 import {
   ACCSENDING,
   DECSENDING,
-  DEFAULT_USER_SORT_COLUMN_NAME,
   DEFAULT_PAGE_LIMIT,
+  DEFAULT_ASSET_SORT_COLUMN_NAME,
 } from "src/constants/paging";
 import { FilterAssetStateOptions, FilterCategoryOptions } from "src/constants/selectOptions";
-import IUser from "src/interfaces/User/IUser";
 import IPagedModel from "src/interfaces/IPagedModel";
-// import { getUserList } from "../reducer";
 import { DefaultLimit } from "src/constants/User/UserContants";
+import { getAssetList } from "../reducer";
+import IQueryAssetModel from "src/interfaces/Asset/IQueryAssetModel";
+import SelectBox from "src/components/SelectBox";
 
 const ListAsset = () => {
   const dispatch = useAppDispatch();
-  const { users, actionResult } = useAppSelector((state) => state.userReducer);
+  const { assets, actionResult } = useAppSelector((state) => state.assetReducer);
 
   const [query, setQuery] = useState({
-    page: users?.currentPage ?? 1,
+    page: assets?.currentPage ?? 1,
     limit: DefaultLimit,
     sortOrder: DECSENDING,
-    sortColumn: DEFAULT_USER_SORT_COLUMN_NAME,
-  } as IQueryUserModel);
+    sortColumn: DEFAULT_ASSET_SORT_COLUMN_NAME,
+  } as IQueryAssetModel);
 
   const [search, setSearch] = useState("");
 
@@ -148,7 +147,7 @@ const ListAsset = () => {
   };
 
   const fetchData = () => {
-    // dispatch(getUserList(query))
+    dispatch(getAssetList(query))
   };
 
   useEffect(() => {
@@ -162,32 +161,27 @@ const ListAsset = () => {
 
       <div>
         <div className="d-flex mb-5 intro-x">
-          <div className="d-flex align-items-center w-md mr-5 state-list">
+          <div className="d-flex align-items-center w-md mr-5">
             <div className="button">
-                <ReactMultiSelectCheckboxes
+              <div className="filter-state">
+                <SelectBox               
                 options={FilterAssetStateOptions}
-                hideSearch={true}
                 placeholderButtonLabel="Type"
                 value={selectedState}
-                onChange={handleState}
-                />
-            </div>
-            <div className="border incon-filter p-2">
-              <FunnelFill />
+                onChange={handleState}/>
+              </div>
             </div>
           </div>
-          <div className="d-flex align-items-center w-md mr-5 state-list">
+          <div className="d-flex align-items-center w-md mr-5">
             <div className="button">
-                <ReactMultiSelectCheckboxes
-                options={FilterCategoryOptions}
-                hideSearch={true}
-                placeholderButtonLabel="Type"
-                value={selectedCategory}
-                onChange={handleCategory}
-                />
-            </div>
-            <div className="border incon-filter p-2">
-              <FunnelFill />
+                <div className="filter-category">
+                  <SelectBox
+                  options={FilterCategoryOptions}
+                  placeholderButtonLabel="Type"
+                  value={selectedCategory}
+                  onChange={handleCategory}
+                  />
+                </div>
             </div>
           </div>
           <div className="d-flex align-items-center w-ld ml-auto mr-2">
@@ -212,7 +206,7 @@ const ListAsset = () => {
         </div>
 
         <AssetTable
-          users={users}
+          assets={assets}
           result={actionResult}
           handlePage={handlePage}
           handleSort={handleSort}

@@ -1,4 +1,5 @@
+import AssetSagas from "src/containers/Asset/sagas";
 import AuthorizeSagas from "src/containers/Authorize/sagas";
 import UserSagas from "src/containers/User/sagas";
 
-export default [AuthorizeSagas, UserSagas];
+export default [AuthorizeSagas, UserSagas,AssetSagas];
