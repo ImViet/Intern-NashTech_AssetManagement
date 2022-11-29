@@ -25,6 +25,11 @@ using FluentAssertions.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Rewrite;
+
+
+
 
 
 namespace Rookie.AssetManagement.UnitTests.Business
@@ -41,7 +46,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
 
         private readonly CancellationToken _cancellationToken;
 
-         public UserServiceShould()
+        public UserServiceShould()
         {
             _userRepository = new Mock<IBaseRepository<User>>();
             _userManager = new Mock<UserManager<User>>(Mock.Of<IUserStore<User>>(), null, null, null, null, null, null, null, null);
@@ -57,7 +62,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
             var usersMock = UserTestData.GetUsers().AsEnumerable().BuildMock();
             _userRepository.Setup(x => x.Entities).Returns(usersMock);
             //Act
-            var result = await _userService.GetByPageAsync(UserTestData.userQueryCriteriaDto , _cancellationToken, "HCM");
+            var result = await _userService.GetByPageAsync(UserTestData.userQueryCriteriaDto, _cancellationToken, "HCM");
             //Assert
             Assert.Equal(1, result.TotalItems);
         }
@@ -73,7 +78,6 @@ namespace Rookie.AssetManagement.UnitTests.Business
         public async Task AddAsyncShouldBeSuccessfullyAsync()
         {
             //Arrange
-
             var ListUser = UserTestData.ListUser().ToList().BuildMock();
             var newUser = _mapper.Map<User>(UserTestData.GetCreateUserDto());
             _userRepository.Setup(x => x.Entities).Returns(ListUser);
@@ -85,6 +89,8 @@ namespace Rookie.AssetManagement.UnitTests.Business
             //Assert
             Assert.Equal("Trieu", result.FirstName);
         }
+
+
 
         [Fact]
         public async Task UpdateAsyncShouldThrowNotFoundException()

@@ -76,14 +76,14 @@ namespace Rookie.AssetManagement.Business
             CreateMap<User, AccountDto>()
                 .ForMember(d => d.FullName, t => t.MapFrom(src => src.FirstName + " " + src.LastName))
                 .ForMember(d => d.Token, t => t.Ignore());
-            CreateMap<Category,CategoryDto>();
-            CreateMap<State,StateDto>();
+            CreateMap<Category, CategoryDto>();
+            CreateMap<State, StateDto>();
         }
 
         private void MapperAssetFromPresentationLayer()
         {
             CreateMap<Asset, AssetDto>()
-                .ForMember(d => d.Category, t=>t.MapFrom(c=>c.Category.CategoryName))
+                .ForMember(d => d.Category, t => t.MapFrom(c => c.Category.CategoryName))
                 .ForMember(d => d.State, t => t.MapFrom(c => c.State.StateName));
         }
     }

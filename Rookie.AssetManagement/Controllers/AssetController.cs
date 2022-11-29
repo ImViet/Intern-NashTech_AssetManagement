@@ -69,8 +69,8 @@ namespace Rookie.AssetManagement.Controllers
         public async Task<ActionResult<AssetDto>> AddAssetAsync([FromForm] AssetCreateDto assetCreate)
         {
             var location = User.Claims.FirstOrDefault(x => x.Type.Equals("Location", StringComparison.OrdinalIgnoreCase))?.Value;
-            var user = await _assetService.AddAssetAsync(assetCreate, location);
-            return Created(Endpoints.User, user);
+            var asset = await _assetService.AddAssetAsync(assetCreate, location);
+            return Created(Endpoints.User, asset);
         }
     }
 }
