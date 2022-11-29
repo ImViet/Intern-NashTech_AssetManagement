@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
@@ -17,6 +17,7 @@ import { CategoryTypeOptions, GenderOptions, StateOptions, UserTypeOptions } fro
 import { ASSET, HOME, USER, USER_PARENT_ROOT } from 'src/constants/pages';
 import Gender from 'src/constants/gender';
 import IAssetForm from 'src/interfaces/Asset/IAssetForm';
+import { createAsset, getCategory, getState, updateAsset } from './reducer';
 
 
 const initialFormValues: IAssetForm = {
@@ -86,6 +87,11 @@ type Props = {
 function AssetFormContainer({ initialUserForm = {
     ...initialFormValues
 } }) {
+
+    const {FilterAssetCategoryOptions ,FilterAssetStateOptions} = useAppSelector(state=> state.assetReducer)
+    const states = useMemo(()=>FilterAssetStateOptions.filter(state => state.label=="Available" ||  state.label=="Not Available"), [FilterAssetStateOptions])
+    const categories = useMemo(()=>FilterAssetCategoryOptions.filter(cate => cate.label!="ALL"), [FilterAssetCategoryOptions])
+    
     const [loading, setLoading] = useState(false);
 
     const dispatch = useAppDispatch();
@@ -105,7 +111,10 @@ function AssetFormContainer({ initialUserForm = {
     const handleLanguage = (date) => {
         setDateOfBirth(date);
     };
-
+    useEffect(()=>{
+        dispatch(getCategory())
+        dispatch(getState())
+    },[])
     return (
         <Formik
             initialValues={initialUserForm}
@@ -116,10 +125,10 @@ function AssetFormContainer({ initialUserForm = {
                 setLoading(true);
                 setTimeout(() => {
                     if (isUpdate) {
-                        // dispatch(updateUser({ handleResult, formValues: values }));
+                        dispatch(updateAsset({ handleResult, formValues: values }));
                     }
                     else {
-                        // dispatch(createUser({ handleResult, formValues: values }));
+                        dispatch(createAsset({ handleResult, formValues: values }));
                     }
                     setLoading(false);
                 }, 1000);
@@ -138,7 +147,7 @@ function AssetFormContainer({ initialUserForm = {
                         <SelectField
                             name="Category"
                             label="Category"
-                            options={CategoryTypeOptions}
+                            options={categories}
                             isrequired
                             disabled={isUpdate ? true : false} />
                         
@@ -161,7 +170,7 @@ function AssetFormContainer({ initialUserForm = {
                             name="State"
                             label="State"
                             isrequired
-                            options={StateOptions}
+                            options={states}
                             disabled={isUpdate ? true : false} />
 
                         <div className="d-flex">
