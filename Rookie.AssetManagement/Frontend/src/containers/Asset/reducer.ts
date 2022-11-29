@@ -7,6 +7,7 @@ import IAsset from "src/interfaces/Asset/IAsset";
 import IQueryAssetModel from "src/interfaces/Asset/IQueryAssetModel";
 import ICategory from "src/interfaces/Category/ICategory";
 import ISelectOption from "src/interfaces/ISelectOption";
+import IAssetForm from "src/interfaces/Asset/IAssetForm";
 
 type AssetState = {
   FilterAssetCategoryOptions: ISelectOption[];
@@ -18,19 +19,45 @@ type AssetState = {
   error?: IError;
 };
 
+export type CreateAction = {
+  handleResult: Function;
+  formValues: IAssetForm;
+};
+
+export type UpdateAction = {
+  handleResult: Function;
+  formValues: IAssetForm;
+};
+
 const initialState: AssetState = {
   assets: null,
   loading: false,
   assetResult: null,
   actionResult: null,
-  FilterAssetCategoryOptions:[]
+  FilterAssetCategoryOptions: [],
 };
 
 const AssetReducerSlice = createSlice({
   name: "asset",
   initialState,
   reducers: {
-    getAssetList: (state, action: PayloadAction<IQueryAssetModel>): AssetState => {
+    createAsset: (state, action: PayloadAction<CreateAction>): AssetState => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+    updateAsset: (state, action: PayloadAction<UpdateAction>): AssetState => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+
+    getAssetList: (
+      state,
+      action: PayloadAction<IQueryAssetModel>
+    ): AssetState => {
       return {
         ...state,
         loading: true,
@@ -58,28 +85,30 @@ const AssetReducerSlice = createSlice({
       };
     },
     getCategory: (state) => {
-      return{
+      return {
         ...state,
         loading: true,
       };
     },
     setCategory: (state, action: PayloadAction<ISelectOption[]>) => {
       const categoryOptions = action.payload;
-      return{
+      return {
         ...state,
-        FilterAssetCategoryOptions:categoryOptions,
+        FilterAssetCategoryOptions: categoryOptions,
         loading: false,
       };
-    }
+    },
   },
 });
 
 export const {
+  createAsset,
+  updateAsset,
   setAssetList,
   getAssetList,
   getCategory,
   setCategory,
-  setStatus
+  setStatus,
 } = AssetReducerSlice.actions;
 
 export default AssetReducerSlice.reducer;

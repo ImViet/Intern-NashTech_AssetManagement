@@ -12,21 +12,19 @@ import SelectField from 'src/components/FormInputs/SelectField';
 // import { USER_PARENT_ROOT } from 'src/constants/pages';
 import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
 // import { createBrand, updateBrand } from './reducer';
-import IUserForm from 'src/interfaces/User/IUserForm';
 import { Status } from 'src/constants/status';
-import { GenderOptions, UserTypeOptions } from 'src/constants/selectOptions';
-import { HOME, USER, USER_PARENT_ROOT } from 'src/constants/pages';
+import { CategoryTypeOptions, GenderOptions, StateOptions, UserTypeOptions } from 'src/constants/selectOptions';
+import { ASSET, HOME, USER, USER_PARENT_ROOT } from 'src/constants/pages';
 import Gender from 'src/constants/gender';
-import { createUser, updateUser } from './reducer';
+import IAssetForm from 'src/interfaces/Asset/IAssetForm';
 
 
-const initialFormValues: IUserForm = {
-    firstName: '',
-    lastName: '',
-    dateOfBirth: undefined,
-    gender: Gender.Female,
-    joinedDate: undefined,
-    type: '',
+const initialFormValues: IAssetForm = {
+    Name: '',
+    Category: '',
+    Specification: '',
+    InstalledData: undefined,
+    State: '',
 };
 
 const validationSchema = Yup.object().shape({
@@ -81,13 +79,13 @@ const validationSchema = Yup.object().shape({
 });
 
 type Props = {
-    initialUserForm?: IUserForm;
+    initialUserForm?: IAssetForm;
 
 };
 
-const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
+function AssetFormContainer({ initialUserForm = {
     ...initialFormValues
-} }) => {
+} }) {
     const [loading, setLoading] = useState(false);
 
     const dispatch = useAppDispatch();
@@ -96,7 +94,6 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
     // if(!isUpdate){
     //     initialFormValues.joinedDate = new Date();
     // }
-
     const [dateOfBirth, setDateOfBirth] = useState();
 
     const navigate = useNavigate();
@@ -104,10 +101,10 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
         if (result) {
             navigate(USER_PARENT_ROOT);
         }
-    }
+    };
     const handleLanguage = (date) => {
         setDateOfBirth(date);
-    }
+    };
 
     return (
         <Formik
@@ -119,60 +116,52 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
                 setLoading(true);
                 setTimeout(() => {
                     if (isUpdate) {
-                        dispatch(updateUser({ handleResult, formValues: values }));
+                        // dispatch(updateUser({ handleResult, formValues: values }));
                     }
                     else {
-                        dispatch(createUser({ handleResult, formValues: values }));
+                        // dispatch(createUser({ handleResult, formValues: values }));
                     }
                     setLoading(false);
                 }, 1000);
-            }}
+            } }
         >
             {(actions) => {
                 return (
                     <Form className='intro-y col-lg-6 col-12'>
                         <TextField
-                            name="firstName"
-                            label="First Name"
+                            name="Name"
+                            label="Name"
                             placeholder=""
                             isrequired
                             disabled={isUpdate ? true : false} />
 
+                        <SelectField
+                            name="Category"
+                            label="Category"
+                            options={CategoryTypeOptions}
+                            isrequired
+                            disabled={isUpdate ? true : false} />
+                        
                         <TextField
-                            name="lastName"
-                            label="Last Name"
+                            name="Specification"
+                            label="Specification"
                             placeholder=""
                             isrequired
                             disabled={isUpdate ? true : false} />
 
                         <DateField
-                            label="Date of Birth"
-                            name="dateOfBirth"
+                            label="Installed Data"
+                            name="InstalledData"
                             placeholder=""
                             isrequired
                             onChangeCapture={handleLanguage}
                             disabled={isUpdate ? true : false} />
 
                         <CheckboxField
-                            name="gender"
-                            label="Gender"
+                            name="State"
+                            label="State"
                             isrequired
-                            options={GenderOptions}
-                            disabled={isUpdate ? true : false} />
-
-                        <DateField
-                            label="Joined Date"
-                            id="joinedDate"
-                            name="joinedDate"
-                            placeholder=""
-                            isrequired
-                            disabled={isUpdate ? true : false} />
-
-                        <SelectField
-                            name="type"
-                            label="Type"
-                            options={UserTypeOptions}
-                            isrequired
+                            options={StateOptions}
                             disabled={isUpdate ? true : false} />
 
                         <div className="d-flex">
@@ -183,16 +172,16 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
                                     Save {(loading) && <img src="/oval.svg" className='w-4 h-4 ml-2 inline-block' />}
                                 </button>
 
-                                <Link to={"/" + USER} className="btn btn-outline-secondary ml-2">
+                                <Link to={"/" + ASSET} className="btn btn-outline-secondary ml-2">
                                     Cancel
                                 </Link>
                             </div>
                         </div>
                     </Form>
-                )
-            }}
+                );
+            } }
         </Formik>
     );
 }
 
-export default UserFormContainer;
+export default AssetFormContainer;

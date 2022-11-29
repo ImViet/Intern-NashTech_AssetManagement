@@ -6,14 +6,12 @@ import LayoutRoute from "src/routes/LayoutRoute";
 
 const NotFound = lazy(() => import("../NotFound"));
 const ListAsset = lazy(() => import("./List"));
-// const CreateUser = lazy(() => import("./Create"));
-// const UpdateUser = lazy(() => import("./Update"));
+const CreateAsset = lazy(() => import("./Create"));
 const User = () => {
   return (
     <Routes>
       <Route path={ASSET_LIST} element={<ListAsset />} />
-      {/* <Route path={CREATE_USER} element={<CreateUser />} />
-      <Route path={EDIT_USER} element={<UpdateUser />} /> */}
+      <Route path={CREATE_ASSET} element={<CreateAsset />} />
     </Routes>
   );
 };

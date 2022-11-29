@@ -152,5 +152,23 @@ namespace Rookie.AssetManagement.UnitTests.Business
             result.Should().NotBeNull();
             _userRepository.Verify(mock => mock.Entities, Times.Once());
         }
+
+        [Fact]
+        public async Task DisableAsyncReturnTrue()
+        {
+            //Arrange
+            var DisableUserId = 1;
+            var usersMock = UserTestData.GetUsers().AsQueryable().BuildMock();
+
+            _userRepository
+                  .Setup(x => x.Entities)
+                  .Returns(usersMock);
+
+            //Act
+            var result = await _userService.DisableAsync(DisableUserId);
+
+            //Assert
+            result.Should().Equals(true);
+        }
     }
 }
