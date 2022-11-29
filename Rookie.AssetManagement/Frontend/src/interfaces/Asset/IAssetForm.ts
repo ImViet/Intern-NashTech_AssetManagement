@@ -5,6 +5,6 @@ export default interface IAssetForm {
   Name: string;
   Category: string
   Specification: string;
-  InstalledData?: Date;
-  State: string;  
+  InstalledDate?: Date;
+  State: number;  
 }

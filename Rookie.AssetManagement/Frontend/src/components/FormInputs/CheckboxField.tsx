@@ -19,7 +19,7 @@ const CheckboxField: React.FC<InputFieldProps> = (props) => {
     const handleChange = (e) => {
         setValue(e.target.value)
     };
-
+    
     return (
         <>
             <div className="mb-3 row">
@@ -29,7 +29,6 @@ const CheckboxField: React.FC<InputFieldProps> = (props) => {
                         <div className="invalid ml-1">*</div>
                     )}
                 </label>
-
                 <div className="col">
                     {
                         options.map(({ id, label: optionLabel, value: optionValue }) => (
@@ -40,7 +39,7 @@ const CheckboxField: React.FC<InputFieldProps> = (props) => {
                                     name={name}
                                     value={optionValue}
                                     onChange={handleChange}
-                                    checked={optionValue === value}
+                                    checked={optionValue == value}
                                 />
                                 <label className="form-check-label" htmlFor={id.toString()}>
                                     {optionLabel}

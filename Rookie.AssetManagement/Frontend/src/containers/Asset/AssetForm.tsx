@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
@@ -17,65 +17,23 @@ import { CategoryTypeOptions, GenderOptions, StateOptions, UserTypeOptions } fro
 import { ASSET, HOME, USER, USER_PARENT_ROOT } from 'src/constants/pages';
 import Gender from 'src/constants/gender';
 import IAssetForm from 'src/interfaces/Asset/IAssetForm';
+import { createAsset, getCategory, getState, updateAsset } from './reducer';
 
 
 const initialFormValues: IAssetForm = {
     Name: '',
     Category: '',
     Specification: '',
-    InstalledData: undefined,
-    State: '',
+    InstalledDate: undefined,
+    State: 2,
 };
 
 const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required(""),
-    lastName: Yup.string().required(""),
-    type: Yup.string().required(""),
-    dateOfBirth: Yup.date().required("")
-        .test("dateOfBirth", "User is under 18. Please select a different date", function (value) {
-            if (value) {
-                return differenceInYears(new Date(), value) >= 18;
-            }
-            return true;
-
-        }),
-    joinedDate: Yup.date()
-        .required("")
-        .test("joinedDate", "User under the age of 18 may not join company. Please select a different date",
-            (value, ctx) => {
-                if (value) {
-                    const condition = new Date(ctx.parent.dateOfBirth);
-                    condition.setFullYear(condition.getFullYear() + 18);
-                    if (value < condition)
-                        return false;
-                }
-                return true;
-            })
-        .test("joinedDate", "Joined date is Saturday or Sunday. Please select a different date", (value) => {
-            if (value) {
-                if (value.getDay() === 6)
-                    return false;
-            }
-            return true;
-        })
-        .test("joinedDate", "Joined date is Saturday or Sunday. Please select a different date", (value) => {
-            if (value) {
-                if (value.getDay() === 0)
-                    return false;
-            }
-            return true;
-        })
-        .test("joinedDate", "Please Select Date of Birth",
-            (value, ctx) => {
-                if (value) {
-                    if (ctx.parent.dateOfBirth === undefined) {
-                        return false;
-                    }
-
-                }
-                return true;
-            })
-
+    Name: Yup.string().required(""),
+    Category: Yup.string().required(""),
+    Specification: Yup.string().required(""),
+    InstalledDate: Yup.date().required(""),
+    State: Yup.number().required(""),
 });
 
 type Props = {
@@ -86,6 +44,11 @@ type Props = {
 function AssetFormContainer({ initialUserForm = {
     ...initialFormValues
 } }) {
+
+    const {FilterAssetCategoryOptions ,FilterAssetStateOptions} = useAppSelector(state=> state.assetReducer)
+    const states = useMemo(()=>FilterAssetStateOptions.filter(state => state.label=="Available" ||  state.label=="Not Available"), [FilterAssetStateOptions])
+    const categories = useMemo(()=>FilterAssetCategoryOptions.filter(cate => cate.label!="ALL"), [FilterAssetCategoryOptions])
+    
     const [loading, setLoading] = useState(false);
 
     const dispatch = useAppDispatch();
@@ -105,7 +68,10 @@ function AssetFormContainer({ initialUserForm = {
     const handleLanguage = (date) => {
         setDateOfBirth(date);
     };
-
+    useEffect(()=>{
+        dispatch(getCategory())
+        dispatch(getState())
+    },[])
     return (
         <Formik
             initialValues={initialUserForm}
@@ -116,10 +82,10 @@ function AssetFormContainer({ initialUserForm = {
                 setLoading(true);
                 setTimeout(() => {
                     if (isUpdate) {
-                        // dispatch(updateUser({ handleResult, formValues: values }));
+                        dispatch(updateAsset({ handleResult, formValues: values }));
                     }
                     else {
-                        // dispatch(createUser({ handleResult, formValues: values }));
+                        dispatch(createAsset({ handleResult, formValues: values }));
                     }
                     setLoading(false);
                 }, 1000);
@@ -138,7 +104,7 @@ function AssetFormContainer({ initialUserForm = {
                         <SelectField
                             name="Category"
                             label="Category"
-                            options={CategoryTypeOptions}
+                            options={categories}
                             isrequired
                             disabled={isUpdate ? true : false} />
                         
@@ -150,8 +116,8 @@ function AssetFormContainer({ initialUserForm = {
                             disabled={isUpdate ? true : false} />
 
                         <DateField
-                            label="Installed Data"
-                            name="InstalledData"
+                            label="Installed Date"
+                            name="InstalledDate"
                             placeholder=""
                             isrequired
                             onChangeCapture={handleLanguage}
@@ -161,7 +127,7 @@ function AssetFormContainer({ initialUserForm = {
                             name="State"
                             label="State"
                             isrequired
-                            options={StateOptions}
+                            options={states}
                             disabled={isUpdate ? true : false} />
 
                         <div className="d-flex">
