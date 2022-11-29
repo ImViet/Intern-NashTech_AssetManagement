@@ -158,7 +158,8 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
                             label="Gender"
                             isrequired
                             options={GenderOptions}
-                            disabled={isUpdate ? true : false} />
+                            disabled={isUpdate ? true : false} 
+                            checked = {true}/>
 
                         <DateField
                             label="Joined Date"

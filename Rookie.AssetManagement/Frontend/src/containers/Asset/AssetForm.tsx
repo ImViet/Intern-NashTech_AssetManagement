@@ -162,7 +162,8 @@ function AssetFormContainer({ initialUserForm = {
                             label="State"
                             isrequired
                             options={StateOptions}
-                            disabled={isUpdate ? true : false} />
+                            disabled={isUpdate ? true : false}
+                            checked = {false} />
 
                         <div className="d-flex">
                             <div className="ml-auto">
