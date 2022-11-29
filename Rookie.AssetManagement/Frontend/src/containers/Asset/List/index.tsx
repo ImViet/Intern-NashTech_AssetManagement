@@ -17,7 +17,6 @@ import { DefaultLimit } from "src/constants/User/UserContants";
 import { getAssetList, getCategory, getState } from "../reducer";
 import IQueryAssetModel from "src/interfaces/Asset/IQueryAssetModel";
 import SelectBox from "src/components/SelectBox";
-import { FilterAssetStateOptions } from "src/constants/selectOptions";
 
 const ListAsset = () => {
   const dispatch = useAppDispatch();
@@ -41,12 +40,14 @@ const ListAsset = () => {
   ] as ISelectOption[]);
 
   const {FilterAssetCategoryOptions} = useAppSelector(state=> state.assetReducer)
+  const {FilterAssetStateOptions} = useAppSelector(state=> state.assetReducer)
 
   const handleState = (selected: ISelectOption[]) => {
     if (selected.length === 0) {
       setQuery({
         ...query,
-        types: ["ALL"],
+        states:["ALL"],
+        page:1
       });
 
       setSelectedState([FilterAssetCategoryOptions[0]]);
@@ -60,28 +61,32 @@ const ListAsset = () => {
       if (!prevSelected.some((item) => item.id === 1) && selectedAll) {
         setQuery({
           ...query,
-          types: ["ALL"],
+          states:["ALL"],
+          page:1
         });
 
         return [selectedAll];
       }
       const newSelected = selected.filter((item) => item.id !== 1);
-      const types = newSelected.map((item) => item.value as string);
+      const states = newSelected.map((item) => item.value as string);
 
       setQuery({
         ...query,
-        types,
+        states,
+        page:1
       });
 
       return newSelected;
     });
     console.log(query)
   };
+
   const handleCategory = (selected: ISelectOption[]) => {
     if (selected.length === 0) {
       setQuery({
         ...query,
-        types: ["ALL"],
+        categories: ["ALL"],
+        page:1
       });
 
       setSelectedCategory([FilterAssetCategoryOptions[0]]);
@@ -95,17 +100,19 @@ const ListAsset = () => {
       if (!prevSelected.some((item) => item.id === 1) && selectedAll) {
         setQuery({
           ...query,
-          types: ["ALL"],
+          categories: ["ALL"],
+          page:1
         });
 
         return [selectedAll];
       }
       const newSelected = selected.filter((item) => item.id !== 1);
-      const types = newSelected.map((item) => item.value as string);
+      const categories = newSelected.map((item) => item.value as string);
 
       setQuery({
         ...query,
-        types,
+        categories,
+        page:1
       });
 
       return newSelected;
@@ -157,13 +164,10 @@ const ListAsset = () => {
 
   useEffect(() => {
     dispatch(getCategory())
-  }, []);
-
-  useEffect(() => {
     dispatch(getState())
   }, []);
 
-  return (
+  return (  
     <>
       <div className="primaryColor text-title intro-x ">Asset List</div>
 
@@ -212,18 +216,29 @@ const ListAsset = () => {
             </Link>
           </div>
         </div>
-
-        <AssetTable
-          assets={assets}
-          result={actionResult}
-          handlePage={handlePage}
-          handleSort={handleSort}
-          sortState={{
-            columnValue: query.sortColumn,
-            orderBy: query.sortOrder,
-          }}
-          fetchData={fetchData}
-        />
+          {(() => {
+          if (assets?.totalItems==0) {
+            return (
+              <h5 className="not-data-found">No data found</h5>
+            )
+          } else {
+            return (
+              <>
+                 <AssetTable
+                  assets={assets}
+                  result={actionResult}
+                  handlePage={handlePage}
+                  handleSort={handleSort}
+                  sortState={{
+                    columnValue: query.sortColumn,
+                    orderBy: query.sortOrder,
+                  }}
+                  fetchData={fetchData}
+                />     
+              </>
+            )
+          }
+        })()}       
       </div>
     </>
   );

@@ -7,7 +7,7 @@ import LayoutRoute from "src/routes/LayoutRoute";
 const NotFound = lazy(() => import("../NotFound"));
 const ListAsset = lazy(() => import("./List"));
 const CreateAsset = lazy(() => import("./Create"));
-const User = () => {
+const Asset = () => {
   return (
     <Routes>
       <Route path={ASSET_LIST} element={<ListAsset />} />
@@ -16,4 +16,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default Asset;

@@ -28,6 +28,3 @@ export const StateOptions: ISelectOption[] = [
   { id: 2, label: "Not available", value: state.NotAvailable },
 ];
 
-export const FilterAssetStateOptions: ISelectOption[] = [
-  
-];

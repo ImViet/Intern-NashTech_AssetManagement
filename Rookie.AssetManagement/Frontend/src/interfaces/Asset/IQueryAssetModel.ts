@@ -1,7 +1,8 @@
 export default interface IQueryAssetModel {
     page: number;
     limit: number;
-    types: string[];
+    categories: string[];
+    states:string[];
     search: string;
     sortOrder: string;
     sortColumn: string;

@@ -14,15 +14,6 @@ import formatDateTime, { convertDDMMYYYY } from "src/utils/formatDateTime";
 import { EDIT_ASSET_ID } from "src/constants/pages";
 import ConfirmModal from "src/components/ConfirmModal";
 import { useAppDispatch } from "src/hooks/redux";
-import {
-  AdminUserType,
-  StaffUserType,
-  AllUserType,
-  AdminUserTypeLabel,
-  StaffUserTypeLabel,
-  AllUserTypeLabel,
-} from "src/constants/User/UserContants";
-import { resultsAriaMessage } from "react-select/src/accessibility";
 import IAsset from "src/interfaces/Asset/IAsset";
 
 
@@ -53,7 +44,7 @@ const AssetTable: React.FC<Props> = ({
   const dispatch = useAppDispatch();
 
   const [showDetail, setShowDetail] = useState(false);
-  const [userDetail, setUserDetail] = useState(null as IAsset | null);
+  // const [userDetail, setUserDetail] = useState(null as IAsset | null);
   const [disableState, setDisable] = useState({
     isOpen: false,
     id: 0,
@@ -102,7 +93,6 @@ const AssetTable: React.FC<Props> = ({
   } else if (assets) {
     rows = [...assets.items]
   }
-
   return (
     <>
       <Table
@@ -121,13 +111,32 @@ const AssetTable: React.FC<Props> = ({
             <td>{data.assetName}</td>
             <td>{data.category}</td>
             <td>{data.state}</td>
-            <td className="d-flex">
-              <ButtonIcon onClick={() => handleEdit(data.id)}>
-                <PencilFill className="text-black" />
-              </ButtonIcon>
-              <ButtonIcon onClick={() => handleShowDisable(data.id)}>
-                <XCircle className="text-danger mx-2" />
-              </ButtonIcon>
+            <td className="d-flex">     
+            {(() => {
+              if (data.state == "Assigned") {
+                return (
+                  <>
+                    <ButtonIcon disable={true} onClick={() => handleEdit(data.id)}>
+                      <PencilFill className="text-black" />
+                    </ButtonIcon>
+                    <ButtonIcon disable={true} onClick={() => handleShowDisable(data.id)}>
+                      <XCircle className="text-danger mx-2" />
+                  </ButtonIcon> 
+                  </>
+                )
+              } else {
+                return (
+                  <>
+                    <ButtonIcon onClick={() => handleEdit(data.id)}>
+                      <PencilFill className="text-black" />
+                    </ButtonIcon>
+                    <ButtonIcon onClick={() => handleShowDisable(data.id)}>
+                      <XCircle className="text-danger mx-2" />
+                    </ButtonIcon>
+                  </>
+                )
+              }
+            })()}                                     
             </td>
           </tr>
 

@@ -15,7 +15,7 @@
 .filter-css div:first-child div:first-child div:first-child:only-child {
     padding: 0;
     border:none;
-    width: 144px;
+    width: 100%;
     div:first-child:only-child{
         margin-top: -10px;
         overflow: hidden;
@@ -97,10 +97,10 @@
 }
 //State Filter
 .filter-state .filter-css div:first-child div:first-child div:first-child:only-child {
-    width: 190px;
+    width: 200px;
 }
 .filter-state .filter-css div:first-child{
-    width: 190px;
+    width: 210px;
 }
 
 //Category Filter
@@ -109,4 +109,10 @@
 }
 .filter-category .filter-css div:first-child{
     width: 190px;
+}
+
+//No data found
+.not-data-found{
+    opacity: 0.5;
+    text-align: center;
 }
