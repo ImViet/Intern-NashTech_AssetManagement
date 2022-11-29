@@ -34,21 +34,21 @@ namespace Rookie.AssetManagement.Business.Services
 
         public AuthService(IBaseRepository<User> userRepository, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper)
         {
-            this._signInManager = signInManager;
-            this._userManager = userManager;
-            this._userRepository = userRepository;
+            _signInManager = signInManager;
+            _userManager = userManager;
+            _userRepository = userRepository;
             _mapper = mapper;
         }
 
-        public async Task<AccountDto> LoginAsync(LoginDto request)
+        public async Task<AccountDto> LoginAsync(LoginDto login)
         {
-            var result = await _signInManager.PasswordSignInAsync(request.UserName, request.Password, true, true);
+            var result = await _signInManager.PasswordSignInAsync(login.UserName, login.Password, true, true);
 
             if (!result.Succeeded)
             {
                 return null;
             }
-            var user = await _userManager.FindByNameAsync(request.UserName);
+            var user = await _userManager.FindByNameAsync(login.UserName);
             string token = CreateToKen(user);
 
             var account = _mapper.Map<AccountDto>(user);
@@ -57,87 +57,87 @@ namespace Rookie.AssetManagement.Business.Services
             return account;
         }
 
-        public async Task<AccountDto> ChangePasswordAsync(string username, ChangePasswordDto passwordRequest)
+        public async Task<AccountDto> ChangePasswordAsync(string useName, ChangePasswordDto passwordRequest)
         {
-            var User = await _userManager.FindByNameAsync(username);
+            var user = await _userManager.FindByNameAsync(useName);
 
-            if (User == null)
+            if (user == null)
             {
                 throw new NotFoundException("Not Found!");
             }
 
-            var result = await _userManager.ChangePasswordAsync(User, passwordRequest.PasswordOld, passwordRequest.PasswordNew);
+            var result = await _userManager.ChangePasswordAsync(user, passwordRequest.PasswordOld, passwordRequest.PasswordNew);
 
             if (!result.Succeeded)
             {
                 return null;
             }
 
-            var account = _mapper.Map<AccountDto>(User);
+            var account = _mapper.Map<AccountDto>(user);
 
             return account;
         }
 
-        public async Task<AccountDto> GetAccountByUserName(string UserName)
+        public async Task<AccountDto> GetAccountByUserName(string userName)
         {
-            var User = await _userManager.FindByNameAsync(UserName);
+            var user = await _userManager.FindByNameAsync(userName);
 
-            if (User == null)
+            if (user == null)
             {
                 return null;
             }
 
-            var account = _mapper.Map<AccountDto>(User);
+            var account = _mapper.Map<AccountDto>(user);
 
             return account;
         }
 
-        public async Task<AccountDto> ChangePasswordFirstLoginAsync(string username, ChangePasswordFirstLoginDto passwordRequest)
+        public async Task<AccountDto> ChangePasswordFirstLoginAsync(string useName, ChangePasswordFirstLoginDto passwordRequest)
         {
-            var User = await _userManager.FindByNameAsync(username);
+            var user = await _userManager.FindByNameAsync(useName);
 
-            if (User == null)
+            if (user == null)
             {
                 throw new NotFoundException("Not Found!");
             }
             //Generate Token
-            var token = await _userManager.GeneratePasswordResetTokenAsync(User);
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
             //Set new Password
-            var result = await _userManager.ResetPasswordAsync(User, token, passwordRequest.PasswordNew);
+            var result = await _userManager.ResetPasswordAsync(user, token, passwordRequest.PasswordNew);
 
             if (!result.Succeeded)
             {
                 return null;
             }
 
-            if (User.IsNewUser)
+            if (user.IsNewUser)
             {
-                User.IsNewUser = false;
-                await _userRepository.Update(User);
+                user.IsNewUser = false;
+                await _userRepository.Update(user);
             }
 
-            var account = _mapper.Map<AccountDto>(User);
+            var account = _mapper.Map<AccountDto>(user);
 
             return account;
         }
 
-        public async Task<bool> IsUserDeleted(string UserName)
+        public async Task<bool> IsUserDeleted(string userName)
         {
-            var User = await _userManager.FindByNameAsync(UserName);
-            return User.IsDeleted;
+            var user = await _userManager.FindByNameAsync(userName);
+            return user.IsDeleted;
         }
 
         public async Task<bool> IsMatchPassword(string userName, string password)
         {
-            var User = await _userManager.FindByNameAsync(userName);
+            var user = await _userManager.FindByNameAsync(userName);
 
-            if (User == null)
+            if (user == null)
             {
                 throw new NotFoundException("Not Found!");
             }
 
-            var result = await _signInManager.CheckPasswordSignInAsync(User, password, false);
+            var result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
 
             if (result.Succeeded)
             {

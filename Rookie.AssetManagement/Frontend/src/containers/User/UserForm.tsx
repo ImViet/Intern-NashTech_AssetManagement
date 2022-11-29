@@ -124,7 +124,6 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
                     else {
                         dispatch(createUser({ handleResult, formValues: values }));
                     }
-
                     setLoading(false);
                 }, 1000);
             }}
@@ -136,18 +135,21 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
                             name="firstName"
                             label="First Name"
                             placeholder=""
+                            isrequired
                             disabled={isUpdate ? true : false} />
 
                         <TextField
                             name="lastName"
                             label="Last Name"
                             placeholder=""
+                            isrequired
                             disabled={isUpdate ? true : false} />
 
                         <DateField
                             label="Date of Birth"
                             name="dateOfBirth"
                             placeholder=""
+                            isrequired
                             onChangeCapture={handleLanguage}
                             disabled={isUpdate ? true : false} />
 
@@ -156,13 +158,15 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
                             label="Gender"
                             isrequired
                             options={GenderOptions}
-                            disabled={isUpdate ? true : false} />
+                            disabled={isUpdate ? true : false} 
+                            checked = {true}/>
 
                         <DateField
                             label="Joined Date"
                             id="joinedDate"
                             name="joinedDate"
                             placeholder=""
+                            isrequired
                             disabled={isUpdate ? true : false} />
 
                         <SelectField

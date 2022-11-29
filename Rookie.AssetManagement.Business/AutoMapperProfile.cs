@@ -1,5 +1,8 @@
 ﻿using Rookie.AssetManagement.Contracts.Dtos.AuthDtos;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
+using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
+using Rookie.AssetManagement.Contracts.Dtos.CategoryDtos;
+using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
 
 namespace Rookie.AssetManagement.Business
@@ -10,6 +13,7 @@ namespace Rookie.AssetManagement.Business
         {
             FromDataAccessorLayer();
             FromPresentationLayer();
+            MapperAssetFromPresentationLayer();
         }
 
         private void FromPresentationLayer()
@@ -56,6 +60,13 @@ namespace Rookie.AssetManagement.Business
                 .ForMember(d => d.AccessFailedCount, t => t.Ignore())
                 .ForMember(d => d.SecurityStamp, t => t.Ignore())
                 .ForMember(d => d.ConcurrencyStamp, t => t.Ignore());
+            CreateMap<AssetCreateDto, Asset>()
+                .ForMember(d => d.Id, t => t.Ignore())
+                .ForMember(d => d.AssetCode, t => t.Ignore())
+                .ForMember(d => d.IsDeleted, t => t.Ignore())
+                .ForMember(d => d.Location, t => t.Ignore())
+                .ForMember(d => d.Category, t => t.Ignore())
+                .ForMember(d => d.State, t => t.Ignore());
         }
 
         private void FromDataAccessorLayer()
@@ -65,6 +76,15 @@ namespace Rookie.AssetManagement.Business
             CreateMap<User, AccountDto>()
                 .ForMember(d => d.FullName, t => t.MapFrom(src => src.FirstName + " " + src.LastName))
                 .ForMember(d => d.Token, t => t.Ignore());
+            CreateMap<Category, CategoryDto>();
+            CreateMap<State, StateDto>();
+        }
+
+        private void MapperAssetFromPresentationLayer()
+        {
+            CreateMap<Asset, AssetDto>()
+                .ForMember(d => d.Category, t => t.MapFrom(c => c.Category.CategoryName))
+                .ForMember(d => d.State, t => t.MapFrom(c => c.State.StateName));
         }
     }
 }

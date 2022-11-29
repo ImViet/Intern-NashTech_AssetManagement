@@ -1,30 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { LOGIN } from "src/constants/pages";
+import React, { lazy } from "react";
+import { Route, Routes } from "react-router-dom";
 
-import { useAppDispatch, useAppSelector } from "src/hooks/redux";
-import { me } from "../Authorize/reducer";
+import { CREATE_ASSET, ASSET_LIST, EDIT_ASSET } from "src/constants/pages";
+import LayoutRoute from "src/routes/LayoutRoute";
 
+const NotFound = lazy(() => import("../NotFound"));
+const ListAsset = lazy(() => import("./List"));
+const CreateAsset = lazy(() => import("./Create"));
 const Asset = () => {
-    const { isAuth, account } = useAppSelector((state) => state.authReducer);
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (isAuth) {
-            dispatch(me());
-        } else {
-            navigate(LOGIN)
-        }
-    }, [isAuth]);
-
-    return (
-        <>
-            <div className='primaryColor text-title intro-x'>
-                Manage Asset
-            </div>
-        </>
-    );
+  return (
+    <Routes>
+      <Route path={ASSET_LIST} element={<ListAsset />} />
+      <Route path={CREATE_ASSET} element={<CreateAsset />} />
+    </Routes>
+  );
 };
 
 export default Asset;

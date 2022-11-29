@@ -3,7 +3,7 @@
 @import './Table.scss';
 @import './Modal.scss';
 @import './Intro.scss';
-
+@import './Filter.scss';
 * {
     margin: 0;
     padding: 0;
@@ -83,91 +83,7 @@ body {
 .is-invalid,.is-valid{
     background-image:none !important;
 }
-.w-md{  
-    .css-1r4vtzz,.css-48ayfv{
-        padding: 2px 8px 5px 8px;
-        border: 2px solid rgb(190,190,190);
-        width: 120px;
-        height: 34px;
-        font-size: 16px;
-        border-radius: .25rem 0 0 .25rem;
-        box-shadow: none;
-    }
-    .css-ik6y5r{
-        padding: 0;
-        border-radius: 0 0 5px 5px; 
-        margin-top: -10px;
-        border: 2px solid rgb(162,162,162); 
-        width: 144px;
-    }
-    .css-11unzgr{
-        overflow: hidden;
-        padding: 12px 0 ;
-        line-height: 16px;
-        min-height: 32px;
-        background-color: rgb(245,245,245);
-        div{
-            background-color: rgb(245,245,245);
-            height: 32px;
-            font-weight: normal;
-            display: flex;
-            cursor: pointer;
-            min-width: none !important;
-            input[type="checkbox"] {
-                /* Add if not using autoprefixer */
-                -webkit-appearance: none;
-                /* Remove most all native input styles */
-                appearance: none;
-                /* For iOS < 15 */
-                background-color: var(--form-background);
-                /* Not removed via appearance */
-                font: inherit;
-                color: currentColor;
-                width: 1.15em;
-                height: 1.15em;
-                border: 0.085em solid currentColor;
-                border-radius: 0.15em;
-                transform: translateY(-0.075em);
-                display:grid;
-                place-content: center;
-              }
-              input[type="checkbox"]:hover{
-                cursor: pointer;
-              }
-              input[type="checkbox"]::before {
-                content: "";
-                width: 1em;
-                height: 1em;
-                clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-                transform: scale(0);
-                transform-origin: bottom left;
-                transition: 120ms transform ease-in-out;
-                box-shadow: inset 1em 1em var(--form-control-color);
-                /* Windows High Contrast Mode */
-                background-color: red ;
-              }
-              
-              input[type="checkbox"]:checked::before {
-                transform: scale(1);
-              }
-        }
-        div:hover{
-            background-color: rgb(232, 232, 232)
-        }
-    }
-    .incon-filter{
-    height: 34px;
-    margin-left:-2px ;
-    padding: 0 !important;
-    border: 2px solid rgb(190,190,190) !important;
-    border-radius: 0px .25rem .25rem 0px;
-    padding: 0 3px !important;
-    }
-    .css-1gpjby2{
-        display: none;
-    }
-}
-
+ 
 .search-icon{
     border: 2px solid rgb(190,190,190);
     margin-left: -1px;

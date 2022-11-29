@@ -11,7 +11,12 @@ export const USER_LIST_LINK = "/user";
 export const USER_PARENT_ROOT = "..";
 
 export const ASSET = "asset/*";
+export const ASSET_LIST = "*";
+export const CREATE_ASSET = "create";
+export const EDIT_ASSET = "edit/:id";
+export const EDIT_ASSET_ID = (id: string | number) => `edit/${id}`;
 export const ASSET_LIST_LINK = "/asset";
+export const ASSET_PARENT_ROOT = "..";
 
 export const ASSIGNMENT = "assignment/*";
 export const ASSIGNMENT_LIST_LINK = "/assignment";

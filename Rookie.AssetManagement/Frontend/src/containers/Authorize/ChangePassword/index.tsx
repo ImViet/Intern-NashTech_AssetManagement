@@ -49,13 +49,13 @@ const ChangePassword = ({show, onClose}) => {
           aria-labelledby="login-modal"
         >
           <div className="first-login-modal">
-            <Modal.Header style={{paddingLeft:48, paddingRight:48 }}>
+            <Modal.Header style={{paddingLeft:47, paddingRight:47 }}>
               <Modal.Title id="login-modal">
-                Change Password
+                Change password
             </Modal.Title>
 
             </Modal.Header>
-              <Modal.Body style={{paddingLeft:48, paddingRight:48 }}>
+              <Modal.Body style={{paddingLeft:47, paddingRight:47 }}>
                 <Formik
                   initialValues={initialValues}
                   onSubmit={handleSubmit}
@@ -63,15 +63,15 @@ const ChangePassword = ({show, onClose}) => {
                 >
                   {(actions) => (
                     <Form className='intro-y'>
-                      <TextFieldPassword name="passwordOld" label="Old Password" isrequired={true} />
-                      <TextFieldPassword name="passwordNew" label="New Password" isrequired={true} />
-
-                      {/* {error && (
+                      <TextFieldPassword name="passwordOld" label="Old password" isrequired={true} />
+                      {error && (
                         <div className="invalid">
                           {error}
                         </div>
-                      )} */}
+                      )} 
 
+                      <TextFieldPassword name="passwordNew" label="New password" isrequired={true} />
+                      
                       <div className="text-right mt-5">
                         <button className="btn btn-danger"
                           type="submit" disabled={!(actions.dirty && actions.isValid)}>
@@ -97,7 +97,7 @@ const ChangePassword = ({show, onClose}) => {
           <div className="first-login-modal">
             <Modal.Header style={{paddingLeft:48, paddingRight:48 }}>
               <Modal.Title id="login-modal">
-                Change Password
+                Change password
             </Modal.Title>
 
             </Modal.Header>
