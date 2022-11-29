@@ -11,11 +11,11 @@ namespace Rookie.AssetManagement.Business
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-            services.AddTransient<IUserService,UserService>();
-            services.AddTransient<IAuthService,AuthService>();
-            services.AddTransient<IAssetService,AssetService>();
-            services.AddTransient<IStateService,StateService>();
-            services.AddTransient<ICategoryService,CategoryService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IAssetService, AssetService>();
+            services.AddTransient<IStateService, StateService>();
+            services.AddTransient<ICategoryService, CategoryService>();
         }
     }
 }

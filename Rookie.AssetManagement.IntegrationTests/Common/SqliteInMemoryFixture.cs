@@ -30,8 +30,9 @@ namespace Rookie.AssetManagement.IntegrationTests.Common
         public virtual ApplicationDbContext Context => ServiceProvider.GetRequiredService<ApplicationDbContext>();
         public virtual UserManager<User> UserManager => ServiceProvider.GetRequiredService<UserManager<User>>();
         public virtual SignInManager<User> SignInManager => ServiceProvider.GetRequiredService<SignInManager<User>>();
-
-
+        public virtual Asset Asset => ServiceProvider.GetRequiredService<Asset>();
+        public virtual Category Category => ServiceProvider.GetRequiredService<Category>();
+        public virtual State State => ServiceProvider.GetRequiredService<State>();
         public virtual void CreateDatabase()
         {
             Dispose();
