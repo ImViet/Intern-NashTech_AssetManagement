@@ -24,59 +24,16 @@ const initialFormValues: IAssetForm = {
     Name: '',
     Category: '',
     Specification: '',
-    InstalledData: undefined,
-    State: '',
+    InstalledDate: undefined,
+    State: 2,
 };
 
 const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required(""),
-    lastName: Yup.string().required(""),
-    type: Yup.string().required(""),
-    dateOfBirth: Yup.date().required("")
-        .test("dateOfBirth", "User is under 18. Please select a different date", function (value) {
-            if (value) {
-                return differenceInYears(new Date(), value) >= 18;
-            }
-            return true;
-
-        }),
-    joinedDate: Yup.date()
-        .required("")
-        .test("joinedDate", "User under the age of 18 may not join company. Please select a different date",
-            (value, ctx) => {
-                if (value) {
-                    const condition = new Date(ctx.parent.dateOfBirth);
-                    condition.setFullYear(condition.getFullYear() + 18);
-                    if (value < condition)
-                        return false;
-                }
-                return true;
-            })
-        .test("joinedDate", "Joined date is Saturday or Sunday. Please select a different date", (value) => {
-            if (value) {
-                if (value.getDay() === 6)
-                    return false;
-            }
-            return true;
-        })
-        .test("joinedDate", "Joined date is Saturday or Sunday. Please select a different date", (value) => {
-            if (value) {
-                if (value.getDay() === 0)
-                    return false;
-            }
-            return true;
-        })
-        .test("joinedDate", "Please Select Date of Birth",
-            (value, ctx) => {
-                if (value) {
-                    if (ctx.parent.dateOfBirth === undefined) {
-                        return false;
-                    }
-
-                }
-                return true;
-            })
-
+    Name: Yup.string().required(""),
+    Category: Yup.string().required(""),
+    Specification: Yup.string().required(""),
+    InstalledDate: Yup.date().required(""),
+    State: Yup.number().required(""),
 });
 
 type Props = {
@@ -159,8 +116,8 @@ function AssetFormContainer({ initialUserForm = {
                             disabled={isUpdate ? true : false} />
 
                         <DateField
-                            label="Installed Data"
-                            name="InstalledData"
+                            label="Installed Date"
+                            name="InstalledDate"
                             placeholder=""
                             isrequired
                             onChangeCapture={handleLanguage}
