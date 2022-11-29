@@ -12,12 +12,12 @@ import {
   DEFAULT_PAGE_LIMIT,
   DEFAULT_ASSET_SORT_COLUMN_NAME,
 } from "src/constants/paging";
-import { FilterAssetStateOptions, FilterCategoryOptions } from "src/constants/selectOptions";
 import IPagedModel from "src/interfaces/IPagedModel";
 import { DefaultLimit } from "src/constants/User/UserContants";
 import { getAssetList, getCategory, getState } from "../reducer";
 import IQueryAssetModel from "src/interfaces/Asset/IQueryAssetModel";
 import SelectBox from "src/components/SelectBox";
+import { FilterAssetStateOptions } from "src/constants/selectOptions";
 
 const ListAsset = () => {
   const dispatch = useAppDispatch();
@@ -40,6 +40,8 @@ const ListAsset = () => {
     { id: 1, label: "Category", value: "ALL" },
   ] as ISelectOption[]);
 
+  const {FilterAssetCategoryOptions} = useAppSelector(state=> state.assetReducer)
+
   const handleState = (selected: ISelectOption[]) => {
     if (selected.length === 0) {
       setQuery({
@@ -47,7 +49,7 @@ const ListAsset = () => {
         types: ["ALL"],
       });
 
-      setSelectedState([FilterAssetStateOptions[0]]);
+      setSelectedState([FilterAssetCategoryOptions[0]]);
 
       return;
     }
@@ -75,7 +77,6 @@ const ListAsset = () => {
     });
     console.log(query)
   };
-  
   const handleCategory = (selected: ISelectOption[]) => {
     if (selected.length === 0) {
       setQuery({
@@ -83,7 +84,7 @@ const ListAsset = () => {
         types: ["ALL"],
       });
 
-      setSelectedCategory([FilterCategoryOptions[0]]);
+      setSelectedCategory([FilterAssetCategoryOptions[0]]);
 
       return;
     }
@@ -172,7 +173,7 @@ const ListAsset = () => {
             <div className="button">
               <div className="filter-state">
                 <SelectBox               
-                options={FilterAssetStateOptions}
+                 options={FilterAssetStateOptions}
                 placeholderButtonLabel="Type"
                 value={selectedState}
                 onChange={handleState}/>
@@ -183,7 +184,7 @@ const ListAsset = () => {
             <div className="button">
                 <div className="filter-category">
                   <SelectBox
-                  options={FilterCategoryOptions}
+                  options={FilterAssetCategoryOptions}
                   placeholderButtonLabel="Type"
                   value={selectedCategory}
                   onChange={handleCategory}
