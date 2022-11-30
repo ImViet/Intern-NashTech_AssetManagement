@@ -10,7 +10,7 @@ namespace Rookie.AssetManagement.DataAccessor.Entities
     {
         public int Id { get; set; }
         public string StateName { get; set; }
-        public string IsDelete { get; set; }
+        public bool IsDeleted { get; set; }
         public virtual ICollection<Asset> Assets { get; set; }
     }
 }
