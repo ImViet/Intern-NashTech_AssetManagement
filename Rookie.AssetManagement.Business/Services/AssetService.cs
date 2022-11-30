@@ -157,5 +157,26 @@ namespace Rookie.AssetManagement.Business.Services
             }
             return assetQuery;
         }
+        public async Task<AssetDto> UpdateAssetAsync(AssetUpdateDto assetUpdateDto)
+        {
+            var asset = await _assetRepository.Entities.FirstOrDefaultAsync(c => c.Id == assetUpdateDto.Id);
+            var getState = _stateRepository.Entities.Where(x => x.Id == assetUpdateDto.State).FirstOrDefault();
+            if (getState == null)
+            {
+                throw new NotFoundException("State Not Found!");
+            }
+            if (asset == null)
+            {
+                throw new NotFoundException("Asset Not Found!");
+            }
+            asset.AssetName = assetUpdateDto.AssetName;
+            asset.Specification = assetUpdateDto.Specification;
+            asset.InstalledDate = assetUpdateDto.InstalledDate;
+            asset.State = getState;
+
+            var assetUpdated = await _assetRepository.Update(asset);
+            var assetUpdatedDto = _mapper.Map<AssetDto>(assetUpdated);
+            return assetUpdatedDto;
+        }
     }
 }
