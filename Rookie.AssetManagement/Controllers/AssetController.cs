@@ -82,5 +82,12 @@ namespace Rookie.AssetManagement.Controllers
             var asset = await _assetService.AddAssetAsync(assetCreate, location);
             return Created(Endpoints.User, asset);
         }
+
+        [HttpPut]
+        public async Task<ActionResult<AssetDto>> UpdateAssetAsync([FromBody] AssetUpdateDto assetUpdateDto)
+        {
+            var asset = await _assetService.UpdateAssetAsync(assetUpdateDto);
+            return Created(Endpoints.User, asset);
+        }
     }
 }
