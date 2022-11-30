@@ -1,6 +1,5 @@
 ﻿using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
 using Rookie.AssetManagement.Contracts.Dtos.EnumDtos;
-using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
 using System;
 using System.Collections.Generic;
@@ -76,6 +75,45 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                 State = 1
             };
         }
-
+        public static int UnExistedAssetId = 3;
+        public static int ExistedAssetId = 1;
+        public static Asset GetUpdateAsset()
+        {
+            var updateAsset = GetAsset(ExistedAssetId);
+            return updateAsset;
+        }
+        public static Asset GetAsset(int id, bool isDeleted = false)
+        {
+            return new Asset()
+            {
+                Id = id,
+                AssetName = "Laptop Asus",
+                Specification = "Window 11, Ram 8GB, Core i7",
+                InstalledDate = DateTime.Parse("2021-11-21"),             
+                IsDeleted = isDeleted
+            };           
+        }
+        public static AssetUpdateDto GetUpdateAssetDtoFail()
+        {
+            return new AssetUpdateDto()
+            {
+                Id = UnExistedAssetId,
+                AssetName = "Laptop Acer",
+                Specification = "Window 11, Ram 8GB",
+                InstalledDate = DateTime.Parse("2021-11-21"),
+                State = 1
+            };
+        }
+        public static AssetUpdateDto GetUpdateAssetDtoSuccess()
+        {
+            return new AssetUpdateDto()
+            {
+                Id = ExistedAssetId,
+                AssetName = "Laptop Asus",
+                Specification = "Window 11, Ram 8GB, Core i7",
+                InstalledDate = DateTime.Parse("2021-11-21"),
+                State = 1
+            };
+        }
     }
 }

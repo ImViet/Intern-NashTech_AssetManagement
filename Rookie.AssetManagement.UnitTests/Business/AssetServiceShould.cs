@@ -6,6 +6,7 @@ using Moq;
 using Rookie.AssetManagement.Business;
 using Rookie.AssetManagement.Business.Interfaces;
 using Rookie.AssetManagement.Business.Services;
+using Rookie.AssetManagement.Contracts;
 using Rookie.AssetManagement.DataAccessor.Entities;
 using Rookie.AssetManagement.UnitTests.TestDataAPI;
 using System;
@@ -78,6 +79,38 @@ namespace Rookie.AssetManagement.UnitTests.Business
             var result = await _assetService.AddAssetAsync(AssetTestData.GetCreateAssetDto(), "HCM");
             //Assert
             Assert.Equal("Monitor xyz3", result.AssetName);
+        }
+
+        [Fact]
+        public async Task UpdateAssetAsyncShouldThrowNotFoundException()
+        {
+            //Arrange
+            var assetsMock = AssetTestData.GetAssets().AsQueryable().BuildMock();
+            _assetRepository.Setup(x => x.Entities).Returns(assetsMock);
+            //Act
+            Func<Task> act = async () => await _assetService.UpdateAssetAsync(
+                AssetTestData.GetUpdateAssetDtoFail()
+                );
+            //Assert
+            await act.Should().ThrowAsync<NotFoundException>();
+        }
+
+        [Fact]
+        public async Task UpdateAssetAsyncShouldSuccess()
+        {
+            //Arrange
+            var assetsMock = AssetTestData.GetAssets().AsQueryable().BuildMock();
+            var listState = AssetTestData.GetStates().ToList().BuildMock();
+            _stateRepository.Setup(x => x.Entities).Returns(listState);
+            _assetRepository.Setup(x => x.Entities).Returns(assetsMock);
+            _assetRepository.Setup(x => x.Update(It.IsAny<Asset>()))
+                                        .Returns(Task.FromResult(AssetTestData.GetUpdateAsset()));
+            //Act
+            var result = await _assetService.UpdateAssetAsync(
+                AssetTestData.GetUpdateAssetDtoSuccess()
+                );
+            //Assert
+            Assert.Equal("Laptop Asus", result.AssetName);
         }
     }
 }
