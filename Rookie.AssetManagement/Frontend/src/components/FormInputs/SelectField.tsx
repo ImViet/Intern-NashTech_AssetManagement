@@ -42,7 +42,7 @@ const SelectField: React.FC<InputFieldProps> = (props) => {
                 </label>
 
                 <div className="col">
-                    <select style={{ background: "none" }} className={`custom-select ${validateClass()}`} onClick={handleTouched} onChange={handleChange}>
+                    <select disabled={props.disabled} style={{ background: "none" }} className={`custom-select ${validateClass()}`} onClick={handleTouched} onChange={handleChange}>
                         <option selected hidden></option>
                         {
                             options.map(({ id, label: optionLabel, value: optionValue }) => (

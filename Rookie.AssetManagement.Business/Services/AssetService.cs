@@ -167,7 +167,7 @@ namespace Rookie.AssetManagement.Business.Services
         }
         public async Task<AssetDto> UpdateAssetAsync(AssetUpdateDto assetUpdateDto)
         {
-            var asset = await _assetRepository.Entities.FirstOrDefaultAsync(c => c.Id == assetUpdateDto.Id);
+            var asset = await _assetRepository.Entities.Include(x => x.Category).FirstOrDefaultAsync(c => c.Id == assetUpdateDto.Id);
             var getState = _stateRepository.Entities.Where(x => x.Id == assetUpdateDto.State).FirstOrDefault();
             if (getState == null)
             {
@@ -177,9 +177,7 @@ namespace Rookie.AssetManagement.Business.Services
             {
                 throw new NotFoundException("Asset Not Found!");
             }
-            asset.AssetName = assetUpdateDto.AssetName;
-            asset.Specification = assetUpdateDto.Specification;
-            asset.InstalledDate = assetUpdateDto.InstalledDate;
+            _mapper.Map(assetUpdateDto, asset);
             asset.State = getState;
 
             var assetUpdated = await _assetRepository.Update(asset);

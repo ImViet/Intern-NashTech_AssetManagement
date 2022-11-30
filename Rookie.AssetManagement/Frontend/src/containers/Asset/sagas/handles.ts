@@ -23,6 +23,7 @@ import {
   getAssetsRequest,
   getCategoryRequest,
   getStateRequest,
+  updateAssetRequest,
 } from "./requests";
 
 export function* handleCreateAsset(action: PayloadAction<CreateAction>) {
@@ -54,34 +55,33 @@ export function* handleCreateAsset(action: PayloadAction<CreateAction>) {
   }
 }
 
-// export function* handleUpdateUser(action: PayloadAction<UpdateAction>) {
-//   const { handleResult, formValues } = action.payload;
-//   try {
-//     console.log("handleUpdateUser");
-//     console.log(formValues);
+export function* handleUpdateAsset(action: PayloadAction<UpdateAction>) {
+  const { handleResult, formValues } = action.payload;
+  try {
+    console.log("handleUpdateAsset");
+    console.log(formValues);
 
-//     const { data } = yield call(updateUserRequest, formValues);
+    const { data } = yield call(updateAssetRequest, formValues);
 
-//     data.dateOfBirth = new Date(data.dateOfBirth);
-//     data.joinedDate = new Date(data.joinedDate);
+    data.InstalledDate = new Date(data.InstalledDate);
 
-//     if (data) {
-//       handleResult(true, data.firstName);
-//     }
+    if (data) {
+      handleResult(true, data.AssetName);
+    }
 
-//     yield put(setActionResult(data));
-//   } catch (error: any) {
-//     const errors = error.response.data.errors;
-//     const firstError = errors[Object.keys(errors)[0]][0];
-//     handleResult(false, firstError);
-//     yield put(
-//       setStatus({
-//         status: Status.Failed,
-//         error: firstError,
-//       })
-//     );
-//   }
-// }
+    yield put(setActionResult(data));
+  } catch (error: any) {
+    const errors = error.response.data.errors;
+    const firstError = errors[Object.keys(errors)[0]][0];
+    handleResult(false, firstError);
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: firstError,
+      })
+    );
+  }
+}
 
 export function* handleGetAssetList(action: PayloadAction<IQueryAssetModel>) {
   const queryAssetModel = action.payload;
@@ -106,6 +106,7 @@ export function* handleGetAssetForm(action: PayloadAction<number>) {
 
   try {
     const { data } = yield call(getAssetFormDataRequest, id);
+    data.installedDate = new Date(data.installedDate);
     yield put(setAssetFormData(data));
   } catch (error: any) {
     const errorModel = error.response.data as IError;

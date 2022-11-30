@@ -5,6 +5,7 @@ import {
   getAssetList,
   getCategory,
   getState,
+  updateAsset,
 } from "../reducer";
 import {
   handleCreateAsset,
@@ -12,6 +13,7 @@ import {
   handleGetAssetList,
   handleGetCategoryList,
   handleGetStateList,
+  handleUpdateAsset,
 } from "./handles";
 
 export default function* AssetSagas() {
@@ -20,4 +22,5 @@ export default function* AssetSagas() {
   yield takeLatest(getState.type, handleGetStateList);
   yield takeLatest(createAsset.type, handleCreateAsset);
   yield takeLatest(getAssetFormData.type, handleGetAssetForm);
+  yield takeLatest(updateAsset.type, handleUpdateAsset);
 }
