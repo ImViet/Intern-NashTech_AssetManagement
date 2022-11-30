@@ -51,6 +51,16 @@ namespace Rookie.AssetManagement.Controllers
         }
 
         [HttpGet]
+        [Route("GetAsset/{id}")]
+        public async Task<ActionResult<AssetFormDto>> GetAssetById(int id)
+        {
+            var location = User.Claims.FirstOrDefault(x => x.Type.Equals("Location", StringComparison.OrdinalIgnoreCase))?.Value;
+
+            var assetResponses = await _assetService.GetAssetFormDataById(id, location);
+            return Ok(assetResponses);
+        }
+
+        [HttpGet]
         [Route("GetAsset")]
         public async Task<ActionResult<PagedResponseModel<AssetDto>>> GetAsset(
         [FromQuery] AssetQueryCriteriaDto assetCriteriaDto,

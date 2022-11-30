@@ -26,7 +26,7 @@ const ListUser = () => {
   const [query, setQuery] = useState({
     page: users?.currentPage ?? 1,
     limit: DefaultLimit,
-    sortOrder: DECSENDING,
+    sortOrder: ACCSENDING,
     sortColumn: DEFAULT_USER_SORT_COLUMN_NAME,
   } as IQueryUserModel);
 

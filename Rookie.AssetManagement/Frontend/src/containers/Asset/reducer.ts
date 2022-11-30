@@ -13,7 +13,7 @@ type AssetState = {
   FilterAssetCategoryOptions: ISelectOption[];
   FilterAssetStateOptions: ISelectOption[];
   loading: boolean;
-  assetResult: IAsset | null;
+  assetFormData: IAssetForm | null;
   actionResult: IAsset | null;
   assets: IPagedModel<IAsset> | null;
   status?: number;
@@ -33,7 +33,7 @@ export type UpdateAction = {
 const initialState: AssetState = {
   assets: null,
   loading: false,
-  assetResult: null,
+  assetFormData: null,
   actionResult: null,
   FilterAssetCategoryOptions: [],
   FilterAssetStateOptions: [],
@@ -123,6 +123,24 @@ const AssetReducerSlice = createSlice({
         loading: false,
       };
     },
+    getAssetFormData: (state, action: PayloadAction<number>): AssetState => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+    setAssetFormData: (
+      state,
+      action: PayloadAction<IAssetForm>
+    ): AssetState => {
+      const assetFormData = action.payload;
+
+      return {
+        ...state,
+        assetFormData,
+        loading: false,
+      };
+    },
   },
 });
 
@@ -137,6 +155,8 @@ export const {
   getState,
   setState,
   setStatus,
+  getAssetFormData,
+  setAssetFormData,
 } = AssetReducerSlice.actions;
 
 export default AssetReducerSlice.reducer;

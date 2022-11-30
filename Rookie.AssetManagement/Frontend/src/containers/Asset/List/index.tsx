@@ -25,14 +25,17 @@ const ListAsset = () => {
   const [query, setQuery] = useState({
     page: assets?.currentPage ?? 1,
     limit: DefaultLimit,
-    sortOrder: DECSENDING,
+    sortOrder: ACCSENDING,
     sortColumn: DEFAULT_ASSET_SORT_COLUMN_NAME,
+    states:['1','2','3']
   } as IQueryAssetModel);
 
   const [search, setSearch] = useState("");
 
   const [selectedState, setSelectedState] = useState([
-    { id: 1, label: "State", value: "" },
+    { id: 2, label: "Assigned", value: 1 },
+    { id: 3, label: "Available", value: 2 },
+    { id: 4, label: "Not available", value: 3 },
   ] as ISelectOption[]);
 
   const [selectedCategory, setSelectedCategory] = useState([
@@ -50,7 +53,7 @@ const ListAsset = () => {
         page:1
       });
 
-      setSelectedState([FilterAssetCategoryOptions[0]]);
+      setSelectedState([FilterAssetStateOptions[0]]);
 
       return;
     }

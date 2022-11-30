@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Rookie.AssetManagement.Business.Interfaces;
 using Rookie.AssetManagement.Contracts;
 using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
-using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
 using System;
@@ -13,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper.QueryableExtensions;
 
 namespace Rookie.AssetManagement.Business.Services
 {
@@ -30,6 +30,14 @@ namespace Rookie.AssetManagement.Business.Services
             _categoryRepository = categoryRepository;
             _stateRepository = stateRepository;
             _mapper = mapper;
+        }
+        public async Task<AssetFormDto> GetAssetFormDataById(int id, string location)
+        {
+            var assetForm = await _assetRepository.Entities
+                .Where(a => a.Id == id && a.Location == location)
+                .ProjectTo<AssetFormDto>(_mapper.ConfigurationProvider)
+                .FirstAsync();
+            return assetForm;
         }
         public async Task<IEnumerable<AssetDto>> GetAllAsync()
         {
