@@ -31,7 +31,7 @@ export function* handleCreateAsset(action: PayloadAction<CreateAction>) {
   try {
     console.log(formValues);
 
-    formValues.InstalledDate = toUTC(formValues.InstalledDate);
+    formValues.installedDate = toUTC(formValues.installedDate);
 
     const { data } = yield call(createAssetRequest, formValues);
 

@@ -13,11 +13,11 @@ import { createAsset, getCategory, getState, updateAsset } from './reducer';
 
 
 const initialFormValues: IAssetForm = {
-    AssetName: '',
-    Category: "",
-    Specification: '',
-    InstalledDate: undefined,
-    State: 2,
+    assetName: '',
+    category: "",
+    specification: '',
+    installedDate: undefined,
+    state: 2,
 };
 
 const validationSchema = Yup.object().shape({
