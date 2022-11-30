@@ -90,7 +90,7 @@ function AssetFormContainer({ initialAssetForm = {
                     <Form className='intro-y col-lg-6 col-12'>
                         <TextField
                             name="assetName"
-                            label="AssetName"
+                            label="Name"
                             placeholder=""
                             isrequired
                         />
