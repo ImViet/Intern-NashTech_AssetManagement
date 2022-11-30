@@ -33,9 +33,9 @@ const ListAsset = () => {
   const [search, setSearch] = useState("");
 
   const [selectedState, setSelectedState] = useState([
-    { id: 1, label: "Assigned", value: 1 },
-    { id: 2, label: "Available", value: 2 },
-    { id: 3, label: "Not available", value: 3 },
+    { id: 2, label: "Assigned", value: 1 },
+    { id: 3, label: "Available", value: 2 },
+    { id: 4, label: "Not available", value: 3 },
   ] as ISelectOption[]);
 
   const [selectedCategory, setSelectedCategory] = useState([
@@ -70,7 +70,7 @@ const ListAsset = () => {
 
         return [selectedAll];
       }
-      const newSelected = selected.filter((item) => item.id !== 0);
+      const newSelected = selected.filter((item) => item.id !== 1);
       const states = newSelected.map((item) => item.value as string);
 
       setQuery({
