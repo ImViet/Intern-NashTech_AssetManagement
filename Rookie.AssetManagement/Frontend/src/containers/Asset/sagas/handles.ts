@@ -1,13 +1,17 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, put } from "redux-saga/effects";
 import { Status } from "src/constants/status";
-import { setState, setStatus } from "src/containers/Asset/reducer";
+import {
+  setAssetFormData,
+  setState,
+  setStatus,
+} from "src/containers/Asset/reducer";
 import IQueryAssetModel from "src/interfaces/Asset/IQueryAssetModel";
 import IError from "src/interfaces/IError";
 import ISelectOption from "src/interfaces/ISelectOption";
 import { toUTC } from "src/utils/formatDateTime";
-import { 
-  setAssetList, 
+import {
+  setAssetList,
   setCategory,
   CreateAction,
   UpdateAction,
@@ -15,8 +19,11 @@ import {
 } from "../reducer";
 import {
   createAssetRequest,
-   getAssetsRequest, getCategoryRequest, getStateRequest, 
- } from "./requests";
+  getAssetFormDataRequest,
+  getAssetsRequest,
+  getCategoryRequest,
+  getStateRequest,
+} from "./requests";
 
 export function* handleCreateAsset(action: PayloadAction<CreateAction>) {
   const { handleResult, formValues } = action.payload;
@@ -77,34 +84,58 @@ export function* handleCreateAsset(action: PayloadAction<CreateAction>) {
 // }
 
 export function* handleGetAssetList(action: PayloadAction<IQueryAssetModel>) {
-    const queryAssetModel = action.payload;
-  
-    try {
-      const { data } = yield call(getAssetsRequest, queryAssetModel);
-      yield put(setAssetList(data));
-    } catch (error: any) {
-      const errorModel = error.response.data as IError;
-  
-      yield put(
-        setStatus({
-          status: Status.Failed,
-          error: errorModel,
-        })
-      );
-    }
+  const queryAssetModel = action.payload;
+
+  try {
+    const { data } = yield call(getAssetsRequest, queryAssetModel);
+    yield put(setAssetList(data));
+  } catch (error: any) {
+    const errorModel = error.response.data as IError;
+
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: errorModel,
+      })
+    );
   }
+}
+
+export function* handleGetAssetForm(action: PayloadAction<number>) {
+  const id = action.payload;
+
+  try {
+    const { data } = yield call(getAssetFormDataRequest, id);
+    yield put(setAssetFormData(data));
+  } catch (error: any) {
+    const errorModel = error.response.data as IError;
+
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: errorModel,
+      })
+    );
+  }
+}
 
 export function* handleGetCategoryList() {
   try {
     const { data } = yield call(getCategoryRequest);
-    const options = [{
-        id: 1, label: "ALL", value: ""
-    }]
+    const options = [
+      {
+        id: 1,
+        label: "ALL",
+        value: "",
+      },
+    ];
     data.forEach((cate, index) => {
       options.push({
-        id: index + 2, label: cate.categoryName, value: cate.id 
-      })
-    })
+        id: index + 2,
+        label: cate.categoryName,
+        value: cate.id,
+      });
+    });
     yield put(setCategory(options));
   } catch (error: any) {
     const errorModel = error.response.data as IError;
@@ -121,14 +152,20 @@ export function* handleGetCategoryList() {
 export function* handleGetStateList() {
   try {
     const { data } = yield call(getStateRequest);
-    const options = [{
-        id: 1, label: "ALL", value: ""
-    }]
+    const options = [
+      {
+        id: 1,
+        label: "ALL",
+        value: "",
+      },
+    ];
     data.forEach((state, index) => {
       options.push({
-        id: index + 2, label: state.stateName, value: state.id 
-      })
-    })
+        id: index + 2,
+        label: state.stateName,
+        value: state.id,
+      });
+    });
     yield put(setState(options));
   } catch (error: any) {
     const errorModel = error.response.data as IError;

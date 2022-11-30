@@ -25,23 +25,24 @@ export function createAssetRequest(
 // }
 
 export function getAssetsRequest(
-    assetQuery: IQueryAssetModel
-  ): Promise<AxiosResponse<IAsset[]>> {
-    return RequestService.axios.get(EndPoints.searchAsset, {
-      params: assetQuery,
-      paramsSerializer: (params) => qs.stringify(params),
-    });
-  }
+  assetQuery: IQueryAssetModel
+): Promise<AxiosResponse<IAsset[]>> {
+  return RequestService.axios.get(EndPoints.searchAsset, {
+    params: assetQuery,
+    paramsSerializer: (params) => qs.stringify(params),
+  });
+}
 
+export function getAssetFormDataRequest(
+  id: number
+): Promise<AxiosResponse<IAssetForm>> {
+  return RequestService.axios.get(`${EndPoints.searchAsset}/${id}`);
+}
 
-export function getCategoryRequest(
-  
-): Promise<AxiosResponse<ICategory[]>> {
+export function getCategoryRequest(): Promise<AxiosResponse<ICategory[]>> {
   return RequestService.axios.get(EndPoints.category);
 }
 
-export function getStateRequest(
-  
-  ): Promise<AxiosResponse<IState[]>> {
-    return RequestService.axios.get(EndPoints.state);
-  }
+export function getStateRequest(): Promise<AxiosResponse<IState[]>> {
+  return RequestService.axios.get(EndPoints.state);
+}
