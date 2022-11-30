@@ -13,7 +13,6 @@ namespace Rookie.AssetManagement.Business
         {
             FromDataAccessorLayer();
             FromPresentationLayer();
-            MapperAssetFromPresentationLayer();
         }
 
         private void FromPresentationLayer()
@@ -78,13 +77,14 @@ namespace Rookie.AssetManagement.Business
                 .ForMember(d => d.Token, t => t.Ignore());
             CreateMap<Category, CategoryDto>();
             CreateMap<State, StateDto>();
-        }
 
-        private void MapperAssetFromPresentationLayer()
-        {
             CreateMap<Asset, AssetDto>()
                 .ForMember(d => d.Category, t => t.MapFrom(c => c.Category.CategoryName))
                 .ForMember(d => d.State, t => t.MapFrom(c => c.State.StateName));
+            CreateMap<Asset, AssetFormDto>()
+                .ForMember(d => d.Category, t => t.MapFrom(c => c.Category.Id))
+                .ForMember(d => d.State, t => t.MapFrom(c => c.State.Id));
         }
+
     }
 }
