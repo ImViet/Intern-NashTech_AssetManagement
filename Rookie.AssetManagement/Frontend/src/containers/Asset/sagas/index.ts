@@ -1,6 +1,7 @@
 import { takeLatest } from "redux-saga/effects";
 import {
   createAsset,
+  disableAsset,
   getAssetFormData,
   getAssetList,
   getCategory,
@@ -9,6 +10,7 @@ import {
 } from "../reducer";
 import {
   handleCreateAsset,
+  handleDisableAsset,
   handleGetAssetForm,
   handleGetAssetList,
   handleGetCategoryList,
@@ -23,4 +25,5 @@ export default function* AssetSagas() {
   yield takeLatest(createAsset.type, handleCreateAsset);
   yield takeLatest(getAssetFormData.type, handleGetAssetForm);
   yield takeLatest(updateAsset.type, handleUpdateAsset);
+  yield takeLatest(disableAsset.type, handleDisableAsset);
 }

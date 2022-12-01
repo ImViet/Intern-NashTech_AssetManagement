@@ -29,6 +29,8 @@ type Props = {
   result: IAsset | null;
   handlePage: (page: number) => void;
   handleSort: (colValue: string) => void;
+  handleDisable: Function;
+  
   sortState: SortType;
   fetchData: Function;
 };
@@ -40,6 +42,7 @@ const AssetTable: React.FC<Props> = ({
   handleSort,
   sortState,
   fetchData,
+  handleDisable,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -73,6 +76,17 @@ const AssetTable: React.FC<Props> = ({
     });
   };
 
+  const onDisable= ()=>{
+    handleDisable(disableState.id)
+    setDisable({
+      isOpen: false,
+      id: 0,
+      title: '',
+      message: '',
+      isDisable: true,
+    });
+  }
+    
   const handleCloseDetail = () => {
     setShowDetail(false);
   };
@@ -161,6 +175,7 @@ const AssetTable: React.FC<Props> = ({
                 <button
                   className="btn btn-danger mr-3"
                   type="button"
+                  onClick={onDisable}
                 >
                   Disable
                 </button>

@@ -44,3 +44,7 @@ export function getCategoryRequest(): Promise<AxiosResponse<ICategory[]>> {
 export function getStateRequest(): Promise<AxiosResponse<IState[]>> {
   return RequestService.axios.get(EndPoints.state);
 }
+
+export function disableAssetRequest(id: number): Promise<AxiosResponse<IAsset>> {
+  return RequestService.axios.delete(EndPoints.asset + "/" + id);
+}
