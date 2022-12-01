@@ -184,5 +184,19 @@ namespace Rookie.AssetManagement.Business.Services
             var assetUpdatedDto = _mapper.Map<AssetDto>(assetUpdated);
             return assetUpdatedDto;
         }
+
+        public async Task<bool> DisableAssetAsync(int id)
+        {
+            var asset = await _assetRepository.Entities.SingleOrDefaultAsync(b => b.Id.Equals(id));
+            if (asset == null)
+            {
+                throw new NotFoundException("Asset Not Found!");
+            }
+            asset.IsDeleted = true ;
+
+            await _assetRepository.Update(asset);
+
+            return await Task.FromResult(true);
+        }
     }
 }

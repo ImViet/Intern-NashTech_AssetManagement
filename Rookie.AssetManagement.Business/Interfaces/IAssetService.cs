@@ -18,5 +18,6 @@ namespace Rookie.AssetManagement.Business.Interfaces
         Task<AssetDto> AddAssetAsync(AssetCreateDto assetCreate, string location);
         Task<AssetFormDto> GetAssetFormDataById(int id, string location);
         Task<AssetDto> UpdateAssetAsync(AssetUpdateDto assetUpdateDto);
+        Task<bool> DisableAssetAsync(int id);
     }
 }
