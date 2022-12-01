@@ -166,12 +166,12 @@ const AssetTable: React.FC<Props> = ({
       >
         <div>
 
-          <div className="text-center">
+          <div className="text-start">
             {disableState.message}
           </div>
           {
             disableState.isDisable && (
-              <div className="text-center mt-3">
+              <div className="text-start mt-3">
                 <button
                   className="btn btn-danger mr-3"
                   type="button"
