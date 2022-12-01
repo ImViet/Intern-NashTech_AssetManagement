@@ -127,7 +127,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
                   .Returns(assetsMock);
 
             //Act 
-            Func<Task> act = async () => await _assetService.DisableAssetAsync(UnExistedAssetId);
+            Func<Task> act = async () => await _assetService.DisableAssetAsync(UnExistedAssetId, "HCM");
 
             //Assert
             await act.Should().ThrowAsync<NotFoundException>();
@@ -145,7 +145,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
                   .Returns(assetsMock);
 
             //Act
-            var result = await _assetService.DisableAssetAsync(DisableAssetId);
+            var result = await _assetService.DisableAssetAsync(DisableAssetId, "HCM");
 
             //Assert
             result.Should().Equals(true);

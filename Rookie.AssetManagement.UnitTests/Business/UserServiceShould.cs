@@ -171,7 +171,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
                   .Returns(usersMock);
 
             //Act 
-            Func<Task> act = async() => await _userService.DisableAsync(UnExistedUserId);
+            Func<Task> act = async() => await _userService.DisableAsync(UnExistedUserId, "HCM");
 
             //Assert
             await act.Should().ThrowAsync<NotFoundException>();
