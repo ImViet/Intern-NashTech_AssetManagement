@@ -150,7 +150,8 @@ namespace Rookie.AssetManagement.IntegrationTests
             var result = await _userController.DisableUserAsync(userRequestId);
 
             // Assert
-            result.Should().Equals(true);
+            var actionResult = Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(true, actionResult.Value);
 
         }
         [Fact]
