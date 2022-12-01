@@ -100,7 +100,8 @@ namespace Rookie.AssetManagement.UnitTests.Business
             _userRepository.Setup(x => x.Entities).Returns(usersMock);
             //Act
             Func<Task> act = async () => await _userService.UpdateAsnyc(
-                UserTestData.GetUpdateUserDtoFail()
+                UserTestData.GetUpdateUserDtoFail(),
+                "HCM"
                 );
             //Assert
             await act.Should().ThrowAsync<NotFoundException>();
@@ -116,7 +117,8 @@ namespace Rookie.AssetManagement.UnitTests.Business
                                         .Returns(Task.FromResult(UserTestData.GetUpdateUser()));
             //Act
             var result = await _userService.UpdateAsnyc(
-                UserTestData.GetUpdateUserDtoSuccess()
+                UserTestData.GetUpdateUserDtoSuccess(),
+                "HCM"
                 );
             //Assert
             Assert.Equal("STAFF", result.Type);
@@ -171,7 +173,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
                   .Returns(usersMock);
 
             //Act
-            var result = await _userService.DisableAsync(DisableUserId);
+            var result = await _userService.DisableAsync(DisableUserId, "HCM");
 
             //Assert
             result.Should().Equals(true);

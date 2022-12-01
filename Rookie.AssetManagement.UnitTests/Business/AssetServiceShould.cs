@@ -89,7 +89,8 @@ namespace Rookie.AssetManagement.UnitTests.Business
             _assetRepository.Setup(x => x.Entities).Returns(assetsMock);
             //Act
             Func<Task> act = async () => await _assetService.UpdateAssetAsync(
-                AssetTestData.GetUpdateAssetDtoFail()
+                AssetTestData.GetUpdateAssetDtoFail(),
+                "HCM"
                 );
             //Assert
             await act.Should().ThrowAsync<NotFoundException>();
@@ -107,7 +108,8 @@ namespace Rookie.AssetManagement.UnitTests.Business
                                         .Returns(Task.FromResult(AssetTestData.GetUpdateAsset()));
             //Act
             var result = await _assetService.UpdateAssetAsync(
-                AssetTestData.GetUpdateAssetDtoSuccess()
+                AssetTestData.GetUpdateAssetDtoSuccess(),
+                "HCM"
                 );
             //Assert
             Assert.Equal("Laptop Asus", result.AssetName);

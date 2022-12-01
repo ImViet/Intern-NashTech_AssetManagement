@@ -102,9 +102,9 @@ namespace Rookie.AssetManagement.Business.Services
 
             return _mapper.Map<UserDto>(user);
         }
-        public async Task<UserDto> UpdateAsnyc(UserUpdateDto userUpdateDto)
+        public async Task<UserDto> UpdateAsnyc(UserUpdateDto userUpdateDto, string location)
         {
-            var user = await _userRepository.Entities.FirstOrDefaultAsync(c => c.Id == userUpdateDto.Id);
+            var user = await _userRepository.Entities.FirstOrDefaultAsync(u => u.Id == userUpdateDto.Id && u.Location == location);
             if (user == null)
             {
                 throw new NotFoundException("User Not Found!");
@@ -234,14 +234,14 @@ namespace Rookie.AssetManagement.Business.Services
             return userQuery;
         }
 
-        public async Task<bool> DisableAsync(int id)
+        public async Task<bool> DisableAsync(int id, string location)
         {
-            var user = await _userRepository.Entities.SingleOrDefaultAsync(b => b.Id.Equals(id));
+            var user = await _userRepository.Entities.SingleOrDefaultAsync(u => u.Id.Equals(id) && u.Location.Equals(location));
             if (user == null)
             {
                 throw new NotFoundException("User Not Found!");
             }
-            user.IsDeleted = true ;
+            user.IsDeleted = true;
 
             await _userRepository.Update(user);
 

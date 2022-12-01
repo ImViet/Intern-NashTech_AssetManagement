@@ -43,7 +43,8 @@ namespace Rookie.AssetManagement.Controllers
         [HttpPut]
         public async Task<ActionResult<UserDto>> UpdateUser([FromBody] UserUpdateDto userRequest)
         {
-            var user = await _userService.UpdateAsnyc(userRequest);
+            var location = User.Claims.FirstOrDefault(x => x.Type.Equals("Location", StringComparison.OrdinalIgnoreCase))?.Value;
+            var user = await _userService.UpdateAsnyc(userRequest, location);
             return Created(Endpoints.User, user);
         }
 
@@ -65,8 +66,10 @@ namespace Rookie.AssetManagement.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DisableUserAsync([FromRoute] int id)
         {
-            var disableResult = await _userService.DisableAsync(id);
-            
+            var location = User.Claims.FirstOrDefault(x => x.Type.Equals("Location", StringComparison.OrdinalIgnoreCase))?.Value;
+
+            var disableResult = await _userService.DisableAsync(id, location);
+
             return Ok(disableResult);
         }
 

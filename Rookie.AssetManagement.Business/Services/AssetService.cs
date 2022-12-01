@@ -165,9 +165,9 @@ namespace Rookie.AssetManagement.Business.Services
             }
             return assetQuery;
         }
-        public async Task<AssetDto> UpdateAssetAsync(AssetUpdateDto assetUpdateDto)
+        public async Task<AssetDto> UpdateAssetAsync(AssetUpdateDto assetUpdateDto, string location)
         {
-            var asset = await _assetRepository.Entities.Include(x => x.Category).FirstOrDefaultAsync(c => c.Id == assetUpdateDto.Id);
+            var asset = await _assetRepository.Entities.Include(x => x.Category).FirstOrDefaultAsync(a => a.Id == assetUpdateDto.Id && a.Location == location);
             var getState = _stateRepository.Entities.Where(x => x.Id == assetUpdateDto.State).FirstOrDefault();
             if (getState == null)
             {
@@ -185,14 +185,14 @@ namespace Rookie.AssetManagement.Business.Services
             return assetUpdatedDto;
         }
 
-        public async Task<bool> DisableAssetAsync(int id)
+        public async Task<bool> DisableAssetAsync(int id, string location)
         {
-            var asset = await _assetRepository.Entities.SingleOrDefaultAsync(b => b.Id.Equals(id));
+            var asset = await _assetRepository.Entities.SingleOrDefaultAsync(a => a.Id.Equals(id) && a.Location.Equals(location));
             if (asset == null)
             {
                 throw new NotFoundException("Asset Not Found!");
             }
-            asset.IsDeleted = true ;
+            asset.IsDeleted = true;
 
             await _assetRepository.Update(asset);
 

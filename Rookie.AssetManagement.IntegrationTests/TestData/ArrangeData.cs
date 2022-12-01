@@ -27,7 +27,8 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     Gender = UserGenderEnum.Male,
                     JoinedDate = new DateTime(2022, 11, 10, 0, 0, 0),
                     Type = "Staff",
-                    IsDeleted = false
+                    IsDeleted = false,
+                    Location= "HCM"
                 },
                 new User()
                 {
@@ -37,7 +38,8 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     Gender = UserGenderEnum.Male,
                     JoinedDate = new DateTime(2022, 11, 10, 0, 0, 0),
                     Type = "Staff",
-                    IsDeleted = false
+                    IsDeleted = false,
+                    Location= "HCM"
                 },
                 new User()
                 {
@@ -47,7 +49,8 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     Gender = UserGenderEnum.Female,
                     JoinedDate = new DateTime(2022, 11, 10, 0, 0, 0),
                     Type = "Staff",
-                    IsDeleted = false
+                    IsDeleted = false,
+                    Location= "HN"
                 },
             };
         }
@@ -69,7 +72,7 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
         public static UserUpdateDto GetUserUpdateDto()
         {
             return new UserUpdateDto() {
-                Id = 3,
+                Id = 1,
                 DateOfBirth = new DateTime(2000, 02, 17, 0, 0, 0),
                 Gender = UserGenderEnumDto.Female,
                 JoinedDate = new DateTime(2022, 11, 10, 0, 0, 0),

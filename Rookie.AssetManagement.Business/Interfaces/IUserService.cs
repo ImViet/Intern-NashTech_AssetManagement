@@ -14,14 +14,15 @@ namespace Rookie.AssetManagement.Business.Interfaces
     public interface IUserService
     {
         Task<IEnumerable<UserDto>> GetAllAsync();
-        
+
         Task<UserDto> GetByIdAsync(int id);
-        
+
         Task<UserDto> AddAsync(UserCreateDto assetRequest, string location);
-        
-        Task<UserDto> UpdateAsnyc(UserUpdateDto assetRequest);
-        
-        Task<bool> DisableAsync(int id);
+
+        Task<UserDto> UpdateAsnyc(UserUpdateDto userUpdateDto, string location);
+
+        Task<bool> DisableAsync(int id, string location);
+
         Task<PagedResponseModel<UserDto>> GetByPageAsync(UserQueryCriteriaDto assetQueryCriteria, CancellationToken cancellationToken, string location);
     }
 }
