@@ -144,14 +144,14 @@ namespace Rookie.AssetManagement.IntegrationTests
         public async Task DisableAssetAsyncSuccess()
         {
             //Arrange
-            var assetRequestId = 1
-                ;
+            var assetRequestId = 1;
 
             // Act
             var result = await _assetController.DisableAssetAsync(assetRequestId);
 
             // Assert
-            result.Should().Equals(true);
+            var actionResult = Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(true, actionResult.Value);
 
         }
         [Fact]
