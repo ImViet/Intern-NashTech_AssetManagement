@@ -48,7 +48,7 @@ const CheckboxField: React.FC<InputFieldProps> = (props) => {
                                     onChange={handleChange}
                                     checked={optionValue == value}
                                 />
-                                <label className="form-check-label" htmlFor={id.toString()}>
+                                <label className="form-check-label ml-1" htmlFor={id.toString()}>
                                     {optionLabel}
                                 </label>
                             </div>

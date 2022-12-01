@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
 import { ASSET, ASSET_PARENT_ROOT, HOME, USER, USER_PARENT_ROOT } from 'src/constants/pages';
 import IAssetForm from 'src/interfaces/Asset/IAssetForm';
 import { createAsset, getCategory, getState, updateAsset } from './reducer';
+import TextAreaField from 'src/components/FormInputs/TextAreaField';
 
 
 const initialFormValues: IAssetForm = {
@@ -103,7 +104,7 @@ function AssetFormContainer({ initialAssetForm = {
                             disabled={isUpdate ? true : false}
                         />
 
-                        <TextField
+                        <TextAreaField
                             name="specification"
                             label="Specification"
                             placeholder=""
@@ -127,7 +128,7 @@ function AssetFormContainer({ initialAssetForm = {
 
                         <div className="d-flex">
                             <div className="ml-auto">
-                                <button className="btn btn-danger"
+                                <button className="btn btn-danger mr-4"
                                     type="submit" disabled={!(actions.dirty && actions.isValid)}
                                 >
                                     Save {(loading) && <img src="/oval.svg" className='w-4 h-4 ml-2 inline-block' />}
