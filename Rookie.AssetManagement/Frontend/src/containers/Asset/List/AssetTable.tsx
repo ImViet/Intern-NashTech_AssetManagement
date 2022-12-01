@@ -57,7 +57,7 @@ const AssetTable: React.FC<Props> = ({
     setDisable({
       id,
       isOpen: true,
-      title: 'Are you sure',
+      title: 'Are you sure?',
       message: 'Do you want to disable this asset?',
       isDisable: true,
     });
