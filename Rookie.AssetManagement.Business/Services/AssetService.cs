@@ -196,9 +196,9 @@ namespace Rookie.AssetManagement.Business.Services
             {
                 throw new NotFoundException("Asset is assigned can not be delete");
             }
-            asset.IsDeleted = true;
+            // asset.IsDeleted = true;
 
-            await _assetRepository.Update(asset);
+            await _assetRepository.Delete(asset);
 
             return await Task.FromResult(true);
         }
