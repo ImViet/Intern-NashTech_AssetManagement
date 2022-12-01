@@ -61,7 +61,7 @@ const AssetTable: React.FC<Props> = ({
       id,
       isOpen: true,
       title: 'Are you sure?',
-      message: 'Do you want to disable this asset?',
+      message: 'Do you want to delete this asset?',
       isDisable: true,
     });
   };
@@ -177,7 +177,7 @@ const AssetTable: React.FC<Props> = ({
                   type="button"
                   onClick={onDisable}
                 >
-                  Disable
+                  Delete
                 </button>
 
                 <button
