@@ -14,7 +14,7 @@ import {
   DEFAULT_USER_SORT_COLUMN_NAME,
 } from "src/constants/paging";
 import { FilterUserTypeOptions } from "src/constants/selectOptions";
-import { getUserList, disableUser } from "../reducer";
+import { getUserList, disableUser, cleanUpUserState } from "../reducer";
 import { DefaultLimit } from "src/constants/User/UserContants";
 import SelectBox from "src/components/SelectBox";
 
@@ -131,7 +131,12 @@ const ListUser = () => {
 
   useEffect(() => {
     fetchData();
+    dispatch(cleanUpUserState());
   }, [query]);
+
+  useEffect(() => {
+    dispatch(getUserList({...defaultQuery}))
+  }, []);
 
   return (
     <>

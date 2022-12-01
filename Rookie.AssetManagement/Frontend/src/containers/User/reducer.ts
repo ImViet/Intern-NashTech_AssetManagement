@@ -113,6 +113,9 @@ const UserReducerSlice = createSlice({
         loading: true,
       };
     },
+    cleanUpUserState: (state, action: PayloadAction): UserState => {
+      return { ...initialState };
+    },
   },
 });
 
@@ -126,6 +129,7 @@ export const {
   getUserList,
   getUser,
   disableUser,
+  cleanUpUserState,
 } = UserReducerSlice.actions;
 
 export default UserReducerSlice.reducer;
