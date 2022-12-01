@@ -36,7 +36,9 @@ function AssetFormContainer({ initialAssetForm = {
     ...initialFormValues
 } }) {
     const isUpdate = initialAssetForm.id ? true : false;
+
     const { FilterAssetCategoryOptions, FilterAssetStateOptions } = useAppSelector(state => state.assetReducer)
+    
     const states = useMemo(() => {
         if (isUpdate) {
             return FilterAssetStateOptions.filter(state => state.label != "Assigned" && state.label != "ALL" )
@@ -45,16 +47,12 @@ function AssetFormContainer({ initialAssetForm = {
             return FilterAssetStateOptions.filter(state => state.label == "Available" || state.label == "Not Available")
         }
     }, [FilterAssetStateOptions])
+
     const categories = useMemo(() => FilterAssetCategoryOptions.filter(cate => cate.label != "ALL"), [FilterAssetCategoryOptions])
 
     const [loading, setLoading] = useState(false);
 
     const dispatch = useAppDispatch();
-
-    
-    // if(!isUpdate){
-    //     initialFormValues.joinedDate = new Date();
-    // }
 
     const navigate = useNavigate();
     const handleResult = (result: boolean, message: string) => {
@@ -62,6 +60,7 @@ function AssetFormContainer({ initialAssetForm = {
             navigate(ASSET_PARENT_ROOT);
         }
     };
+    
     useEffect(() => {
         dispatch(getCategory())
         dispatch(getState())

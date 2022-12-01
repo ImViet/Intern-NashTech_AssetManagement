@@ -14,7 +14,7 @@ import {
 } from "src/constants/paging";
 import IPagedModel from "src/interfaces/IPagedModel";
 import { DefaultLimit } from "src/constants/User/UserContants";
-import { disableAsset, getAssetList, getCategory, getState } from "../reducer";
+import { cleanUpAssetState, disableAsset, getAssetList, getCategory, getState } from "../reducer";
 import IQueryAssetModel from "src/interfaces/Asset/IQueryAssetModel";
 import SelectBox from "src/components/SelectBox";
 
@@ -181,10 +181,12 @@ const ListAsset = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData()
+    dispatch(cleanUpAssetState())
   }, [query]);
 
   useEffect(() => {
+    dispatch(getAssetList({...defaultQuery}))
     dispatch(getCategory())
     dispatch(getState())
   }, []);
@@ -252,7 +254,6 @@ const ListAsset = () => {
                   handlePage={handlePage}
                   handleSort={handleSort}
                   handleDisable={handleDisable}
-
                   sortState={{
                     columnValue: query.sortColumn,
                     orderBy: query.sortOrder,
