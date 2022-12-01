@@ -201,7 +201,7 @@ const ListAsset = () => {
               <div className="filter-state">
                 <SelectBox               
                  options={FilterAssetStateOptions}
-                placeholderButtonLabel="Type"
+                placeholderButtonLabel="State"
                 value={selectedState}
                 onChange={handleState}/>
               </div>
@@ -212,7 +212,7 @@ const ListAsset = () => {
                 <div className="filter-category">
                   <SelectBox
                   options={FilterAssetCategoryOptions}
-                  placeholderButtonLabel="Type"
+                  placeholderButtonLabel="Category"
                   value={selectedCategory}
                   onChange={handleCategory}
                   />

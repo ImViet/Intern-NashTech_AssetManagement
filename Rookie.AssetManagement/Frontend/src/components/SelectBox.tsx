@@ -20,6 +20,7 @@ function SelectBox({
         <div className="icon-filter border p-2">
             <FunnelFill />
         </div>
+        <div className="placeholder">{placeholderButtonLabel}</div>
     </div>  
   )
 }
