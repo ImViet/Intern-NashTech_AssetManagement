@@ -114,5 +114,41 @@ namespace Rookie.AssetManagement.UnitTests.Business
             //Assert
             Assert.Equal("Laptop Asus", result.AssetName);
         }
+
+        [Fact]
+        public async Task DisableAsyncShouldThrowException()
+        {
+            //Arrange
+            var UnExistedAssetId = 3;
+            var assetsMock = AssetTestData.GetAssets().AsQueryable().BuildMock();
+
+            _assetRepository
+                  .Setup(x => x.Entities)
+                  .Returns(assetsMock);
+
+            //Act 
+            Func<Task> act = async () => await _assetService.DisableAssetAsync(UnExistedAssetId);
+
+            //Assert
+            await act.Should().ThrowAsync<NotFoundException>();
+        }
+
+        [Fact]
+        public async Task DisableAsyncReturnTrue()
+        {
+            //Arrange
+            var DisableAssetId = 1;
+            var assetsMock = AssetTestData.GetAssets().AsQueryable().BuildMock();
+
+            _assetRepository
+                  .Setup(x => x.Entities)
+                  .Returns(assetsMock);
+
+            //Act
+            var result = await _assetService.DisableAssetAsync(DisableAssetId);
+
+            //Assert
+            result.Should().Equals(true);
+        }
     }
 }

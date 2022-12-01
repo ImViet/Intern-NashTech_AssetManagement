@@ -25,8 +25,6 @@ using FluentAssertions.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Rewrite;
 
 
 
@@ -162,7 +160,26 @@ namespace Rookie.AssetManagement.UnitTests.Business
         }
 
         [Fact]
-        public async Task DisableAsyncReturnTrue()
+        public async Task DisableAsyncShouldThrowException()
+        {
+            //Arrange
+            var UnExistedUserId = 3;
+            var usersMock = UserTestData.GetUsers().AsQueryable().BuildMock();
+
+            _userRepository
+                  .Setup(x => x.Entities)
+                  .Returns(usersMock);
+
+            //Act 
+            Func<Task> act = async() => await _userService.DisableAsync(UnExistedUserId);
+
+            //Assert
+            await act.Should().ThrowAsync<NotFoundException>();
+        }
+
+
+        [Fact]
+        public async Task DisableAsyncShouldTrue()
         {
             //Arrange
             var DisableUserId = 1;
