@@ -61,7 +61,6 @@ const AuthSlice = createSlice({
     },
     setStatus: (state: AuthState, action: PayloadAction<SetStatusType>) => {
       const { status, error } = action.payload;
-
       return {
         ...state,
         status,
@@ -78,7 +77,10 @@ const AuthSlice = createSlice({
       ...state,
       loading: true,
     }),
-    changePassword: (state: AuthState , action: PayloadAction<ChangePasswordAction>) => {
+    changePassword: (
+      state: AuthState,
+      action: PayloadAction<ChangePasswordAction>
+    ) => {
       return {
         ...state,
         loading: true,

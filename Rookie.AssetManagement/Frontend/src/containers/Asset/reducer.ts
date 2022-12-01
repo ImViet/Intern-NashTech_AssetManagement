@@ -18,7 +18,6 @@ type AssetState = {
   assets: IPagedModel<IAsset> | null;
   status?: number;
   error?: IError;
-  
 };
 
 export type CreateAction = {
@@ -147,11 +146,16 @@ const AssetReducerSlice = createSlice({
         loading: false,
       };
     },
-
     disableAsset: (state, action: PayloadAction<DisableAction>): AssetState => {
       return {
         ...state,
         loading: true,
+      };
+    },
+    cleanUpActionResult: (state, action: PayloadAction): AssetState => {
+      return {
+        ...state,
+        actionResult: null,
       };
     },
   },
@@ -171,6 +175,7 @@ export const {
   getAssetFormData,
   setAssetFormData,
   disableAsset,
+  cleanUpActionResult,
 } = AssetReducerSlice.actions;
 
 export default AssetReducerSlice.reducer;

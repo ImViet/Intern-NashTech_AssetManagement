@@ -32,6 +32,7 @@ const TextAreaField: React.FC<TextAreaFieldType> = (props) => {
                 </label>
                 <div className="col">
                     <textarea
+                        style={{resize: "none"}}
                         rows={3}
                         className={`form-control ${validateClass()}`}
                         {...field}

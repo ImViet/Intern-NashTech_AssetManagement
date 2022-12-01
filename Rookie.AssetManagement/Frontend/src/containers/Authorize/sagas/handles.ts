@@ -23,12 +23,11 @@ export function* handleLogin(action: PayloadAction<ILoginModel>) {
     const { data } = yield call(loginRequest, loginModel);
     yield put(setAccount(data));
   } catch (error: any) {
-    const errorModel = error.response.data as IError;
-
+    const message = error.response.data;
     yield put(
       setStatus({
         status: Status.Failed,
-        error: errorModel,
+        error: { error: true, message: message },
       })
     );
   }
@@ -61,12 +60,15 @@ export function* handleChangePassword(
       })
     );
   } catch (error: any) {
-    const errorModel = error.response.data as IError;
+    const errorModel = error.response.data;
     handleResult(false, errorModel);
     yield put(
       setStatus({
         status: Status.Failed,
-        error: errorModel,
+        error: {
+          error: true,
+          message: "",
+        },
       })
     );
   }
@@ -87,12 +89,15 @@ export function* handleChangePasswordFirstLogin(
       })
     );
   } catch (error: any) {
-    const errorModel = error.response.data as IError;
+    const message = error.response.data;
 
     yield put(
       setStatus({
         status: Status.Failed,
-        error: errorModel,
+        error: {
+          error: true,
+          message: message,
+        },
       })
     );
   }

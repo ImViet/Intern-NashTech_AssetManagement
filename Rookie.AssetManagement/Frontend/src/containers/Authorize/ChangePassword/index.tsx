@@ -28,7 +28,6 @@ const ChangePassword = ({show, onClose}) => {
   const [ showSuccess, setShowSuccess ] = useState(false);
 
   const handleSubmit = (values, actions) => {
-    debugger
     dispatch(changePassword({ handleResult: (result, data) => {
       if (result) {
         onClose()
@@ -66,7 +65,7 @@ const ChangePassword = ({show, onClose}) => {
                       <TextFieldPassword name="passwordOld" label="Old password" isrequired={true} />
                       {error && (
                         <div className="invalid">
-                          {error}
+                          {error.message}
                         </div>
                       )} 
 

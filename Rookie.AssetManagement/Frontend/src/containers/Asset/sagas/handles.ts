@@ -17,7 +17,6 @@ import {
   UpdateAction,
   setActionResult,
   DisableAction,
-  
 } from "../reducer";
 import {
   createAssetRequest,
@@ -27,7 +26,6 @@ import {
   getStateRequest,
   updateAssetRequest,
   disableAssetRequest,
- 
 } from "./requests";
 
 export function* handleCreateAsset(action: PayloadAction<CreateAction>) {
@@ -47,13 +45,15 @@ export function* handleCreateAsset(action: PayloadAction<CreateAction>) {
 
     yield put(setActionResult(data));
   } catch (error: any) {
-    const errors = error.response.data.errors;
-    const firstError = errors[Object.keys(errors)[0]][0];
-    handleResult(false, firstError);
+    const errorModel = error.response.data;
+    handleResult(false, errorModel);
     yield put(
       setStatus({
         status: Status.Failed,
-        error: firstError,
+        error: {
+          error: true,
+          message: "",
+        },
       })
     );
   }
@@ -65,6 +65,8 @@ export function* handleUpdateAsset(action: PayloadAction<UpdateAction>) {
     console.log("handleUpdateAsset");
     console.log(formValues);
 
+    formValues.installedDate = toUTC(formValues.installedDate);
+
     const { data } = yield call(updateAssetRequest, formValues);
 
     data.InstalledDate = new Date(data.InstalledDate);
@@ -75,13 +77,15 @@ export function* handleUpdateAsset(action: PayloadAction<UpdateAction>) {
 
     yield put(setActionResult(data));
   } catch (error: any) {
-    const errors = error.response.data.errors;
-    const firstError = errors[Object.keys(errors)[0]][0];
-    handleResult(false, firstError);
+    const errorModel = error.response.data;
+    handleResult(false, errorModel);
     yield put(
       setStatus({
         status: Status.Failed,
-        error: firstError,
+        error: {
+          error: true,
+          message: "",
+        },
       })
     );
   }
@@ -94,12 +98,14 @@ export function* handleGetAssetList(action: PayloadAction<IQueryAssetModel>) {
     const { data } = yield call(getAssetsRequest, queryAssetModel);
     yield put(setAssetList(data));
   } catch (error: any) {
-    const errorModel = error.response.data as IError;
-
+    const message = error.response.data;
     yield put(
       setStatus({
         status: Status.Failed,
-        error: errorModel,
+        error: {
+          error: true,
+          message: message,
+        },
       })
     );
   }
@@ -113,12 +119,14 @@ export function* handleGetAssetForm(action: PayloadAction<number>) {
     data.installedDate = new Date(data.installedDate);
     yield put(setAssetFormData(data));
   } catch (error: any) {
-    const errorModel = error.response.data as IError;
-
+    const message = error.response.data;
     yield put(
       setStatus({
         status: Status.Failed,
-        error: errorModel,
+        error: {
+          error: true,
+          message: message,
+        },
       })
     );
   }
@@ -143,12 +151,14 @@ export function* handleGetCategoryList() {
     });
     yield put(setCategory(options));
   } catch (error: any) {
-    const errorModel = error.response.data as IError;
-
+    const message = error.response.data;
     yield put(
       setStatus({
         status: Status.Failed,
-        error: errorModel,
+        error: {
+          error: true,
+          message: message,
+        },
       })
     );
   }
@@ -173,12 +183,14 @@ export function* handleGetStateList() {
     });
     yield put(setState(options));
   } catch (error: any) {
-    const errorModel = error.response.data as IError;
-
+    const message = error.response.data;
     yield put(
       setStatus({
         status: Status.Failed,
-        error: errorModel,
+        error: {
+          error: true,
+          message: message,
+        },
       })
     );
   }
@@ -193,13 +205,15 @@ export function* handleDisableAsset(action: PayloadAction<DisableAction>) {
       handleResult(true, "");
     }
   } catch (error: any) {
-    const errorModel = error.response.data as IError;
-    handleResult(false, errorModel);
-
+    const message = error.response.data;
+    handleResult(false, message);
     yield put(
       setStatus({
         status: Status.Failed,
-        error: errorModel,
+        error: {
+          error: true,
+          message: message,
+        },
       })
     );
   }

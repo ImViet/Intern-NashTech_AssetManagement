@@ -119,10 +119,10 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
                 setLoading(true);
                 setTimeout(() => {
                     if (isUpdate) {
-                        dispatch(updateUser({ handleResult, formValues: values }));
+                        dispatch(updateUser({ handleResult, formValues: {...values} }));
                     }
                     else {
-                        dispatch(createUser({ handleResult, formValues: values }));
+                        dispatch(createUser({ handleResult, formValues: {...values} }));
                     }
                     setLoading(false);
                 }, 1000);

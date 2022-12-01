@@ -86,7 +86,7 @@ const Login = () => {
 
                   {error && (
                     <div className="invalid text-center">
-                      {error}
+                      {error.message}
                     </div>
                   )}
 
