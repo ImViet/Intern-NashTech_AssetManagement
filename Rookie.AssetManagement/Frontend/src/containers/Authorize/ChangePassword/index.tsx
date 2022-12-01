@@ -28,13 +28,11 @@ const ChangePassword = ({show, onClose}) => {
   const [ showSuccess, setShowSuccess ] = useState(false);
 
   const handleSubmit = (values, actions) => {
-    debugger
     dispatch(changePassword({ handleResult: (result, data) => {
       if (result) {
         onClose()
         setShowSuccess(true)
       }else{
-        debugger
         actions.setErrors(data)
       }
       actions.setSubmitting(false)

@@ -15,7 +15,7 @@ import {
   DEFAULT_USER_SORT_COLUMN_NAME,
 } from "src/constants/paging";
 import { FilterUserTypeOptions } from "src/constants/selectOptions";
-import { getUserList, disableUser, cleanUpUserState } from "../reducer";
+import { getUserList, disableUser, cleanUpUserActionResult } from "../reducer";
 import SelectBox from "src/components/SelectBox";
 
 const defaultQuery: IQueryUserModel = {
@@ -130,8 +130,9 @@ const ListUser = () => {
   };
 
   useEffect(() => {
+    dispatch(cleanUpUserActionResult());  
+    debugger
     fetchData();
-    dispatch(cleanUpUserState());
   }, [query]);
 
   useEffect(() => {

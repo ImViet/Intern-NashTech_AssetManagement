@@ -152,11 +152,10 @@ const AssetReducerSlice = createSlice({
         loading: true,
       };
     },
-    cleanUpAssetState: (state, action: PayloadAction): AssetState => {
+    cleanUpActionResult: (state, action: PayloadAction): AssetState => {
       return {
-        ...initialState,
-        FilterAssetCategoryOptions: state.FilterAssetCategoryOptions,
-        FilterAssetStateOptions: state.FilterAssetStateOptions,
+        ...state,
+        actionResult: null,
       };
     },
   },
@@ -176,7 +175,7 @@ export const {
   getAssetFormData,
   setAssetFormData,
   disableAsset,
-  cleanUpAssetState,
+  cleanUpActionResult,
 } = AssetReducerSlice.actions;
 
 export default AssetReducerSlice.reducer;

@@ -13,7 +13,7 @@ import {
   DEFAULT_ASSET_SORT_COLUMN_NAME,
 } from "src/constants/paging";
 import IPagedModel from "src/interfaces/IPagedModel";
-import { cleanUpAssetState, disableAsset, getAssetList, getCategory, getState } from "../reducer";
+import { cleanUpActionResult, disableAsset, getAssetList, getCategory, getState } from "../reducer";
 import IQueryAssetModel from "src/interfaces/Asset/IQueryAssetModel";
 import SelectBox from "src/components/SelectBox";
 
@@ -180,8 +180,8 @@ const ListAsset = () => {
   };
 
   useEffect(() => {
+    dispatch(cleanUpActionResult())
     fetchData()
-    dispatch(cleanUpAssetState())
   }, [query]);
 
   useEffect(() => {

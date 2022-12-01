@@ -61,7 +61,6 @@ const AuthSlice = createSlice({
     },
     setStatus: (state: AuthState, action: PayloadAction<SetStatusType>) => {
       const { status, error } = action.payload;
-      debugger;
       return {
         ...state,
         status,

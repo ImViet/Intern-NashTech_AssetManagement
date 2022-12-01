@@ -65,6 +65,8 @@ export function* handleUpdateAsset(action: PayloadAction<UpdateAction>) {
     console.log("handleUpdateAsset");
     console.log(formValues);
 
+    formValues.installedDate = toUTC(formValues.installedDate);
+
     const { data } = yield call(updateAssetRequest, formValues);
 
     data.InstalledDate = new Date(data.InstalledDate);

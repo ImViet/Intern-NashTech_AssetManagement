@@ -76,10 +76,10 @@ function AssetFormContainer({ initialAssetForm = {
                 setLoading(true);
                 setTimeout(() => {
                     if (isUpdate) {
-                        dispatch(updateAsset({ handleResult, formValues: values }));
+                        dispatch(updateAsset({ handleResult, formValues: {...values} }));
                     }
                     else {
-                        dispatch(createAsset({ handleResult, formValues: values }));
+                        dispatch(createAsset({ handleResult, formValues: {...values} }));
                     }
                     setLoading(false);
                 }, 1000);
