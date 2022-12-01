@@ -62,9 +62,10 @@ namespace Rookie.AssetManagement.IntegrationTests
             _assetController = new AssetController(_assetService, _stateService, _categoryService);
 
 
-            AssetData.InitAssetsData(_dbContext);
             AssetData.InitCategoriesData(_dbContext);
             AssetData.InitStatesData(_dbContext);
+            AssetData.InitAssetsData(_dbContext);
+
 
             _identity = new ClaimsIdentity();
             _identity.AddClaims(new[]
@@ -137,7 +138,7 @@ namespace Rookie.AssetManagement.IntegrationTests
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<OkObjectResult>(result.Result);
             var returnValue = Assert.IsType<List<StateDto>>(actionResult.Value);
-            Assert.Equal(8, returnValue.Count);
+            Assert.Equal(5, returnValue.Count);
         }
         [Fact]
         public async Task DisableAssetAsyncSuccess()

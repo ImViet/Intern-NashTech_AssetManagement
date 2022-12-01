@@ -30,7 +30,8 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     InstalledDate = new DateTime(),
                     State =  new State()
                     {
-                        StateName = "Assigned",
+                        Id = 2,
+                        StateName = "Available",
                     },
                     IsDeleted = false,
                     Location="HCM",
@@ -47,6 +48,7 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     InstalledDate = new DateTime(),
                     State = new State()
                     {
+                        Id = 2,
                         StateName = "Available",
                     },
                     IsDeleted = false,
@@ -64,7 +66,8 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     InstalledDate = new DateTime(),
                     State = new State()
                     {
-                     StateName = "Available",
+                        Id = 2,
+                        StateName = "Available",
                     },
                     IsDeleted = false,
                     Location="HN",
@@ -163,6 +166,11 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
         public static void InitAssetsData(ApplicationDbContext dbContext)
         {
             var assets = GetSeedAssetsData();
+            var state = dbContext.States.FirstOrDefault(s => s.Id == 2);
+            foreach (var asset in assets)
+            {
+                asset.State = state;
+            }
             dbContext.Assets.AddRange(assets);
             dbContext.SaveChanges();
 

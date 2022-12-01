@@ -187,10 +187,14 @@ namespace Rookie.AssetManagement.Business.Services
 
         public async Task<bool> DisableAssetAsync(int id, string location)
         {
-            var asset = await _assetRepository.Entities.SingleOrDefaultAsync(a => a.Id.Equals(id) && a.Location.Equals(location));
+            var asset = await _assetRepository.Entities.Include(a => a.State).SingleOrDefaultAsync(a => a.Id.Equals(id) && a.Location.Equals(location));
             if (asset == null)
             {
                 throw new NotFoundException("Asset Not Found!");
+            }
+            if (asset.State.Id == 1)
+            {
+                throw new NotFoundException("Asset is assigned can not be delete");
             }
             asset.IsDeleted = true;
 

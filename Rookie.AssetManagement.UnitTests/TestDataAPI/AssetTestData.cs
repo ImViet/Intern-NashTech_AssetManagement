@@ -27,7 +27,11 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                     AssetName = "Monitor xyz",
                     Specification = "abc",
                     IsDeleted = false,
-                    Location="HCM"
+                    Location="HCM",
+                    State=new State() {
+                        Id = 2,
+                        StateName="Available",
+                    },
                 },
                 new Asset() {
                     Id = 2,
@@ -35,7 +39,12 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                     AssetName = "Monitor xyz2",
                     Specification = "abc",
                     IsDeleted = false,
-                    Location="HCM"
+                    Location="HCM",
+                    State=new State() {
+                        Id = 1,
+                        StateName="Assigned",
+                    },
+
                 }
             };
         }
@@ -44,10 +53,14 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
             return new List<State>() {
                 new State() {
                     Id = 1,
-                    StateName="Available",
+                    StateName="Assigned",
                 },
                 new State() {
                     Id = 2,
+                    StateName="Available",
+                },
+                new State() {
+                    Id = 3,
                     StateName="Not Available",
                 }
             };
