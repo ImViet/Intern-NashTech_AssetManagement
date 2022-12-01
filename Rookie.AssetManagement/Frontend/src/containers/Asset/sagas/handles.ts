@@ -127,7 +127,7 @@ export function* handleGetCategoryList() {
       {
         id: 1,
         label: "ALL",
-        value: "",
+        value: "ALL",
       },
     ];
     data.forEach((cate, index) => {
@@ -157,7 +157,7 @@ export function* handleGetStateList() {
       {
         id: 1,
         label: "ALL",
-        value: "",
+        value: "ALL",
       },
     ];
     data.forEach((state, index) => {

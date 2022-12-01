@@ -18,29 +18,37 @@ import { getAssetList, getCategory, getState } from "../reducer";
 import IQueryAssetModel from "src/interfaces/Asset/IQueryAssetModel";
 import SelectBox from "src/components/SelectBox";
 
+const defaultQuery: IQueryAssetModel = {
+  search:"",
+  page: 1,
+  limit: DefaultLimit,
+  sortOrder: ACCSENDING,
+  sortColumn: DEFAULT_ASSET_SORT_COLUMN_NAME,
+  states:['1','2','3'],
+  categories: ["ALL"]
+}
+
+const defaultSelectedCategory: ISelectOption[] = [
+  { id: 2, label: "Assigned", value: 1 },
+  { id: 3, label: "Available", value: 2 },
+  { id: 4, label: "Not available", value: 3 },
+]
+
+const defaultSelectedState: ISelectOption[] =[
+  { id: 1, label: "Category", value: "ALL" },
+]
+
 const ListAsset = () => {
   const dispatch = useAppDispatch();
   const { assets, actionResult } = useAppSelector((state) => state.assetReducer);
 
-  const [query, setQuery] = useState({
-    page: assets?.currentPage ?? 1,
-    limit: DefaultLimit,
-    sortOrder: ACCSENDING,
-    sortColumn: DEFAULT_ASSET_SORT_COLUMN_NAME,
-    states:['1','2','3']
-  } as IQueryAssetModel);
+  const [query, setQuery] = useState(assets ? { ...defaultQuery, page: assets.currentPage } : defaultQuery);
 
   const [search, setSearch] = useState("");
 
-  const [selectedState, setSelectedState] = useState([
-    { id: 2, label: "Assigned", value: 1 },
-    { id: 3, label: "Available", value: 2 },
-    { id: 4, label: "Not available", value: 3 },
-  ] as ISelectOption[]);
+  const [selectedState, setSelectedState] = useState(defaultSelectedCategory);
 
-  const [selectedCategory, setSelectedCategory] = useState([
-    { id: 1, label: "Category", value: "" },
-  ] as ISelectOption[]);
+  const [selectedCategory, setSelectedCategory] = useState(defaultSelectedState);
 
   const {FilterAssetCategoryOptions} = useAppSelector(state=> state.assetReducer)
   const {FilterAssetStateOptions} = useAppSelector(state=> state.assetReducer)
