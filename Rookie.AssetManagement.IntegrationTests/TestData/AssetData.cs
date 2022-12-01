@@ -32,7 +32,8 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     {
                         StateName = "Assigned",
                     },
-                    IsDeleted = false
+                    IsDeleted = false,
+                    Location="HCM",
                 },
                 new Asset()
                 {
@@ -48,7 +49,8 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     {
                         StateName = "Available",
                     },
-                    IsDeleted = false
+                    IsDeleted = false,
+                    Location="HCM",
                 },
                 new Asset()
                 {
@@ -64,7 +66,8 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     {
                      StateName = "Available",
                     },
-                    IsDeleted = false
+                    IsDeleted = false,
+                    Location="HN",
                 },
             };
         }

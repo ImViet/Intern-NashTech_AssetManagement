@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Rookie.AssetManagement.Contracts.Dtos.CategoryDtos;
 using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
+using Rookie.AssetManagement.Contracts;
 
 namespace Rookie.AssetManagement.IntegrationTests
 {
@@ -138,7 +139,25 @@ namespace Rookie.AssetManagement.IntegrationTests
             var returnValue = Assert.IsType<List<StateDto>>(actionResult.Value);
             Assert.Equal(8, returnValue.Count);
         }
+        [Fact]
+        public async Task DisableAssetAsyncSuccess()
+        {
+            //Arrange
+            var assetRequestId = 1
+                ;
 
+            // Act
+            var result = await _assetController.DisableAssetAsync(assetRequestId);
+
+            // Assert
+            result.Should().Equals(true);
+
+        }
+        [Fact]
+        public async Task DisableAsyncShouldThrowExceptionAsync()
+        {
+            await Assert.ThrowsAsync<NotFoundException>(() => _assetController.DisableAssetAsync(4));
+        }
 
     }
 }
