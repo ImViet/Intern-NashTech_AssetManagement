@@ -153,7 +153,11 @@ const AssetReducerSlice = createSlice({
       };
     },
     cleanUpAssetState: (state, action: PayloadAction): AssetState => {
-      return { ...initialState };
+      return {
+        ...initialState,
+        FilterAssetCategoryOptions: state.FilterAssetCategoryOptions,
+        FilterAssetStateOptions: state.FilterAssetStateOptions,
+      };
     },
   },
 });
