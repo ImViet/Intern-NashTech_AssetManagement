@@ -11,16 +11,16 @@ import { Link, useLocation } from "react-router-dom";
 import {
   ACCSENDING,
   DECSENDING,
+  DEFAULT_PAGE_LIMIT,
   DEFAULT_USER_SORT_COLUMN_NAME,
 } from "src/constants/paging";
 import { FilterUserTypeOptions } from "src/constants/selectOptions";
 import { getUserList, disableUser, cleanUpUserState } from "../reducer";
-import { DefaultLimit } from "src/constants/User/UserContants";
 import SelectBox from "src/components/SelectBox";
 
 const defaultQuery: IQueryUserModel = {
   page: 1,
-  limit: DefaultLimit,
+  limit: DEFAULT_PAGE_LIMIT,
   sortOrder: ACCSENDING,
   sortColumn: DEFAULT_USER_SORT_COLUMN_NAME,
   types: [],

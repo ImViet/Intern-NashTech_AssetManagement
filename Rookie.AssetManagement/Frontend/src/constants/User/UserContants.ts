@@ -5,5 +5,3 @@ export const AllUserType = "ALL";
 export const AdminUserTypeLabel = "Admin";
 export const StaffUserTypeLabel = "Staff";
 export const AllUserTypeLabel = "All";
-
-export const DefaultLimit = 5;

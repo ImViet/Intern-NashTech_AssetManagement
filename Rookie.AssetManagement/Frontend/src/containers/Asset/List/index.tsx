@@ -13,7 +13,6 @@ import {
   DEFAULT_ASSET_SORT_COLUMN_NAME,
 } from "src/constants/paging";
 import IPagedModel from "src/interfaces/IPagedModel";
-import { DefaultLimit } from "src/constants/User/UserContants";
 import { cleanUpAssetState, disableAsset, getAssetList, getCategory, getState } from "../reducer";
 import IQueryAssetModel from "src/interfaces/Asset/IQueryAssetModel";
 import SelectBox from "src/components/SelectBox";
@@ -21,7 +20,7 @@ import SelectBox from "src/components/SelectBox";
 const defaultQuery: IQueryAssetModel = {
   search:"",
   page: 1,
-  limit: DefaultLimit,
+  limit: DEFAULT_PAGE_LIMIT,
   sortOrder: ACCSENDING,
   sortColumn: DEFAULT_ASSET_SORT_COLUMN_NAME,
   states:['1','2','3'],

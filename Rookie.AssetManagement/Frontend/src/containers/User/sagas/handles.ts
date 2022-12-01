@@ -44,13 +44,15 @@ export function* handleCreateUser(action: PayloadAction<CreateAction>) {
 
     yield put(setActionResult(data));
   } catch (error: any) {
-    const errors = error.response.data.errors;
-    const firstError = errors[Object.keys(errors)[0]][0];
-    handleResult(false, firstError);
+    const errorModel = error.response.data;
+    handleResult(false, errorModel);
     yield put(
       setStatus({
         status: Status.Failed,
-        error: firstError,
+        error: {
+          error: true,
+          message: "",
+        },
       })
     );
   }
@@ -73,13 +75,15 @@ export function* handleUpdateUser(action: PayloadAction<UpdateAction>) {
 
     yield put(setActionResult(data));
   } catch (error: any) {
-    const errors = error.response.data.errors;
-    const firstError = errors[Object.keys(errors)[0]][0];
-    handleResult(false, firstError);
+    const errorModel = error.response.data;
+    handleResult(false, errorModel);
     yield put(
       setStatus({
         status: Status.Failed,
-        error: firstError,
+        error: {
+          error: true,
+          message: "",
+        },
       })
     );
   }
@@ -92,12 +96,14 @@ export function* handleGetUserList(action: PayloadAction<IQueryUserModel>) {
     const { data } = yield call(getUsersRequest, queryUserModel);
     yield put(setUserList(data));
   } catch (error: any) {
-    const errorModel = error.response.data as IError;
-
+    const message = error.response.data;
     yield put(
       setStatus({
         status: Status.Failed,
-        error: errorModel,
+        error: {
+          error: true,
+          message: message,
+        },
       })
     );
   }
@@ -112,12 +118,14 @@ export function* handleGetUserById(action: PayloadAction<number>) {
     data.joinedDate = new Date(data.joinedDate);
     yield put(setUserResult(data));
   } catch (error: any) {
-    const errorModel = error.response.data as IError;
-
+    const message = error.response.data;
     yield put(
       setStatus({
         status: Status.Failed,
-        error: errorModel,
+        error: {
+          error: true,
+          message: message,
+        },
       })
     );
   }
@@ -132,13 +140,15 @@ export function* handleDisableUser(action: PayloadAction<DisableAction>) {
       handleResult(true, "");
     }
   } catch (error: any) {
-    const errorModel = error.response.data as IError;
-    handleResult(false, errorModel);
-
+    const message = error.response.data;
+    handleResult(false, message);
     yield put(
       setStatus({
         status: Status.Failed,
-        error: errorModel,
+        error: {
+          error: true,
+          message: message,
+        },
       })
     );
   }

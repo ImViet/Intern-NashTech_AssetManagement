@@ -34,6 +34,7 @@ const ChangePassword = ({show, onClose}) => {
         onClose()
         setShowSuccess(true)
       }else{
+        debugger
         actions.setErrors(data)
       }
       actions.setSubmitting(false)
@@ -66,7 +67,7 @@ const ChangePassword = ({show, onClose}) => {
                       <TextFieldPassword name="passwordOld" label="Old password" isrequired={true} />
                       {error && (
                         <div className="invalid">
-                          {error}
+                          {error.message}
                         </div>
                       )} 
 
