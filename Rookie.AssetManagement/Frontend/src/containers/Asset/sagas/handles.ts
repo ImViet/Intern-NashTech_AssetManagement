@@ -16,6 +16,8 @@ import {
   CreateAction,
   UpdateAction,
   setActionResult,
+  DisableAction,
+  
 } from "../reducer";
 import {
   createAssetRequest,
@@ -24,6 +26,8 @@ import {
   getCategoryRequest,
   getStateRequest,
   updateAssetRequest,
+  disableAssetRequest,
+ 
 } from "./requests";
 
 export function* handleCreateAsset(action: PayloadAction<CreateAction>) {
@@ -170,6 +174,27 @@ export function* handleGetStateList() {
     yield put(setState(options));
   } catch (error: any) {
     const errorModel = error.response.data as IError;
+
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: errorModel,
+      })
+    );
+  }
+}
+
+export function* handleDisableAsset(action: PayloadAction<DisableAction>) {
+  const { id, handleResult } = action.payload;
+  try {
+    const { data } = yield call(disableAssetRequest, id);
+
+    if (data) {
+      handleResult(true, "");
+    }
+  } catch (error: any) {
+    const errorModel = error.response.data as IError;
+    handleResult(false, errorModel);
 
     yield put(
       setStatus({
