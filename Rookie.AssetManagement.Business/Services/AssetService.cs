@@ -165,5 +165,42 @@ namespace Rookie.AssetManagement.Business.Services
             }
             return assetQuery;
         }
+        public async Task<AssetDto> UpdateAssetAsync(AssetUpdateDto assetUpdateDto, string location)
+        {
+            var asset = await _assetRepository.Entities.Include(x => x.Category).FirstOrDefaultAsync(a => a.Id == assetUpdateDto.Id && a.Location == location);
+            var getState = _stateRepository.Entities.Where(x => x.Id == assetUpdateDto.State).FirstOrDefault();
+            if (getState == null)
+            {
+                throw new NotFoundException("State Not Found!");
+            }
+            if (asset == null)
+            {
+                throw new NotFoundException("Asset Not Found!");
+            }
+            _mapper.Map(assetUpdateDto, asset);
+            asset.State = getState;
+
+            var assetUpdated = await _assetRepository.Update(asset);
+            var assetUpdatedDto = _mapper.Map<AssetDto>(assetUpdated);
+            return assetUpdatedDto;
+        }
+
+        public async Task<bool> DisableAssetAsync(int id, string location)
+        {
+            var asset = await _assetRepository.Entities.Include(a => a.State).SingleOrDefaultAsync(a => a.Id.Equals(id) && a.Location.Equals(location));
+            if (asset == null)
+            {
+                throw new NotFoundException("Asset Not Found!");
+            }
+            if (asset.State.Id == 1)
+            {
+                throw new NotFoundException("Asset is assigned can not be delete");
+            }
+            asset.IsDeleted = true;
+
+            await _assetRepository.Update(asset);
+
+            return await Task.FromResult(true);
+        }
     }
 }

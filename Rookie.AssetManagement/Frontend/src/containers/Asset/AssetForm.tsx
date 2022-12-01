@@ -7,25 +7,25 @@ import DateField from 'src/components/FormInputs/DateField';
 import CheckboxField from 'src/components/FormInputs/CheckboxField';
 import SelectField from 'src/components/FormInputs/SelectField';
 import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
-import { ASSET, HOME, USER, USER_PARENT_ROOT } from 'src/constants/pages';
+import { ASSET, ASSET_PARENT_ROOT, HOME, USER, USER_PARENT_ROOT } from 'src/constants/pages';
 import IAssetForm from 'src/interfaces/Asset/IAssetForm';
 import { createAsset, getCategory, getState, updateAsset } from './reducer';
 
 
 const initialFormValues: IAssetForm = {
-    AssetName: '',
-    Category: "",
-    Specification: '',
-    InstalledDate: undefined,
-    State: 2,
+    assetName: '',
+    category: "",
+    specification: '',
+    installedDate: undefined,
+    state: 2,
 };
 
 const validationSchema = Yup.object().shape({
-    AssetName: Yup.string().required(""),
-    Category: Yup.string().required(""),
-    Specification: Yup.string().required(""),
-    InstalledDate: Yup.date().required(""),
-    State: Yup.number().required(""),
+    assetName: Yup.string().required(""),
+    category: Yup.string().required(""),
+    specification: Yup.string().required(""),
+    installedDate: Yup.date().required(""),
+    state: Yup.number().required(""),
 });
 
 type Props = {
@@ -35,34 +35,37 @@ type Props = {
 function AssetFormContainer({ initialAssetForm = {
     ...initialFormValues
 } }) {
+    const isUpdate = initialAssetForm.id ? true : false;
+    const { FilterAssetCategoryOptions, FilterAssetStateOptions } = useAppSelector(state => state.assetReducer)
+    const states = useMemo(() => {
+        if (isUpdate) {
+            return FilterAssetStateOptions.filter(state => state.label != "Assigned" && state.label != "ALL" )
+        }
+        else {
+            return FilterAssetStateOptions.filter(state => state.label == "Available" || state.label == "Not Available")
+        }
+    }, [FilterAssetStateOptions])
+    const categories = useMemo(() => FilterAssetCategoryOptions.filter(cate => cate.label != "ALL"), [FilterAssetCategoryOptions])
 
-    const {FilterAssetCategoryOptions ,FilterAssetStateOptions} = useAppSelector(state=> state.assetReducer)
-    const states = useMemo(()=>FilterAssetStateOptions.filter(state => state.label=="Available" ||  state.label=="Not Available"), [FilterAssetStateOptions])
-    const categories = useMemo(()=>FilterAssetCategoryOptions.filter(cate => cate.label!="ALL"), [FilterAssetCategoryOptions])
-    
     const [loading, setLoading] = useState(false);
 
     const dispatch = useAppDispatch();
 
-    const isUpdate = initialAssetForm.id ? true : false;
+    
     // if(!isUpdate){
     //     initialFormValues.joinedDate = new Date();
     // }
-    const [dateOfBirth, setDateOfBirth] = useState();
 
     const navigate = useNavigate();
     const handleResult = (result: boolean, message: string) => {
         if (result) {
-            navigate(USER_PARENT_ROOT);
+            navigate(ASSET_PARENT_ROOT);
         }
     };
-    const handleLanguage = (date) => {
-        setDateOfBirth(date);
-    };
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getCategory())
         dispatch(getState())
-    },[])
+    }, [])
     return (
         <Formik
             initialValues={initialAssetForm}
@@ -80,47 +83,47 @@ function AssetFormContainer({ initialAssetForm = {
                     }
                     setLoading(false);
                 }, 1000);
-            } }
+            }}
         >
             {(actions) => {
                 return (
                     <Form className='intro-y col-lg-6 col-12'>
                         <TextField
-                            name="AssetName"
-                            label="AssetName"
+                            name="assetName"
+                            label="Name"
                             placeholder=""
                             isrequired
-                            disabled={isUpdate ? true : false} />
+                        />
 
                         <SelectField
-                            name="Category"
+                            name="category"
                             label="Category"
                             options={categories}
                             isrequired
-                            disabled={isUpdate ? true : false} />
-                        
+                            disabled={isUpdate ? true : false}
+                        />
+
                         <TextField
-                            name="Specification"
+                            name="specification"
                             label="Specification"
                             placeholder=""
                             isrequired
-                            disabled={isUpdate ? true : false} />
+                        />
 
                         <DateField
+                            name="installedDate"
                             label="Installed Date"
-                            name="InstalledDate"
                             placeholder=""
                             isrequired
-                            onChangeCapture={handleLanguage}
-                            disabled={isUpdate ? true : false} />
+                        />
 
                         <CheckboxField
-                            name="State"
+                            name="state"
                             label="State"
                             isrequired
                             options={states}
-                            disabled={isUpdate ? true : false}
-                            checked = {false} />
+                            checked={false}
+                        />
 
                         <div className="d-flex">
                             <div className="ml-auto">
@@ -137,7 +140,7 @@ function AssetFormContainer({ initialAssetForm = {
                         </div>
                     </Form>
                 );
-            } }
+            }}
         </Formik>
     );
 }

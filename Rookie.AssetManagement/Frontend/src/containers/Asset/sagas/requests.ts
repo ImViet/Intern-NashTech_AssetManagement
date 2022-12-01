@@ -16,14 +16,6 @@ export function createAssetRequest(
   });
 }
 
-// export function updateRequest(
-//   userForm: IUserForm
-// ): Promise<AxiosResponse<IUser>> {
-//   return RequestService.axios.put(EndPoints.user, userForm, {
-//     paramsSerializer: (params) => JSON.stringify(params),
-//   });
-// }
-
 export function getAssetsRequest(
   assetQuery: IQueryAssetModel
 ): Promise<AxiosResponse<IAsset[]>> {
@@ -32,7 +24,13 @@ export function getAssetsRequest(
     paramsSerializer: (params) => qs.stringify(params),
   });
 }
-
+export function updateAssetRequest(
+  assetForm: IAssetForm
+): Promise<AxiosResponse<IAsset>> {
+  return RequestService.axios.put(EndPoints.asset, assetForm, {
+    paramsSerializer: (params) => JSON.stringify(params),
+  });
+}
 export function getAssetFormDataRequest(
   id: number
 ): Promise<AxiosResponse<IAssetForm>> {
@@ -45,4 +43,8 @@ export function getCategoryRequest(): Promise<AxiosResponse<ICategory[]>> {
 
 export function getStateRequest(): Promise<AxiosResponse<IState[]>> {
   return RequestService.axios.get(EndPoints.state);
+}
+
+export function disableAssetRequest(id: number): Promise<AxiosResponse<IAsset>> {
+  return RequestService.axios.delete(EndPoints.asset + "/" + id);
 }

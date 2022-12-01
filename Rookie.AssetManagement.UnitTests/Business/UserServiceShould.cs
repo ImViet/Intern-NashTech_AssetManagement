@@ -25,8 +25,6 @@ using FluentAssertions.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Rewrite;
 
 
 
@@ -100,7 +98,8 @@ namespace Rookie.AssetManagement.UnitTests.Business
             _userRepository.Setup(x => x.Entities).Returns(usersMock);
             //Act
             Func<Task> act = async () => await _userService.UpdateAsnyc(
-                UserTestData.GetUpdateUserDtoFail()
+                UserTestData.GetUpdateUserDtoFail(),
+                "HCM"
                 );
             //Assert
             await act.Should().ThrowAsync<NotFoundException>();
@@ -116,7 +115,8 @@ namespace Rookie.AssetManagement.UnitTests.Business
                                         .Returns(Task.FromResult(UserTestData.GetUpdateUser()));
             //Act
             var result = await _userService.UpdateAsnyc(
-                UserTestData.GetUpdateUserDtoSuccess()
+                UserTestData.GetUpdateUserDtoSuccess(),
+                "HCM"
                 );
             //Assert
             Assert.Equal("STAFF", result.Type);
@@ -160,7 +160,26 @@ namespace Rookie.AssetManagement.UnitTests.Business
         }
 
         [Fact]
-        public async Task DisableAsyncReturnTrue()
+        public async Task DisableAsyncShouldThrowException()
+        {
+            //Arrange
+            var UnExistedUserId = 3;
+            var usersMock = UserTestData.GetUsers().AsQueryable().BuildMock();
+
+            _userRepository
+                  .Setup(x => x.Entities)
+                  .Returns(usersMock);
+
+            //Act 
+            Func<Task> act = async() => await _userService.DisableAsync(UnExistedUserId, "HCM");
+
+            //Assert
+            await act.Should().ThrowAsync<NotFoundException>();
+        }
+
+
+        [Fact]
+        public async Task DisableAsyncShouldTrue()
         {
             //Arrange
             var DisableUserId = 1;
@@ -171,7 +190,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
                   .Returns(usersMock);
 
             //Act
-            var result = await _userService.DisableAsync(DisableUserId);
+            var result = await _userService.DisableAsync(DisableUserId, "HCM");
 
             //Assert
             result.Should().Equals(true);

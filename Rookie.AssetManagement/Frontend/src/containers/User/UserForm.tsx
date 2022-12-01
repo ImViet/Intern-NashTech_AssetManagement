@@ -174,7 +174,7 @@ const UserFormContainer: React.FC<Props> = ({ initialUserForm = {
                             label="Type"
                             options={UserTypeOptions}
                             isrequired
-                            disabled={isUpdate ? true : false} />
+                             />
 
                         <div className="d-flex">
                             <div className="ml-auto">

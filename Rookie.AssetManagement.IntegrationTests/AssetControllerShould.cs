@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Rookie.AssetManagement.Contracts.Dtos.CategoryDtos;
 using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
+using Rookie.AssetManagement.Contracts;
 
 namespace Rookie.AssetManagement.IntegrationTests
 {
@@ -61,9 +62,10 @@ namespace Rookie.AssetManagement.IntegrationTests
             _assetController = new AssetController(_assetService, _stateService, _categoryService);
 
 
-            AssetData.InitAssetsData(_dbContext);
             AssetData.InitCategoriesData(_dbContext);
             AssetData.InitStatesData(_dbContext);
+            AssetData.InitAssetsData(_dbContext);
+
 
             _identity = new ClaimsIdentity();
             _identity.AddClaims(new[]
@@ -136,9 +138,27 @@ namespace Rookie.AssetManagement.IntegrationTests
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<OkObjectResult>(result.Result);
             var returnValue = Assert.IsType<List<StateDto>>(actionResult.Value);
-            Assert.Equal(8, returnValue.Count);
+            Assert.Equal(5, returnValue.Count);
         }
+        [Fact]
+        public async Task DisableAssetAsyncSuccess()
+        {
+            //Arrange
+            var assetRequestId = 1
+                ;
 
+            // Act
+            var result = await _assetController.DisableAssetAsync(assetRequestId);
+
+            // Assert
+            result.Should().Equals(true);
+
+        }
+        [Fact]
+        public async Task DisableAsyncShouldThrowExceptionAsync()
+        {
+            await Assert.ThrowsAsync<NotFoundException>(() => _assetController.DisableAssetAsync(4));
+        }
 
     }
 }

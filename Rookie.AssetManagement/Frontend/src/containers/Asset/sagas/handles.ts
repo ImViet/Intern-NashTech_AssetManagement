@@ -16,6 +16,8 @@ import {
   CreateAction,
   UpdateAction,
   setActionResult,
+  DisableAction,
+  
 } from "../reducer";
 import {
   createAssetRequest,
@@ -23,6 +25,9 @@ import {
   getAssetsRequest,
   getCategoryRequest,
   getStateRequest,
+  updateAssetRequest,
+  disableAssetRequest,
+ 
 } from "./requests";
 
 export function* handleCreateAsset(action: PayloadAction<CreateAction>) {
@@ -30,7 +35,7 @@ export function* handleCreateAsset(action: PayloadAction<CreateAction>) {
   try {
     console.log(formValues);
 
-    formValues.InstalledDate = toUTC(formValues.InstalledDate);
+    formValues.installedDate = toUTC(formValues.installedDate);
 
     const { data } = yield call(createAssetRequest, formValues);
 
@@ -54,34 +59,33 @@ export function* handleCreateAsset(action: PayloadAction<CreateAction>) {
   }
 }
 
-// export function* handleUpdateUser(action: PayloadAction<UpdateAction>) {
-//   const { handleResult, formValues } = action.payload;
-//   try {
-//     console.log("handleUpdateUser");
-//     console.log(formValues);
+export function* handleUpdateAsset(action: PayloadAction<UpdateAction>) {
+  const { handleResult, formValues } = action.payload;
+  try {
+    console.log("handleUpdateAsset");
+    console.log(formValues);
 
-//     const { data } = yield call(updateUserRequest, formValues);
+    const { data } = yield call(updateAssetRequest, formValues);
 
-//     data.dateOfBirth = new Date(data.dateOfBirth);
-//     data.joinedDate = new Date(data.joinedDate);
+    data.InstalledDate = new Date(data.InstalledDate);
 
-//     if (data) {
-//       handleResult(true, data.firstName);
-//     }
+    if (data) {
+      handleResult(true, data.AssetName);
+    }
 
-//     yield put(setActionResult(data));
-//   } catch (error: any) {
-//     const errors = error.response.data.errors;
-//     const firstError = errors[Object.keys(errors)[0]][0];
-//     handleResult(false, firstError);
-//     yield put(
-//       setStatus({
-//         status: Status.Failed,
-//         error: firstError,
-//       })
-//     );
-//   }
-// }
+    yield put(setActionResult(data));
+  } catch (error: any) {
+    const errors = error.response.data.errors;
+    const firstError = errors[Object.keys(errors)[0]][0];
+    handleResult(false, firstError);
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: firstError,
+      })
+    );
+  }
+}
 
 export function* handleGetAssetList(action: PayloadAction<IQueryAssetModel>) {
   const queryAssetModel = action.payload;
@@ -106,6 +110,7 @@ export function* handleGetAssetForm(action: PayloadAction<number>) {
 
   try {
     const { data } = yield call(getAssetFormDataRequest, id);
+    data.installedDate = new Date(data.installedDate);
     yield put(setAssetFormData(data));
   } catch (error: any) {
     const errorModel = error.response.data as IError;
@@ -126,7 +131,7 @@ export function* handleGetCategoryList() {
       {
         id: 1,
         label: "ALL",
-        value: "",
+        value: "ALL",
       },
     ];
     data.forEach((cate, index) => {
@@ -156,7 +161,7 @@ export function* handleGetStateList() {
       {
         id: 1,
         label: "ALL",
-        value: "",
+        value: "ALL",
       },
     ];
     data.forEach((state, index) => {
@@ -169,6 +174,27 @@ export function* handleGetStateList() {
     yield put(setState(options));
   } catch (error: any) {
     const errorModel = error.response.data as IError;
+
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: errorModel,
+      })
+    );
+  }
+}
+
+export function* handleDisableAsset(action: PayloadAction<DisableAction>) {
+  const { id, handleResult } = action.payload;
+  try {
+    const { data } = yield call(disableAssetRequest, id);
+
+    if (data) {
+      handleResult(true, "");
+    }
+  } catch (error: any) {
+    const errorModel = error.response.data as IError;
+    handleResult(false, errorModel);
 
     yield put(
       setStatus({

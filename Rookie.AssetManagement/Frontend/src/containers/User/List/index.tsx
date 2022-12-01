@@ -18,23 +18,29 @@ import { getUserList, disableUser } from "../reducer";
 import { DefaultLimit } from "src/constants/User/UserContants";
 import SelectBox from "src/components/SelectBox";
 
+const defaultQuery: IQueryUserModel = {
+  page: 1,
+  limit: DefaultLimit,
+  sortOrder: ACCSENDING,
+  sortColumn: DEFAULT_USER_SORT_COLUMN_NAME,
+  types: [],
+  search: ""
+}
+
+const defaultSelectedType: ISelectOption[] = [
+  { id: 1, label: "Type", value: "ALL" },
+] as ISelectOption[]
 
 const ListUser = () => {
   const dispatch = useAppDispatch();
+  
   const { users, actionResult } = useAppSelector((state) => state.userReducer);
 
-  const [query, setQuery] = useState({
-    page: users?.currentPage ?? 1,
-    limit: DefaultLimit,
-    sortOrder: ACCSENDING,
-    sortColumn: DEFAULT_USER_SORT_COLUMN_NAME,
-  } as IQueryUserModel);
+  const [query, setQuery] = useState(users ? { ...defaultQuery, page: users.currentPage } : defaultQuery);
 
   const [search, setSearch] = useState("");
 
-  const [selectedType, setSelectedType] = useState([
-    { id: 1, label: "Type", value: "ALL" },
-  ] as ISelectOption[]);
+  const [selectedType, setSelectedType] = useState(defaultSelectedType);
 
   const handleType = (selected: ISelectOption[]) => {
     if (selected.length === 0) {
@@ -108,6 +114,17 @@ const ListUser = () => {
     });
   };
 
+  const handleDisable = (id) => {
+    dispatch(disableUser({
+      id: id,
+      handleResult: (result, message) => {
+        if (result) {
+          setQuery({ ...defaultQuery });
+        }
+      }
+    }))
+  };
+
   const fetchData = () => {
     dispatch(getUserList(query))
   };
@@ -116,36 +133,19 @@ const ListUser = () => {
     fetchData();
   }, [query]);
 
-  const handleDisable = (id) => {
-    dispatch(disableUser({
-      id: id,
-      handleResult: (result, message) => {
-        if (result) {
-          setQuery({
-            ...query,
-            page: 1,
-            limit: DefaultLimit,
-            sortOrder: DECSENDING,
-            sortColumn: DEFAULT_USER_SORT_COLUMN_NAME,
-          });
-        }
-      }
-    }))
-  };
-
   return (
     <>
       <div className="primaryColor text-title intro-x ">User List</div>
 
       <div>
         <div className="d-flex mb-5 intro-x">
-         <div className="filter-type">
-          <SelectBox               
+          <div className="filter-type">
+            <SelectBox
               options={FilterUserTypeOptions}
               placeholderButtonLabel="Type"
               value={selectedType}
-              onChange={handleType}/>
-         </div>
+              onChange={handleType} />
+          </div>
 
           <div className="d-flex align-items-center w-ld ml-auto mr-2">
             <div className="input-group">

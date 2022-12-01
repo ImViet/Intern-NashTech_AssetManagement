@@ -82,5 +82,23 @@ namespace Rookie.AssetManagement.Controllers
             var asset = await _assetService.AddAssetAsync(assetCreate, location);
             return Created(Endpoints.User, asset);
         }
+
+        [HttpPut]
+        public async Task<ActionResult<AssetDto>> UpdateAssetAsync([FromBody] AssetUpdateDto assetUpdateDto)
+        {
+            var location = User.Claims.FirstOrDefault(x => x.Type.Equals("Location", StringComparison.OrdinalIgnoreCase))?.Value;
+            var asset = await _assetService.UpdateAssetAsync(assetUpdateDto, location);
+            return Created(Endpoints.User, asset);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DisableAssetAsync([FromRoute] int id)
+        {
+            var location = User.Claims.FirstOrDefault(x => x.Type.Equals("Location", StringComparison.OrdinalIgnoreCase))?.Value;
+
+            var disableResult = await _assetService.DisableAssetAsync(id, location);
+
+            return Ok(disableResult);
+        }
     }
 }

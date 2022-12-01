@@ -127,7 +127,7 @@ namespace Rookie.AssetManagement.IntegrationTests
             var actionResult = Assert.IsType<CreatedResult>(result.Result);
             var returnValue = Assert.IsType<UserDto>(actionResult.Value);
 
-            Assert.Equal(3, returnValue.Id);
+            Assert.Equal(1, returnValue.Id);
             Assert.Equal("Admin", returnValue.Type);
         }
 
@@ -144,7 +144,7 @@ namespace Rookie.AssetManagement.IntegrationTests
         public async Task DisableAsyncShouldReturnTrue()
         {
             //Arrange
-            var userRequestId = 3;
+            var userRequestId = 1;
 
             // Act
             var result = await _userController.DisableUserAsync(userRequestId);
