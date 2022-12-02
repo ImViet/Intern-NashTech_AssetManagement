@@ -156,7 +156,12 @@ const ListAsset = () => {
   };
 
   const handleSort = (sortColumn: string) => {
-    const sortOrder = query.sortOrder === ACCSENDING ? DECSENDING : ACCSENDING;
+    let sortOrder
+    if(query.sortColumn != sortColumn){
+      sortOrder = ACCSENDING
+    }else{
+      sortOrder = query.sortOrder === ACCSENDING ? DECSENDING : ACCSENDING;
+    }
     setQuery({
       ...query,
       sortColumn,
