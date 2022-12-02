@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Rookie.AssetManagement.Business.Interfaces;
 using Rookie.AssetManagement.Business.Services;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace Rookie.AssetManagement.Controllers
 {
+    [Authorize(AuthenticationSchemes = "Bearer", Policy = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AssetController : ControllerBase
@@ -87,7 +89,16 @@ namespace Rookie.AssetManagement.Controllers
         public async Task<ActionResult<AssetDto>> UpdateAssetAsync([FromBody] AssetUpdateDto assetUpdateDto)
         {
             var location = User.Claims.FirstOrDefault(x => x.Type.Equals("Location", StringComparison.OrdinalIgnoreCase))?.Value;
-            var asset = await _assetService.UpdateAssetAsync(assetUpdateDto, location);
+
+            AssetDto asset;
+            try
+            {
+                asset = await _assetService.UpdateAssetAsync(assetUpdateDto, location);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
             return Created(Endpoints.User, asset);
         }
 
