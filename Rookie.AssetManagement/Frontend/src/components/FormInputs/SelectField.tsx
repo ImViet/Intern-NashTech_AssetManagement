@@ -52,7 +52,7 @@ const SelectField: React.FC<InputFieldProps> = (props) => {
                             ))
                         }
                     </select>
-                    <div className="" style={{ position: 'absolute', right: 30, top: 4 }}>
+                    <div className="" style={{ position: 'absolute', right: 30, top: 4, pointerEvents:"none" }}>
                         <CaretDownFill />
                     </div>
                     {error && touched && (
