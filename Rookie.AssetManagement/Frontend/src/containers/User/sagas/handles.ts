@@ -40,9 +40,8 @@ export function* handleCreateUser(action: PayloadAction<CreateAction>) {
 
     if (data) {
       handleResult(true, data.firstName);
+      yield put(setActionResult(data));
     }
-
-    yield put(setActionResult(data));
   } catch (error: any) {
     const errorModel = error.response.data;
     handleResult(false, errorModel);
@@ -74,12 +73,11 @@ export function* handleUpdateUser(action: PayloadAction<UpdateAction>) {
 
     if (data) {
       handleResult(true, data.firstName);
+      yield put(setActionResult(data));
     }
-
-    yield put(setActionResult(data));
   } catch (error: any) {
-    const errorModel = error.response.data;
-    handleResult(false, errorModel);
+    // const errorModel = error.response.data;
+    handleResult(false, "");
     yield put(
       setStatus({
         status: Status.Failed,
