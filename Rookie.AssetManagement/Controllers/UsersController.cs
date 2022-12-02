@@ -10,9 +10,11 @@ using Rookie.AssetManagement.Constants;
 using System.Linq;
 using Rookie.AssetManagement.Contracts;
 using System.Threading;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Rookie.AssetManagement.Controllers
 {
+    [Authorize(AuthenticationSchemes = "Bearer", Policy = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase

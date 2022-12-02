@@ -75,6 +75,13 @@ namespace Rookie.AssetManagement.Extensions.ServiceCollection
                         },
                     };
                 });
+            services.AddAuthorization(opt =>
+                opt.AddPolicy("Admin", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim("Type", "ADMIN");
+                })
+            );
         }
     }
 }

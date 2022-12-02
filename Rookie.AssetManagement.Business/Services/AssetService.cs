@@ -167,7 +167,11 @@ namespace Rookie.AssetManagement.Business.Services
         }
         public async Task<AssetDto> UpdateAssetAsync(AssetUpdateDto assetUpdateDto, string location)
         {
-            var asset = await _assetRepository.Entities.Include(x => x.Category).FirstOrDefaultAsync(a => a.Id == assetUpdateDto.Id && a.Location == location);
+            var asset = await _assetRepository.Entities.Include(x => x.State).Include(x => x.Category).FirstOrDefaultAsync(a => a.Id == assetUpdateDto.Id && a.Location == location);
+            if (asset.State.Id == 1)
+            {
+                throw new NotFoundException("Assigned Asset can not be edit");
+            }
             var getState = _stateRepository.Entities.Where(x => x.Id == assetUpdateDto.State).FirstOrDefault();
             if (getState == null)
             {
