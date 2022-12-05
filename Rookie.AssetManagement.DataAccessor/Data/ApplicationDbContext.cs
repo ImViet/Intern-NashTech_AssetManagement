@@ -53,6 +53,10 @@ namespace Rookie.AssetManagement.DataAccessor.Data
             {
                 entity.ToTable("UserTokens");
             });
+
+            builder.Entity<Assignemnt>().HasOne(a => a.AssignedTo).WithMany(u => u.Assignemnts);
+            builder.Entity<Assignemnt>().HasOne(a => a.AssignedBy);
+            builder.Entity<Assignemnt>().HasOne(a => a.Asset).WithMany(a=>a.Assignemnts);
         }
     }
 }
