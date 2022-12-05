@@ -152,7 +152,7 @@ const ListUser = () => {
 
           <div className="d-flex align-items-center ml-3">
             <Link to="/user/create" type="button" className="btn btn-danger">
-              Create new User
+              Create new user
             </Link>
           </div>
         </div>

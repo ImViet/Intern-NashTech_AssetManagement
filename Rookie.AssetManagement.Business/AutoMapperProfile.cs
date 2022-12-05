@@ -37,7 +37,8 @@ namespace Rookie.AssetManagement.Business
                 .ForMember(d => d.LockoutEnabled, t => t.Ignore())
                 .ForMember(d => d.AccessFailedCount, t => t.Ignore())
                 .ForMember(d => d.SecurityStamp, t => t.Ignore())
-                .ForMember(d => d.ConcurrencyStamp, t => t.Ignore());
+                .ForMember(d => d.ConcurrencyStamp, t => t.Ignore())
+                .ForMember(d => d.Assignments, t =>t.Ignore());
             CreateMap<UserUpdateDto, User>()
                 .ForMember(d => d.FirstName, t => t.Ignore())
                 .ForMember(d => d.LastName, t => t.Ignore())
@@ -59,21 +60,24 @@ namespace Rookie.AssetManagement.Business
                 .ForMember(d => d.LockoutEnabled, t => t.Ignore())
                 .ForMember(d => d.AccessFailedCount, t => t.Ignore())
                 .ForMember(d => d.SecurityStamp, t => t.Ignore())
-                .ForMember(d => d.ConcurrencyStamp, t => t.Ignore());
+                .ForMember(d => d.ConcurrencyStamp, t => t.Ignore())
+                .ForMember(d => d.Assignments, t => t.Ignore());
             CreateMap<AssetCreateDto, Asset>()
                 .ForMember(d => d.Id, t => t.Ignore())
                 .ForMember(d => d.AssetCode, t => t.Ignore())
                 .ForMember(d => d.IsDeleted, t => t.Ignore())
                 .ForMember(d => d.Location, t => t.Ignore())
                 .ForMember(d => d.Category, t => t.Ignore())
-                .ForMember(d => d.State, t => t.Ignore());
+                .ForMember(d => d.State, t => t.Ignore())
+                .ForMember(d => d.Assignments, t => t.Ignore());
             CreateMap<AssetUpdateDto, Asset>()
                 .ForMember(d => d.Id, t => t.Ignore())
                 .ForMember(d => d.AssetCode, t => t.Ignore())
                 .ForMember(d => d.IsDeleted, t => t.Ignore())
                 .ForMember(d => d.Location, t => t.Ignore())
                 .ForMember(d => d.Category, t => t.Ignore())
-                .ForMember(d => d.State, t => t.Ignore());
+                .ForMember(d => d.State, t => t.Ignore())
+                .ForMember(d => d.Assignments, t => t.Ignore());
         }
 
         private void FromDataAccessorLayer()
