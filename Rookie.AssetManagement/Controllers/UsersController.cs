@@ -10,6 +10,7 @@ using Rookie.AssetManagement.Constants;
 using System.Linq;
 using Rookie.AssetManagement.Contracts;
 using System.Threading;
+using Rookie.AssetManagement.Contracts.Dtos;
 
 namespace Rookie.AssetManagement.Controllers
 {
@@ -61,6 +62,12 @@ namespace Rookie.AssetManagement.Controllers
                                             cancellationToken,
                                             location);
             return Ok(userResponses);
+        }
+        [HttpGet]
+        [Route("Searching")]
+        public async Task<ActionResult<string>> Searching(string searching, string location)
+        {
+            return Ok(await _userService.GetSuggestion(searching,location));
         }
 
         [HttpDelete("{id}")]
