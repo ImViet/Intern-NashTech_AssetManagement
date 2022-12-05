@@ -4,6 +4,11 @@ using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Rookie.AssetManagement.Contracts.Dtos.AssignmentDtos;
+using Rookie.AssetManagement.Business.Services;
+using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
+using Rookie.AssetManagement.Contracts;
+using System.Linq;
+using System.Threading;
 
 namespace Rookie.AssetManagement.Controllers
 {
@@ -21,6 +26,22 @@ namespace Rookie.AssetManagement.Controllers
         public async Task<ActionResult<AssignmentDto>> GetAllAssignment()
         {
             return Ok(await _assignmentService.GetAllAsync());
+        }
+
+        [HttpGet]
+        [Route("GetAsset")]
+        public async Task<ActionResult<PagedResponseModel<AssignmentDto>>> GetAsset(
+        [FromQuery] AssignmentQueryCriteriaDto assetCriteriaDto,
+        CancellationToken cancellationToken)
+        {
+          
+          
+
+            var assetResponses = await _assignmentService.GetByPageAsync(
+                                            assetCriteriaDto,
+                                            cancellationToken
+                                            );
+            return Ok(assetResponses);
         }
     }
 }
