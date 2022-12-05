@@ -49,8 +49,6 @@ const Table: React.FC<Props> = ({ columns, children, page, sortState, handleSort
                       </a>
                     )
                     }
-
-
                   </th>
                 ))
               }

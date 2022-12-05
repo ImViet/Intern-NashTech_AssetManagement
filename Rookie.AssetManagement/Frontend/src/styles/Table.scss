@@ -37,8 +37,35 @@
         tr:hover {
             cursor: pointer;
         }
+    }   
+    
+}
+.table-container-history{
+    overflow-x: auto;
+    table{
+        border-collapse: separate;
+        border-spacing: 1rem 0;
+    }
+    .table-history{
+        thead th {
+            border-bottom: 2px solid rgb(149, 153, 153);
+            a {
+                font-weight: bold;
+            }
+        }
+        td {
+            border-bottom: 2px solid #dee2e6;
+            padding: 0;
+            border-top: none;
+        }
+        th {
+            padding: 0;
+            border-bottom: 0 2px solid #dee2e6;
+            border-top: none;
+        }
     }
 }
+
 
 .pagination {
     margin-left: auto;
@@ -74,4 +101,7 @@
         }
 
     }
+}
+.table-detail>div>div:last-child{
+    word-break:break-all;
 }
