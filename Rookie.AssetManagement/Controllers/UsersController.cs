@@ -64,6 +64,12 @@ namespace Rookie.AssetManagement.Controllers
                                             location);
             return Ok(userResponses);
         }
+        [HttpGet]
+        [Route("Searching")]
+        public async Task<ActionResult<string>> Searching(string searching, string location)
+        {
+            return Ok(await _userService.GetSuggestion(searching,location));
+        }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DisableUserAsync([FromRoute] int id)

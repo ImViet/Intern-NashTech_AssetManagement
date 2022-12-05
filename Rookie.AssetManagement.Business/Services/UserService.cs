@@ -12,6 +12,7 @@ using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
 using Rookie.AssetManagement.DataAccessor.Enum;
 using Rookie.AssetManagement.DataAccessor.Migrations;
+using Rookie.AssetManagement.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -247,6 +248,27 @@ namespace Rookie.AssetManagement.Business.Services
 
             return await Task.FromResult(true);
         }
-    }
+        public async Task<List<string>> GetSuggestion(string searching, string location)
+        {
+            List<string> list = new List<string>();
 
+            var suggestionStaffCode = await _userRepository.Entities.Where(x => !x.IsDeleted).Where(x => x.Location == location).Where(x => x.StaffCode.ToLower().Contains(searching.ToLower()))
+                .Take(5).ToListAsync();
+            foreach (var item in suggestionStaffCode)
+            {
+                list.Add(item.StaffCode);
+            }
+            if (list.Count < 5)
+            {
+                var suggestionName = await _userRepository.Entities.Where(x => !x.IsDeleted).Where(x => x.Location == location).Where(x => (x.LastName.ToLower() + " " + x.FirstName.ToLower()).Contains(searching.ToLower()) || (x.FirstName.ToLower() + " " + x.LastName.ToLower()).Contains(searching.ToLower()))
+                .Take(5-list.Count).ToListAsync();
+
+                foreach (var item in suggestionName)
+                {
+                    list.Add(item.FirstName + " " + item.LastName);
+                }
+            }
+            return list;
+        }
+    }
 }
