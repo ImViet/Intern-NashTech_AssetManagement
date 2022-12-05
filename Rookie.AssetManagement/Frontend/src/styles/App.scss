@@ -4,6 +4,7 @@
 @import './Modal.scss';
 @import './Intro.scss';
 @import './Filter.scss';
+@import './DetailModal.scss';
 * {
     margin: 0;
     padding: 0;
@@ -100,3 +101,4 @@ body {
     border: 2px solid rgb(190,190,190);
     border-radius: 5px 0 0 5px;
 }
+
