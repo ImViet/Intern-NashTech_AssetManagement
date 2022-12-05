@@ -171,7 +171,7 @@ const ListAssignment = () => {
                     </div>
                     <div className="d-flex align-items-center w-md mr-5">
                         <div className="button">
-                            <div className="col d-flex">
+                            <div className="col d-flex" style={{width: "250px"}}>
                                 <div className="d-flex align-items-center w-100">
                                     <DatePicker
                                         className={"form-control input-search w-100 "}
