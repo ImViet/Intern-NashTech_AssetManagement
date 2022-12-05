@@ -63,7 +63,7 @@ const SearchBox : React.FC<Props> = ({ handleSearch , getSuggestionRequest}) =>{
                                 <div key={index} 
                                     className="suggestion" 
                                     onMouseDown={(e) => e.preventDefault()} 
-                                    onClick={handleSuggestionCLick("Dat")}>
+                                    onClick={handleSuggestionCLick(suggestion)}>
                                     {suggestion}
                                 </div>
                             ))}
