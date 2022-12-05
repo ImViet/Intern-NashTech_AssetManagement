@@ -15,6 +15,7 @@ namespace Rookie.AssetManagement.DataAccessor.Data
         public DbSet<Asset> Assets { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<State> States { get; set; }
+        public DbSet<Assignment> Assignments { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -54,9 +55,9 @@ namespace Rookie.AssetManagement.DataAccessor.Data
                 entity.ToTable("UserTokens");
             });
 
-            builder.Entity<Assignemnt>().HasOne(a => a.AssignedTo).WithMany(u => u.Assignemnts);
-            builder.Entity<Assignemnt>().HasOne(a => a.AssignedBy);
-            builder.Entity<Assignemnt>().HasOne(a => a.Asset).WithMany(a=>a.Assignemnts);
+            builder.Entity<Assignment>().HasOne(a => a.AssignedTo).WithMany(u => u.Assignments);
+            builder.Entity<Assignment>().HasOne(a => a.AssignedBy);
+            builder.Entity<Assignment>().HasOne(a => a.Asset).WithMany(a=>a.Assignments);
         }
     }
 }

@@ -196,7 +196,7 @@ namespace Rookie.AssetManagement.DataAccessor.Migrations
                     b.ToTable("Assets");
                 });
 
-            modelBuilder.Entity("Rookie.AssetManagement.DataAccessor.Entities.Assignemnt", b =>
+            modelBuilder.Entity("Rookie.AssetManagement.DataAccessor.Entities.Assignment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -235,7 +235,7 @@ namespace Rookie.AssetManagement.DataAccessor.Migrations
 
                     b.HasIndex("StateId");
 
-                    b.ToTable("Assignemnt");
+                    b.ToTable("Assignments");
                 });
 
             modelBuilder.Entity("Rookie.AssetManagement.DataAccessor.Entities.Category", b =>
@@ -440,10 +440,10 @@ namespace Rookie.AssetManagement.DataAccessor.Migrations
                     b.Navigation("State");
                 });
 
-            modelBuilder.Entity("Rookie.AssetManagement.DataAccessor.Entities.Assignemnt", b =>
+            modelBuilder.Entity("Rookie.AssetManagement.DataAccessor.Entities.Assignment", b =>
                 {
                     b.HasOne("Rookie.AssetManagement.DataAccessor.Entities.Asset", "Asset")
-                        .WithMany("Assignemnts")
+                        .WithMany("Assignments")
                         .HasForeignKey("AssetId");
 
                     b.HasOne("Rookie.AssetManagement.DataAccessor.Entities.User", "AssignedBy")
@@ -451,11 +451,11 @@ namespace Rookie.AssetManagement.DataAccessor.Migrations
                         .HasForeignKey("AssignedById");
 
                     b.HasOne("Rookie.AssetManagement.DataAccessor.Entities.User", "AssignedTo")
-                        .WithMany("Assignemnts")
+                        .WithMany("Assignments")
                         .HasForeignKey("AssignedToId");
 
                     b.HasOne("Rookie.AssetManagement.DataAccessor.Entities.State", "State")
-                        .WithMany("Assignemnts")
+                        .WithMany("Assignments")
                         .HasForeignKey("StateId");
 
                     b.Navigation("Asset");
@@ -469,7 +469,7 @@ namespace Rookie.AssetManagement.DataAccessor.Migrations
 
             modelBuilder.Entity("Rookie.AssetManagement.DataAccessor.Entities.Asset", b =>
                 {
-                    b.Navigation("Assignemnts");
+                    b.Navigation("Assignments");
                 });
 
             modelBuilder.Entity("Rookie.AssetManagement.DataAccessor.Entities.Category", b =>
@@ -481,12 +481,12 @@ namespace Rookie.AssetManagement.DataAccessor.Migrations
                 {
                     b.Navigation("Assets");
 
-                    b.Navigation("Assignemnts");
+                    b.Navigation("Assignments");
                 });
 
             modelBuilder.Entity("Rookie.AssetManagement.DataAccessor.Entities.User", b =>
                 {
-                    b.Navigation("Assignemnts");
+                    b.Navigation("Assignments");
                 });
 #pragma warning restore 612, 618
         }

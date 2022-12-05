@@ -93,7 +93,7 @@ namespace Rookie.AssetManagement.Business
                 .ForMember(d => d.Category, t => t.MapFrom(c => c.Category.Id))
                 .ForMember(d => d.State, t => t.MapFrom(c => c.State.Id));
 
-            CreateMap<Assignemnt, AssignmentDto>()
+            CreateMap<Assignment, AssignmentDto>()
                 .ForMember(d => d.AssetCode, t => t.MapFrom(c => c.Asset.AssetCode))
                 .ForMember(d => d.AssetName, t => t.MapFrom(c => c.Asset.AssetName))
                 .ForMember(d => d.State, t => t.MapFrom(c => c.State.StateName))

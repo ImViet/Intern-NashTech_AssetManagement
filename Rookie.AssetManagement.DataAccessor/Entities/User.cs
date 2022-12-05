@@ -20,6 +20,6 @@ namespace Rookie.AssetManagement.DataAccessor.Entities
         public string Location { get; set; }
         public bool IsNewUser { get; set; }
             
-        public virtual ICollection<Assignemnt> Assignemnts { get; set; }
+        public virtual ICollection<Assignment> Assignments { get; set; }
     }
 }

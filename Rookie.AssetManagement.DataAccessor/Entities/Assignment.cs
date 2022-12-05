@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Rookie.AssetManagement.DataAccessor.Entities
 {
-    public class Assignemnt
+    public class Assignment
     {
         public int Id { get; set; }
         public Asset Asset { get; set; }
