@@ -24,11 +24,7 @@ using Rookie.AssetManagement.DataAccessor.Migrations;
 using FluentAssertions.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-
-
-
-
-
+using Microsoft.AspNetCore.Mvc;
 
 namespace Rookie.AssetManagement.UnitTests.Business
 {
@@ -193,7 +189,26 @@ namespace Rookie.AssetManagement.UnitTests.Business
             var result = await _userService.DisableAsync(DisableUserId, "HCM");
 
             //Assert
-            result.Should().Equals(true);
+            var actionResult = Assert.IsType<Boolean>(result);
+            Assert.True(actionResult.Equals(true));
+        }
+
+        [Fact]
+        public async Task GetSuggestionShouldSuccess()
+        {
+           //Arrange
+           var sugesstionString = "SD";
+           var usersMock = UserTestData.GetUsers().AsQueryable().BuildMock();
+
+           _userRepository
+                 .Setup(x => x.Entities)
+                 .Returns(usersMock);
+
+           //Act
+           var result = await _userService.GetSuggestion(sugesstionString, "HCM");
+
+           //Assert
+            Assert.Equal(result.Count,2);
         }
     }
 }

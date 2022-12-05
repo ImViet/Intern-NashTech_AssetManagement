@@ -19,6 +19,7 @@ export const ASSET_LIST_LINK = "/asset";
 export const ASSET_PARENT_ROOT = "..";
 
 export const ASSIGNMENT = "assignment/*";
+export const ASSIGNMENT_LIST = "*";
 export const ASSIGNMENT_LIST_LINK = "/assignment";
 
 export const RETURNING= "returning/*";
