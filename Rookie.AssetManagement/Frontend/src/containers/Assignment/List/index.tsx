@@ -171,15 +171,16 @@ const ListAssignment = () => {
                     </div>
                     <div className="d-flex align-items-center w-md mr-5">
                         <div className="button">
-                            <div className="col">
+                            <div className="col d-flex">
                                 <div className="d-flex align-items-center w-100">
                                     <DatePicker
-                                        className={"form-control  w-100 "}
+                                        className={"form-control input-search w-100 "}
                                         value={assignedDate}
                                         onChange={handleAssignDateChange}
+                                        placeholderText="Assigned Date"
                                         maxDate={new Date()} />
                                 </div>
-                                <div className="" style={{ position: 'absolute', right: 30, top: 4, pointerEvents: "none" }}>
+                                <div className="date-icon p-1 pointer">
                                     <CalendarDateFill />
                                 </div>
                             </div>
