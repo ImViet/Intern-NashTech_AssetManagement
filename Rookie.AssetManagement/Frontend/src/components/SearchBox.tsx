@@ -29,11 +29,15 @@ const SearchBox : React.FC<Props> = ({ handleSearch , getSuggestionRequest}) =>{
     }
 
     const getSuggestion = useThrottle((keyword)=>{
-        if(!keyword) {
+        if(keyword == "") {
             setSuggestions([])
+            return
         }
         getSuggestionRequest(keyword)
             .then((res)=>{
+                if(res.data.length > 0){
+                    setShow(true)
+                }
                 setSuggestions(res.data)
             })
             .catch(err=>console.log(err))
