@@ -15,6 +15,7 @@ import {
   setCategory,
   CreateAction,
   UpdateAction,
+  setAssetResult,
   setActionResult,
   DisableAction,
 } from "../reducer";
@@ -25,6 +26,7 @@ import {
   getCategoryRequest,
   getStateRequest,
   updateAssetRequest,
+  getAssetByIdRequest,
   disableAssetRequest,
 } from "./requests";
 
@@ -182,6 +184,27 @@ export function* handleGetStateList() {
       });
     });
     yield put(setState(options));
+  } catch (error: any) {
+    const message = error.response.data;
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: {
+          error: true,
+          message: message,
+        },
+      })
+    );
+  }
+}
+
+export function* handleGetAssetById(action: PayloadAction<number>) {
+  const id = action.payload;
+
+  try {
+    const { data } = yield call(getAssetByIdRequest, id);
+    data.InstalledDate = new Date(data.InstalledDate);
+    yield put(setAssetResult(data));
   } catch (error: any) {
     const message = error.response.data;
     yield put(
