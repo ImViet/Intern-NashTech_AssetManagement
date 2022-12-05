@@ -8,17 +8,15 @@ import {
     StaffUserType
 } from "src/constants/User/UserContants";
 import formatDateTime, { convertDDMMYYYY } from "src/utils/formatDateTime";
-import IUser from "src/interfaces/User/IUser";
+import IAsset from "src/interfaces/Asset/IAsset";
 
 type Props = {
-    user: IUser;
+    asset: IAsset;
     handleClose: () => void;
 };
 
-const Info: React.FC<Props> = ({ user, handleClose }) => {
-    const getUserTypeName = (type: string) => {
-        return type == AdminUserType ? AdminUserTypeLabel : StaffUserTypeLabel;
-    }
+const Info: React.FC<Props> = ({ asset, handleClose }) => {
+
     return (
         <>
             <Modal
@@ -28,44 +26,46 @@ const Info: React.FC<Props> = ({ user, handleClose }) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="login-modal">
-                        Detailed User Infomation
+                        Detailed Asset Infomation
                     </Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
                     <div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Staff Code:</div>
-                            <div>{user.staffCode}</div>
+                            <div className='col-5'>Asset Code:</div>
+                            <div>{asset.assetCode}</div>
                         </div>
 
                         <div className='row -intro-y'>
-                            <div className='col-5'>Full Name:</div>
-                            <div>{user.fullName}</div>
+                            <div className='col-5'>Asset Name:</div>
+                            <div>{asset.assetName}</div>
                         </div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Username:</div>
-                            <div>{user.userName}</div>
+                            <div className='col-5'>Category:</div>
+                            <div>{asset.category}</div>
                         </div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Date Of Birth:</div>
-                            <div>{convertDDMMYYYY(user.dateOfBirth)}</div>
+                            <div className='col-5'>Installed Date:</div>
+                            <div>{convertDDMMYYYY(asset.installedDate)}</div>
                         </div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Gender:</div>
-                            <div>{user.gender}</div>
+                            <div className='col-5'>State:</div>
+                            <div>{asset.state}</div>
                         </div> 
                         <div className='row -intro-y'>
-                            <div className='col-5'>Joined Date:</div>
-                            <div>{convertDDMMYYYY(user.joinedDate)}</div>
-                        </div>
-                        <div className='row -intro-y'>
-                            <div className='col-5'>Type:</div>
-                            <div>{getUserTypeName(user.type)}</div>
-                        </div>
-                        <div className='row -intro-y'>
                             <div className='col-5'>Location:</div>
-                            <div>{user.location}</div>
+                            <div>{asset.location}</div>
+                        </div>
+                        <div className='row -intro-y'>
+                            <div className='col-5'>Specification:</div>
+                            <div>{asset.specification}</div>
+                        </div>
+                        <div className='row -intro-y'>
+                            <div className='col-5'>History:</div>
+                            <div>
+                                
+                            </div>
                         </div>
 
                     </div>

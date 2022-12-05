@@ -8,7 +8,7 @@ import Table, { SortType } from "src/components/Table";
 import IColumnOption from "src/interfaces/IColumnOption";
 import IPagedModel from "src/interfaces/IPagedModel";
 import formatDateTime, { convertDDMMYYYY } from "src/utils/formatDateTime";
-// import Info from "../Info";
+import Info from "../Info";
 //import { disableUser } from "../reducer";
 
 import { EDIT_ASSET_ID } from "src/constants/pages";
@@ -47,7 +47,7 @@ const AssetTable: React.FC<Props> = ({
   const dispatch = useAppDispatch();
 
   const [showDetail, setShowDetail] = useState(false);
-  // const [userDetail, setUserDetail] = useState(null as IAsset | null);
+  const [assetDetail, setAssetDetail] = useState(null as IAsset | null);
   const [disableState, setDisable] = useState({
     isOpen: false,
     id: 0,
@@ -55,6 +55,15 @@ const AssetTable: React.FC<Props> = ({
     message: '',
     isDisable: true,
   });
+
+  const handleShowInfo = (id: number) => {
+    const asset = assets?.items.find((item) => item.id === id);
+
+    if (asset) {
+      setAssetDetail(asset);
+      setShowDetail(true);
+    }
+  };
 
   const handleShowDisable = async (id: number) => {
     setDisable({
@@ -120,7 +129,7 @@ const AssetTable: React.FC<Props> = ({
         }}
       >
         {rows?.map((data, index) => (
-          <tr key={index} className="">
+          <tr key={index} className="" onClick={() => handleShowInfo(data.id)}>
             <td>{data.assetCode}</td>
             <td>{data.assetName}</td>
             <td>{data.category}</td>
@@ -156,9 +165,9 @@ const AssetTable: React.FC<Props> = ({
 
         ))}       
       </Table>
-      {/* {userDetail && showDetail && (
-        <Info user={userDetail} handleClose={handleCloseDetail} />
-      )} */}
+      {assetDetail && showDetail && (
+        <Info asset={assetDetail} handleClose={handleCloseDetail} />
+      )}
       <ConfirmModal
         title={disableState.title}
         isShow={disableState.isOpen}

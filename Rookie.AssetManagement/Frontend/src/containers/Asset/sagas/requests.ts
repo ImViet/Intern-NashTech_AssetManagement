@@ -36,6 +36,9 @@ export function getAssetFormDataRequest(
 ): Promise<AxiosResponse<IAssetForm>> {
   return RequestService.axios.get(`${EndPoints.searchAsset}/${id}`);
 }
+export function getAssetByIdRequest(id: number): Promise<AxiosResponse<IAsset>> {
+  return RequestService.axios.get(EndPoints.asset + "/" + id);
+}
 
 export function getCategoryRequest(): Promise<AxiosResponse<ICategory[]>> {
   return RequestService.axios.get(EndPoints.category);
