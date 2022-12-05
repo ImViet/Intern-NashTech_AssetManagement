@@ -201,8 +201,8 @@ const ListAssignment = () => {
                     </div>
 
                     <div className="d-flex align-items-center ml-3">
-                        <Link to="/asset/create" type="button" className="btn btn-danger">
-                            Create new asset
+                        <Link to="/assignment/create" type="button" className="btn btn-danger">
+                            Create new assignment
                         </Link>
                     </div>
                 </div>
