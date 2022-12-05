@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Rookie.AssetManagement.Business.Interfaces;
 using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
 using Rookie.AssetManagement.Contracts.Dtos.AssignmentDtos;
+using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,12 @@ namespace Rookie.AssetManagement.Business.Services
     {
         private readonly IBaseRepository<Asset> _assetRepository;
         private readonly IBaseRepository<State> _stateRepository;
-        private readonly IBaseRepository<Assignemnt> _assignmentRepository;
+        private readonly IBaseRepository<Assignment> _assignmentRepository;
         private readonly IMapper _mapper;
 
         public AssignmentService(IBaseRepository<Asset> assetRepository
             , IBaseRepository<State> stateRepository
-            , IBaseRepository<Assignemnt> assignmentRepository
+            , IBaseRepository<Assignment> assignmentRepository
             , IMapper mapper)
         {
             _assetRepository = assetRepository;
@@ -34,7 +35,8 @@ namespace Rookie.AssetManagement.Business.Services
         public async Task<IEnumerable<AssignmentDto>> GetAllAsync()
         {
             var listAssignment = await _assignmentRepository.Entities.ProjectTo<AssignmentDto>(_mapper.ConfigurationProvider).ToListAsync();
-            return (List<AssignmentDto>) listAssignment;
+            return (List<AssignmentDto>)listAssignment;
+
         }
     }
 }
