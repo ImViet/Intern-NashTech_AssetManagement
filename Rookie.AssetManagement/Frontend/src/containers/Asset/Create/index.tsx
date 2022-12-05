@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import AssetFormContainer from "../AssetForm";
 
-
-
-const CreateUserContainer = () => {
+const CreateAssetContainer = () => {
   return (
     <div className="ml-5">
       <div className="primaryColor text-title intro-x">Create New Asset</div>
@@ -16,4 +14,4 @@ const CreateUserContainer = () => {
   );
 };
 
-export default CreateUserContainer;
+export default CreateAssetContainer;
