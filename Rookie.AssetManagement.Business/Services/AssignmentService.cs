@@ -65,11 +65,6 @@ namespace Rookie.AssetManagement.Business.Services
 
             var assignmentDto = _mapper.Map<IEnumerable<AssignmentDto>>(assignment.Items);
 
-            var assetDto = await _assetRepository.Entities.ToListAsync();
-            _mapper.Map<IEnumerable<AssetDto>>(assetDto);
-            _assignmentRepository.Entities.ProjectTo<AssignmentDto>(_mapper.ConfigurationProvider);
-
-
             return new PagedResponseModel<AssignmentDto>
             {
                 CurrentPage = assignment.CurrentPage,
