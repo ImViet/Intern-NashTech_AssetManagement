@@ -29,16 +29,16 @@ namespace Rookie.AssetManagement.Controllers
         }
 
         [HttpGet]
-        [Route("GetAsset")]
-        public async Task<ActionResult<PagedResponseModel<AssignmentDto>>> GetAsset(
-        [FromQuery] AssignmentQueryCriteriaDto assetCriteriaDto,
+        [Route("Assignment")]
+        public async Task<ActionResult<PagedResponseModel<AssignmentDto>>> GetAssignment(
+        [FromQuery] AssignmentQueryCriteriaDto assignmentCriteriaDto,
         CancellationToken cancellationToken)
         {
           
           
 
             var assetResponses = await _assignmentService.GetByPageAsync(
-                                            assetCriteriaDto,
+                                            assignmentCriteriaDto,
                                             cancellationToken
                                             );
             return Ok(assetResponses);
