@@ -8,6 +8,7 @@ const NotFound = lazy(() => import("../NotFound"));
 const ListAsset = lazy(() => import("./List"));
 const CreateAsset = lazy(() => import("./Create"));
 const UpdateAsset = lazy(() => import("./Update"));
+
 const Asset = () => {
   return (
     <Routes>

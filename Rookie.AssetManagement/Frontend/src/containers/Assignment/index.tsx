@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, lazy } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { ASSIGNMENT_LIST, LOGIN } from "src/constants/pages";
+import { ASSIGNMENT_LIST, LOGIN, CREATE_ASSIGNMENT } from "src/constants/pages";
 
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import { me } from "../Authorize/reducer";
-import ListAssignment from "./List";
+
+const CreateAssignment = lazy(() => import("./Create"));
+const ListAssignment = lazy(() => import("./List"));
 
 const Assignment = () => {
     const { isAuth, account } = useAppSelector((state) => state.authReducer);
@@ -22,8 +24,8 @@ const Assignment = () => {
     return (
         <Routes>
             <Route path={ASSIGNMENT_LIST} element={<ListAssignment />} />
-            {/* <Route path={CREATE_ASSET} element={<CreateAsset />} />
-        <Route path={EDIT_ASSET} element={<UpdateAsset />} /> */}
+            <Route path={CREATE_ASSIGNMENT} element={<CreateAssignment />} />
+            {/* <Route path={EDIT_ASSET} element={<UpdateAsset />} /> */}
         </Routes>
     );
 };
