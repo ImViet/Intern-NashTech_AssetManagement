@@ -48,3 +48,8 @@
         padding: 30px 30px; 
     }    
 }
+@media (min-width: 576px){
+    .model-info-asset{
+        max-width: 800px;
+    }
+}
