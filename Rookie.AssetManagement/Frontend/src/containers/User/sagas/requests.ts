@@ -41,3 +41,12 @@ export function getUserByIdRequest(id: number): Promise<AxiosResponse<IUser>> {
 export function disableUserRequest(id: number): Promise<AxiosResponse<IUser>> {
   return RequestService.axios.delete(EndPoints.user + "/" + id);
 }
+
+export function getSearchUserSuggestion(
+  keyword: string
+): Promise<AxiosResponse<string[]>> {
+  return RequestService.axios.get(EndPoints.user + "/searching", {
+    params: { keyword },
+    paramsSerializer: (params) => qs.stringify(params),
+  });
+}
