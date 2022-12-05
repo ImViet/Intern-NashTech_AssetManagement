@@ -7,7 +7,7 @@ import {
     AdminUserType,
     StaffUserType
 } from "src/constants/User/UserContants";
-
+import formatDateTime, { convertDDMMYYYY } from "src/utils/formatDateTime";
 import IUser from "src/interfaces/User/IUser";
 
 type Props = {
@@ -24,7 +24,7 @@ const Info: React.FC<Props> = ({ user, handleClose }) => {
             <Modal
                 show={true}
                 onHide={handleClose}
-                dialogClassName="modal-90w"
+                dialogClassName="detail-modal modal-90w"
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="login-modal">
@@ -40,28 +40,32 @@ const Info: React.FC<Props> = ({ user, handleClose }) => {
                         </div>
 
                         <div className='row -intro-y'>
-                            <div className='col-5'>Fisrt Name:</div>
-                            <div>{user.firstName}</div>
+                            <div className='col-5'>Full Name:</div>
+                            <div>{user.fullName}</div>
                         </div>
                         <div className='row -intro-y'>
                             <div className='col-5'>Username:</div>
                             <div>{user.userName}</div>
                         </div>
                         <div className='row -intro-y'>
+                            <div className='col-5'>Date Of Birth:</div>
+                            <div>{convertDDMMYYYY(user.dateOfBirth)}</div>
+                        </div>
+                        <div className='row -intro-y'>
                             <div className='col-5'>Gender:</div>
                             <div>{user.gender}</div>
+                        </div> 
+                        <div className='row -intro-y'>
+                            <div className='col-5'>Joined Date:</div>
+                            <div>{convertDDMMYYYY(user.joinedDate)}</div>
                         </div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Date Of Birth:</div>
-                            <div>{user.dateOfBirth}</div>
-                        </div>
-                        <div className='row -intro-y'>
-                            <div className='col-5'>Join Date:</div>
-                            <div>{user.joinedDate}</div>
-                        </div>
-                        <div className='row -intro-y'>
-                            <div className='col-5'>Role Type:</div>
+                            <div className='col-5'>Type:</div>
                             <div>{getUserTypeName(user.type)}</div>
+                        </div>
+                        <div className='row -intro-y'>
+                            <div className='col-5'>Location:</div>
+                            <div>{user.location}</div>
                         </div>
 
                     </div>

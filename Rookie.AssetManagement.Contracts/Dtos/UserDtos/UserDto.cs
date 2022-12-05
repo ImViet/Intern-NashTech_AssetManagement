@@ -19,5 +19,6 @@ namespace Rookie.AssetManagement.Contracts.Dtos.UserDtos
         public string Gender { get; set; }
         public DateTime JoinedDate { get; set; }
         public string Type { get; set; }
+        public string Location { get; set; }
     }
 }

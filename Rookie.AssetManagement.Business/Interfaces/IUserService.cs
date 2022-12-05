@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Security.Claims;
 using Rookie.AssetManagement.Contracts;
 using System.Threading;
+using Rookie.AssetManagement.Contracts.Dtos;
 
 namespace Rookie.AssetManagement.Business.Interfaces
 {
@@ -20,7 +21,7 @@ namespace Rookie.AssetManagement.Business.Interfaces
         Task<UserDto> AddAsync(UserCreateDto assetRequest, string location);
 
         Task<UserDto> UpdateAsnyc(UserUpdateDto userUpdateDto, string location);
-
+        Task<List<string>> GetSuggestion(string searching, string location);
         Task<bool> DisableAsync(int id, string location);
 
         Task<PagedResponseModel<UserDto>> GetByPageAsync(UserQueryCriteriaDto assetQueryCriteria, CancellationToken cancellationToken, string location);

@@ -20,6 +20,7 @@ namespace Rookie.AssetManagement.DataAccessor.Entities
         public State State { get; set; }
         public bool IsDeleted { get; set; }
         public string Location { get; set; }
- 
+        public virtual ICollection<Assignemnt> Assignemnts { get; set; }
+
     }
 }

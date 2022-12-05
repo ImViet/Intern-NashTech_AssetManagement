@@ -4,6 +4,8 @@
 @import './Modal.scss';
 @import './Intro.scss';
 @import './Filter.scss';
+@import './DetailModal.scss';
+@import './SearchBox.scss';
 * {
     margin: 0;
     padding: 0;
@@ -99,4 +101,14 @@ body {
 .input-search{     
     border: 2px solid rgb(190,190,190);
     border-radius: 5px 0 0 5px;
+}
+.date-icon{
+    display: inline-block;
+    height: 38px;
+    margin-left: -2px;
+    padding: 0 !important;
+    border: 2px solid #bebebe !important;
+    border-radius: 0px .25rem .25rem 0px;
+    padding: 0 3px !important;
+    pointer-events: none;
 }
