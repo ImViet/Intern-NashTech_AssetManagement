@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Rookie.AssetManagement.DataAccessor.Enum;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -18,5 +19,7 @@ namespace Rookie.AssetManagement.DataAccessor.Entities
         public bool IsDeleted { get; set; }
         public string Location { get; set; }
         public bool IsNewUser { get; set; }
+            
+        public virtual ICollection<Assignemnt> Assignemnts { get; set; }
     }
 }

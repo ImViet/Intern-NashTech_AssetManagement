@@ -4,6 +4,7 @@ using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
 using Rookie.AssetManagement.Contracts.Dtos.CategoryDtos;
 using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
+using Rookie.AssetManagement.Contracts.Dtos.AssignmentDtos;
 
 namespace Rookie.AssetManagement.Business
 {
@@ -91,6 +92,16 @@ namespace Rookie.AssetManagement.Business
             CreateMap<Asset, AssetFormDto>()
                 .ForMember(d => d.Category, t => t.MapFrom(c => c.Category.Id))
                 .ForMember(d => d.State, t => t.MapFrom(c => c.State.Id));
+
+            CreateMap<Assignemnt, AssignmentDto>()
+                .ForMember(d => d.AssetCode, t => t.MapFrom(c => c.Asset.AssetCode))
+                .ForMember(d => d.AssetName, t => t.MapFrom(c => c.Asset.AssetName))
+                .ForMember(d => d.State, t => t.MapFrom(c => c.State.StateName))
+                .ForMember(d => d.AssignedTo, t => t.MapFrom(c => c.AssignedTo.UserName))
+                .ForMember(d => d.AssignedBy, t => t.MapFrom(c => c.AssignedBy.UserName));
+                
+
+
         }
 
     }
