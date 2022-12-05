@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { FunnelFill } from "react-bootstrap-icons";
-import { Search } from "react-feather";
 import ReactMultiSelectCheckboxes from "react-multiselect-checkboxes";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import UserTable from "./UserTable";
@@ -17,6 +16,7 @@ import {
 import { FilterUserTypeOptions } from "src/constants/selectOptions";
 import { getUserList, disableUser, cleanUpUserActionResult } from "../reducer";
 import SelectBox from "src/components/SelectBox";
+import SearchBox from "src/components/SearchBox";
 
 const defaultQuery: IQueryUserModel = {
   page: 1,
@@ -37,8 +37,6 @@ const ListUser = () => {
   const { users, actionResult } = useAppSelector((state) => state.userReducer);
 
   const [query, setQuery] = useState(users ? { ...defaultQuery, page: users.currentPage } : defaultQuery);
-
-  const [search, setSearch] = useState("");
 
   const [selectedType, setSelectedType] = useState(defaultSelectedType);
 
@@ -80,14 +78,6 @@ const ListUser = () => {
     console.log(query)
   };
 
-  const handleChangeSearch = (e) => {
-    e.preventDefault();
-
-    const search = e.target.value;
-    setSearch(search);
-    console.log(query)
-  };
-
   const handlePage = (page: number) => {
     setQuery({
       ...query,
@@ -96,10 +86,10 @@ const ListUser = () => {
     console.log(query)
   };
 
-  const handleSearch = () => {
+  const handleSearch = (keyword) => {
     setQuery({
       ...query,
-      search,
+      search: keyword,
       page: 1
     });
     console.log(query)
@@ -157,19 +147,7 @@ const ListUser = () => {
               onChange={handleType} />
           </div>
 
-          <div className="d-flex align-items-center w-ld ml-auto mr-2">
-            <div className="input-group">
-              <input
-                onChange={handleChangeSearch}
-                value={search}
-                type="text"
-                className="input-search  form-control"
-              />
-              <span onClick={handleSearch} className=" search-icon p-1 pointer">
-                <Search />
-              </span>
-            </div>
-          </div>
+          <SearchBox handleSearch={handleSearch}/>
 
           <div className="d-flex align-items-center ml-3">
             <Link to="/user/create" type="button" className="btn btn-danger">
