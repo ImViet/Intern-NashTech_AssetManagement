@@ -55,7 +55,7 @@ const Info: React.FC<Props> = ({ assignment, handleClose }) => {
                         </div> 
                         <div className='row -intro-y'>
                             <div className='col-5'>Assigned Date</div>
-                            <div>{assignment.assgnedDate}</div>
+                            <div>{assignment.assignedDate}</div>
                         </div>
                         <div className='row -intro-y'>
                             <div className='col-5'>State</div>

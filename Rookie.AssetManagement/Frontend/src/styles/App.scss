@@ -6,6 +6,7 @@
 @import './Filter.scss';
 @import './DetailModal.scss';
 @import './SearchBox.scss';
+@import './DateFilter.scss';
 * {
     margin: 0;
     padding: 0;
@@ -101,21 +102,7 @@ body {
     border: 2px solid rgb(190,190,190);
     border-radius: 5px 0 0 5px;
 }
-.date-icon{
-    display: inline-block;
-    height: 34px;
-    margin-left: -2px;
-    padding: 0 !important;
-    border: 2px solid #bebebe !important;
-    border-radius: 0px .25rem .25rem 0px;
-    padding: 0 3px !important;
-    pointer-events: none;
-}
-.date-picker{     
-    border: 2px solid rgb(190,190,190);
-    border-radius: 5px 0 0 5px;
-    height: 34px;
-}  
+
 .search-icon{
     border: 2px solid rgb(190,190,190);
     margin-left: -1px;

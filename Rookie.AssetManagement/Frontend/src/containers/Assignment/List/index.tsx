@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import AssignmentTable from "./AssignmentTable";
 import ISelectOption from "src/interfaces/ISelectOption";
 import { Link, useLocation } from "react-router-dom";
-import DatePicker from 'react-datepicker';
 import {
     ACCSENDING,
     DECSENDING,
@@ -18,6 +17,7 @@ import { cleanUpActionResult, getAssignmentList, getState } from "../reducer";
 import IQueryAssignmentModel from "src/interfaces/Assignment/IQueryAssignmentModel";
 import SelectBox from "src/components/SelectBox";
 import { toUTCWithoutHour } from "src/utils/formatDateTime";
+import DateFilter from "src/components/DateFilter";
 
 const defaultQuery: IQueryAssignmentModel = {
     search: "",
@@ -47,7 +47,7 @@ const ListAssignment = () => {
     const { FilterAssignmentStateOptions } = useAppSelector(state => state.assignmentReducer)
     const states = useMemo(() => {
         return FilterAssignmentStateOptions.filter(state => state.label == "Accepted" || state.label == "Waiting for acceptance" || state.label == "ALL")
-}, [FilterAssignmentStateOptions])
+    }, [FilterAssignmentStateOptions])
     const handleState = (selected: ISelectOption[]) => {
         if (selected.length === 0) {
             setQuery({
@@ -165,7 +165,7 @@ const ListAssignment = () => {
                 <div className="d-flex mb-5 intro-x">
                     <div className="d-flex align-items-center w-md mr-5">
                         <div className="button">
-                            <div className="filter-state">
+                            <div className="filter-state-assignment">
                                 <SelectBox
                                     options={states}
                                     placeholderButtonLabel="State"
@@ -175,21 +175,7 @@ const ListAssignment = () => {
                         </div>
                     </div>
                     <div className="d-flex align-items-center w-md mr-5">
-                        <div className="button">
-                            <div className="col d-flex" style={{width: "250px"}}>
-                                <div className="d-flex align-items-center w-100">
-                                    <DatePicker
-                                        className={"form-control date-picker w-100 "}
-                                        selected={assignedDate}
-                                        onChange={handleAssignDateChange}
-                                        placeholderText="Assigned Date"
-                                        maxDate={new Date()} />
-                                </div>
-                                <div className="date-icon p-1 pointer">
-                                    <CalendarDateFill />
-                                </div>
-                            </div>
-                        </div>
+                        <DateFilter label="Assigned Date" date={assignedDate} handleDateChange={handleAssignDateChange}/>
                     </div>
                     <div className="d-flex align-items-center w-ld ml-auto mr-2">
                         <div className="input-group">
