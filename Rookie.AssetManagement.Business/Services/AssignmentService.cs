@@ -147,5 +147,14 @@ namespace Rookie.AssetManagement.Business.Services
             }
             return assignmentQuery;
         }
+
+        public async Task<AssignmentDetailDto> GetByIdAsync(int id)
+        {
+            var assignment = await _assignmentRepository.Entities
+                .Where(a => a.Id == id)
+                .ProjectTo<AssignmentDetailDto>(_mapper.ConfigurationProvider)
+                .FirstAsync();
+            return assignment;
+        }
     }
 }
