@@ -12,6 +12,7 @@ import IAssignmentForm from 'src/interfaces/Assignment/IAssignmentForm';
 import { Modal } from 'react-bootstrap';
 import UserLookupTable from './UserLookupTable';
 import { Search } from 'react-feather';
+import { getLookUpUserRequest } from './sagas/requests';
 
 const initialFormValues: IAssignmentForm = {
     user: '',
@@ -86,7 +87,7 @@ function AssignmentFormContainer({ initialAssetForm = {
                                 label="User"
                                 isrequired
                                 lookupLabel="Users"
-                                request={() => { }}
+                                request={getLookUpUserRequest}
                                 TableComponent={UserLookupTable}
                             />
 

@@ -75,7 +75,7 @@ const UserLookupTable: React.FC<ILookupTable> = ({
 
     const fetchData=()=>{
         requestData(query)
-            .then(res=>setQuery(res.data))
+            .then(res=>setUsers(res.data))
             .catch(err=>console.log(err));
     }
     
@@ -117,11 +117,11 @@ const UserLookupTable: React.FC<ILookupTable> = ({
                                 columnValue: query.sortColumn,
                                 orderBy: query.sortOrder,
                             }}
-                            page={{
-                                currentPage: users?.currentPage,
-                                totalPage: users?.totalPages,
-                                handleChange: handlePage,
-                            }}
+                            // page={{
+                            //     currentPage: users?.currentPage,
+                            //     totalPage: users?.totalPages,
+                            //     handleChange: handlePage,
+                            // }}
                         >
                             {users?.items?.map((data, index) => (
                                 <tr key={index} className="">
