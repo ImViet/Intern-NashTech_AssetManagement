@@ -1,18 +1,24 @@
-import React, { InputHTMLAttributes } from 'react';
+import React, { ComponentType, FunctionComponent, InputHTMLAttributes, useState } from 'react';
 import { useField } from 'formik';
 import { Search } from "react-bootstrap-icons";
+import { Modal } from 'react-bootstrap';
+import ILookupTable from 'src/interfaces/ILookupTable';
 
 type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
     label: string;
+    lookupLabel: string;
     placeholder?: string;
     name: string;
     isrequired?: boolean;
     notvalidate?: boolean;
+    TableComponent: FunctionComponent<ILookupTable>;
+    request: Function;
 };
 
 const LookupField: React.FC<InputFieldProps> = (props) => {
     const [field, { error, touched }] = useField(props);
-    const { label, isrequired, notvalidate } = props;
+    const { label, isrequired, notvalidate, TableComponent,request } = props;
+    const [showLookup, setShowLookup] = useState(false);
 
     const validateClass = () => {
         if (touched && error) return 'is-invalid';
@@ -23,7 +29,7 @@ const LookupField: React.FC<InputFieldProps> = (props) => {
 
     return (
         <>
-            <div className="mb-3 row">
+            <div className="mb-3 row" onClick={()=>setShowLookup(true)}>
                 <label className="col-4 col-form-label d-flex">
                     {label}
                     {isrequired && (
@@ -31,9 +37,9 @@ const LookupField: React.FC<InputFieldProps> = (props) => {
                     )}
                 </label>
                 <div className="col">
-                    <input className={`form-control ${validateClass()}`} {...field} {...props}
-                    />
-                    <div className="" style={{ position: 'absolute', right: 30, top: 4, pointerEvents:"none" }}>
+                    <input {...field} {...props} hidden />
+                    <div className={`form-control ${validateClass()} pointer`}>adasdasd</div>
+                    <div className="" style={{ position: 'absolute', right: 30, top: 4, pointerEvents: "none" }}>
                         <Search />
                     </div>
                     {error && touched && (
@@ -41,7 +47,22 @@ const LookupField: React.FC<InputFieldProps> = (props) => {
                     )}
                 </div>
             </div>
-
+            <Modal
+                className="modal-user"
+                show={showLookup}
+                onHide={() => setShowLookup(false)}
+                aria-labelledby="login-modal"
+            >
+                <div className="first-login-modal">
+                    <Modal.Body>
+                        <TableComponent 
+                            closeModal={()=>setShowLookup(false)}
+                            onSelect={(label, value)=>{}}
+                            requestData={request}
+                        />
+                    </Modal.Body>
+                </div>
+            </Modal>
         </>
     );
 };

@@ -173,7 +173,7 @@ const AssignmentTable: React.FC<Props> = ({
                         })()}                                     
                         </td>
                     </tr>
-        ))}                
+                ))}                
             </Table>
             {assignmentDetail && showDetail && (
                 <Info assignment={assignmentDetail} handleClose={handleCloseDetail} />
