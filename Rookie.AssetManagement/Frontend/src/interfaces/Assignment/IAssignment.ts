@@ -4,7 +4,7 @@ export default interface IAssignment {
     assetName: string;
     assignedTo: string;
     assignedBy: string;
-    assgnedDate: Date;
+    assignedDate: Date;
     note: string;
     state: string;
   }

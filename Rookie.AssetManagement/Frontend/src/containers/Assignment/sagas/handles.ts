@@ -9,7 +9,7 @@ import {
 import IError from "src/interfaces/IError";
 import IQueryAssignmentModel from "src/interfaces/Assignment/IQueryAssignmentModel";
 import ISelectOption from "src/interfaces/ISelectOption";
-import { toUTC } from "src/utils/formatDateTime";
+import { toUTCWithoutHour } from "src/utils/formatDateTime";
 import {
   setAssignmentList,
   CreateAction,
@@ -29,6 +29,11 @@ export function* handleGetAssignmentList(action: PayloadAction<IQueryAssignmentM
 
   try {
     console.log(queryAssigmentModel);
+    if(!queryAssigmentModel.assignedDate){
+      queryAssigmentModel.assignedDate = new Date('0001-01-01T00:00:00Z');
+    }else{
+      queryAssigmentModel.assignedDate = toUTCWithoutHour(queryAssigmentModel.assignedDate)
+    }
     const { data } = yield call(getAssignmentsRequest, queryAssigmentModel);
     yield put(setAssignmentList(data));
   } catch (error: any) {

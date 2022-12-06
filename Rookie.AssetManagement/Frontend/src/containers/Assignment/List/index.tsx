@@ -1,4 +1,4 @@
-import React, { useDebugValue, useEffect, useState } from "react";
+import React, { useDebugValue, useEffect, useState, useMemo } from "react";
 import { FunnelFill, CalendarDateFill } from "react-bootstrap-icons";
 import { Search } from "react-feather";
 import ReactMultiSelectCheckboxes from "react-multiselect-checkboxes";
@@ -17,20 +17,20 @@ import IPagedModel from "src/interfaces/IPagedModel";
 import { cleanUpActionResult, getAssignmentList, getState } from "../reducer";
 import IQueryAssignmentModel from "src/interfaces/Assignment/IQueryAssignmentModel";
 import SelectBox from "src/components/SelectBox";
+import { toUTCWithoutHour } from "src/utils/formatDateTime";
 
 const defaultQuery: IQueryAssignmentModel = {
     search: "",
     page: 1,
     limit: DEFAULT_PAGE_LIMIT,
-    assignDate: null,
+    assignedDate: null,
     sortOrder: ACCSENDING,
     sortColumn: DEFAULT_ASSET_SORT_COLUMN_NAME,
-    states: ['1'],
+    states: [],
 }
 
 const defaultSelectedState: ISelectOption[] = [
-    { id: 2, label: "Accepted", value: 1 },
-    { id: 3, label: "Waiting for acceptance", value: 2 },
+    { id: 1, label: "All", value: "ALL" }
 
 ]
 
@@ -42,11 +42,13 @@ const ListAssignment = () => {
     const [query, setQuery] = useState(assignments ? { ...defaultQuery, page: assignments.currentPage } : defaultQuery);
 
     const [search, setSearch] = useState("");
-    const [assignedDate, setAssignedDate] = useState("");
+    const [assignedDate, setAssignedDate] = useState(new Date());
     const [selectedState, setSelectedState] = useState(defaultSelectedState);
 
     const { FilterAssignmentStateOptions } = useAppSelector(state => state.assignmentReducer)
-
+    const states = useMemo(() => {
+        return FilterAssignmentStateOptions.filter(state => state.label == "Accepted" || state.label == "Waiting for acceptance" || state.label == "ALL")
+}, [FilterAssignmentStateOptions])
     const handleState = (selected: ISelectOption[]) => {
         if (selected.length === 0) {
             setQuery({
@@ -85,8 +87,13 @@ const ListAssignment = () => {
         });
         console.log(query)
     };
-    const handleAssignDateChange = (date: Date) => {
-
+    const handleAssignDateChange = (date: Date) => { 
+        setQuery({
+            ...query,
+            assignedDate: toUTCWithoutHour(date)
+        });
+        setAssignedDate(date);
+        console.log(query)
     }
     const handleChangeSearch = (e) => {
         e.preventDefault();
@@ -138,7 +145,7 @@ const ListAssignment = () => {
         // }))
     };
     const fetchData = () => {
-        dispatch(getAssignmentList(query))
+        dispatch(getAssignmentList({...query}))
     };
 
     useEffect(() => {
@@ -161,7 +168,7 @@ const ListAssignment = () => {
                         <div className="button">
                             <div className="filter-state">
                                 <SelectBox
-                                    options={FilterAssignmentStateOptions}
+                                    options={states}
                                     placeholderButtonLabel="State"
                                     value={selectedState}
                                     onChange={handleState} />
@@ -174,7 +181,7 @@ const ListAssignment = () => {
                                 <div className="d-flex align-items-center w-100">
                                     <DatePicker
                                         className={"form-control date-picker w-100 "}
-                                        value={assignedDate}
+                                        selected={assignedDate}
                                         onChange={handleAssignDateChange}
                                         placeholderText="Assigned Date"
                                         maxDate={new Date()} />
@@ -205,12 +212,7 @@ const ListAssignment = () => {
                         </Link>
                     </div>
                 </div>
-                {(() => {
-                    if (assignments?.totalItems == 0) {
-                        return (
-                            <h5 className="not-data-found">No data found</h5>
-                        )
-                    } else {
+                {(() => {   
                         return (                    
                             <>                           
                                 <AssignmentTable
@@ -228,7 +230,7 @@ const ListAssignment = () => {
                             </>
                         )
                     }
-                })()}
+                )()}
             </div>
         </>
     );

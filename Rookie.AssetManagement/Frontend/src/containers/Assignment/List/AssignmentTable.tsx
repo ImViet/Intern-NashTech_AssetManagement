@@ -128,7 +128,7 @@ const AssignmentTable: React.FC<Props> = ({
                         <td>{data.assetName}</td>
                         <td>{data.assignedTo}</td>
                         <td>{data.assignedBy}</td>
-                        <td>{data.assignedDate}</td>
+                        <td>{convertDDMMYYYY(data.assignedDate)}</td>
                         <td>{data.state}</td>
                         <td className="d-flex">     
                         {(() => {

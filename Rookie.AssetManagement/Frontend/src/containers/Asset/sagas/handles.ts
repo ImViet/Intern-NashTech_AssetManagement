@@ -9,7 +9,7 @@ import {
 import IQueryAssetModel from "src/interfaces/Asset/IQueryAssetModel";
 import IError from "src/interfaces/IError";
 import ISelectOption from "src/interfaces/ISelectOption";
-import { toUTC } from "src/utils/formatDateTime";
+import { toUTCWithoutHour } from "src/utils/formatDateTime";
 import {
   setAssetList,
   setCategory,
@@ -35,7 +35,7 @@ export function* handleCreateAsset(action: PayloadAction<CreateAction>) {
   try {
     console.log(formValues);
 
-    formValues.installedDate = toUTC(formValues.installedDate);
+    formValues.installedDate = toUTCWithoutHour(formValues.installedDate);
 
     const { data } = yield call(createAssetRequest, formValues);
 
@@ -67,7 +67,7 @@ export function* handleUpdateAsset(action: PayloadAction<UpdateAction>) {
     console.log("handleUpdateAsset");
     console.log(formValues);
 
-    formValues.installedDate = toUTC(formValues.installedDate);
+    formValues.installedDate = toUTCWithoutHour(formValues.installedDate);
 
     const { data } = yield call(updateAssetRequest, formValues);
 
