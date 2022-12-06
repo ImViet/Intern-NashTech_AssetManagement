@@ -17,7 +17,7 @@ namespace Rookie.AssetManagement.Business.Interfaces
 
         Task<AssignmentDto> GetByIdAsync(int id);
 
-        Task<AssignmentDto> AddAssetAsync(AssignmentCreateDto assignmentCreateDto, string AssignedBy);
+        Task<AssignmentDto> AddAssignmentAsync(AssignmentCreateDto assignmentCreateDto, string AssignedBy);
 
         //Task<AssignmentDto> UpdateAsnyc(UserUpdateDto userUpdateDto, string location);
 

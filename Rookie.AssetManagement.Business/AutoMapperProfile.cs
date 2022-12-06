@@ -100,8 +100,6 @@ namespace Rookie.AssetManagement.Business
             CreateMap<Asset, AssetFormDto>()
                 .ForMember(d => d.Category, t => t.MapFrom(c => c.Category.Id))
                 .ForMember(d => d.State, t => t.MapFrom(c => c.State.Id));
-            CreateMap<Asset, LookUpAssetDto>()
-            .ForMember(d => d.Category, t => t.MapFrom(src => src.Category.Id));
 
             CreateMap<Assignment, AssignmentDto>()
                 .ForMember(d => d.No, t => t.Ignore())
