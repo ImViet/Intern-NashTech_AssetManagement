@@ -3,6 +3,7 @@ export default interface IAssignment {
   no: number;
   assetCode: string;
   assetName: string;
+  specification: string;
   assignedTo: string;
   assignedBy: string;
   assgnedDate: Date;
