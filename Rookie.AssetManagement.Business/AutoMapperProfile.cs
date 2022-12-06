@@ -83,6 +83,10 @@ namespace Rookie.AssetManagement.Business
             CreateMap<User, AccountDto>()
                 .ForMember(d => d.FullName, t => t.MapFrom(src => src.FirstName + " " + src.LastName))
                 .ForMember(d => d.Token, t => t.Ignore());
+            CreateMap<User, LookUpUserDto>()
+                .ForMember(d => d.FullName, t => t.MapFrom(src => src.FirstName + " " + src.LastName));
+              
+           
             CreateMap<Category, CategoryDto>();
             CreateMap<State, StateDto>();
 
@@ -92,6 +96,8 @@ namespace Rookie.AssetManagement.Business
             CreateMap<Asset, AssetFormDto>()
                 .ForMember(d => d.Category, t => t.MapFrom(c => c.Category.Id))
                 .ForMember(d => d.State, t => t.MapFrom(c => c.State.Id));
+            CreateMap<Asset, LookUpAssetDto>()
+            .ForMember(d => d.Category, t => t.MapFrom(src => src.Category.Id));
 
             CreateMap<Assignment, AssignmentDto>()
                 .ForMember(d => d.AssetCode, t => t.MapFrom(c => c.Asset.AssetCode))

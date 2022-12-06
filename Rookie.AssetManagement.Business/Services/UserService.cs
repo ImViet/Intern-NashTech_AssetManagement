@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
+using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
 
 namespace Rookie.AssetManagement.Business.Services
 {
@@ -246,6 +247,51 @@ namespace Rookie.AssetManagement.Business.Services
             await _userRepository.Update(user);
 
             return await Task.FromResult(true);
+        }
+
+      
+
+        private IQueryable<User> UserSortLookUp(
+           IQueryable<User> userQuery,
+           UserQueryCriteriaDto userQueryCriteria)
+        {
+            if (userQueryCriteria.SortColumn != null)
+            {
+                var sortColumn = userQueryCriteria.SortColumn.ToUpper();
+                userQuery = sortColumn switch
+                {
+                    "STAFFCODE" => userQueryCriteria.SortOrder == 0 ? userQuery.OrderBy(x => x.StaffCode) : userQuery.OrderByDescending(x => x.StaffCode),
+                    "FULLNAME" => userQueryCriteria.SortOrder == 0 ? userQuery.OrderBy(x => x.FirstName) : userQuery.OrderByDescending(x => x.FirstName),
+                    "TYPE" => userQueryCriteria.SortOrder == 0 ? userQuery.OrderBy(x => x.Type) : userQuery.OrderByDescending(x => x.Type),
+                    _ => userQuery.OrderBy(x => x.StaffCode),
+                };
+            }
+            return userQuery;
+        }
+
+        public async Task<PagedResponseModel<LookUpUserDto>> GetLookUpUser(UserQueryCriteriaDto assetQueryCriteria, CancellationToken cancellationToken)
+        {
+            var userQuery = UserSortLookUp(
+             _userRepository.Entities
+             .Where(x => !x.IsDeleted).AsQueryable(),
+             assetQueryCriteria);
+
+            var user = await userQuery
+               .AsNoTracking()
+               .PaginateAsync<User>(
+                   assetQueryCriteria.Page,
+                   assetQueryCriteria.Limit,
+                   cancellationToken);
+
+            var userDto = _mapper.Map<IEnumerable<LookUpUserDto>>(user.Items);
+
+            return new PagedResponseModel<LookUpUserDto>
+            {
+                CurrentPage = user.CurrentPage,
+                TotalPages = user.TotalPages,
+                TotalItems = user.TotalItems,
+                Items = userDto
+            };
         }
     }
 

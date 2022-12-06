@@ -24,5 +24,12 @@ namespace Rookie.AssetManagement.Business.Interfaces
         Task<bool> DisableAsync(int id, string location);
 
         Task<PagedResponseModel<UserDto>> GetByPageAsync(UserQueryCriteriaDto assetQueryCriteria, CancellationToken cancellationToken, string location);
+        
+        Task<PagedResponseModel<LookUpUserDto>> GetLookUpUser(UserQueryCriteriaDto assetQueryCriteria, CancellationToken cancellationToken);
+
+     
+
+
+
     }
 }

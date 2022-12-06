@@ -75,5 +75,19 @@ namespace Rookie.AssetManagement.Controllers
             return Ok(disableResult);
         }
 
+        [HttpGet]
+        [Route("LookUpUser")]
+        public async Task<ActionResult<PagedResponseModel<UserDto>>> GetLookUpUser(
+             [FromQuery] UserQueryCriteriaDto userCriteriaDto,
+             CancellationToken cancellationToken)
+        {
+           
+
+            var userResponses = await _userService.GetLookUpUser(
+                                            userCriteriaDto,
+                                            cancellationToken
+                                            );
+            return Ok(userResponses);
+        }
     }
 }
