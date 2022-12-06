@@ -40,6 +40,26 @@
     }   
     
 }
+
+.table-container-history{
+    .table-history{
+        padding-left: 10px;
+        thead th:first-child{
+            border-bottom: none;
+            a {
+                font-weight: bold;
+            }
+        }
+
+        thead th:nth-child(3) a{
+            margin-right: 250px;
+        }
+        thead th:nth-child(4) a{
+            margin-right: 70px;
+        }
+    }
+}
+
 .table-container-history{
     overflow-x: auto;
     table{
