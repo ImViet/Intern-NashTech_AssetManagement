@@ -8,7 +8,7 @@ namespace Rookie.AssetManagement.Contracts.Dtos.AssetDtos
 {
     public class AssignmentQueryCriteriaDto : BaseQueryCriteria
     {
-        public DateTime AssignmentDate { get; set; }
+        public DateTime AssignedDate { get; set; }
         public string[] States { get; set; }
         public int Id { get; set; }
     }

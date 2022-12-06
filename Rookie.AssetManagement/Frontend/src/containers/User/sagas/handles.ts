@@ -6,7 +6,7 @@ import IError from "src/interfaces/IError";
 import IPagedModel from "src/interfaces/IPagedModel";
 import IQueryUserModel from "src/interfaces/User/IQueryUserModel";
 import IUser from "src/interfaces/User/IUser";
-import { toUTC } from "src/utils/formatDateTime";
+import { toUTCWithoutHour } from "src/utils/formatDateTime";
 import {
   CreateAction,
   setStatus,
@@ -30,8 +30,8 @@ export function* handleCreateUser(action: PayloadAction<CreateAction>) {
     console.log("handleCreateUser");
     console.log(formValues);
 
-    formValues.joinedDate = toUTC(formValues.joinedDate);
-    formValues.dateOfBirth = toUTC(formValues.dateOfBirth);
+    formValues.joinedDate = toUTCWithoutHour(formValues.joinedDate);
+    formValues.dateOfBirth = toUTCWithoutHour(formValues.dateOfBirth);
 
     const { data } = yield call(createUserRequest, formValues);
 
@@ -63,8 +63,8 @@ export function* handleUpdateUser(action: PayloadAction<UpdateAction>) {
     console.log("handleUpdateUser");
     console.log(formValues);
 
-    formValues.joinedDate = toUTC(formValues.joinedDate);
-    formValues.dateOfBirth = toUTC(formValues.dateOfBirth);
+    formValues.joinedDate = toUTCWithoutHour(formValues.joinedDate);
+    formValues.dateOfBirth = toUTCWithoutHour(formValues.dateOfBirth);
 
     const { data } = yield call(updateUserRequest, formValues);
 

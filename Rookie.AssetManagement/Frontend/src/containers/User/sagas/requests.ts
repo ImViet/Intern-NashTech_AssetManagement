@@ -7,7 +7,6 @@ import IUserForm from "src/interfaces/User/IUserForm";
 import IUser from "src/interfaces/User/IUser";
 import IPagedModel from "src/interfaces/IPagedModel";
 import IQueryUserModel from "src/interfaces/User/IQueryUserModel";
-import { toUTC } from "src/utils/formatDateTime";
 
 export function createUserRequest(
   userForm: IUserForm

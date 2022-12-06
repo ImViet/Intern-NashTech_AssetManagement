@@ -106,10 +106,10 @@ namespace Rookie.AssetManagement.Business.Services
             }
 
 
-            if (assignmentQueryCriteria.AssignmentDate != DateTime.MinValue)
+            if (assignmentQueryCriteria.AssignedDate != DateTime.MinValue)
             {
                 assignmentQuery = assignmentQuery.Where(b =>
-                b.AssignedDate == assignmentQueryCriteria.AssignmentDate);
+                b.AssignedDate == assignmentQueryCriteria.AssignedDate);
             }
 
             if (assignmentQueryCriteria.States != null && !assignmentQueryCriteria.States.Any(e => e == "ALL"))

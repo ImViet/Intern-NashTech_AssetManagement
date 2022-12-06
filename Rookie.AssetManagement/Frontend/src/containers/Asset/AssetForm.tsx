@@ -42,7 +42,7 @@ function AssetFormContainer({ initialAssetForm = {
     
     const states = useMemo(() => {
         if (isUpdate) {
-            return FilterAssetStateOptions.filter(state => state.label != "Assigned" && state.label != "ALL" )
+            return FilterAssetStateOptions.filter(state => state.label != "Assigned" && state.label != "ALL" && state.label != "Accepted" && state.label != "Waiting for acceptance" )
         }
         else {
             return FilterAssetStateOptions.filter(state => state.label == "Available" || state.label == "Not Available")

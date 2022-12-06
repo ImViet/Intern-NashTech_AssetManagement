@@ -20,14 +20,12 @@ export function convertDDMMYYYY(input) {
   return dd + "/" + mm + "/" + yyyy;
 }
 
-export function toUTC(date) {
+export function toUTCWithoutHour(date) {
   return new Date(
     Date.UTC(
       date.getFullYear(),
       date.getMonth(),
       date.getDate(),
-      date.getHours(),
-      date.getMinutes()
     )
   );
 }

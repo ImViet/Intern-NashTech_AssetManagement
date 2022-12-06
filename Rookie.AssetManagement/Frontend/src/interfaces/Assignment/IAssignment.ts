@@ -6,7 +6,7 @@ export default interface IAssignment {
   specification: string;
   assignedTo: string;
   assignedBy: string;
-  assgnedDate: Date;
+  assignedDate: Date;
   note: string;
   state: string;
 }
