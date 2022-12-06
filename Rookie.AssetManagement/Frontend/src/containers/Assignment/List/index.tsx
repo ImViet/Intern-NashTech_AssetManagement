@@ -22,7 +22,7 @@ const defaultQuery: IQueryAssignmentModel = {
     search: "",
     page: 1,
     limit: DEFAULT_PAGE_LIMIT,
-    assignDate: new Date(),
+    assignDate: null,
     sortOrder: ACCSENDING,
     sortColumn: DEFAULT_ASSET_SORT_COLUMN_NAME,
     states: ['1'],
@@ -146,10 +146,10 @@ const ListAssignment = () => {
         fetchData()
     }, [query]);
 
-    // useEffect(() => {
-    //     dispatch(getAssignmentList({...defaultQuery}))
-    //     dispatch(getState())
-    // }, []);
+    useEffect(() => {
+        dispatch(getAssignmentList({...defaultQuery}))
+        dispatch(getState())
+    }, []);
 
     return (
         <>
