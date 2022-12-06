@@ -9,6 +9,8 @@ using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
 using Rookie.AssetManagement.Contracts;
 using System.Linq;
 using System.Threading;
+using Rookie.AssetManagement.Constants;
+using System;
 
 namespace Rookie.AssetManagement.Controllers
 {
@@ -42,6 +44,14 @@ namespace Rookie.AssetManagement.Controllers
                                             cancellationToken
                                             );
             return Ok(assetResponses);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<AssetDto>> AddAssetAsync([FromBody] AssignmentCreateDto assignmentCreate)
+        {
+            var AssignedBy = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
+            var asset = await _assignmentService.AddAssetAsync(assignmentCreate, AssignedBy);
+            return Created(Endpoints.User, asset);
         }
     }
 }
