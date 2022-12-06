@@ -67,7 +67,7 @@ namespace Rookie.AssetManagement.Business.Services
 
             if (assignmentQueryCriteria.SortOrder == 0)
             {
-                var startNo = assignment.CurrentPage * assignmentQueryCriteria.Limit + 1;
+                var startNo = (assignment.CurrentPage - 1) * assignmentQueryCriteria.Limit + 1;
                 foreach (var assign in assignmentDto)
                 {
                     assign.No = startNo;
@@ -76,7 +76,7 @@ namespace Rookie.AssetManagement.Business.Services
             }
             else
             {
-                var startNo = (assignment.CurrentPage + 1) * assignmentQueryCriteria.Limit;
+                var startNo = assignment.CurrentPage * assignmentQueryCriteria.Limit;
                 foreach (var assign in assignmentDto)
                 {
                     assign.No = startNo;
