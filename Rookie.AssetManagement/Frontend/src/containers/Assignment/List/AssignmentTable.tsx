@@ -8,7 +8,7 @@ import Table, { SortType } from "src/components/Table";
 import IColumnOption from "src/interfaces/IColumnOption";
 import IPagedModel from "src/interfaces/IPagedModel";
 import formatDateTime, { convertDDMMYYYY } from "src/utils/formatDateTime";
-// import Info from "../Info";
+import Info from "../Info";
 //import { disableUser } from "../reducer";
 
 import { EDIT_ASSET_ID } from "src/constants/pages";
@@ -49,7 +49,7 @@ const AssignmentTable: React.FC<Props> = ({
     const dispatch = useAppDispatch();
 
     const [showDetail, setShowDetail] = useState(false);
-    // const [userDetail, setUserDetail] = useState(null as IAssignment | null);
+    const [assignmentDetail, setAssignmentDetail] = useState(null as IAssignment | null);
     const [disableState, setDisable] = useState({
         isOpen: false,
         id: 0,
@@ -57,6 +57,15 @@ const AssignmentTable: React.FC<Props> = ({
         message: '',
         isDisable: true,
     });
+
+    const handleShowInfo = (id: number) => {
+        const assignment = assignments?.items.find((item) => item.id === id);
+    
+        if (assignment) {
+          setAssignmentDetail(assignment);
+          setShowDetail(true);
+        }
+      };
 
     const handleShowDisable = async (id: number) => {
         // setDisable({
@@ -121,135 +130,54 @@ const AssignmentTable: React.FC<Props> = ({
                     handleChange: handlePage,
                 }}
             >
-                {/* {rows?.map((data, index) => (
-          <tr key={index} className="">
-            <td>{data.id}</td>
-            <td>{data.assetCode}</td>
-            <td>{data.assetName}</td>
-            <td>{data.assignedTo}</td>
-            <td>{data.assignedBy}</td>
-            <td>{data.assignedDate}</td>
-            <td>{data.state}</td>
-            <td className="d-flex">     
-            {(() => {
-              if (data.state == "Accepted") {
-                return (
-                  <>
-                    <ButtonIcon disable={true} onClick={() => handleEdit(data.id)}>
-                      <PencilFill className="text-black" />
-                    </ButtonIcon>
-                    <ButtonIcon disable={true} onClick={() => handleShowDisable(data.id)}>
-                      <XCircle className="text-danger mx-2" />
-                  </ButtonIcon> 
-                  </>
-                )
-              } else {
-                return (
-                  <>
-                    <ButtonIcon onClick={() => handleEdit(data.id)}>
-                      <PencilFill className="text-black" />
-                    </ButtonIcon>
-                    <ButtonIcon onClick={() => handleShowDisable(data.id)}>
-                      <XCircle className="text-danger mx-2" />
-                    </ButtonIcon>
-                  </>
-                )
-              }
-            })()}                                     
-            </td>
-          </tr>
-
-        ))}     */}
-                <tr className="">
-                    <td>1</td>
-                    <td>asdasd</td>
-                    <td>asdasdas</td>
-                    <td>asdsa</td>
-                    <td>asdsadas</td>
-                    <td>asdasd</td>
-                    <td>asdasd</td>
-                    <td className="d-flex">
+                {rows?.map((data, index) => (
+                    <tr key={index} className="" onClick={() => handleShowInfo(data.id)}>
+                        <td>{data.no}</td>
+                        <td>{data.assetCode}</td>
+                        <td>{data.assetName}</td>
+                        <td>{data.assignedTo}</td>
+                        <td>{data.assignedBy}</td>
+                        <td>{convertDDMMYYYY(data.assignedDate)}</td>
+                        <td>{data.state}</td>
+                        <td className="d-flex">     
                         {(() => {
-                            if ("Accepted") {
-                                return (
-                                    <>
-                                        <ButtonIcon disable={true} onClick={() => handleEdit(1)}>
-                                            <PencilFill className="text-black" />
-                                        </ButtonIcon>
-                                        <ButtonIcon disable={true} onClick={() => handleShowDisable(1)}>
-                                            <XCircle className="text-danger mx-2" />
-                                        </ButtonIcon>
-                                        <ButtonIcon >
-                                            <ArrowCounterclockwise className="text-primary " />
-                                        </ButtonIcon>
-                                    </>
-                                )
-                            } else {
-                                return (
-                                    <>
-                                        <ButtonIcon onClick={() => handleEdit(1)}>
-                                            <PencilFill className="text-black" />
-                                        </ButtonIcon>
-                                        <ButtonIcon onClick={() => handleShowDisable(1)}>
-                                            <XCircle className="text-danger mx-2" />
-                                        </ButtonIcon>
-                                        <ButtonIcon disable={true}>
-                                            <ArrowCounterclockwise className="text-primary " />
-                                        </ButtonIcon>
-                                    </>
-                                )
-                            }
-                        })()}
-
-                    </td>
-                </tr>
-                <tr className="">
-                    <td>1</td>
-                    <td>asdasd</td>
-                    <td>asdasdas</td>
-                    <td>asdsa</td>
-                    <td>asdsadas</td>
-                    <td>asdasd</td>
-                    <td>asdasd</td>
-                    <td className="d-flex">
-                        {(() => {
-                            if (false) {
-                                return (
-                                    <>
-                                        <ButtonIcon disable={true} onClick={() => handleEdit(1)}>
-                                            <PencilFill className="text-black" />
-                                        </ButtonIcon>
-                                        <ButtonIcon disable={true} onClick={() => handleShowDisable(1)}>
-                                            <XCircle className="text-danger mx-2" />
-                                        </ButtonIcon>
-                                        <ButtonIcon >
-                                            <ArrowCounterclockwise className="text-primary " />
-                                        </ButtonIcon>
-                                    </>
-                                )
-                            } else {
-                                return (
-                                    <>
-                                        <ButtonIcon onClick={() => handleEdit(1)}>
-                                            <PencilFill className="text-black" />
-                                        </ButtonIcon>
-                                        <ButtonIcon onClick={() => handleShowDisable(1)}>
-                                            <XCircle className="text-danger mx-2" />
-                                        </ButtonIcon>
-                                        <ButtonIcon >
-                                            <ArrowCounterclockwise fill="" className="text-primary " />
-                                        </ButtonIcon>
-                                    </>
-                                )
-                            }
-                        })()}
-
-                    </td>
-                </tr>
+                        if (data.state == "Accepted") {
+                            return (
+                            <>
+                                <ButtonIcon disable={true} onClick={() => handleEdit(data.id)}>
+                                    <PencilFill className="text-black" />
+                                </ButtonIcon>
+                                <ButtonIcon disable={true} onClick={() => handleShowDisable(data.id)}>
+                                    <XCircle className="text-danger mx-2" />
+                                </ButtonIcon> 
+                                <ButtonIcon >
+                                    <ArrowCounterclockwise className="text-primary " />
+                                </ButtonIcon>
+                            </>
+                            )
+                        } else {
+                            return (
+                            <>
+                                <ButtonIcon onClick={() => handleEdit(data.id)}>
+                                    <PencilFill className="text-black" />
+                                </ButtonIcon>
+                                <ButtonIcon onClick={() => handleShowDisable(data.id)}>
+                                    <XCircle className="text-danger mx-2" />
+                                </ButtonIcon>
+                                <ButtonIcon>
+                                    <ArrowCounterclockwise fill="" className="text-primary " />
+                                </ButtonIcon>
+                            </>
+                            )
+                        }
+                        })()}                                     
+                        </td>
+                    </tr>
+        ))}                
             </Table>
-            {/* {userDetail && showDetail && (
-        <Info user={userDetail} handleClose={handleCloseDetail} />
-      )} */}
+            {assignmentDetail && showDetail && (
+                <Info assignment={assignmentDetail} handleClose={handleCloseDetail} />
+            )}
             <ConfirmModal
                 title={disableState.title}
                 isShow={disableState.isOpen}

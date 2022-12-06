@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Rookie.AssetManagement.DataAccessor.Migrations
 {
-    public partial class AddTableAssignment : Migration
+    public partial class AddAssignment : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Assignemnt",
+                name: "Assignments",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -20,58 +20,59 @@ namespace Rookie.AssetManagement.DataAccessor.Migrations
                     AssignedById = table.Column<int>(type: "int", nullable: true),
                     AssignedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StateId = table.Column<int>(type: "int", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Assignemnt", x => x.Id);
+                    table.PrimaryKey("PK_Assignments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Assignemnt_Assets_AssetId",
+                        name: "FK_Assignments_Assets_AssetId",
                         column: x => x.AssetId,
                         principalTable: "Assets",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Assignemnt_States_StateId",
+                        name: "FK_Assignments_States_StateId",
                         column: x => x.StateId,
                         principalTable: "States",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Assignemnt_Users_AssignedById",
+                        name: "FK_Assignments_Users_AssignedById",
                         column: x => x.AssignedById,
                         principalTable: "Users",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Assignemnt_Users_AssignedToId",
+                        name: "FK_Assignments_Users_AssignedToId",
                         column: x => x.AssignedToId,
                         principalTable: "Users",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Assignemnt_AssetId",
-                table: "Assignemnt",
+                name: "IX_Assignments_AssetId",
+                table: "Assignments",
                 column: "AssetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Assignemnt_AssignedById",
-                table: "Assignemnt",
+                name: "IX_Assignments_AssignedById",
+                table: "Assignments",
                 column: "AssignedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Assignemnt_AssignedToId",
-                table: "Assignemnt",
+                name: "IX_Assignments_AssignedToId",
+                table: "Assignments",
                 column: "AssignedToId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Assignemnt_StateId",
-                table: "Assignemnt",
+                name: "IX_Assignments_StateId",
+                table: "Assignments",
                 column: "StateId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Assignemnt");
+                name: "Assignments");
         }
     }
 }

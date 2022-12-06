@@ -66,9 +66,11 @@ namespace Rookie.AssetManagement.Controllers
         }
         [HttpGet]
         [Route("Searching")]
-        public async Task<ActionResult<string>> Searching(string searching, string location)
+        public async Task<ActionResult<string>> Searching(string keyword)
         {
-            return Ok(await _userService.GetSuggestion(searching,location));
+            var location = User.Claims.FirstOrDefault(x => x.Type.Equals("Location", StringComparison.OrdinalIgnoreCase))?.Value;
+
+            return Ok(await _userService.GetSuggestion(keyword, location));
         }
 
         [HttpDelete("{id}")]

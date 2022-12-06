@@ -22,8 +22,8 @@
 
     .modal-header {
         background-color: rgba(239,241,245,1);
-        border-bottom: 2px solid rgb(0, 0, 0);
-        padding-left: 81px;
+        border-bottom: 2px solid rgb(164,166,168);
+        padding-left: 50px;
         align-items: center;
         .modal-title {
             color: rgba(207,35,56,1);
@@ -32,8 +32,10 @@
     }
     .modal-body{
         background-color: rgb(250,252,252);
-        margin-top: -1px;
-        padding: 30px 80px;
+        padding: 20px 50px;
+        .row{
+            padding-bottom: 10px;
+        }
     }
 }
 
@@ -50,6 +52,11 @@
 }
 @media (min-width: 576px){
     .model-info-asset{
-        max-width: 800px;
+        max-width: 710px;
+    }
+}
+@media (min-width: 576px){
+    .modal-dialog{
+        max-width: 550px;
     }
 }

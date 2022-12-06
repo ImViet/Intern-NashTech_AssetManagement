@@ -7,7 +7,6 @@ import IUserForm from "src/interfaces/User/IUserForm";
 import IUser from "src/interfaces/User/IUser";
 import IPagedModel from "src/interfaces/IPagedModel";
 import IQueryUserModel from "src/interfaces/User/IQueryUserModel";
-import { toUTC } from "src/utils/formatDateTime";
 
 export function createUserRequest(
   userForm: IUserForm
@@ -40,4 +39,13 @@ export function getUserByIdRequest(id: number): Promise<AxiosResponse<IUser>> {
 
 export function disableUserRequest(id: number): Promise<AxiosResponse<IUser>> {
   return RequestService.axios.delete(EndPoints.user + "/" + id);
+}
+
+export function getSearchUserSuggestion(
+  keyword: string
+): Promise<AxiosResponse<string[]>> {
+  return RequestService.axios.get(EndPoints.user + "/searching", {
+    params: { keyword },
+    paramsSerializer: (params) => qs.stringify(params),
+  });
 }

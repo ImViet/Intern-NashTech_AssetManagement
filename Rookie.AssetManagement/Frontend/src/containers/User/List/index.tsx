@@ -17,6 +17,7 @@ import { FilterUserTypeOptions } from "src/constants/selectOptions";
 import { getUserList, disableUser, cleanUpUserActionResult } from "../reducer";
 import SelectBox from "src/components/SelectBox";
 import SearchBox from "src/components/SearchBox";
+import { getSearchUserSuggestion } from "../sagas/requests";
 
 const defaultQuery: IQueryUserModel = {
   page: 1,
@@ -147,11 +148,11 @@ const ListUser = () => {
               onChange={handleType} />
           </div>
 
-          <SearchBox handleSearch={handleSearch}/>
+          <SearchBox handleSearch={handleSearch} getSuggestionRequest={getSearchUserSuggestion}/>
 
           <div className="d-flex align-items-center ml-3">
             <Link to="/user/create" type="button" className="btn btn-danger">
-              Create new User
+              Create new user
             </Link>
           </div>
         </div>

@@ -141,6 +141,20 @@ namespace Rookie.AssetManagement.IntegrationTests
             await Assert.ThrowsAsync<NotFoundException>(() => _userController.UpdateUser(userRequest));
         }
         [Fact]
+        public async Task GetSearchSuggestionSuccess()
+        {
+            //Arrange
+            string searchInput = "First Name";
+
+            //Act
+            var result = await _userController.Searching(searchInput);
+
+            //Assert
+            var actionResult = Assert.IsType<OkObjectResult>(result.Result);
+            var returnValue = Assert.IsType<List<string>>(actionResult.Value);
+            Assert.Equal(2, returnValue.Count);
+        }
+        [Fact]
         public async Task DisableAsyncShouldReturnTrue()
         {
             //Arrange

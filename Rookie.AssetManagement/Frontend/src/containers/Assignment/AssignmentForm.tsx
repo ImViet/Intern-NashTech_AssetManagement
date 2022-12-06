@@ -2,38 +2,35 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
-import TextField from 'src/components/FormInputs/TextField';
 import DateField from 'src/components/FormInputs/DateField';
-import CheckboxField from 'src/components/FormInputs/CheckboxField';
-import SelectField from 'src/components/FormInputs/SelectField';
 import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
 import { ASSET, ASSET_PARENT_ROOT, HOME, USER, USER_PARENT_ROOT } from 'src/constants/pages';
-import IAssetForm from 'src/interfaces/Asset/IAssetForm';
-import { createAsset, getCategory, getState, updateAsset } from './reducer';
+import { createAsset, getCategory, getState, updateAsset } from '../Asset/reducer';
 import TextAreaField from 'src/components/FormInputs/TextAreaField';
+import LookupField from 'src/components/FormInputs/LookupField';
+import IAssignmentForm from 'src/interfaces/Assignment/IAssignmentForm';
+import { Modal } from 'react-bootstrap';
 
 
-const initialFormValues: IAssetForm = {
-    assetName: '',
-    category: "",
-    specification: '',
-    installedDate: undefined,
-    state: 2,
+const initialFormValues: IAssignmentForm = {
+    user: '',
+    asset: "",
+    note: '',
+    assignedDate: new Date(),
 };
 
 const validationSchema = Yup.object().shape({
-    assetName: Yup.string().required(""),
-    category: Yup.string().required(""),
-    specification: Yup.string().required(""),
-    installedDate: Yup.date().required(""),
-    state: Yup.number().required(""),
+    user: Yup.string().required(""),
+    asset: Yup.string().required(""),
+    note: Yup.string().required(""),
+    assignedDate: Yup.date().required("")
 });
 
 type Props = {
-    initialAssetForm?: IAssetForm;
+    initialAssetForm?: IAssignmentForm;
 };
 
-function AssetFormContainer({ initialAssetForm = {
+function AssignmentFormContainer({ initialAssetForm = {
     ...initialFormValues
 } }) {
     const isUpdate = initialAssetForm.id ? true : false;
@@ -42,7 +39,7 @@ function AssetFormContainer({ initialAssetForm = {
     
     const states = useMemo(() => {
         if (isUpdate) {
-            return FilterAssetStateOptions.filter(state => state.label != "Assigned" && state.label != "ALL" && state.label != "Accepted" && state.label != "Waiting for acceptance" )
+            return FilterAssetStateOptions.filter(state => state.label != "Assigned" && state.label != "ALL" )
         }
         else {
             return FilterAssetStateOptions.filter(state => state.label == "Available" || state.label == "Not Available")
@@ -52,6 +49,7 @@ function AssetFormContainer({ initialAssetForm = {
     const categories = useMemo(() => FilterAssetCategoryOptions.filter(cate => cate.label != "ALL"), [FilterAssetCategoryOptions])
 
     const [loading, setLoading] = useState(false);
+    const [ showLookup, setShowLookup ] = useState(false);
 
     const dispatch = useAppDispatch();
 
@@ -66,8 +64,13 @@ function AssetFormContainer({ initialAssetForm = {
         dispatch(getCategory())
         dispatch(getState())
     }, [])
+
+    const showLookupModal = () =>{
+        setShowLookup(true)
+    }
     return (
-        <Formik
+        <>
+            <Formik
             initialValues={initialAssetForm}
             enableReinitialize
             validationSchema={validationSchema}
@@ -76,10 +79,10 @@ function AssetFormContainer({ initialAssetForm = {
                 setLoading(true);
                 setTimeout(() => {
                     if (isUpdate) {
-                        dispatch(updateAsset({ handleResult, formValues: {...values} }));
+                        // dispatch(updateAsset({ handleResult, formValues: {...values} }));
                     }
                     else {
-                        dispatch(createAsset({ handleResult, formValues: {...values} }));
+                        // dispatch(createAsset({ handleResult, formValues: {...values} }));
                     }
                     setLoading(false);
                 }, 1000);
@@ -88,41 +91,34 @@ function AssetFormContainer({ initialAssetForm = {
             {(actions) => {
                 return (
                     <Form className='intro-y col-lg-6 col-12'>
-                        <TextField
-                            name="assetName"
-                            label="Name"
+                        <LookupField
+                            name="user"
+                            label="User"
                             placeholder=""
                             isrequired
+                            onClick={() => showLookupModal()}
                         />
 
-                        <SelectField
-                            name="category"
-                            label="Category"
-                            options={categories}
-                            isrequired
-                            disabled={isUpdate ? true : false}
-                        />
-
-                        <TextAreaField
-                            name="specification"
-                            label="Specification"
+                        <LookupField
+                            name="asset"
+                            label="Asset"
                             placeholder=""
                             isrequired
                         />
 
                         <DateField
-                            name="installedDate"
-                            label="Installed Date"
+                            name="assignedDate"
+                            label="Assigned Date"
                             placeholder=""
                             isrequired
+                            minDate={new Date()}
                         />
 
-                        <CheckboxField
-                            name="state"
-                            label="State"
+                        <TextAreaField
+                            name="note"
+                            label="Note"
+                            placeholder=""
                             isrequired
-                            options={states}
-                            checked={false}
                         />
 
                         <div className="d-flex">
@@ -141,8 +137,37 @@ function AssetFormContainer({ initialAssetForm = {
                     </Form>
                 );
             }}
-        </Formik>
+            </Formik>
+
+            <Modal
+            show={showLookup}
+            onHide={() => setShowLookup(false)}
+            aria-labelledby="login-modal"
+            >
+                <div className="first-login-modal">
+                    <Modal.Body style={{paddingLeft:48, paddingRight:48 }}>
+                    <Formik
+                        initialValues={initialAssetForm}
+                        onSubmit={(values) => {
+                        }}
+                        >
+                        {(actions) => (
+                        <Form className='intro-y'>
+                            <p>Your password has been changed successfully!</p>
+
+                            <div className="text-right mt-5">
+                            <button onClick={() => setShowLookup(false)} className="btn btn-outline-secondary ml-2">
+                                Close
+                            </button>
+                            </div>
+                        </Form>
+                        )}
+                    </Formik>
+                    </Modal.Body>
+                </div>
+            </Modal>
+        </>
     );
 }
 
-export default AssetFormContainer;
+export default AssignmentFormContainer;

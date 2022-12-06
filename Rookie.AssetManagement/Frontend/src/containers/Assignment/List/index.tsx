@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useDebugValue, useEffect, useState, useMemo } from "react";
 import { FunnelFill, CalendarDateFill } from "react-bootstrap-icons";
 import { Search } from "react-feather";
 import ReactMultiSelectCheckboxes from "react-multiselect-checkboxes";
@@ -6,32 +6,31 @@ import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import AssignmentTable from "./AssignmentTable";
 import ISelectOption from "src/interfaces/ISelectOption";
 import { Link, useLocation } from "react-router-dom";
-import DatePicker from 'react-datepicker';
 import {
     ACCSENDING,
     DECSENDING,
     DEFAULT_PAGE_LIMIT,
-    DEFAULT_ASSET_SORT_COLUMN_NAME,
+    DEFAULT_ASSIGNMENT_SORT_COLUMN_NAME,
 } from "src/constants/paging";
 import IPagedModel from "src/interfaces/IPagedModel";
-//import { cleanUpActionResult, disableAssignment, getAssignmentList, getCategory, getState } from "../reducer";
+import { cleanUpActionResult, getAssignmentList, getState } from "../reducer";
 import IQueryAssignmentModel from "src/interfaces/Assignment/IQueryAssignmentModel";
 import SelectBox from "src/components/SelectBox";
+import { toUTCWithoutHour } from "src/utils/formatDateTime";
+import DateFilter from "src/components/DateFilter";
 
 const defaultQuery: IQueryAssignmentModel = {
     search: "",
     page: 1,
     limit: DEFAULT_PAGE_LIMIT,
-    assignDate: new Date(),
+    assignedDate: null,
     sortOrder: ACCSENDING,
-    sortColumn: DEFAULT_ASSET_SORT_COLUMN_NAME,
-    states: ['1', '2', '3'],
+    sortColumn: DEFAULT_ASSIGNMENT_SORT_COLUMN_NAME,
+    states: [],
 }
 
 const defaultSelectedState: ISelectOption[] = [
-    { id: 2, label: "Accepted", value: 1 },
-    { id: 3, label: "Waiting for acceptance", value: 2 },
-
+    { id: 1, label: "All", value: "ALL" }
 ]
 
 
@@ -42,11 +41,13 @@ const ListAssignment = () => {
     const [query, setQuery] = useState(assignments ? { ...defaultQuery, page: assignments.currentPage } : defaultQuery);
 
     const [search, setSearch] = useState("");
-    const [assignedDate, setAssignedDate] = useState("");
+    const [assignedDate, setAssignedDate] = useState(new Date());
     const [selectedState, setSelectedState] = useState(defaultSelectedState);
 
     const { FilterAssignmentStateOptions } = useAppSelector(state => state.assignmentReducer)
-
+    const states = useMemo(() => {
+        return FilterAssignmentStateOptions.filter(state => state.label == "Accepted" || state.label == "Waiting for acceptance" || state.label == "ALL")
+    }, [FilterAssignmentStateOptions])
     const handleState = (selected: ISelectOption[]) => {
         if (selected.length === 0) {
             setQuery({
@@ -85,8 +86,13 @@ const ListAssignment = () => {
         });
         console.log(query)
     };
-    const handleAssignDateChange = (date: Date) => {
-
+    const handleAssignDateChange = (date: Date) => { 
+        setQuery({
+            ...query,
+            assignedDate: toUTCWithoutHour(date)
+        });
+        setAssignedDate(date);
+        console.log(query)
     }
     const handleChangeSearch = (e) => {
         e.preventDefault();
@@ -137,32 +143,31 @@ const ListAssignment = () => {
         //   }
         // }))
     };
-
     const fetchData = () => {
-        // dispatch(getAssignmentList(query))
+        dispatch(getAssignmentList({...query}))
     };
 
     useEffect(() => {
-        // dispatch(cleanUpActionResult())
-        // fetchData()
+        dispatch(cleanUpActionResult())
+        fetchData()
     }, [query]);
 
     useEffect(() => {
-        // dispatch(getAssignmentList({...defaultQuery}))
-        // dispatch(getState())
+        dispatch(getAssignmentList({...defaultQuery}))
+        dispatch(getState())
     }, []);
 
     return (
         <>
-            <div className="primaryColor text-title intro-x ">Asset List</div>
+            <div className="primaryColor text-title intro-x ">Assignment List</div>
 
             <div>
                 <div className="d-flex mb-5 intro-x">
                     <div className="d-flex align-items-center w-md mr-5">
                         <div className="button">
-                            <div className="filter-state">
+                            <div className="filter-state-assignment">
                                 <SelectBox
-                                    options={FilterAssignmentStateOptions}
+                                    options={states}
                                     placeholderButtonLabel="State"
                                     value={selectedState}
                                     onChange={handleState} />
@@ -170,21 +175,7 @@ const ListAssignment = () => {
                         </div>
                     </div>
                     <div className="d-flex align-items-center w-md mr-5">
-                        <div className="button">
-                            <div className="col d-flex">
-                                <div className="d-flex align-items-center w-100">
-                                    <DatePicker
-                                        className={"form-control input-search w-100 "}
-                                        value={assignedDate}
-                                        onChange={handleAssignDateChange}
-                                        placeholderText="Assigned Date"
-                                        maxDate={new Date()} />
-                                </div>
-                                <div className="date-icon p-1 pointer">
-                                    <CalendarDateFill />
-                                </div>
-                            </div>
-                        </div>
+                        <DateFilter label="Assigned Date" date={assignedDate} handleDateChange={handleAssignDateChange}/>
                     </div>
                     <div className="d-flex align-items-center w-ld ml-auto mr-2">
                         <div className="input-group">
@@ -201,35 +192,23 @@ const ListAssignment = () => {
                     </div>
 
                     <div className="d-flex align-items-center ml-3">
-                        <Link to="/asset/create" type="button" className="btn btn-danger">
-                            Create new asset
+                        <Link to="/assignment/create" type="button" className="btn btn-danger">
+                            Create new assignment
                         </Link>
                     </div>
                 </div>
-                {(() => {
-                    if (assignments?.totalItems == 0) {
-                        return (
-                            <h5 className="not-data-found">No data found</h5>
-                        )
-                    } else {
-                        return (
-                            <>
-                                <AssignmentTable
-                                    assignments={assignments}
-                                    result={actionResult}
-                                    handlePage={handlePage}
-                                    handleSort={handleSort}
-                                    handleDisable={handleDisable}
-                                    sortState={{
-                                        columnValue: query.sortColumn,
-                                        orderBy: query.sortOrder,
-                                    }}
-                                    fetchData={fetchData}
-                                />
-                            </>
-                        )
-                    }
-                })()}
+                <AssignmentTable
+                    assignments={assignments}
+                    result={actionResult}
+                    handlePage={handlePage}
+                    handleSort={handleSort}
+                    handleDisable={handleDisable}
+                    sortState={{
+                        columnValue: query.sortColumn,
+                        orderBy: query.sortOrder,
+                    }}                       
+                    fetchData={fetchData}
+                />
             </div>
         </>
     );

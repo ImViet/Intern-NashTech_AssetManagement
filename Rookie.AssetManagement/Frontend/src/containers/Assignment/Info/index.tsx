@@ -8,17 +8,14 @@ import {
     StaffUserType
 } from "src/constants/User/UserContants";
 import formatDateTime, { convertDDMMYYYY } from "src/utils/formatDateTime";
-import IUser from "src/interfaces/User/IUser";
-
+import IAssignment from "src/interfaces/Assignment/IAssignment";
 type Props = {
-    user: IUser;
+    assignment: IAssignment;
     handleClose: () => void;
 };
 
-const Info: React.FC<Props> = ({ user, handleClose }) => {
-    const getUserTypeName = (type: string) => {
-        return type == AdminUserType ? AdminUserTypeLabel : StaffUserTypeLabel;
-    }
+const Info: React.FC<Props> = ({ assignment, handleClose }) => {
+    console.log(assignment)
     return (
         <>
             <Modal
@@ -29,44 +26,44 @@ const Info: React.FC<Props> = ({ user, handleClose }) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="login-modal">
-                        Detailed User Infomation
+                        Detailed Assignment Infomation
                     </Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
-                    <div>
+                    <div className="table-detail">
                         <div className='row -intro-y'>
-                            <div className='col-5'>Staff Code</div>
-                            <div>{user.staffCode}</div>
+                            <div className='col-4'>Asset Code</div>
+                            <div className='col-6'>{assignment.assetCode}</div>
                         </div>
 
                         <div className='row -intro-y'>
-                            <div className='col-5'>Full Name</div>
-                            <div>{user.fullName}</div>
+                            <div className='col-4'>Asset Name</div>
+                            <div className='col-6'>{assignment.assetName}</div>
                         </div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Username</div>
-                            <div>{user.userName}</div>
+                            <div className='col-4'>Specification</div>
+                            <div className='col-6'>{assignment.specification}</div>
                         </div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Date Of Birth</div>
-                            <div>{convertDDMMYYYY(user.dateOfBirth)}</div>
+                            <div className='col-4'>Assigned to</div>
+                            <div className='col-6'>{assignment.assignedTo}</div>
                         </div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Gender</div>
-                            <div>{user.gender}</div>
+                            <div className='col-4'>Assigned by</div>
+                            <div className='col-6'>{assignment.assignedBy}</div>
                         </div> 
                         <div className='row -intro-y'>
-                            <div className='col-5'>Joined Date</div>
-                            <div>{convertDDMMYYYY(user.joinedDate)}</div>
+                            <div className='col-4'>Assigned Date</div>
+                            <div className='col-6'>{convertDDMMYYYY(assignment.assignedDate)}</div>
                         </div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Type</div>
-                            <div>{getUserTypeName(user.type)}</div>
+                            <div className='col-4'>State</div>
+                            <div className='col-6'>{assignment.state}</div>
                         </div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Location</div>
-                            <div>{user.location}</div>
+                            <div className='col-4'>Note</div>
+                            <div className='col-6'>{assignment.note}</div>
                         </div>
 
                     </div>
