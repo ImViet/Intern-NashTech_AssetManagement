@@ -49,7 +49,7 @@ const AssignmentTable: React.FC<Props> = ({
     const dispatch = useAppDispatch();
 
     const [showDetail, setShowDetail] = useState(false);
-    // const [userDetail, setUserDetail] = useState(null as IAssignment | null);
+    const [assignmentDetail, setAssignmentDetail] = useState(null as IAssignment | null);
     const [disableState, setDisable] = useState({
         isOpen: false,
         id: 0,
@@ -57,6 +57,15 @@ const AssignmentTable: React.FC<Props> = ({
         message: '',
         isDisable: true,
     });
+
+    const handleShowInfo = (id: number) => {
+        const assignment = assignments?.items.find((item) => item.id === id);
+    
+        if (assignment) {
+          setAssignmentDetail(assignment);
+          setShowDetail(true);
+        }
+      };
 
     const handleShowDisable = async (id: number) => {
         // setDisable({
@@ -122,7 +131,7 @@ const AssignmentTable: React.FC<Props> = ({
                 }}
             >
                 {rows?.map((data, index) => (
-                    <tr key={index} className="">
+                    <tr key={index} className="" onClick={() => handleShowInfo(data.id)}>
                         <td>{data.no}</td>
                         <td>{data.assetCode}</td>
                         <td>{data.assetName}</td>
