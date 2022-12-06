@@ -9,6 +9,7 @@ const Endpoints = {
   searchAsset:"api/Asset/GetAsset",
   category:"api/Asset/GetAllCategory",
   state:"api/Asset/GetAllState",
+  assignment:"api/Assignment",
 };
 
 export default Endpoints;

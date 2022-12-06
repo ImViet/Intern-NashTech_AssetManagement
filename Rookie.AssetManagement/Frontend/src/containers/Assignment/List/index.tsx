@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useDebugValue, useEffect, useState } from "react";
 import { FunnelFill, CalendarDateFill } from "react-bootstrap-icons";
 import { Search } from "react-feather";
 import ReactMultiSelectCheckboxes from "react-multiselect-checkboxes";
@@ -14,7 +14,7 @@ import {
     DEFAULT_ASSET_SORT_COLUMN_NAME,
 } from "src/constants/paging";
 import IPagedModel from "src/interfaces/IPagedModel";
-//import { cleanUpActionResult, disableAssignment, getAssignmentList, getCategory, getState } from "../reducer";
+import { cleanUpActionResult, getAssignmentList, getState } from "../reducer";
 import IQueryAssignmentModel from "src/interfaces/Assignment/IQueryAssignmentModel";
 import SelectBox from "src/components/SelectBox";
 
@@ -25,7 +25,7 @@ const defaultQuery: IQueryAssignmentModel = {
     assignDate: new Date(),
     sortOrder: ACCSENDING,
     sortColumn: DEFAULT_ASSET_SORT_COLUMN_NAME,
-    states: ['1', '2', '3'],
+    states: ['1'],
 }
 
 const defaultSelectedState: ISelectOption[] = [
@@ -137,24 +137,23 @@ const ListAssignment = () => {
         //   }
         // }))
     };
-
     const fetchData = () => {
-        // dispatch(getAssignmentList(query))
+        dispatch(getAssignmentList(query))
     };
 
     useEffect(() => {
-        // dispatch(cleanUpActionResult())
-        // fetchData()
+        dispatch(cleanUpActionResult())
+        fetchData()
     }, [query]);
 
-    useEffect(() => {
-        // dispatch(getAssignmentList({...defaultQuery}))
-        // dispatch(getState())
-    }, []);
+    // useEffect(() => {
+    //     dispatch(getAssignmentList({...defaultQuery}))
+    //     dispatch(getState())
+    // }, []);
 
     return (
         <>
-            <div className="primaryColor text-title intro-x ">Asset List</div>
+            <div className="primaryColor text-title intro-x ">Assignment List</div>
 
             <div>
                 <div className="d-flex mb-5 intro-x">
@@ -212,8 +211,8 @@ const ListAssignment = () => {
                             <h5 className="not-data-found">No data found</h5>
                         )
                     } else {
-                        return (
-                            <>
+                        return (                    
+                            <>                           
                                 <AssignmentTable
                                     assignments={assignments}
                                     result={actionResult}
@@ -223,7 +222,7 @@ const ListAssignment = () => {
                                     sortState={{
                                         columnValue: query.sortColumn,
                                         orderBy: query.sortOrder,
-                                    }}
+                                    }}                       
                                     fetchData={fetchData}
                                 />
                             </>
