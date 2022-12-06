@@ -155,8 +155,8 @@ const AssignmentTable: React.FC<Props> = ({
                                 <ButtonIcon onClick={() => handleShowDisable(data.id)}>
                                     <XCircle className="text-danger mx-2" />
                                 </ButtonIcon>
-                                <ButtonIcon disable={true}>
-                                    <ArrowCounterclockwise className="text-primary " />
+                                <ButtonIcon>
+                                    <ArrowCounterclockwise fill="" className="text-primary " />
                                 </ButtonIcon>
                             </>
                             )
