@@ -11,7 +11,7 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
 {
     public class AssetTestData
     {
-        public static AssignmentQueryCriteriaDto AssetQueryCriteriaDto = new AssignmentQueryCriteriaDto()
+        public static AssetQueryCriteriaDto AssetQueryCriteriaDto = new AssetQueryCriteriaDto()
         {
             Search = "Monitor",
             Page = 1,
