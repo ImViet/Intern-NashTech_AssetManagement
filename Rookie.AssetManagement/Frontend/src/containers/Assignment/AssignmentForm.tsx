@@ -4,13 +4,14 @@ import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import DateField from 'src/components/FormInputs/DateField';
 import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
-import { ASSET, ASSET_PARENT_ROOT, HOME, USER, USER_PARENT_ROOT } from 'src/constants/pages';
-import { createAsset, getCategory, getState, updateAsset } from '../Asset/reducer';
+import { ASSIGNMENT, ASSET_PARENT_ROOT, HOME, USER, USER_PARENT_ROOT } from 'src/constants/pages';
+import { getCategory, getState } from '../Asset/reducer';
 import TextAreaField from 'src/components/FormInputs/TextAreaField';
 import LookupField from 'src/components/FormInputs/LookupField';
 import IAssignmentForm from 'src/interfaces/Assignment/IAssignmentForm';
 import { Modal } from 'react-bootstrap';
-
+import UserLookupTable from './UserLookupTable';
+import { Search } from 'react-feather';
 
 const initialFormValues: IAssignmentForm = {
     user: '',
@@ -35,21 +36,9 @@ function AssignmentFormContainer({ initialAssetForm = {
 } }) {
     const isUpdate = initialAssetForm.id ? true : false;
 
-    const { FilterAssetCategoryOptions, FilterAssetStateOptions } = useAppSelector(state => state.assetReducer)
-    
-    const states = useMemo(() => {
-        if (isUpdate) {
-            return FilterAssetStateOptions.filter(state => state.label != "Assigned" && state.label != "ALL" )
-        }
-        else {
-            return FilterAssetStateOptions.filter(state => state.label == "Available" || state.label == "Not Available")
-        }
-    }, [FilterAssetStateOptions])
-
-    const categories = useMemo(() => FilterAssetCategoryOptions.filter(cate => cate.label != "ALL"), [FilterAssetCategoryOptions])
-
     const [loading, setLoading] = useState(false);
     const [ showLookup, setShowLookup ] = useState(false);
+    const [search, setSearch] = useState("");
 
     const dispatch = useAppDispatch();
 
@@ -67,7 +56,28 @@ function AssignmentFormContainer({ initialAssetForm = {
 
     const showLookupModal = () =>{
         setShowLookup(true)
-    }
+    };
+
+    const handleSearch = () => {
+    };
+
+    const handleChangeSearch = (e) => {
+        e.preventDefault();
+
+        const search = e.target.value;
+        setSearch(search);
+    };
+
+    const fetchData = () => {
+        //dispatch(getAssetList(query))
+    };
+
+    const mystyle = {
+        marginLeft: "-10px",
+        marginBottom: "5px",
+        color: "#cf2338",
+    };
+    
     return (
         <>
             <Formik
@@ -104,6 +114,7 @@ function AssignmentFormContainer({ initialAssetForm = {
                             label="Asset"
                             placeholder=""
                             isrequired
+                            onClick={() => showLookupModal()}
                         />
 
                         <DateField
@@ -129,7 +140,7 @@ function AssignmentFormContainer({ initialAssetForm = {
                                     Save {(loading) && <img src="/oval.svg" className='w-4 h-4 ml-2 inline-block' />}
                                 </button>
 
-                                <Link to={"/" + ASSET} className="btn btn-outline-secondary ml-2">
+                                <Link to={"/" + ASSIGNMENT} className="btn btn-outline-secondary ml-2">
                                     Cancel
                                 </Link>
                             </div>
@@ -140,29 +151,56 @@ function AssignmentFormContainer({ initialAssetForm = {
             </Formik>
 
             <Modal
+            className="modal-user"
             show={showLookup}
             onHide={() => setShowLookup(false)}
             aria-labelledby="login-modal"
             >
                 <div className="first-login-modal">
-                    <Modal.Body style={{paddingLeft:48, paddingRight:48 }}>
-                    <Formik
-                        initialValues={initialAssetForm}
-                        onSubmit={(values) => {
-                        }}
-                        >
-                        {(actions) => (
-                        <Form className='intro-y'>
-                            <p>Your password has been changed successfully!</p>
-
-                            <div className="text-right mt-5">
-                            <button onClick={() => setShowLookup(false)} className="btn btn-outline-secondary ml-2">
-                                Close
-                            </button>
+                    <Modal.Body>
+                        <div className="header-table">
+                            <div>
+                                <strong style={mystyle}>Select User</strong>
+                                <div className="d-flex align-items-center w-ld ml-auto mr-2">
+                                    <div style={{marginTop: -33, marginLeft: -15}} className="input-group">
+                                    <input
+                                        onChange={handleChangeSearch}
+                                        value={search}
+                                        type="text"
+                                        className="input-search  form-control"
+                                    />
+                                    <span onClick={handleSearch} className=" search-icon p-1 pointer">
+                                        <Search />
+                                    </span>
+                                    </div>
+                                </div>
                             </div>
-                        </Form>
-                        )}
-                    </Formik>
+                        </div>
+                        <div className="table-detail">
+                            <div className='row -intro-y'>
+                                <div>
+                                    <UserLookupTable
+                                        assetHistory={null}
+                                        result={null}
+                                        fetchData={fetchData}
+                                    />
+
+                                </div>
+                            </div>
+                        </div>
+                        <div className="d-flex mt-3 mr-2">
+                            <div className="ml-auto">
+                                <button className="btn btn-danger mr-4"
+                                    type="submit" disabled={false}
+                                >
+                                    Save {(loading) && <img src="/oval.svg" className='w-4 h-4 ml-2 inline-block' />}
+                                </button>
+
+                                <button onClick={() => setShowLookup(false)} className="btn btn-outline-secondary">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
                     </Modal.Body>
                 </div>
             </Modal>
