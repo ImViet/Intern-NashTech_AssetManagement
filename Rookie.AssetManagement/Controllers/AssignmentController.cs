@@ -14,7 +14,7 @@ using System;
 
 namespace Rookie.AssetManagement.Controllers
 {
-    //[Authorize(AuthenticationSchemes = "Bearer", Policy = "Admin")]
+    [Authorize(AuthenticationSchemes = "Bearer", Policy = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AssignmentController : ControllerBase

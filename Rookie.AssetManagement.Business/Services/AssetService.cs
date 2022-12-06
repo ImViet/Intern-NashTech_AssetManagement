@@ -237,6 +237,13 @@ namespace Rookie.AssetManagement.Business.Services
           IQueryable<Asset> assetQuery,
           AssetQueryCriteriaDto assetQueryCriteria)
         {
+            if (!String.IsNullOrEmpty(assetQueryCriteria.Search))
+            {
+                assetQuery = assetQuery.Where(b =>
+                  (b.AssetName.ToLower()).Contains(assetQueryCriteria.Search.ToLower())
+                    || b.AssetCode.ToLower().Contains(assetQueryCriteria.Search.ToLower()));
+            }
+
             if (assetQueryCriteria.SortColumn != null)
             {
                 var sortColumn = assetQueryCriteria.SortColumn.ToUpper();
