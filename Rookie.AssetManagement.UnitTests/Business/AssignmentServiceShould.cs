@@ -10,6 +10,7 @@ using Rookie.AssetManagement.UnitTests.TestDataAPI;
 using System.Linq;
 using MockQueryable.Moq;
 using System.Threading.Tasks;
+using FluentAssertions;
 
 namespace Rookie.AssetManagement.UnitTests.Business{
     public class AssignmentServiceShould{
@@ -40,6 +41,23 @@ namespace Rookie.AssetManagement.UnitTests.Business{
             var result = await _assignmentService.GetByPageAsync(AssignmentTestData.AssignmentQueryCriteriaDto, _cancellationToken);
             //Assert   
             Assert.Equal(2,result.TotalItems);
-        }        
+        }
+
+        [Fact]
+        public async Task GetByIdShouldSuccess()
+        {
+            var existedAssigmentId = 1;
+            var assignmentsMock = AssignmentTestData.GetAssignments().AsEnumerable().BuildMock();
+
+            _assignmentRepository.Setup(x => x.Entities).Returns(assignmentsMock);
+
+            //Act
+            var result = await _assignmentService.GetByIdAsync(existedAssigmentId);
+
+            //Assert
+            result.Should().NotBeNull();
+            _assignmentRepository.Verify(mock => mock.Entities, Times.Once());
+
+        }
     }
 }
