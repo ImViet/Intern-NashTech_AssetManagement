@@ -31,7 +31,7 @@ const Info: React.FC<Props> = ({ assignment, handleClose }) => {
                 </Modal.Header>
 
                 <Modal.Body>
-                    <div className="table-detail">
+                    <div className="table-detail-large">
                         <div className='row -intro-y'>
                             <div className='col-4'>Asset Code</div>
                             <div className='col-6'>{assignment.assetCode}</div>
