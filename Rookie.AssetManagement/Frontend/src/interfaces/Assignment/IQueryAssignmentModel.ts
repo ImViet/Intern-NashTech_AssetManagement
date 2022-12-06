@@ -1,4 +1,4 @@
-export default interface IQueryAssetModel {
+export default interface IQueryAssignmentModel {
     page: number;
     limit: number;
     assignDate: Date;

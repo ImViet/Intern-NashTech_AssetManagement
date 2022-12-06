@@ -82,6 +82,11 @@ const Header = () => {
         pathnameSplit[index] = "Manage Asset";
         type="asset"
       } 
+      if(split == "assignment"){
+        const index = pathnameSplit.findIndex(s=>s== split)
+        pathnameSplit[index] = "Manage Assignment";
+        type="assignment"
+      } 
       if(type=="user")
       {
         if(split == "create"){
@@ -105,6 +110,20 @@ const Header = () => {
         else if(split == "edit"){
           const index = pathnameSplit.findIndex(s=>s== split)
           pathnameSplit[index] = "Edit Asset";
+        }else if(!isNaN(Number(split)) || split == "*"){
+          const index = pathnameSplit.findIndex(s=>s== split)
+          pathnameSplit.splice(index,1)
+        }     
+      }    
+      else if(type="assigment")
+      {
+        if(split == "create"){
+          const index = pathnameSplit.findIndex(s=>s== split)
+          pathnameSplit[index] = "Create New Assignment";
+        }
+        else if(split == "edit"){
+          const index = pathnameSplit.findIndex(s=>s== split)
+          pathnameSplit[index] = "Edit Assignment";
         }else if(!isNaN(Number(split)) || split == "*"){
           const index = pathnameSplit.findIndex(s=>s== split)
           pathnameSplit.splice(index,1)
