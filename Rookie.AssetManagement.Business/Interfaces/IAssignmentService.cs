@@ -17,12 +17,13 @@ namespace Rookie.AssetManagement.Business.Interfaces
 
         Task<AssignmentDto> GetByIdAsync(int id);
 
-        //Task<AssignmentDto> AddAsync(UserCreateDto assetRequest, string location);
+        Task<AssignmentDto> AddAssignmentAsync(AssignmentCreateDto assignmentCreateDto, string AssignedBy);
 
         //Task<AssignmentDto> UpdateAsnyc(UserUpdateDto userUpdateDto, string location);
 
         //Task<bool> DisableAsync(int id, string location);
 
         Task<PagedResponseModel<AssignmentDto>> GetByPageAsync(AssignmentQueryCriteriaDto assignmentQueryCriteria, CancellationToken cancellationToken);
+     
     }
 }

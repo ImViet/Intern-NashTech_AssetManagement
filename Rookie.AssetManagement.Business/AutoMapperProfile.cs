@@ -38,7 +38,7 @@ namespace Rookie.AssetManagement.Business
                 .ForMember(d => d.AccessFailedCount, t => t.Ignore())
                 .ForMember(d => d.SecurityStamp, t => t.Ignore())
                 .ForMember(d => d.ConcurrencyStamp, t => t.Ignore())
-                .ForMember(d => d.Assignments, t =>t.Ignore());
+                .ForMember(d => d.Assignments, t => t.Ignore());
             CreateMap<UserUpdateDto, User>()
                 .ForMember(d => d.FirstName, t => t.Ignore())
                 .ForMember(d => d.LastName, t => t.Ignore())
@@ -78,6 +78,13 @@ namespace Rookie.AssetManagement.Business
                 .ForMember(d => d.Category, t => t.Ignore())
                 .ForMember(d => d.State, t => t.Ignore())
                 .ForMember(d => d.Assignments, t => t.Ignore());
+            CreateMap<AssignmentCreateDto, Assignment>()
+                .ForMember(d => d.AssignedTo, t => t.Ignore())
+                .ForMember(d => d.AssignedBy, t => t.Ignore())
+                .ForMember(d => d.IsDeleted, t => t.Ignore())
+                .ForMember(d => d.State, t => t.Ignore())
+                 .ForMember(d => d.Id, t => t.Ignore())
+                .ForMember(d => d.Asset, t => t.Ignore());
         }
 
         private void FromDataAccessorLayer()
@@ -103,9 +110,7 @@ namespace Rookie.AssetManagement.Business
                 .ForMember(d => d.AssetName, t => t.MapFrom(c => c.Asset.AssetName))
                 .ForMember(d => d.State, t => t.MapFrom(c => c.State.StateName))
                 .ForMember(d => d.AssignedTo, t => t.MapFrom(c => c.AssignedTo.UserName))
-                .ForMember(d => d.AssignedBy, t => t.MapFrom(c => c.AssignedBy.UserName))
-                .ForMember(d => d.Specification, t => t.MapFrom(c => c.Asset.Specification));
-
+                .ForMember(d => d.AssignedBy, t => t.MapFrom(c => c.AssignedBy.UserName));
         }
 
     }

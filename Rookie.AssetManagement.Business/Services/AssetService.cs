@@ -207,5 +207,48 @@ namespace Rookie.AssetManagement.Business.Services
 
             return await Task.FromResult(true);
         }
+
+        public async Task<PagedResponseModel<LookUpAssetDto>> GetLookUpAset(AssetQueryCriteriaDto assetQueryCriteria, CancellationToken cancellationToken)
+        {
+            var assetQuery = AssetSortLookUp(
+            _assetRepository.Entities
+            .Where(x => !x.IsDeleted).AsQueryable(),
+            assetQueryCriteria);
+
+            var asset = await assetQuery
+               .AsNoTracking()
+               .PaginateAsync<Asset>(
+                   assetQueryCriteria.Page,
+                   assetQueryCriteria.Limit,
+                   cancellationToken);
+
+            var assetDto = _mapper.Map<IEnumerable<LookUpAssetDto>>(asset.Items);
+
+            return new PagedResponseModel<LookUpAssetDto>
+            {
+                CurrentPage = asset.CurrentPage,
+                TotalPages = asset.TotalPages,
+                TotalItems = asset.TotalItems,
+                Items = assetDto
+            };
+        }
+
+        private IQueryable<Asset> AssetSortLookUp(
+          IQueryable<Asset> assetQuery,
+          AssetQueryCriteriaDto assetQueryCriteria)
+        {
+            if (assetQueryCriteria.SortColumn != null)
+            {
+                var sortColumn = assetQueryCriteria.SortColumn.ToUpper();
+                assetQuery = sortColumn switch
+                {
+                    "ASSETCODE" => assetQueryCriteria.SortOrder == 0 ? assetQuery.OrderBy(x => x.AssetCode) : assetQuery.OrderByDescending(x => x.AssetCode),
+                    "ASSETNAME" => assetQueryCriteria.SortOrder == 0 ? assetQuery.OrderBy(x => x.AssetName) : assetQuery.OrderByDescending(x => x.AssetName),
+                    "CATEGORY" => assetQueryCriteria.SortOrder == 0 ? assetQuery.OrderBy(x => x.Category) : assetQuery.OrderByDescending(x => x.Category),
+                    _ => assetQuery.OrderBy(x => x.AssetCode),
+                };
+            }
+            return assetQuery;
+        }
     }
 }

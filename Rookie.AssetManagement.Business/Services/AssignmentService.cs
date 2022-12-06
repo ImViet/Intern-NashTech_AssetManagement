@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using EnsureThat;
+//using LinqToTwitter;
 using LinqToTwitter.Common;
 using Microsoft.EntityFrameworkCore;
 using Rookie.AssetManagement.Business.Interfaces;
@@ -7,34 +9,69 @@ using Rookie.AssetManagement.Contracts;
 using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
 using Rookie.AssetManagement.Contracts.Dtos.AssignmentDtos;
 using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
+using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
+
 namespace Rookie.AssetManagement.Business.Services
 {
     public class AssignmentService : IAssignmentService
     {
+        private readonly IBaseRepository<User> _userRepository;
         private readonly IBaseRepository<Asset> _assetRepository;
         private readonly IBaseRepository<State> _stateRepository;
         private readonly IBaseRepository<Assignment> _assignmentRepository;
+        
         private readonly IMapper _mapper;
 
         public AssignmentService(IBaseRepository<Asset> assetRepository
             , IBaseRepository<State> stateRepository
             , IBaseRepository<Assignment> assignmentRepository
+            , IBaseRepository<User> userRepository
             , IMapper mapper)
         {
             _assetRepository = assetRepository;
             _stateRepository = stateRepository;
             _assignmentRepository = assignmentRepository;
+            _userRepository = userRepository;
             _mapper = mapper;
+        }
+
+        public async Task<AssignmentDto> AddAssignmentAsync(AssignmentCreateDto assignmentCreateDto, string AssignedBy)
+        {
+            Ensure.Any.IsNotNull(assignmentCreateDto);
+            var newAssignment = _mapper.Map<Assignment>(assignmentCreateDto);
+            var getUser = _userRepository.Entities.Where(x => x.Id.ToString() == assignmentCreateDto.User).FirstOrDefault();
+            if (getUser == null)
+            {
+                throw new NotFoundException("User Not Found!");
+            }
+           // var getAsset = _assetRepository.Entities.Where(x => x.Id == assignmentCreateDto.Asset).FirstOrDefault();
+            var getAsset = _assetRepository.Entities.Where(x => x.Id.ToString() == assignmentCreateDto.Asset).FirstOrDefault();
+            if (getAsset == null)
+            {
+                throw new NotFoundException("State Not Found!");
+            }
+
+            var getAssignedBy = _userRepository.Entities.Where(x => x.UserName == AssignedBy).FirstOrDefault();
+
+            newAssignment.AssignedTo = getUser;
+            newAssignment.Asset = getAsset;          
+            newAssignment.IsDeleted = false;
+            newAssignment.AssignedBy = getAssignedBy;
+            newAssignment.AssignedDate = DateTime.Now;
+            
+            var createResult = await _assignmentRepository.Add(newAssignment);
+            return _mapper.Map<AssignmentDto>(newAssignment);
         }
 
         public async Task<IEnumerable<AssignmentDto>> GetAllAsync()

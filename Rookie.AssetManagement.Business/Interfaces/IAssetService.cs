@@ -19,5 +19,6 @@ namespace Rookie.AssetManagement.Business.Interfaces
         Task<AssetFormDto> GetAssetFormDataById(int id, string location);
         Task<AssetDto> UpdateAssetAsync(AssetUpdateDto assetUpdateDto, string location);
         Task<bool> DisableAssetAsync(int id, string location);
+        Task<PagedResponseModel<LookUpAssetDto>> GetLookUpAset(AssetQueryCriteriaDto assetQueryCriteria, CancellationToken cancellationToken);
     }
 }
