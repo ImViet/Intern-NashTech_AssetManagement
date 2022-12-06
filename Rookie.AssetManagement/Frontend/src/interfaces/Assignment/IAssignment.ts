@@ -1,10 +1,11 @@
 export default interface IAssignment {
-    id: number;
-    assetCode: string;
-    assetName: string;
-    assignedTo: string;
-    assignedBy: string;
-    assgnedDate: Date;
-    note: string;
-    state: string;
-  }
+  id: number;
+  no: number;
+  assetCode: string;
+  assetName: string;
+  assignedTo: string;
+  assignedBy: string;
+  assgnedDate: Date;
+  note: string;
+  state: string;
+}
