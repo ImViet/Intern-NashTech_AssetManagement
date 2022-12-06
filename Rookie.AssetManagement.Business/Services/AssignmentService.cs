@@ -131,10 +131,10 @@ namespace Rookie.AssetManagement.Business.Services
                         assignmentQuery = assignmentQueryCriteria.SortOrder == 0 ? assignmentQuery.OrderBy(x => x.Asset.AssetName) : assignmentQuery.OrderByDescending(x => x.Asset.AssetName);
                         break;
                     case "ASSIGNEDTO":
-                        assignmentQuery = assignmentQueryCriteria.SortOrder == 0 ? assignmentQuery.OrderBy(x => x.AssignedTo.UserName) : assignmentQuery.OrderByDescending(x => x.AssignedTo.UserName);
+                        assignmentQuery = assignmentQueryCriteria.SortOrder == 0 ? assignmentQuery.OrderBy(x => x.AssignedTo) : assignmentQuery.OrderByDescending(x => x.AssignedTo);
                         break;
                     case "ASSIGNEDBY":
-                        assignmentQuery = assignmentQueryCriteria.SortOrder == 0 ? assignmentQuery.OrderBy(x => x.AssignedBy.UserName) : assignmentQuery.OrderByDescending(x => x.AssignedBy.UserName);
+                        assignmentQuery = assignmentQueryCriteria.SortOrder == 0 ? assignmentQuery.OrderBy(x => x.AssignedBy) : assignmentQuery.OrderByDescending(x => x.AssignedBy);
                         break;
                     case "ASSIGNEDDATE":
                         assignmentQuery = assignmentQueryCriteria.SortOrder == 0 ? assignmentQuery.OrderBy(x => x.AssignedDate) : assignmentQuery.OrderByDescending(x => x.AssignedDate);
