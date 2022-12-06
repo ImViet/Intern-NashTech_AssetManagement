@@ -15,9 +15,9 @@ const SearchBox : React.FC<Props> = ({ handleSearch , getSuggestionRequest}) =>{
 
     const handleChangeSearch = (e) => {
         e.preventDefault();
-
         const search = e.target.value;
         setSearch(search);
+        getSuggestion(search);
     };
 
     const handleSuggestionCLick =(keyword)=>{
@@ -42,10 +42,6 @@ const SearchBox : React.FC<Props> = ({ handleSearch , getSuggestionRequest}) =>{
             })
             .catch(err=>console.log(err))
     }, 250)
-
-    useEffect(()=>{
-        getSuggestion(search);
-    }, [search])
 
     return (
             <div className="search-box d-flex align-items-center w-ld ml-auto mr-2">
