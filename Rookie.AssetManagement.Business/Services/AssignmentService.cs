@@ -48,7 +48,7 @@ namespace Rookie.AssetManagement.Business.Services
         {
             var assignmentQuery = AssignmentFilter(
              _assignmentRepository.Entities
-            
+
              .Include(a => a.State)
              .Include(b => b.AssignedBy)
              .Include(b => b.AssignedTo)
@@ -65,13 +65,32 @@ namespace Rookie.AssetManagement.Business.Services
 
             var assignmentDto = _mapper.Map<IEnumerable<AssignmentDto>>(assignment.Items);
 
+            if (assignmentQueryCriteria.SortOrder == 0)
+            {
+                var startNo = assignment.CurrentPage * assignmentQueryCriteria.Limit + 1;
+                foreach (var assign in assignmentDto)
+                {
+                    assign.No = startNo;
+                    startNo++;
+                }
+            }
+            else
+            {
+                var startNo = assignment.CurrentPage * assignmentQueryCriteria.Limit + 1;
+                foreach (var assign in assignmentDto)
+                {
+                    assign.No = startNo;
+                    startNo--;
+                }
+            }
+
             return new PagedResponseModel<AssignmentDto>
             {
                 CurrentPage = assignment.CurrentPage,
                 TotalPages = assignment.TotalPages,
                 TotalItems = assignment.TotalItems,
                 Items = assignmentDto
-            }; 
+            };
         }
 
         private IQueryable<Assignment> AssignmentFilter(
@@ -86,7 +105,7 @@ namespace Rookie.AssetManagement.Business.Services
                   || b.AssignedTo.UserName.ToLower().Contains(assignmentQueryCriteria.Search.ToLower()));
             }
 
-        
+
             if (assignmentQueryCriteria.AssignmentDate != DateTime.MinValue)
             {
                 assignmentQuery = assignmentQuery.Where(b =>

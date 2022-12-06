@@ -2,7 +2,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { call, put } from "redux-saga/effects";
 import { Status } from "src/constants/status";
 import {
-//   setAssetFormData,
+  //   setAssetFormData,
   setState,
   setStatus,
 } from "src/containers/Assignment/reducer";
@@ -24,7 +24,9 @@ import {
   getAssignmentByIdRequest,
 } from "./requests";
 
-export function* handleGetAssignmentList(action: PayloadAction<IQueryAssignmentModel>) {
+export function* handleGetAssignmentList(
+  action: PayloadAction<IQueryAssignmentModel>
+) {
   const queryAssigmentModel = action.payload;
 
   try {
