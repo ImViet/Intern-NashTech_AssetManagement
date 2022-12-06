@@ -1,0 +1,36 @@
+#pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    li {
+      
+      display: flex;
+      a {
+        
+        padding: 5px 10px;
+       
+        border-right: 0;
+      }
+      a:hover{
+        cursor: pointer;
+      }
+    }
+    // li.previous,
+    // li.next {
+    //   animation: fadein .5s;
+    // }
+   
+  }
+  
+  // When I feel motivated to get this working
+  // @keyframes fadein {
+  //   from {opacity: 0;}
+  //   to {opacity: 1;}
+  // }
