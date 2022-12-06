@@ -16,6 +16,8 @@ namespace Rookie.AssetManagement.Contracts.Dtos.AssignmentDtos
         public string AssignedBy { get; set; }
         public DateTime AssignedDate { get; set; }
         public string State { get; set; }
+        public string Note { get; set; }
+        public string Specification { get; set; }
 
     }
 }

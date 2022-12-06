@@ -15,7 +15,7 @@ namespace Rookie.AssetManagement.Business.Interfaces
     {
         Task<IEnumerable<AssignmentDto>> GetAllAsync();
 
-        Task<AssignmentDetailDto> GetByIdAsync(int id);
+        Task<AssignmentDto> GetByIdAsync(int id);
 
         //Task<AssignmentDto> AddAsync(UserCreateDto assetRequest, string location);
 
