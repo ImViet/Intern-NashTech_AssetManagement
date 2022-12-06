@@ -46,14 +46,14 @@ namespace Rookie.AssetManagement.Business.Services
             _mapper = mapper;
         }
 
-        public async Task<AssignmentDto> AddAssetAsync(AssignmentCreateDto assignmentCreateDto, string AssignedBy)
+        public async Task<AssignmentDto> AddAssignmentAsync(AssignmentCreateDto assignmentCreateDto, string AssignedBy)
         {
             Ensure.Any.IsNotNull(assignmentCreateDto);
             var newAssignment = _mapper.Map<Assignment>(assignmentCreateDto);
             var getUser = _userRepository.Entities.Where(x => x.Id.ToString() == assignmentCreateDto.User).FirstOrDefault();
             if (getUser == null)
             {
-                throw new NotFoundException("Category Not Found!");
+                throw new NotFoundException("User Not Found!");
             }
            // var getAsset = _assetRepository.Entities.Where(x => x.Id == assignmentCreateDto.Asset).FirstOrDefault();
             var getAsset = _assetRepository.Entities.Where(x => x.Id.ToString() == assignmentCreateDto.Asset).FirstOrDefault();
@@ -62,7 +62,7 @@ namespace Rookie.AssetManagement.Business.Services
                 throw new NotFoundException("State Not Found!");
             }
 
-            var getAssignedBy = _userRepository.Entities.Where(x => x.UserName == assignmentCreateDto.User).FirstOrDefault();
+            var getAssignedBy = _userRepository.Entities.Where(x => x.UserName == AssignedBy).FirstOrDefault();
 
             newAssignment.AssignedTo = getUser;
             newAssignment.Asset = getAsset;          

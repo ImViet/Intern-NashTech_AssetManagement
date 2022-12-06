@@ -47,11 +47,11 @@ namespace Rookie.AssetManagement.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<AssetDto>> AddAssetAsync([FromBody] AssignmentCreateDto assignmentCreate)
+        public async Task<ActionResult<AssignmentDto>> AddAssignmentAsync([FromBody] AssignmentCreateDto assignmentCreate)
         {
             var AssignedBy = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
-            var asset = await _assignmentService.AddAssetAsync(assignmentCreate, AssignedBy);
-            return Created(Endpoints.User, asset);
+            var assigment = await _assignmentService.AddAssignmentAsync(assignmentCreate, AssignedBy);
+            return Created(Endpoints.User, assigment);
         }
     }
 }
