@@ -46,7 +46,7 @@ namespace Rookie.AssetManagement.Controllers
 
         [HttpGet]
         [Route("GetAssignment/{id}")]
-        public async Task<ActionResult<AssignmentDetailDto>> GetAssginmentById(int id)
+        public async Task<ActionResult<AssignmentDto>> GetAssginmentById(int id)
         {
             var assignmentResponses = await _assignmentService.GetByIdAsync(id);
             return Ok(assignmentResponses);

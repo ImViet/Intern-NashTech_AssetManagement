@@ -148,11 +148,11 @@ namespace Rookie.AssetManagement.Business.Services
             return assignmentQuery;
         }
 
-        public async Task<AssignmentDetailDto> GetByIdAsync(int id)
+        public async Task<AssignmentDto> GetByIdAsync(int id)
         {
             var assignment = await _assignmentRepository.Entities
                 .Where(a => a.Id == id)
-                .ProjectTo<AssignmentDetailDto>(_mapper.ConfigurationProvider)
+                .ProjectTo<AssignmentDto>(_mapper.ConfigurationProvider)
                 .FirstAsync();
             return assignment;
         }
