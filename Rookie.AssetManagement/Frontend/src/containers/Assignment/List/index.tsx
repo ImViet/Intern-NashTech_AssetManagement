@@ -30,8 +30,7 @@ const defaultQuery: IQueryAssignmentModel = {
 }
 
 const defaultSelectedState: ISelectOption[] = [
-    { id: 1, label: "All", value: "ALL" },
-
+    { id: 1, label: "All", value: "ALL" }
 ]
 
 
@@ -176,21 +175,7 @@ const ListAssignment = () => {
                         </div>
                     </div>
                     <div className="d-flex align-items-center w-md mr-5">
-                        <div className="button">
-                            <div className="col d-flex" style={{ width: "250px" }}>
-                                <div className="d-flex align-items-center w-100">
-                                    <DatePicker
-                                        className={"form-control date-picker w-100 "}
-                                        selected={assignedDate}
-                                        onChange={handleAssignDateChange}
-                                        placeholderText="Assigned Date"
-                                        maxDate={new Date()} />
-                                </div>
-                                <div className="date-icon p-1 pointer">
-                                    <CalendarDateFill />
-                                </div>
-                            </div>
-                        </div>
+                        <DateFilter label="Assigned Date" date={assignedDate} handleDateChange={handleAssignDateChange} />
                     </div>
                     <div className="d-flex align-items-center w-ld ml-auto mr-2">
                         <div className="input-group">
@@ -212,20 +197,18 @@ const ListAssignment = () => {
                         </Link>
                     </div>
                 </div>
-                <>
-                    <AssignmentTable
-                        assignments={assignments}
-                        result={actionResult}
-                        handlePage={handlePage}
-                        handleSort={handleSort}
-                        handleDisable={handleDisable}
-                        sortState={{
-                            columnValue: query.sortColumn,
-                            orderBy: query.sortOrder,
-                        }}
-                        fetchData={fetchData}
-                    />
-                </>
+                <AssignmentTable
+                    assignments={assignments}
+                    result={actionResult}
+                    handlePage={handlePage}
+                    handleSort={handleSort}
+                    handleDisable={handleDisable}
+                    sortState={{
+                        columnValue: query.sortColumn,
+                        orderBy: query.sortOrder,
+                    }}
+                    fetchData={fetchData}
+                />
             </div>
         </>
     );

@@ -7,25 +7,6 @@ import EndPoints from "src/constants/endpoints";
 import IState from "src/interfaces/Asset/IState";
 // import IAssetForm from "src/interfaces/Asset/IAssetForm";
 
-// export function getAssignmentsRequest(
-//   assigmentQuery: IQueryAssigmentModel
-// ): Promise<AxiosResponse<IAssignment[]>> {
-//   return RequestService.axios.get(EndPoints.searchAsset, {
-//     params: assigmentQuery,
-//     paramsSerializer: (params) => qs.stringify(params),
-//   });
-// }
-
-export function getAssignmentsRequest(
-  assigmentQuery: IQueryAssigmentModel
-): Promise<AxiosResponse<IAssignment[]>> {
-  return RequestService.axios.get(EndPoints.assignment + "/assignment");
-}
-
-export function getAssignmentByIdRequest(
-  id: number
-): Promise<AxiosResponse<IAssignment>> {
-  return RequestService.axios.get(EndPoints.assignment + id);
 export function getAssignmentsRequest(
   assigmentQuery: IQueryAssigmentModel
 ): Promise<AxiosResponse<IAssignment[]>> {
@@ -35,13 +16,15 @@ export function getAssignmentsRequest(
   });
 }
 
-// export function getAssignmentsRequest(assigmentQuery: IQueryAssigmentModel): 
-// Promise<AxiosResponse<IAssignment[]>> 
+// export function getAssignmentsRequest(assigmentQuery: IQueryAssigmentModel):
+// Promise<AxiosResponse<IAssignment[]>>
 // {
 //     return RequestService.axios.get(EndPoints.assignment);
 // }
 
-export function getAssignmentByIdRequest(id: number): Promise<AxiosResponse<IAssignment>> {
+export function getAssignmentByIdRequest(
+  id: number
+): Promise<AxiosResponse<IAssignment>> {
   return RequestService.axios.get(EndPoints.assignment + "/" + id);
 }
 
