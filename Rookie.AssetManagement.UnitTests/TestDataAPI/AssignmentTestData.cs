@@ -15,6 +15,7 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
         {
             return new List<Assignment>() {
                 new Assignment(){
+                    Id= 1,
                     Asset = new Asset (){
                         AssetCode = "MO000001",
                         AssetName = "Personal Computer xyz",
@@ -34,6 +35,7 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                     Note=""
                 },
                 new Assignment(){
+                    Id=2,
                     Asset = new Asset (){
                         AssetCode = "MO000002",
                         AssetName = "Personal Computer xyz2",
@@ -54,6 +56,30 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                 }
             };
         }
+        public static Assignment GetAssignment()
+        {
+            return new Assignment {
+                    Id= 1,
+                    Asset = new Asset (){
+                        AssetCode = "MO000001",
+                        AssetName = "Personal Computer xyz",
+                    },
+                    AssignedTo= new User(){
+                        UserName = "damthuy",
+                    },
+                    AssignedBy = new User(){
+                        UserName = "admin",
+                    },
+                    AssignedDate = DateTime.Parse("2021-02-21"),
+                    State = new State(){
+                        Id = 1,
+                        StateName = "Accepted"
+                    },
+                    IsDeleted=false,
+                    Note=""
+
+            };
+         }
 
         public static List<State> GetStates()
         {
