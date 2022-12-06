@@ -38,7 +38,7 @@ namespace Rookie.AssetManagement.Business
                 .ForMember(d => d.AccessFailedCount, t => t.Ignore())
                 .ForMember(d => d.SecurityStamp, t => t.Ignore())
                 .ForMember(d => d.ConcurrencyStamp, t => t.Ignore())
-                .ForMember(d => d.Assignments, t =>t.Ignore());
+                .ForMember(d => d.Assignments, t => t.Ignore());
             CreateMap<UserUpdateDto, User>()
                 .ForMember(d => d.FirstName, t => t.Ignore())
                 .ForMember(d => d.LastName, t => t.Ignore())
@@ -89,8 +89,8 @@ namespace Rookie.AssetManagement.Business
                 .ForMember(d => d.Token, t => t.Ignore());
             CreateMap<User, LookUpUserDto>()
                 .ForMember(d => d.FullName, t => t.MapFrom(src => src.FirstName + " " + src.LastName));
-              
-           
+
+
             CreateMap<Category, CategoryDto>();
             CreateMap<State, StateDto>();
 
