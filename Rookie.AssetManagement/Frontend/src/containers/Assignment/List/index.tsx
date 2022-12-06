@@ -11,7 +11,7 @@ import {
     ACCSENDING,
     DECSENDING,
     DEFAULT_PAGE_LIMIT,
-    DEFAULT_ASSET_SORT_COLUMN_NAME,
+    DEFAULT_ASSIGNMENT_SORT_COLUMN_NAME,
 } from "src/constants/paging";
 import IPagedModel from "src/interfaces/IPagedModel";
 import { cleanUpActionResult, getAssignmentList, getState } from "../reducer";
@@ -24,14 +24,13 @@ const defaultQuery: IQueryAssignmentModel = {
     limit: DEFAULT_PAGE_LIMIT,
     assignDate: null,
     sortOrder: ACCSENDING,
-    sortColumn: DEFAULT_ASSET_SORT_COLUMN_NAME,
-    states: ['1'],
+    sortColumn: DEFAULT_ASSIGNMENT_SORT_COLUMN_NAME,
+    states: [],
 }
 
 const defaultSelectedState: ISelectOption[] = [
-    { id: 2, label: "Accepted", value: 1 },
-    { id: 3, label: "Waiting for acceptance", value: 2 },
-
+    { id: 1, label: "All", value: "ALL" },
+   
 ]
 
 
@@ -205,30 +204,20 @@ const ListAssignment = () => {
                         </Link>
                     </div>
                 </div>
-                {(() => {
-                    if (assignments?.totalItems == 0) {
-                        return (
-                            <h5 className="not-data-found">No data found</h5>
-                        )
-                    } else {
-                        return (                    
-                            <>                           
-                                <AssignmentTable
-                                    assignments={assignments}
-                                    result={actionResult}
-                                    handlePage={handlePage}
-                                    handleSort={handleSort}
-                                    handleDisable={handleDisable}
-                                    sortState={{
-                                        columnValue: query.sortColumn,
-                                        orderBy: query.sortOrder,
-                                    }}                       
-                                    fetchData={fetchData}
-                                />
-                            </>
-                        )
-                    }
-                })()}
+                <>                           
+                    <AssignmentTable
+                        assignments={assignments}
+                        result={actionResult}
+                        handlePage={handlePage}
+                        handleSort={handleSort}
+                        handleDisable={handleDisable}
+                        sortState={{
+                            columnValue: query.sortColumn,
+                            orderBy: query.sortOrder,
+                        }}                       
+                        fetchData={fetchData}
+                    />
+                </>
             </div>
         </>
     );
