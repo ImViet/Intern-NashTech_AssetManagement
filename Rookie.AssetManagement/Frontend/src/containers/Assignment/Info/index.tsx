@@ -9,13 +9,13 @@ import {
 } from "src/constants/User/UserContants";
 import formatDateTime, { convertDDMMYYYY } from "src/utils/formatDateTime";
 import IAssignment from "src/interfaces/Assignment/IAssignment";
-
 type Props = {
     assignment: IAssignment;
     handleClose: () => void;
 };
 
 const Info: React.FC<Props> = ({ assignment, handleClose }) => {
+    console.log(assignment)
     return (
         <>
             <Modal
@@ -31,39 +31,39 @@ const Info: React.FC<Props> = ({ assignment, handleClose }) => {
                 </Modal.Header>
 
                 <Modal.Body>
-                    <div>
+                    <div className="table-detail">
                         <div className='row -intro-y'>
-                            <div className='col-5'>Asset Code</div>
-                            <div>{assignment.assetCode}</div>
+                            <div className='col-4'>Asset Code</div>
+                            <div className='col-6'>{assignment.assetCode}</div>
                         </div>
 
                         <div className='row -intro-y'>
-                            <div className='col-5'>Asset Name</div>
-                            <div>{assignment.assetName}</div>
+                            <div className='col-4'>Asset Name</div>
+                            <div className='col-6'>{assignment.assetName}</div>
                         </div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Specification</div>
-                            <div>{assignment.specification}</div>
+                            <div className='col-4'>Specification</div>
+                            <div className='col-6'>{assignment.specification}</div>
                         </div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Assigned to</div>
-                            <div>{assignment.assignedTo}</div>
+                            <div className='col-4'>Assigned to</div>
+                            <div className='col-6'>{assignment.assignedTo}</div>
                         </div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Assigned by</div>
-                            <div>{assignment.assignedBy}</div>
+                            <div className='col-4'>Assigned by</div>
+                            <div className='col-6'>{assignment.assignedBy}</div>
                         </div> 
                         <div className='row -intro-y'>
-                            <div className='col-5'>Assigned Date</div>
-                            <div>{assignment.assgnedDate}</div>
+                            <div className='col-4'>Assigned Date</div>
+                            <div className='col-6'>{convertDDMMYYYY(assignment.assignedDate)}</div>
                         </div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>State</div>
-                            <div>{assignment.state}</div>
+                            <div className='col-4'>State</div>
+                            <div className='col-6'>{assignment.state}</div>
                         </div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Note</div>
-                            <div>{assignment.note}</div>
+                            <div className='col-4'>Note</div>
+                            <div className='col-6'>{assignment.note}</div>
                         </div>
 
                     </div>

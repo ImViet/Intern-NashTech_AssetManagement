@@ -4,9 +4,9 @@ export default interface IAssignment {
   assetCode: string;
   assetName: string;
   specification: string;
-  assignedTo: string;
+  assignedTo: string; 
   assignedBy: string;
-  assgnedDate: Date;
+  assignedDate: Date;
   note: string;
   state: string;
 }

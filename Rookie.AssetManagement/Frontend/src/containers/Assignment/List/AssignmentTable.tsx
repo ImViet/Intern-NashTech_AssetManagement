@@ -8,7 +8,7 @@ import Table, { SortType } from "src/components/Table";
 import IColumnOption from "src/interfaces/IColumnOption";
 import IPagedModel from "src/interfaces/IPagedModel";
 import formatDateTime, { convertDDMMYYYY } from "src/utils/formatDateTime";
-// import Info from "../Info";
+import Info from "../Info";
 //import { disableUser } from "../reducer";
 
 import { EDIT_ASSET_ID } from "src/constants/pages";
@@ -175,9 +175,9 @@ const AssignmentTable: React.FC<Props> = ({
                     </tr>
         ))}                
             </Table>
-            {/* {userDetail && showDetail && (
-        <Info user={userDetail} handleClose={handleCloseDetail} />
-      )} */}
+            {assignmentDetail && showDetail && (
+                <Info assignment={assignmentDetail} handleClose={handleCloseDetail} />
+            )}
             <ConfirmModal
                 title={disableState.title}
                 isShow={disableState.isOpen}
