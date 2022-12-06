@@ -25,6 +25,7 @@ const Info: React.FC<Props> = ({ user, handleClose }) => {
                 show={true}
                 onHide={handleClose}
                 dialogClassName="detail-modal modal-90w"
+                centered
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="login-modal">
@@ -35,36 +36,36 @@ const Info: React.FC<Props> = ({ user, handleClose }) => {
                 <Modal.Body>
                     <div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Staff Code:</div>
+                            <div className='col-5'>Staff Code</div>
                             <div>{user.staffCode}</div>
                         </div>
 
                         <div className='row -intro-y'>
-                            <div className='col-5'>Full Name:</div>
+                            <div className='col-5'>Full Name</div>
                             <div>{user.fullName}</div>
                         </div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Username:</div>
+                            <div className='col-5'>Username</div>
                             <div>{user.userName}</div>
                         </div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Date Of Birth:</div>
+                            <div className='col-5'>Date Of Birth</div>
                             <div>{convertDDMMYYYY(user.dateOfBirth)}</div>
                         </div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Gender:</div>
+                            <div className='col-5'>Gender</div>
                             <div>{user.gender}</div>
                         </div> 
                         <div className='row -intro-y'>
-                            <div className='col-5'>Joined Date:</div>
+                            <div className='col-5'>Joined Date</div>
                             <div>{convertDDMMYYYY(user.joinedDate)}</div>
                         </div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Type:</div>
+                            <div className='col-5'>Type</div>
                             <div>{getUserTypeName(user.type)}</div>
                         </div>
                         <div className='row -intro-y'>
-                            <div className='col-5'>Location:</div>
+                            <div className='col-5'>Location</div>
                             <div>{user.location}</div>
                         </div>
 
