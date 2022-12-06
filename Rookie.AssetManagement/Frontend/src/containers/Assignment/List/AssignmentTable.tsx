@@ -123,7 +123,7 @@ const AssignmentTable: React.FC<Props> = ({
             >
                 {rows?.map((data, index) => (
                     <tr key={index} className="">
-                        <td>{data.id}</td>
+                        <td>{data.no}</td>
                         <td>{data.assetCode}</td>
                         <td>{data.assetName}</td>
                         <td>{data.assignedTo}</td>
