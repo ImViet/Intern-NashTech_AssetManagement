@@ -23,7 +23,7 @@
     .modal-header {
         background-color: rgba(239,241,245,1);
         border-bottom: 2px solid rgb(164,166,168);
-        padding-left: 81px;
+        padding-left: 50px;
         align-items: center;
         .modal-title {
             color: rgba(207,35,56,1);
@@ -53,5 +53,10 @@
 @media (min-width: 576px){
     .model-info-asset{
         max-width: 710px;
+    }
+}
+@media (min-width: 576px){
+    .modal-dialog{
+        max-width: 550px;
     }
 }

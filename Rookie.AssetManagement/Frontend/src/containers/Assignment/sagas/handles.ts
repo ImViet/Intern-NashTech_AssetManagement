@@ -89,7 +89,7 @@ export function* handleGetAssignmentById(action: PayloadAction<number>) {
 
   try {
     const { data } = yield call(getAssignmentByIdRequest, id);
-    data.InstalledDate = new Date(data.InstalledDate);
+    data.AssignedDate = new Date(data.AssignedDate);
     yield put(setAssignmentResult(data));
   } catch (error: any) {
     const message = error.response.data;
