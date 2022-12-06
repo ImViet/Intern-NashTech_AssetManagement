@@ -1,66 +1,153 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import IColumnOption from "src/interfaces/IColumnOption";
-import { useAppDispatch } from "src/hooks/redux";
+import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import IAsset from "src/interfaces/Asset/IAsset";
 import HistoryTableAsset from "src/components/Table/HistoryTableAsset";
 import IAssetHistory from "src/interfaces/Asset/IAssetHistory";
-
+import IPagedModel from "src/interfaces/IPagedModel";
+import IUser from "src/interfaces/User/IUser";
+import Table, { SortType } from "src/components/Table";
+import ILookupTable from "src/interfaces/ILookupTable";
+import { Search } from "react-bootstrap-icons";
+import IQueryUserModel from "src/interfaces/User/IQueryUserModel";
+import { ACCSENDING, DECSENDING, DEFAULT_PAGE_LIMIT, DEFAULT_USER_SORT_COLUMN_NAME } from "src/constants/paging";
 
 const columns: IColumnOption[] = [
-    { columnName: "", columnValue: "checkbox" },
-    { columnName: "Staff Code", columnValue: "staffcode" },
-    { columnName: "Full Name", columnValue: "fullname" },
-    { columnName: "Type", columnValue: "type" },
+    { columnName: "Staff Code ", columnValue: "staffCode" },
+    { columnName: "Full Name ", columnValue: "fullName" },
+    { columnName: "Type ", columnValue: "Type" },
 ];
 
-type Props = {
-    assetHistory: IAssetHistory[] | null;
-    result: IAssetHistory | null;
-    fetchData: Function;
-};
+const defaultQuery: IQueryUserModel = {
+    page: 1,
+    limit: DEFAULT_PAGE_LIMIT,
+    sortOrder: ACCSENDING,
+    sortColumn: DEFAULT_USER_SORT_COLUMN_NAME,
+    types: [],
+    search: ""
+}
 
-const UserLookupTable: React.FC<Props> = ({
-    assetHistory,
-    result,
-    fetchData,
+
+const UserLookupTable: React.FC<ILookupTable> = ({
+    onSelect,
+    closeModal,
+    requestData,
 }) => {
-    const dispatch = useAppDispatch();
-    let rows
-    if (result && assetHistory) {
-        rows = [...assetHistory];
+    const [users, setUsers]= useState({} as IPagedModel<IUser>);
+    const [query, setQuery] = useState({ ...defaultQuery });
+    const [search, setSearch] = useState("")
+
+    const handlePage = (page: number) => {
+        setQuery({
+            ...query,
+            page,
+        });
+        console.log(query)
+    };
+
+    const handleChangeSearch = (e) => {
+        e.preventDefault()
+        setSearch(e.target.value)
+    };
+
+    const handleSearch = () => {
+        setQuery({
+          ...query,
+          search,
+          page: 1
+        });
+        console.log(query)
+    };
+
+    const handleSort = (sortColumn: string) => {
+        let sortOrder
+        if (query.sortColumn != sortColumn) {
+            sortOrder = ACCSENDING
+        } else {
+            sortOrder = query.sortOrder === ACCSENDING ? DECSENDING : ACCSENDING;
+        }
+        setQuery({
+            ...query,
+            sortColumn,
+            sortOrder,
+        });
+    };
+
+    const fetchData=()=>{
+        requestData(query)
+            .then(res=>setQuery(res.data))
+            .catch(err=>console.log(err));
     }
+    
+    useEffect(() => {
+        fetchData();
+    }, [query]);
+
     return (
         <>
-            <HistoryTableAsset
-                columns={columns}
-            >
-                {/* {rows?.map((data, index) => (
-                    <tr key={index} className="" >
-                        <td>{data.staffcode}</td>
-                        <td>{data.fullname}</td>
-                        <td>{data.type}</td>
-                    </tr>
+            <div className="header-table">
+                <div>
+                    <strong style={{
+                        marginLeft: "-10px",
+                        marginBottom: "5px",
+                        color: "#cf2338",
+                    }}>Users</strong>
+                    <div className="d-flex align-items-center w-ld ml-auto mr-2">
+                        <div style={{ marginTop: -33, marginLeft: -15 }} className="input-group">
+                            <input
+                                onChange={handleChangeSearch}
+                                value={search}
+                                type="text"
+                                className="input-search  form-control"
+                            />
+                            <span onClick={handleSearch} className=" search-icon p-1 pointer">
+                                <Search />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="table-detail">
+                <div className='row -intro-y'>
+                    <div>
+                        <Table
+                            columns={columns}
+                            handleSort={handleSort}
+                            sortState={{
+                                columnValue: query.sortColumn,
+                                orderBy: query.sortOrder,
+                            }}
+                            page={{
+                                currentPage: users?.currentPage,
+                                totalPage: users?.totalPages,
+                                handleChange: handlePage,
+                            }}
+                        >
+                            {users?.items?.map((data, index) => (
+                                <tr key={index} className="">
+                                    <td>{data.staffCode}</td>
+                                    <td>{data.fullName}</td>
+                                    <td>{data.type}</td>
+                                </tr>
+                            ))}
+                        </Table>
 
-                ))} */}
-                <tr  >
-                    <input className="form-check-input input-radio"
-                        id = "1"
-                        type="radio"
-                    />
-                    <td>SD1901</td>
-                    <td>An Nguyen Thuy</td>
-                    <td>Staff</td>
-                </tr>
-                <tr >
-                    <input className="form-check-input input-radio"
-                        id = "1"
-                        type="radio"
-                    />
-                    <td>SD1234</td>
-                    <td>An Tran Van</td>
-                    <td>Admin</td>
-                </tr>
-            </HistoryTableAsset>
+                    </div>
+                </div>
+            </div>
+            <div className="d-flex mt-3 mr-2">
+                <div className="ml-auto">
+                    <button className="btn btn-danger mr-4"
+                        type="submit" disabled={false}
+                    >
+                        Save
+                    </button>
+
+                    <button onClick={() => closeModal()} className="btn btn-outline-secondary">
+                        Cancel
+                    </button>
+                </div>
+            </div>
         </>
     );
 };
