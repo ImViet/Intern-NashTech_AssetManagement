@@ -174,7 +174,7 @@ const ListAssignment = () => {
                             <div className="col d-flex" style={{width: "250px"}}>
                                 <div className="d-flex align-items-center w-100">
                                     <DatePicker
-                                        className={"form-control input-search w-100 "}
+                                        className={"form-control date-picker w-100 "}
                                         value={assignedDate}
                                         onChange={handleAssignDateChange}
                                         placeholderText="Assigned Date"
