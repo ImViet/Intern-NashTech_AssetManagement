@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
+using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
 
 namespace Rookie.AssetManagement.Business.Services
 {
@@ -261,7 +262,7 @@ namespace Rookie.AssetManagement.Business.Services
             if (list.Count < 5)
             {
                 var suggestionName = await _userRepository.Entities.Where(x => !x.IsDeleted).Where(x => x.Location == location).Where(x => (x.LastName.ToLower() + " " + x.FirstName.ToLower()).Contains(searching.ToLower()) || (x.FirstName.ToLower() + " " + x.LastName.ToLower()).Contains(searching.ToLower()))
-                .Take(5-list.Count).ToListAsync();
+                .Take(5 - list.Count).ToListAsync();
 
                 foreach (var item in suggestionName)
                 {
