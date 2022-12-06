@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { FunnelFill } from "react-bootstrap-icons";
 import { Search } from "react-feather";
 import ReactMultiSelectCheckboxes from "react-multiselect-checkboxes";
@@ -51,6 +51,9 @@ const ListAsset = () => {
 
   const {FilterAssetCategoryOptions} = useAppSelector(state=> state.assetReducer)
   const {FilterAssetStateOptions} = useAppSelector(state=> state.assetReducer)
+  const states = useMemo(() => {
+        return FilterAssetStateOptions.filter(state => state.label != "Accepted" && state.label != "Waiting for acceptance")
+}, [FilterAssetStateOptions])
 
   const handleState = (selected: ISelectOption[]) => {
     if (selected.length === 0) {
@@ -205,7 +208,7 @@ const ListAsset = () => {
             <div className="button">
               <div className="filter-state">
                 <SelectBox               
-                 options={FilterAssetStateOptions}
+                 options={states}
                 placeholderButtonLabel="State"
                 value={selectedState}
                 onChange={handleState}/>
