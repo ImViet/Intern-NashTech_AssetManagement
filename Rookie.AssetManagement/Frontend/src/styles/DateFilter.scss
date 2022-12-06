@@ -1,0 +1,28 @@
+.date-filter{
+    cursor: pointer;
+    .date-icon{
+        display: inline-block;
+        height: 34px;
+        margin-left: -2px;
+        border: 2px solid #bebebe !important;
+        border-radius: 0px .25rem .25rem 0px;
+        padding: 0 5px !important;
+        pointer-events: none;
+    }
+    .date-picker{ 
+        cursor: pointer;    
+        border: 2px solid rgb(190,190,190);
+        border-radius: 5px 0 0 5px;
+        height: 34px;
+        input{
+            cursor: pointer;
+        }
+    } 
+    .placeholder{
+        cursor: pointer;
+        position: absolute;
+        left: 10px;
+        pointer-events: none;
+        background-color: white;
+    }
+}

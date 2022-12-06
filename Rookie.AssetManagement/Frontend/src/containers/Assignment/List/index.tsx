@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import AssignmentTable from "./AssignmentTable";
 import ISelectOption from "src/interfaces/ISelectOption";
 import { Link, useLocation } from "react-router-dom";
-import DatePicker from 'react-datepicker';
 import {
     ACCSENDING,
     DECSENDING,
@@ -18,6 +17,7 @@ import { cleanUpActionResult, getAssignmentList, getState } from "../reducer";
 import IQueryAssignmentModel from "src/interfaces/Assignment/IQueryAssignmentModel";
 import SelectBox from "src/components/SelectBox";
 import { toUTCWithoutHour } from "src/utils/formatDateTime";
+import DateFilter from "src/components/DateFilter";
 
 const defaultQuery: IQueryAssignmentModel = {
     search: "",
@@ -166,7 +166,7 @@ const ListAssignment = () => {
                 <div className="d-flex mb-5 intro-x">
                     <div className="d-flex align-items-center w-md mr-5">
                         <div className="button">
-                            <div className="filter-state">
+                            <div className="filter-state-assignment">
                                 <SelectBox
                                     options={states}
                                     placeholderButtonLabel="State"
