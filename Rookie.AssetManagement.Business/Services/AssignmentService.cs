@@ -121,6 +121,9 @@ namespace Rookie.AssetManagement.Business.Services
                 var sortColumn = assignmentQueryCriteria.SortColumn.ToUpper();
                 switch (sortColumn)
                 {
+                    case "ID":
+                        assignmentQuery = assignmentQueryCriteria.SortOrder == 0 ? assignmentQuery.OrderBy(x => x.Id) : assignmentQuery.OrderByDescending(x => x.Id);
+                        break;
                     case "ASSETCODE":
                         assignmentQuery = assignmentQueryCriteria.SortOrder == 0 ? assignmentQuery.OrderBy(x => x.Asset.AssetCode) : assignmentQuery.OrderByDescending(x => x.Asset.AssetCode);
                         break;

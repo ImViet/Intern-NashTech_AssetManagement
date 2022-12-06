@@ -9,4 +9,4 @@ export const DEFAULT_USER_SORT_COLUMN_NAME = "Staffcode";
 export const DEFAULT_ASSET_SORT_COLUMN_NAME = "Assetcode";
 
 //Assignment
-export const DEFAULT_ASSIGNMENT_SORT_COLUMN_NAME = "Assignmentcode";
+export const DEFAULT_ASSIGNMENT_SORT_COLUMN_NAME = "id";
