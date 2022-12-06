@@ -50,7 +50,7 @@ namespace Rookie.AssetManagement.Business.Services
         {
             Ensure.Any.IsNotNull(assignmentCreateDto);
             var newAssignment = _mapper.Map<Assignment>(assignmentCreateDto);
-            var getUser = _userRepository.Entities.Where(x => x.Id.ToString() == assignmentCreateDto.User).FirstOrDefault();
+            var getUser = _userRepository.Entities.Where(x => (x.FirstName + x.LastName)== assignmentCreateDto.User).FirstOrDefault();
             if (getUser == null)
             {
                 throw new NotFoundException("User Not Found!");
