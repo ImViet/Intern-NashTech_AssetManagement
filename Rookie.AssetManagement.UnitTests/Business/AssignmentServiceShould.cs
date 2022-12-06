@@ -18,6 +18,7 @@ namespace Rookie.AssetManagement.UnitTests.Business{
         private readonly Mock<IBaseRepository<Assignment>> _assignmentRepository;
         private readonly Mock<IBaseRepository<Asset>> _assetRepository;
         private readonly Mock<IBaseRepository<State>> _stateRepository;
+        private readonly Mock<IBaseRepository<User>> _userRepository;
         private readonly IMapper _mapper;
         private readonly CancellationToken _cancellationToken;
 
@@ -25,10 +26,11 @@ namespace Rookie.AssetManagement.UnitTests.Business{
             _assetRepository = new Mock<IBaseRepository<Asset>>();
             _stateRepository = new Mock<IBaseRepository<State>>();
             _assignmentRepository = new Mock<IBaseRepository<Assignment>>();
+            _userRepository = new Mock<IBaseRepository<User>>();
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
             _mapper = config.CreateMapper();
             _cancellationToken = new CancellationToken();
-            _assignmentService = new AssignmentService( _assetRepository.Object,_stateRepository.Object,_assignmentRepository.Object, _mapper);
+            _assignmentService = new AssignmentService( _assetRepository.Object,_stateRepository.Object,_assignmentRepository.Object, _userRepository.Object, _mapper);
         }
 
         [Fact]

@@ -34,6 +34,7 @@ namespace Rookie.AssetManagement.IntegrationTests
         private readonly BaseRepository<Assignment> _assignmentRepository;
         private readonly BaseRepository<State> _stategoryRepository;
         private readonly BaseRepository<Asset> _assetRepository;
+        private readonly BaseRepository<User> _userRepository;
         private readonly AssignmentService _assignmentService;
         private readonly StateService _stateService;
         private readonly AssignmentController _assignmentController;
@@ -50,8 +51,9 @@ namespace Rookie.AssetManagement.IntegrationTests
             _assetRepository = new BaseRepository<Asset>(_dbContext);
             _assignmentRepository = new BaseRepository<Assignment>(_dbContext);
             _stategoryRepository = new BaseRepository<State>(_dbContext);
+            _userRepository = new BaseRepository<User>(_dbContext);
 
-            _assignmentService = new AssignmentService(_assetRepository, _stategoryRepository, _assignmentRepository, _mapper);
+            _assignmentService = new AssignmentService(_assetRepository, _stategoryRepository, _assignmentRepository, _userRepository, _mapper);
             _stateService = new StateService(_stategoryRepository, _mapper);
 
             _assignmentController = new AssignmentController(_assignmentService);
