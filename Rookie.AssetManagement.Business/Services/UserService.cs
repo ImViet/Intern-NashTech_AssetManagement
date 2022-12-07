@@ -276,6 +276,13 @@ namespace Rookie.AssetManagement.Business.Services
             IQueryable<User> userQuery,
             UserQueryCriteriaDto userQueryCriteria)
         {
+            if (!String.IsNullOrEmpty(userQueryCriteria.Search))
+            {
+                userQuery = userQuery.Where(b =>
+                  (b.StaffCode.ToLower()).Contains(userQueryCriteria.Search.ToLower())
+                    || (b.FirstName + " " + b.LastName).ToLower().Contains(userQueryCriteria.Search.ToLower()));
+            }
+
             if (userQueryCriteria.SortColumn != null)
             {
                 var sortColumn = userQueryCriteria.SortColumn.ToUpper();
