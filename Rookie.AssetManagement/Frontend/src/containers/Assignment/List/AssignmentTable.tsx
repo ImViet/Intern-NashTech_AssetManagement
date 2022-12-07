@@ -117,6 +117,7 @@ const AssignmentTable: React.FC<Props> = ({
     } else if (assignments) {
         rows = [...assignments.items]
     }
+    
     return (
         <>
             <Table

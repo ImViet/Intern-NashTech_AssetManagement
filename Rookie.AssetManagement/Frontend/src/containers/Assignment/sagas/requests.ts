@@ -34,7 +34,7 @@ export function getAssignmentByIdRequest(
 }
 
 export function getStateRequest(): Promise<AxiosResponse<IState[]>> {
-  return RequestService.axios.get(EndPoints.assignment);
+  return RequestService.axios.get(EndPoints.state);
 }
 
 export function createAssignmentRequest(
