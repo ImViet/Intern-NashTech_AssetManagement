@@ -34,14 +34,13 @@
             visibility: hidden;
             width: 5%;
         }
-    }
-
-    .table-user{
-        .table-th-1{
-        }   
-    }
-
-    .table-asset{
-
+        tr{
+            input{
+                cursor: pointer;
+            }
+            td{
+                cursor: auto;
+            }
+        }
     }
 }
