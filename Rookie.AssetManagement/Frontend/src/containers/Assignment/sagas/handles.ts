@@ -58,7 +58,7 @@ export function* handleGetStateList() {
     const options = [
       {
         id: 1,
-        label: "ALL",
+        label: "All",
         value: "ALL",
       },
     ];

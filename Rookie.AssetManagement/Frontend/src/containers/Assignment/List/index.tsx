@@ -46,7 +46,7 @@ const ListAssignment = () => {
 
     const { FilterAssignmentStateOptions } = useAppSelector(state => state.assignmentReducer)
     const states = useMemo(() => {
-        return FilterAssignmentStateOptions.filter(state => state.label == "Accepted" || state.label == "Waiting for acceptance" || state.label == "ALL")
+        return FilterAssignmentStateOptions.filter(state => state.label == "Accepted" || state.label == "Waiting for acceptance" || state.label == "All")
     }, [FilterAssignmentStateOptions])
     const handleState = (selected: ISelectOption[]) => {
         if (selected.length === 0) {
