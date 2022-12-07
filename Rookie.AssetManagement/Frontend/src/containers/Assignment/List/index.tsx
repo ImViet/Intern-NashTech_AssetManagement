@@ -86,7 +86,7 @@ const ListAssignment = () => {
         });
         console.log(query)
     };
-    const handleAssignDateChange = (date: Date) => { 
+    const handleAssignDateChange = (date: Date) => {
         setQuery({
             ...query,
             assignedDate: toUTCWithoutHour(date)
@@ -144,7 +144,7 @@ const ListAssignment = () => {
         // }))
     };
     const fetchData = () => {
-        dispatch(getAssignmentList({...query}))
+        dispatch(getAssignmentList({ ...query }))
     };
 
     useEffect(() => {
@@ -153,7 +153,7 @@ const ListAssignment = () => {
     }, [query]);
 
     useEffect(() => {
-        dispatch(getAssignmentList({...defaultQuery}))
+        dispatch(getAssignmentList({ ...defaultQuery }))
         dispatch(getState())
     }, []);
 
@@ -175,7 +175,7 @@ const ListAssignment = () => {
                         </div>
                     </div>
                     <div className="d-flex align-items-center w-md mr-5">
-                        <DateFilter label="Assigned Date" date={assignedDate} handleDateChange={handleAssignDateChange}/>
+                        <DateFilter label="Assigned Date" date={assignedDate} handleDateChange={handleAssignDateChange} />
                     </div>
                     <div className="d-flex align-items-center w-ld ml-auto mr-2">
                         <div className="input-group">
@@ -206,7 +206,7 @@ const ListAssignment = () => {
                     sortState={{
                         columnValue: query.sortColumn,
                         orderBy: query.sortOrder,
-                    }}                       
+                    }}
                     fetchData={fetchData}
                 />
             </div>
