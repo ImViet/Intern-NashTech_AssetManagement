@@ -61,6 +61,7 @@ namespace Rookie.AssetManagement.IntegrationTests
 
             AssignmentData.InitStatesData(_dbContext);
             AssignmentData.InitAssignmentsData(_dbContext);
+            AssignmentData.InitAssetsData(_dbContext);
 
 
             _identity = new ClaimsIdentity();
@@ -88,6 +89,39 @@ namespace Rookie.AssetManagement.IntegrationTests
             var actionResult = Assert.IsType<OkObjectResult>(result.Result);
             var returnValue = Assert.IsType<List<AssignmentDto>>(actionResult.Value);
             Assert.Equal(assignmentList.Count, returnValue.Count);
+        }
+
+        [Fact]
+        public async Task AddAssignmentAsync_Success()
+        {
+            //Arrange
+            var assignmentRequest = AssignmentData.GetCreateAssignmentDto();
+
+            // Act
+            var result = await _assignmentController.AddAssignmentAsync(assignmentRequest);
+
+            // Assert
+            result.Should().NotBeNull();
+
+            var actionResult = Assert.IsType<CreatedResult>(result.Result);
+            var returnValue = Assert.IsType<AssignmentDto>(actionResult.Value);
+
+            Assert.Equal(3, returnValue.Id);
+            Assert.Equal(assignmentRequest.Note, returnValue.Note);
+        }
+
+        [Fact]
+        public async Task AddAssignmentShouldThrowExceptionAsync()
+        {
+            //Arrange
+            var assignmentRequest = AssignmentData.GetCreateAssignmentDto();
+            string unExistedUser = "5";
+            assignmentRequest.User = unExistedUser;
+
+            // Act
+            await Assert.ThrowsAsync<NotFoundException>(() => _assignmentController.AddAssignmentAsync(assignmentRequest));
+
+            // Assert
         }
     }
  }
