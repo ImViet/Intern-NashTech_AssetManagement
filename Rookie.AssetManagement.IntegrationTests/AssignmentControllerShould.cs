@@ -106,7 +106,7 @@ namespace Rookie.AssetManagement.IntegrationTests
             var actionResult = Assert.IsType<OkObjectResult>(result.Result);
             var returnValue = Assert.IsType<AssignmentDto>(actionResult.Value);
 
-            Assert.Equal(1, returnValue.Id);
+            Assert.Equal(assignment.Id, returnValue.Id);
         }
 
         [Fact]
