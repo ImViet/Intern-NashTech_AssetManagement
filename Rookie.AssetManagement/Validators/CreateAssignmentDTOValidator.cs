@@ -12,7 +12,7 @@ public class CreateAssignmentDTOValidator : AbstractValidator<AssignmentCreateDt
          RuleFor(assginment => assginment.AssignedDate)
             .NotEmpty()
             .WithMessage("Assgined Date is empty")
-            .GreaterThanOrEqualTo(DateTime.Now)
+            .GreaterThanOrEqualTo(DateTime.Today)
             .WithMessage("Assgined Date is less than day now");
          RuleFor(assginment => assginment.Note)
             .NotEmpty()
