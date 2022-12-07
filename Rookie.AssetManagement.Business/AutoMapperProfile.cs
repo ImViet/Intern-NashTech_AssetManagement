@@ -78,13 +78,21 @@ namespace Rookie.AssetManagement.Business
                 .ForMember(d => d.Category, t => t.Ignore())
                 .ForMember(d => d.State, t => t.Ignore())
                 .ForMember(d => d.Assignments, t => t.Ignore());
+
             CreateMap<AssignmentCreateDto, Assignment>()
                 .ForMember(d => d.AssignedTo, t => t.Ignore())
                 .ForMember(d => d.AssignedBy, t => t.Ignore())
                 .ForMember(d => d.IsDeleted, t => t.Ignore())
                 .ForMember(d => d.State, t => t.Ignore())
-                 .ForMember(d => d.Id, t => t.Ignore())
-                .ForMember(d => d.Asset, t => t.Ignore());
+                .ForMember(d => d.Id, t => t.Ignore());
+
+            CreateMap<AssignmentUpdateDto, Assignment>()
+                .ForMember(d => d.AssignedTo, t => t.Ignore())
+                .ForMember(d => d.AssignedBy, t => t.Ignore())
+                .ForMember(d => d.IsDeleted, t => t.Ignore())
+                .ForMember(d => d.State, t => t.Ignore())
+                .ForMember(d => d.Asset, t => t.Ignore())
+                .ForMember(d => d.Id, t => t.Ignore());
         }
 
         private void FromDataAccessorLayer()
