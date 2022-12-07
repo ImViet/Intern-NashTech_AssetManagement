@@ -208,10 +208,10 @@ namespace Rookie.AssetManagement.Business.Services
             return await Task.FromResult(true);
         }
 
-        public async Task<PagedResponseModel<LookUpAssetDto>> GetLookUpAset(AssetQueryCriteriaDto assetQueryCriteria, CancellationToken cancellationToken)
+        public async Task<PagedResponseModel<LookUpAssetDto>> GetLookUpAsset(AssetQueryCriteriaDto assetQueryCriteria, CancellationToken cancellationToken)
         {
             var assetQuery = AssetSortLookUp(
-            _assetRepository.Entities
+            _assetRepository.Entities.Include(a=>a.Category)
             .Where(x => !x.IsDeleted).AsQueryable(),
             assetQueryCriteria);
 
@@ -237,6 +237,13 @@ namespace Rookie.AssetManagement.Business.Services
           IQueryable<Asset> assetQuery,
           AssetQueryCriteriaDto assetQueryCriteria)
         {
+            if (!String.IsNullOrEmpty(assetQueryCriteria.Search))
+            {
+                assetQuery = assetQuery.Where(b =>
+                  (b.AssetName.ToLower()).Contains(assetQueryCriteria.Search.ToLower())
+                    || b.AssetCode.ToLower().Contains(assetQueryCriteria.Search.ToLower()));
+            }
+
             if (assetQueryCriteria.SortColumn != null)
             {
                 var sortColumn = assetQueryCriteria.SortColumn.ToUpper();

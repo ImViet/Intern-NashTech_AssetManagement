@@ -30,7 +30,7 @@ namespace Rookie.AssetManagement.Business.Services
         private readonly IBaseRepository<Asset> _assetRepository;
         private readonly IBaseRepository<State> _stateRepository;
         private readonly IBaseRepository<Assignment> _assignmentRepository;
-        
+
         private readonly IMapper _mapper;
 
         public AssignmentService(IBaseRepository<Asset> assetRepository
@@ -55,21 +55,23 @@ namespace Rookie.AssetManagement.Business.Services
             {
                 throw new NotFoundException("User Not Found!");
             }
-           // var getAsset = _assetRepository.Entities.Where(x => x.Id == assignmentCreateDto.Asset).FirstOrDefault();
+            // var getAsset = _assetRepository.Entities.Where(x => x.Id == assignmentCreateDto.Asset).FirstOrDefault();
             var getAsset = _assetRepository.Entities.Where(x => x.Id.ToString() == assignmentCreateDto.Asset).FirstOrDefault();
             if (getAsset == null)
             {
-                throw new NotFoundException("State Not Found!");
+                throw new NotFoundException("Asset Not Found!");
             }
 
             var getAssignedBy = _userRepository.Entities.Where(x => x.UserName == AssignedBy).FirstOrDefault();
 
             newAssignment.AssignedTo = getUser;
-            newAssignment.Asset = getAsset;          
+            newAssignment.Asset = getAsset;
             newAssignment.IsDeleted = false;
             newAssignment.AssignedBy = getAssignedBy;
-            newAssignment.AssignedDate = DateTime.Now;
-            
+
+            var waitAcceptState = await _stateRepository.GetById(7);
+            newAssignment.State = waitAcceptState;
+
             var createResult = await _assignmentRepository.Add(newAssignment);
             return _mapper.Map<AssignmentDto>(newAssignment);
         }

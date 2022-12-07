@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import DateField from 'src/components/FormInputs/DateField';
 import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
-import { ASSIGNMENT, ASSET_PARENT_ROOT, HOME, USER, USER_PARENT_ROOT } from 'src/constants/pages';
+import { ASSIGNMENT, ASSET_PARENT_ROOT, HOME, USER, USER_PARENT_ROOT, ASSIGNMENT_PARENT_ROOT } from 'src/constants/pages';
 import { getCategory, getState } from '../Asset/reducer';
 import TextAreaField from 'src/components/FormInputs/TextAreaField';
 import LookupField from 'src/components/FormInputs/LookupField';
@@ -12,7 +12,9 @@ import IAssignmentForm from 'src/interfaces/Assignment/IAssignmentForm';
 import { Modal } from 'react-bootstrap';
 import UserLookupTable from './UserLookupTable';
 import { Search } from 'react-feather';
-import { getLookUpUserRequest } from './sagas/requests';
+import { getLookUpAssetRequest, getLookUpUserRequest } from './sagas/requests';
+import AssetLookupTable from './AssetLookupTable';
+import { createAssignment } from './reducer';
 
 const initialFormValues: IAssignmentForm = {
     user: '',
@@ -46,7 +48,7 @@ function AssignmentFormContainer({ initialAssetForm = {
     const navigate = useNavigate();
     const handleResult = (result: boolean, message: string) => {
         if (result) {
-            navigate(ASSET_PARENT_ROOT);
+            navigate(ASSIGNMENT_PARENT_ROOT);
         }
     };
 
@@ -95,10 +97,10 @@ function AssignmentFormContainer({ initialAssetForm = {
                             name="asset"
                             label="Asset"
                             isrequired
-                            lookupLabel="Users"
-                            request={()=>{}}
-                            TableComponent={UserLookupTable}
-                        /> */}
+                            lookupLabel="Assets"
+                            request={getLookUpAssetRequest}
+                            TableComponent={AssetLookupTable}
+                        />
 
                             <DateField
                                 name="assignedDate"

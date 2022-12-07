@@ -2,40 +2,38 @@ import React, { useEffect, useState } from "react";
 import IColumnOption from "src/interfaces/IColumnOption";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import IAsset from "src/interfaces/Asset/IAsset";
-import HistoryTableAsset from "src/containers/Asset/HistoryTableAsset";
-import IAssetHistory from "src/interfaces/Asset/IAssetHistory";
 import IPagedModel from "src/interfaces/IPagedModel";
-import IUser from "src/interfaces/User/IUser";
 import Table, { SortType } from "src/components/Table";
 import ILookupTable from "src/interfaces/ILookupTable";
 import { Search } from "react-bootstrap-icons";
-import IQueryUserModel from "src/interfaces/User/IQueryUserModel";
-import { ACCSENDING, DECSENDING, DEFAULT_PAGE_LIMIT, DEFAULT_USER_SORT_COLUMN_NAME } from "src/constants/paging";
+import { ACCSENDING, DECSENDING, DEFAULT_PAGE_LIMIT, DEFAULT_ASSET_SORT_COLUMN_NAME } from "src/constants/paging";
+import IQueryAssetModel from "src/interfaces/Asset/IQueryAssetModel";
 
 const columns: IColumnOption[] = [
     { columnName: "", columnValue: "checkbox" },
-    { columnName: "Staff Code ", columnValue: "staffCode" },
-    { columnName: "Full Name ", columnValue: "fullName" },
-    { columnName: "Type ", columnValue: "Type" },
+    { columnName: "Asset Code ", columnValue: "assetCode" },
+    { columnName: "Asset Name ", columnValue: "assetName" },
+    { columnName: "Category ", columnValue: "category" },
 ];
 
-const defaultQuery: IQueryUserModel = {
+const defaultQuery: IQueryAssetModel = {
     page: 1,
     limit: DEFAULT_PAGE_LIMIT,
     sortOrder: ACCSENDING,
-    sortColumn: DEFAULT_USER_SORT_COLUMN_NAME,
-    types: [],
+    sortColumn: DEFAULT_ASSET_SORT_COLUMN_NAME,
+    categories: ["All"],
+    states: ["All"],
     search: ""
 }
 
 
-const UserLookupTable: React.FC<ILookupTable> = ({
+const AssetLookupTable: React.FC<ILookupTable> = ({
     onSelect,
     closeModal,
     requestData,
 }) => {
     const [selected, setSelected] = useState({label:"", value: 0});
-    const [users, setUsers]= useState({} as IPagedModel<IUser>);
+    const [assets, setAssets]= useState({} as IPagedModel<IAsset>);
     const [query, setQuery] = useState({ ...defaultQuery });
     const [search, setSearch] = useState("");
 
@@ -77,7 +75,7 @@ const UserLookupTable: React.FC<ILookupTable> = ({
 
     const fetchData=()=>{
         requestData(query)
-            .then(res=>setUsers(res.data))
+            .then(res=>setAssets(res.data))
             .catch(err=>console.log(err));
     }
     
@@ -92,7 +90,7 @@ const UserLookupTable: React.FC<ILookupTable> = ({
                     <h5 style={{
                         color: "#cf2338",
                         margin: 0,
-                    }}>Select User</h5>
+                    }}>Select Asset</h5>
                     <div className="d-flex align-items-center w-ld ml-auto mr-2">
                         <div className="input-group">
                             <input
@@ -110,7 +108,7 @@ const UserLookupTable: React.FC<ILookupTable> = ({
             </div>
             <div className="table-detail">
                 <div className='row -intro-y'>
-                    <div className="table-user">
+                    <div className="table-asset">
                         <Table
                             columns={columns}
                             handleSort={handleSort}
@@ -118,22 +116,17 @@ const UserLookupTable: React.FC<ILookupTable> = ({
                                 columnValue: query.sortColumn,
                                 orderBy: query.sortOrder,
                             }}
-                            // page={{
-                            //     currentPage: users?.currentPage,
-                            //     totalPage: users?.totalPages,
-                            //     handleChange: handlePage,
-                            // }}
                         >
-                            {users?.items?.map((data, index) => (
+                            {assets?.items?.map((data, index) => (
                                 <tr key={index} className="">
                                     <input className="form-check-input input-radio ml-1"
                                         type="radio"
-                                        name="user-select"
-                                        onClick={()=>setSelected({label: data.fullName, value: data.id})}
+                                        name="asset-select"
+                                        onClick={()=>setSelected({label: data.assetName, value: data.id})}
                                     />
-                                    <td>{data.staffCode}</td>
-                                    <td>{data.fullName}</td>
-                                    <td>{data.type}</td>
+                                    <td>{data.assetCode}</td>
+                                    <td>{data.assetName}</td>
+                                    <td>{data.category}</td>
                                 </tr>
                             ))}
                         </Table>
@@ -159,4 +152,4 @@ const UserLookupTable: React.FC<ILookupTable> = ({
     );
 };
 
-export default UserLookupTable;
+export default AssetLookupTable;
