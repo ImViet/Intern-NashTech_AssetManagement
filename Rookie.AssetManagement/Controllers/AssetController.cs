@@ -8,6 +8,7 @@ using Rookie.AssetManagement.Contracts;
 using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
 using Rookie.AssetManagement.Contracts.Dtos.CategoryDtos;
 using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
+using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using System;
 using System.Linq;
 using System.Threading;
@@ -110,6 +111,21 @@ namespace Rookie.AssetManagement.Controllers
             var disableResult = await _assetService.DisableAssetAsync(id, location);
 
             return Ok(disableResult);
+        }
+
+        [HttpGet]
+        [Route("GetLookUpAsset")]
+        public async Task<ActionResult<PagedResponseModel<LookUpAssetDto>>> GetLookUpAsset(
+            [FromQuery] AssetQueryCriteriaDto assetQueryCriteriaDto,
+            CancellationToken cancellationToken)
+        {
+
+
+            var assetResponses = await _assetService.GetLookUpAsset(
+                                            assetQueryCriteriaDto,
+                                            cancellationToken
+                                            );
+            return Ok(assetResponses);
         }
     }
 }

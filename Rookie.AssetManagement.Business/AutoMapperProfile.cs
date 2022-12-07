@@ -38,7 +38,7 @@ namespace Rookie.AssetManagement.Business
                 .ForMember(d => d.AccessFailedCount, t => t.Ignore())
                 .ForMember(d => d.SecurityStamp, t => t.Ignore())
                 .ForMember(d => d.ConcurrencyStamp, t => t.Ignore())
-                .ForMember(d => d.Assignments, t =>t.Ignore());
+                .ForMember(d => d.Assignments, t => t.Ignore());
             CreateMap<UserUpdateDto, User>()
                 .ForMember(d => d.FirstName, t => t.Ignore())
                 .ForMember(d => d.LastName, t => t.Ignore())
@@ -78,6 +78,13 @@ namespace Rookie.AssetManagement.Business
                 .ForMember(d => d.Category, t => t.Ignore())
                 .ForMember(d => d.State, t => t.Ignore())
                 .ForMember(d => d.Assignments, t => t.Ignore());
+            CreateMap<AssignmentCreateDto, Assignment>()
+                .ForMember(d => d.AssignedTo, t => t.Ignore())
+                .ForMember(d => d.AssignedBy, t => t.Ignore())
+                .ForMember(d => d.IsDeleted, t => t.Ignore())
+                .ForMember(d => d.State, t => t.Ignore())
+                 .ForMember(d => d.Id, t => t.Ignore())
+                .ForMember(d => d.Asset, t => t.Ignore());
         }
 
         private void FromDataAccessorLayer()
@@ -87,6 +94,9 @@ namespace Rookie.AssetManagement.Business
             CreateMap<User, AccountDto>()
                 .ForMember(d => d.FullName, t => t.MapFrom(src => src.FirstName + " " + src.LastName))
                 .ForMember(d => d.Token, t => t.Ignore());
+            CreateMap<User, LookUpUserDto>()
+                .ForMember(d => d.FullName, t => t.MapFrom(src => src.FirstName + " " + src.LastName));
+
             CreateMap<Category, CategoryDto>();
             CreateMap<State, StateDto>();
 
@@ -96,6 +106,8 @@ namespace Rookie.AssetManagement.Business
             CreateMap<Asset, AssetFormDto>()
                 .ForMember(d => d.Category, t => t.MapFrom(c => c.Category.Id))
                 .ForMember(d => d.State, t => t.MapFrom(c => c.State.Id));
+            CreateMap<Asset, LookUpAssetDto>()
+                .ForMember(d => d.Category, t => t.MapFrom(src => src.Category.CategoryName));
 
             CreateMap<Assignment, AssignmentDto>()
                 .ForMember(d => d.No, t => t.Ignore())

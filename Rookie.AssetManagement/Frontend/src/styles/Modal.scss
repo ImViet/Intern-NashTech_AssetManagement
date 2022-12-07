@@ -39,12 +39,6 @@
     }
 }
 
-// .login-modal{
-//     .modal-content{
-//         border-radius: 10px;
-//     }
-// }
-
 .first-login-modal{ 
     .modal-body{
         padding: 30px 30px; 
@@ -53,11 +47,5 @@
 @media (min-width: 576px){
     .model-info-asset{
         max-width: 710px;
-    }
-}
-@media (min-width: 576px){
-
-    .table-detail-large .modal-dialog{
-        max-width: 550px;
     }
 }

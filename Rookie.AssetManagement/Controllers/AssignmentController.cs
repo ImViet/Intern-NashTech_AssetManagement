@@ -9,10 +9,12 @@ using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
 using Rookie.AssetManagement.Contracts;
 using System.Linq;
 using System.Threading;
+using Rookie.AssetManagement.Constants;
+using System;
 
 namespace Rookie.AssetManagement.Controllers
 {
-    //[Authorize(AuthenticationSchemes = "Bearer", Policy = "Admin")]
+    [Authorize(AuthenticationSchemes = "Bearer", Policy = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AssignmentController : ControllerBase
@@ -34,8 +36,8 @@ namespace Rookie.AssetManagement.Controllers
         [FromQuery] AssignmentQueryCriteriaDto assignmentCriteriaDto,
         CancellationToken cancellationToken)
         {
-          
-          
+
+
 
             var assetResponses = await _assignmentService.GetByPageAsync(
                                             assignmentCriteriaDto,
@@ -50,6 +52,14 @@ namespace Rookie.AssetManagement.Controllers
         {
             var assignmentResponses = await _assignmentService.GetByIdAsync(id);
             return Ok(assignmentResponses);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<AssignmentDto>> AddAssignmentAsync([FromBody] AssignmentCreateDto assignmentCreate)
+        {
+            var AssignedBy = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
+            var assigment = await _assignmentService.AddAssignmentAsync(assignmentCreate, AssignedBy);
+            return Created(Endpoints.User, assigment);
         }
     }
 }

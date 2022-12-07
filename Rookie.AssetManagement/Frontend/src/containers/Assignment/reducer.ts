@@ -6,6 +6,7 @@ import IPagedModel from "src/interfaces/IPagedModel";
 import IQueryAssigmentModel from "src/interfaces/Assignment/IQueryAssignmentModel";
 import ISelectOption from "src/interfaces/ISelectOption";
 import IAssignment from "src/interfaces/Assignment/IAssignment";
+import IAssignmentForm from "src/interfaces/Assignment/IAssignmentForm";
 // import IAssetForm from "src/interfaces/Asset/IAssetForm";
 
 type AssignmentState = {
@@ -21,7 +22,7 @@ type AssignmentState = {
 
 export type CreateAction = {
   handleResult: Function;
-  // formValues: IAssetForm;
+  formValues: IAssignmentForm;
 };
 
 export type UpdateAction = {
@@ -47,13 +48,19 @@ const AssignmentReducerSlice = createSlice({
   name: "assignment",
   initialState,
   reducers: {
-    createAssignment: (state, action: PayloadAction<CreateAction>): AssignmentState => {
+    createAssignment: (
+      state,
+      action: PayloadAction<CreateAction>
+    ): AssignmentState => {
       return {
         ...state,
         loading: true,
       };
     },
-    updateAssignment: (state, action: PayloadAction<UpdateAction>): AssignmentState => {
+    updateAssignment: (
+      state,
+      action: PayloadAction<UpdateAction>
+    ): AssignmentState => {
       return {
         ...state,
         loading: true,
@@ -95,7 +102,7 @@ const AssignmentReducerSlice = createSlice({
         error,
         loading: false,
       };
-    },   
+    },
     getState: (state) => {
       return {
         ...state,
@@ -110,7 +117,10 @@ const AssignmentReducerSlice = createSlice({
         loading: false,
       };
     },
-    setAssignmentResult: (state, action: PayloadAction<IAssignment>): AssignmentState => {
+    setAssignmentResult: (
+      state,
+      action: PayloadAction<IAssignment>
+    ): AssignmentState => {
       const assignmentResult = action.payload;
 
       return {
@@ -119,7 +129,10 @@ const AssignmentReducerSlice = createSlice({
         loading: false,
       };
     },
-    setActionResult: (state, action: PayloadAction<IAssignment>): AssignmentState => {
+    setActionResult: (
+      state,
+      action: PayloadAction<IAssignment>
+    ): AssignmentState => {
       const actionResult = action.payload;
 
       return {
@@ -146,7 +159,10 @@ const AssignmentReducerSlice = createSlice({
     //     loading: false,
     //   };
     // },
-    disableAssignment: (state, action: PayloadAction<DisableAction>): AssignmentState => {
+    disableAssignment: (
+      state,
+      action: PayloadAction<DisableAction>
+    ): AssignmentState => {
       return {
         ...state,
         loading: true,
@@ -172,8 +188,6 @@ export const {
   setState,
   setStatus,
   getAssignment,
-  // getAssetFormData,
-  // setAssetFormData,
   disableAssignment,
   cleanUpActionResult,
 } = AssignmentReducerSlice.actions;

@@ -22,7 +22,9 @@ import {
   getStateRequest,
   getAssignmentsRequest,
   getAssignmentByIdRequest,
+  createAssignmentRequest,
 } from "./requests";
+import IAssignmentForm from "src/interfaces/Assignment/IAssignmentForm";
 
 export function* handleGetAssignmentList(
   action: PayloadAction<IQueryAssignmentModel>
@@ -31,10 +33,12 @@ export function* handleGetAssignmentList(
 
   try {
     console.log(queryAssigmentModel);
-    if(!queryAssigmentModel.assignedDate){
-      queryAssigmentModel.assignedDate = new Date('0001-01-01T00:00:00Z');
-    }else{
-      queryAssigmentModel.assignedDate = toUTCWithoutHour(queryAssigmentModel.assignedDate)
+    if (!queryAssigmentModel.assignedDate) {
+      queryAssigmentModel.assignedDate = new Date("0001-01-01T00:00:00Z");
+    } else {
+      queryAssigmentModel.assignedDate = toUTCWithoutHour(
+        queryAssigmentModel.assignedDate
+      );
     }
     const { data } = yield call(getAssignmentsRequest, queryAssigmentModel);
     yield put(setAssignmentList(data));
@@ -58,7 +62,7 @@ export function* handleGetStateList() {
     const options = [
       {
         id: 1,
-        label: "ALL",
+        label: "All",
         value: "ALL",
       },
     ];
@@ -99,6 +103,39 @@ export function* handleGetAssignmentById(action: PayloadAction<number>) {
         error: {
           error: true,
           message: message,
+        },
+      })
+    );
+  }
+}
+
+export function* handleCreateAssignment(action: PayloadAction<CreateAction>) {
+  const { formValues, handleResult } = action.payload;
+  try {
+    console.log(formValues);
+
+    formValues.assignedDate = toUTCWithoutHour(formValues.assignedDate);
+    formValues.asset = formValues.asset.toString();
+    formValues.user = formValues.user.toString();
+
+    const { data } = yield call(createAssignmentRequest, formValues);
+
+    data.assignedDate = new Date(data.assignedDate);
+
+    if (data) {
+      handleResult(true);
+    }
+
+    yield put(setActionResult(data));
+  } catch (error: any) {
+    const errorModel = error.response.data;
+    handleResult(false, errorModel);
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: {
+          error: true,
+          message: "",
         },
       })
     );

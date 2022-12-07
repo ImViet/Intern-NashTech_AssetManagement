@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import IColumnOption from "src/interfaces/IColumnOption";
 import { useAppDispatch } from "src/hooks/redux";
 import IAsset from "src/interfaces/Asset/IAsset";
-import HistoryTableAsset from "src/components/Table/HistoryTableAsset";
+import HistoryTableAsset from "src/containers/Asset/HistoryTableAsset";
 import IAssetHistory from "src/interfaces/Asset/IAssetHistory";
 
 
