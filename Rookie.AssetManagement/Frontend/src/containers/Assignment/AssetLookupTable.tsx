@@ -100,14 +100,13 @@ const AssetLookupTable: React.FC<ILookupTable> = ({
     return (
         <>
             <div className="header-table">
-                <div>
-                    <strong style={{
-                        marginLeft: "-10px",
-                        marginBottom: "5px",
+                <div className="d-flex align-items-center justify-content-between mb-3">
+                    <h5 style={{
                         color: "#cf2338",
-                    }}>Asset</strong>
+                        margin: 0,
+                    }}>Select Asset</h5>
                     <div className="d-flex align-items-center w-ld ml-auto mr-2">
-                        <div style={{ marginTop: -33, marginLeft: -15 }} className="input-group">
+                        <div className="input-group">
                             <input
                                 onChange={handleChangeSearch}
                                 value={search}
@@ -123,7 +122,7 @@ const AssetLookupTable: React.FC<ILookupTable> = ({
             </div>
             <div className="table-detail">
                 <div className='row -intro-y'>
-                    <div className="table-user">
+                    <div className="table-asset">
                         <Table
                             columns={columns}
                             handleSort={handleSort}
@@ -131,11 +130,6 @@ const AssetLookupTable: React.FC<ILookupTable> = ({
                                 columnValue: query.sortColumn,
                                 orderBy: query.sortOrder,
                             }}
-                            // page={{
-                            //     currentPage: users?.currentPage,
-                            //     totalPage: users?.totalPages,
-                            //     handleChange: handlePage,
-                            // }}
                         >
                             {assets?.items?.map((data, index) => (
                                 <tr key={index} className="">

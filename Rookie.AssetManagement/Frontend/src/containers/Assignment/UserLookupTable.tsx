@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import IColumnOption from "src/interfaces/IColumnOption";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import IAsset from "src/interfaces/Asset/IAsset";
-import HistoryTableAsset from "src/components/Table/HistoryTableAsset";
+import HistoryTableAsset from "src/containers/Asset/HistoryTableAsset";
 import IAssetHistory from "src/interfaces/Asset/IAssetHistory";
 import IPagedModel from "src/interfaces/IPagedModel";
 import IUser from "src/interfaces/User/IUser";
@@ -101,14 +101,13 @@ const UserLookupTable: React.FC<ILookupTable> = ({
     return (
         <>
             <div className="header-table">
-                <div>
-                    <strong style={{
-                        marginLeft: "-10px",
-                        marginBottom: "5px",
+                <div className="d-flex align-items-center justify-content-between mb-3">
+                    <h5 style={{
                         color: "#cf2338",
-                    }}>Users</strong>
+                        margin: 0,
+                    }}>Select User</h5>
                     <div className="d-flex align-items-center w-ld ml-auto mr-2">
-                        <div style={{ marginTop: -33, marginLeft: -15 }} className="input-group">
+                        <div className="input-group">
                             <input
                                 onChange={handleChangeSearch}
                                 value={search}

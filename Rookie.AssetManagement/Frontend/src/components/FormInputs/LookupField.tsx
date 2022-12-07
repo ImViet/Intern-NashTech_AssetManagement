@@ -55,7 +55,6 @@ const LookupField: React.FC<InputFieldProps> = (props) => {
                 onHide={() => setShowLookup(false)}
                 aria-labelledby="login-modal"
             >
-                <div className="first-login-modal">
                     <Modal.Body>
                         <TableComponent 
                             closeModal={()=>setShowLookup(false)}
@@ -63,7 +62,6 @@ const LookupField: React.FC<InputFieldProps> = (props) => {
                             requestData={request}
                         />
                     </Modal.Body>
-                </div>
             </Modal>
         </>
     );
