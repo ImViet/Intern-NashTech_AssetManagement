@@ -92,6 +92,24 @@ namespace Rookie.AssetManagement.IntegrationTests
         }
 
         [Fact]
+        public async Task GetAssignmentShouldReturnSuccess()
+        {
+            //Arrange
+            var idAssignment = 1;
+            var assignment = AssignmentData.GetAssignment();
+
+            //Act
+            var result = await _assignmentController.GetAssginmentById(idAssignment);
+            //Assert
+
+            result.Should().NotBeNull();
+            var actionResult = Assert.IsType<OkObjectResult>(result.Result);
+            var returnValue = Assert.IsType<AssignmentDto>(actionResult.Value);
+
+            Assert.Equal(1, returnValue.Id);
+        }
+
+        [Fact]
         public async Task AddAssignmentAsync_Success()
         {
             //Arrange
