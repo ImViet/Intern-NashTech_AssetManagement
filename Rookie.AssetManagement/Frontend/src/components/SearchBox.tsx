@@ -17,7 +17,11 @@ const SearchBox : React.FC<Props> = ({ handleSearch , getSuggestionRequest}) =>{
         e.preventDefault();
         const search = e.target.value;
         setSearch(search);
-        getSuggestion(search);
+        if(search.length >= 3){
+            getSuggestion(search);
+        }else{
+            setShow(false)
+        }
     };
 
     const handleSuggestionCLick =(keyword)=>{
