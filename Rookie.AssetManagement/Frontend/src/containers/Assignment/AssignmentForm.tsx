@@ -93,14 +93,14 @@ function AssignmentFormContainer({ initialAssetForm = {
                                 TableComponent={UserLookupTable}
                             />
 
-                            {/* <LookupField
-                            name="asset"
-                            label="Asset"
-                            isrequired
-                            lookupLabel="Assets"
-                            request={getLookUpAssetRequest}
-                            TableComponent={AssetLookupTable}
-                        />
+                            <LookupField
+                                name="asset"
+                                label="Asset"
+                                isrequired
+                                lookupLabel="Assets"
+                                request={getLookUpAssetRequest}
+                                TableComponent={AssetLookupTable}
+                            />
 
                             <DateField
                                 name="assignedDate"
