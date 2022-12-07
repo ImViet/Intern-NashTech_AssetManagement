@@ -52,7 +52,7 @@ const Info: React.FC<Props> = ({ assignment, handleClose }) => {
                         <div className='row -intro-y'>
                             <div className='col-4'>Assigned by</div>
                             <div className='col-6'>{assignment.assignedBy}</div>
-                        </div> 
+                        </div>
                         <div className='row -intro-y'>
                             <div className='col-4'>Assigned Date</div>
                             <div className='col-6'>{convertDDMMYYYY(assignment.assignedDate)}</div>
