@@ -109,6 +109,11 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                 {
                     AssetCode = "MO000002",
                     AssetName = "Personal Computer xyz2",
+                },
+                new Asset()
+                {
+                    AssetCode = "MO000003",
+                    AssetName = "Personal Computer 3",
                 }
         };}
         public static List<AssignmentDto> GetAllAssignments(){
@@ -131,6 +136,16 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     State = "",
                 },
 
+            };
+        }
+
+        public static AssignmentCreateDto GetCreateAssignmentDto(){
+            return new AssignmentCreateDto()
+            {
+                    User = "2",
+                    Asset = "3",
+                    AssignedDate = new DateTime(),
+                    Note = "May tinh CR7",
             };
         }
 

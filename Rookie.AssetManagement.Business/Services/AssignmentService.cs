@@ -59,7 +59,7 @@ namespace Rookie.AssetManagement.Business.Services
             var getAsset = _assetRepository.Entities.Where(x => x.Id.ToString() == assignmentCreateDto.Asset).FirstOrDefault();
             if (getAsset == null)
             {
-                throw new NotFoundException("State Not Found!");
+                throw new NotFoundException("Asset Not Found!");
             }
 
             var getAssignedBy = _userRepository.Entities.Where(x => x.UserName == AssignedBy).FirstOrDefault();
