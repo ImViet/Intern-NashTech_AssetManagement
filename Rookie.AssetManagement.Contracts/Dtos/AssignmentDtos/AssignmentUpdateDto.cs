@@ -8,8 +8,9 @@ namespace Rookie.AssetManagement.Contracts.Dtos.AssignmentDtos
 {
     public class AssignmentUpdateDto
     {
-        public string User { get; set; }
-        public string Asset { get; set; }
+        public int Id { get; set; }
+        public int AssignedTo { get; set; }
+        public int Asset { get; set; }
         public DateTime AssignedDate { get; set; }
         public string Note { get; set; }
     }

@@ -9,6 +9,8 @@ using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
 using Rookie.AssetManagement.Contracts;
 using System.Linq;
 using System.Threading;
+using Rookie.AssetManagement.Constants;
+using System;
 
 namespace Rookie.AssetManagement.Controllers
 {
@@ -42,6 +44,20 @@ namespace Rookie.AssetManagement.Controllers
                                             cancellationToken
                                             );
             return Ok(assetResponses);
+        }
+        [HttpPut]
+        public async Task<ActionResult<AssignmentDto>> UpdateAssignmentAsync([FromBody] AssignmentUpdateDto assignmentUpdateDto)
+        {
+            AssignmentDto assignment;
+            try
+            {
+                assignment = await _assignmentService.UpdateAssignmentAsync(assignmentUpdateDto);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            return Created(Endpoints.User, assignment);
         }
     }
 }
