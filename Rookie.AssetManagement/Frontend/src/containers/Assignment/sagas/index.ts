@@ -12,6 +12,7 @@ import {
   handleGetAssignmentById,
   handleGetStateList,
   handleCreateAssignment,
+  handleUpdateAssignment,
 } from "./handles";
 
 export default function* AssignmentSagas() {
@@ -19,4 +20,6 @@ export default function* AssignmentSagas() {
   yield takeLatest(getState.type, handleGetStateList);
   yield takeLatest(getAssignment.type, handleGetAssignmentById);
   yield takeLatest(createAssignment.type, handleCreateAssignment);
+  yield takeLatest(updateAssignment.type, handleUpdateAssignment);
+
 }

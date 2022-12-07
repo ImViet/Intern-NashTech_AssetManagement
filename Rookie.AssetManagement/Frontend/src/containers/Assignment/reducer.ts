@@ -27,7 +27,7 @@ export type CreateAction = {
 
 export type UpdateAction = {
   handleResult: Function;
-  // formValues: IAssetForm;
+  formValues: IAssignmentForm;
 };
 
 export type DisableAction = {
