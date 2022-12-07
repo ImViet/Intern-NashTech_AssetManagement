@@ -73,6 +73,7 @@ export function* handleGetStateList() {
         value: state.id,
       });
     });
+    debugger;
     yield put(setState(options));
   } catch (error: any) {
     const message = error.response.data;

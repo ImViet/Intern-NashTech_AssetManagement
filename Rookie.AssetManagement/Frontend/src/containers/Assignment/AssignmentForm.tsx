@@ -40,8 +40,6 @@ function AssignmentFormContainer({ initialAssetForm = {
     const isUpdate = initialAssetForm.id ? true : false;
 
     const [loading, setLoading] = useState(false);
-    const [showLookup, setShowLookup] = useState(false);
-    const [search, setSearch] = useState("");
 
     const dispatch = useAppDispatch();
 
@@ -50,15 +48,6 @@ function AssignmentFormContainer({ initialAssetForm = {
         if (result) {
             navigate(ASSIGNMENT_PARENT_ROOT);
         }
-    };
-
-    useEffect(() => {
-        dispatch(getCategory())
-        dispatch(getState())
-    }, [])
-
-    const showLookupModal = () => {
-        setShowLookup(true)
     };
 
     return (
@@ -75,7 +64,7 @@ function AssignmentFormContainer({ initialAssetForm = {
                             // dispatch(updateAsset({ handleResult, formValues: {...values} }));
                         }
                         else {
-                            // dispatch(createAsset({ handleResult, formValues: {...values} }));
+                            dispatch(createAssignment({ handleResult, formValues: {...values} }));
                         }
                         setLoading(false);
                     }, 1000);
