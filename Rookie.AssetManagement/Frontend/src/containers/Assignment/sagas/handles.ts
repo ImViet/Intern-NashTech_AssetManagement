@@ -23,6 +23,7 @@ import {
   getAssignmentsRequest,
   getAssignmentByIdRequest,
   createAssignmentRequest,
+  updateAssignmentRequest,
 } from "./requests";
 import IAssignmentForm from "src/interfaces/Assignment/IAssignmentForm";
 
@@ -143,25 +144,34 @@ export function* handleCreateAssignment(action: PayloadAction<CreateAction>) {
   }
 }
 
-// export function* handleDisableAssignment(action: PayloadAction<DisableAction>) {
-//   const { id, handleResult } = action.payload;
-//   try {
-//     const { data } = yield call(disableAssignmentRequest, id);
+export function* handleUpdateAssignment(action: PayloadAction<UpdateAction>) {
+  const { handleResult, formValues } = action.payload;
+  try {
+    console.log("handleUpdateAssignment");
+    console.log(formValues);
 
-//     if (data) {
-//       handleResult(true, "");
-//     }
-//   } catch (error: any) {
-//     const message = error.response.data;
-//     handleResult(false, message);
-//     yield put(
-//       setStatus({
-//         status: Status.Failed,
-//         error: {
-//           error: true,
-//           message: message,
-//         },
-//       })
-//     );
-//   }
-// }
+    formValues.assignedDate = toUTCWithoutHour(formValues.assignedDate);
+
+    const { data } = yield call(updateAssignmentRequest, formValues);
+
+    data.AssignedDate = new Date(data.AssignedDate);
+
+    if (data) {
+      handleResult(true, data.id);
+    }
+
+    yield put(setActionResult(data));
+  } catch (error: any) {
+    const errorModel = error.response.data;
+    handleResult(false, errorModel);
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: {
+          error: true,
+          message: "",
+        },
+      })
+    );
+  }
+}
