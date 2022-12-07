@@ -30,7 +30,6 @@ namespace Rookie.AssetManagement.Business.Services
         private readonly IBaseRepository<Asset> _assetRepository;
         private readonly IBaseRepository<State> _stateRepository;
         private readonly IBaseRepository<Assignment> _assignmentRepository;
-
         private readonly IMapper _mapper;
 
         public AssignmentService(IBaseRepository<Asset> assetRepository
@@ -40,9 +39,9 @@ namespace Rookie.AssetManagement.Business.Services
             , IMapper mapper)
         {
             _assetRepository = assetRepository;
+            _userRepository = userRepository;
             _stateRepository = stateRepository;
             _assignmentRepository = assignmentRepository;
-            _userRepository = userRepository;
             _mapper = mapper;
         }
 
@@ -197,6 +196,36 @@ namespace Rookie.AssetManagement.Business.Services
                 .ProjectTo<AssignmentDto>(_mapper.ConfigurationProvider)
                 .FirstAsync();
             return assignment;
+        }
+
+        public async Task<AssignmentDto> UpdateAssignmentAsync(AssignmentUpdateDto assignmentUpdateDto)
+        {
+            var assignment = await _assignmentRepository.Entities.Include(x => x.AssignedTo).Include(x => x.Asset).Include(x => x.State).FirstOrDefaultAsync(a => a.Id == assignmentUpdateDto.Id);
+            if (assignment == null)
+            {
+                throw new NotFoundException("Assignment Not Found!");
+            }
+            if (assignment.State.Id == 6)
+            {
+                throw new NotFoundException("Accepted Assignment Can Not Be Edit");
+            }
+            var getUserTo = _userRepository.Entities.Where(x => x.Id == assignmentUpdateDto.User).FirstOrDefault();
+            if (getUserTo == null)
+            {
+                throw new NotFoundException("User Not Found!");
+            }
+            var getAsset = _assetRepository.Entities.Where(x => x.Id == assignmentUpdateDto.Asset).FirstOrDefault();
+            if (getAsset == null)
+            {
+                throw new NotFoundException("Asset Not Found!");
+            }
+            assignment.AssignedTo = getUserTo;
+            assignment.Asset = getAsset;
+            _mapper.Map(assignmentUpdateDto, assignment);
+
+            var assignmentUpdated = await _assignmentRepository.Update(assignment);
+            var assignmentUpdatedDto = _mapper.Map<AssignmentDto>(assignmentUpdated);
+            return assignmentUpdatedDto;
         }
     }
 }

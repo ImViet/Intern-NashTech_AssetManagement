@@ -24,6 +24,6 @@ namespace Rookie.AssetManagement.Business.Interfaces
         //Task<bool> DisableAsync(int id, string location);
 
         Task<PagedResponseModel<AssignmentDto>> GetByPageAsync(AssignmentQueryCriteriaDto assignmentQueryCriteria, CancellationToken cancellationToken);
-     
+        Task<AssignmentDto> UpdateAssignmentAsync(AssignmentUpdateDto assignmentUpdateDto);
     }
 }

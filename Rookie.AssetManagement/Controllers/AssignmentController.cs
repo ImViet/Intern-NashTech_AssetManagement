@@ -61,5 +61,19 @@ namespace Rookie.AssetManagement.Controllers
             var assigment = await _assignmentService.AddAssignmentAsync(assignmentCreate, AssignedBy);
             return Created(Endpoints.User, assigment);
         }
+        [HttpPut]
+        public async Task<ActionResult<AssignmentDto>> UpdateAssignmentAsync([FromBody] AssignmentUpdateDto assignmentUpdateDto)
+        {
+            AssignmentDto assignment;
+            try
+            {
+                assignment = await _assignmentService.UpdateAssignmentAsync(assignmentUpdateDto);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            return Created(Endpoints.User, assignment);
+        }
     }
 }

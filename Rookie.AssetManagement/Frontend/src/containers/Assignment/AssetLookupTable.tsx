@@ -116,6 +116,11 @@ const AssetLookupTable: React.FC<ILookupTable> = ({
                                 columnValue: query.sortColumn,
                                 orderBy: query.sortOrder,
                             }}
+                            page={{
+                                currentPage: assets?.currentPage,
+                                totalPage: assets?.totalPages,
+                                handleChange: handlePage,
+                            }}
                         >
                             {assets?.items?.map((data, index) => (
                                 <tr key={index} className="">
