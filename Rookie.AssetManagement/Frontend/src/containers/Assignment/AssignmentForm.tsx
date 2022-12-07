@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import DateField from 'src/components/FormInputs/DateField';
 import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
-import { ASSIGNMENT, ASSET_PARENT_ROOT, HOME, USER, USER_PARENT_ROOT } from 'src/constants/pages';
+import { ASSIGNMENT, ASSET_PARENT_ROOT, HOME, USER, USER_PARENT_ROOT, ASSIGNMENT_PARENT_ROOT } from 'src/constants/pages';
 import { getCategory, getState } from '../Asset/reducer';
 import TextAreaField from 'src/components/FormInputs/TextAreaField';
 import LookupField from 'src/components/FormInputs/LookupField';
@@ -14,6 +14,7 @@ import UserLookupTable from './UserLookupTable';
 import { Search } from 'react-feather';
 import { getLookUpAssetRequest, getLookUpUserRequest } from './sagas/requests';
 import AssetLookupTable from './AssetLookupTable';
+import { createAssignment } from './reducer';
 
 const initialFormValues: IAssignmentForm = {
     user: '',
@@ -39,27 +40,16 @@ function AssignmentFormContainer({ initialAssetForm = {
     const isUpdate = initialAssetForm.id ? true : false;
 
     const [loading, setLoading] = useState(false);
-    const [ showLookup, setShowLookup ] = useState(false);
-    const [search, setSearch] = useState("");
 
     const dispatch = useAppDispatch();
 
     const navigate = useNavigate();
     const handleResult = (result: boolean, message: string) => {
         if (result) {
-            navigate(ASSET_PARENT_ROOT);
+            navigate(ASSIGNMENT_PARENT_ROOT);
         }
     };
     
-    useEffect(() => {
-        dispatch(getCategory())
-        dispatch(getState())
-    }, [])
-
-    const showLookupModal = () =>{
-        setShowLookup(true)
-    };
-
     return (
         <>
             <Formik
@@ -74,7 +64,7 @@ function AssignmentFormContainer({ initialAssetForm = {
                         // dispatch(updateAsset({ handleResult, formValues: {...values} }));
                     }
                     else {
-                        // dispatch(createAsset({ handleResult, formValues: {...values} }));
+                        dispatch(createAssignment({ handleResult, formValues: {...values} }));
                     }
                     setLoading(false);
                 }, 1000);

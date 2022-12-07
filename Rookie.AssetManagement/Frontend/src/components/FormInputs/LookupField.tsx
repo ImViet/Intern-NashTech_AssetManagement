@@ -16,10 +16,11 @@ type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
 };
 
 const LookupField: React.FC<InputFieldProps> = (props) => {
-    const [field, { error, touched }] = useField(props);
+    const [field, { error, touched }, helpers] = useField(props);
+    const { setValue } = helpers;
     const { label, isrequired, notvalidate, TableComponent,request } = props;
     const [showLookup, setShowLookup] = useState(false);
-    const [username, setUsername] = useState();
+    const [username, setUsername] = useState("");
 
     const validateClass = () => {
         if (touched && error) return 'is-invalid';
@@ -58,7 +59,7 @@ const LookupField: React.FC<InputFieldProps> = (props) => {
                     <Modal.Body>
                         <TableComponent 
                             closeModal={()=>setShowLookup(false)}
-                            onSelect={(label, value)=>{setUsername(value)}}
+                            onSelect={(label, value)=>{setUsername(label); setValue(value);}}
                             requestData={request}
                         />
                     </Modal.Body>

@@ -2,7 +2,6 @@ import { takeLatest } from "redux-saga/effects";
 import {
   createAssignment,
   disableAssignment,
-//   getAssetFormData,
   getAssignmentList,
   getState,
   getAssignment,
@@ -12,10 +11,12 @@ import {
   handleGetAssignmentList,
   handleGetAssignmentById,
   handleGetStateList,
+  handleCreateAssignment,
 } from "./handles";
 
 export default function* AssignmentSagas() {
   yield takeLatest(getAssignmentList.type, handleGetAssignmentList);
   yield takeLatest(getState.type, handleGetStateList);
   yield takeLatest(getAssignment.type, handleGetAssignmentById);
+  yield takeLatest(createAssignment.type, handleCreateAssignment);
 }

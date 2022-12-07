@@ -22,17 +22,12 @@ export const ASSIGNMENT = "assignment/*";
 export const ASSIGNMENT_LIST = "*";
 export const CREATE_ASSIGNMENT = "create";
 export const ASSIGNMENT_LIST_LINK = "/assignment";
+export const ASSIGNMENT_PARENT_ROOT = "..";
 
-export const RETURNING= "returning/*";
+export const RETURNING = "returning/*";
 export const RETURNING_LIST_LINK = "/returning";
 
-export const REPORT= "report/*";
+export const REPORT = "report/*";
 export const REPORT_LIST_LINK = "/report";
-
-
-
-
-
-
 
 export const NOTFOUND = "/notfound";

@@ -32,12 +32,10 @@ const AssetLookupTable: React.FC<ILookupTable> = ({
     closeModal,
     requestData,
 }) => {
+    const [selected, setSelected] = useState({label:"", value: 0});
     const [assets, setAssets]= useState({} as IPagedModel<IAsset>);
     const [query, setQuery] = useState({ ...defaultQuery });
     const [search, setSearch] = useState("");
-    const [value, setValue] = useState("");
-    const [id, setId] = useState(1);
-    // const []
 
     const handlePage = (page: number) => {
         setQuery({
@@ -85,18 +83,6 @@ const AssetLookupTable: React.FC<ILookupTable> = ({
         fetchData();
     }, [query]);
 
-    const handleChange = (e) => {
-        console.log(e.target)
-        setValue(e.target.value)
-        setId(e.target.id)
-    };
-
-    const handleChangeName = () =>{
-        onSelect(id.toString(),value)
-        closeModal()
-    }
-
-
     return (
         <>
             <div className="header-table">
@@ -134,11 +120,9 @@ const AssetLookupTable: React.FC<ILookupTable> = ({
                             {assets?.items?.map((data, index) => (
                                 <tr key={index} className="">
                                     <input className="form-check-input input-radio ml-1"
-                                    id={data.id.toString()}
-                                    type="radio"
-                                    value={data.assetName}
-                                    onChange={handleChange}
-                                    checked={data.assetName == value}
+                                        type="radio"
+                                        name="asset-select"
+                                        onClick={()=>setSelected({label: data.assetName, value: data.id})}
                                     />
                                     <td>{data.assetCode}</td>
                                     <td>{data.assetName}</td>
@@ -154,7 +138,7 @@ const AssetLookupTable: React.FC<ILookupTable> = ({
                 <div className="ml-auto">
                     <button className="btn btn-danger mr-4"
                         type="submit" disabled={false}
-                        onClick={() => handleChangeName()}
+                        onClick={()=>{onSelect(selected.label, selected.value); closeModal();}}
                     >
                         Save
                     </button>

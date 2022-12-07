@@ -34,11 +34,10 @@ const UserLookupTable: React.FC<ILookupTable> = ({
     closeModal,
     requestData,
 }) => {
+    const [selected, setSelected] = useState({label:"", value: 0});
     const [users, setUsers]= useState({} as IPagedModel<IUser>);
     const [query, setQuery] = useState({ ...defaultQuery });
     const [search, setSearch] = useState("");
-    const [value, setValue] = useState("");
-    const [id, setId] = useState(0);
 
     const handlePage = (page: number) => {
         setQuery({
@@ -86,18 +85,6 @@ const UserLookupTable: React.FC<ILookupTable> = ({
         fetchData();
     }, [query]);
 
-    const handleChange = (e) => {
-        console.log(e.target)
-        setValue(e.target.value)
-        setId(e.target.id)
-    };
-
-    const handleChangeName = () =>{
-        onSelect(id.toString(),value)
-        closeModal()
-    }
-
-
     return (
         <>
             <div className="header-table">
@@ -140,11 +127,9 @@ const UserLookupTable: React.FC<ILookupTable> = ({
                             {users?.items?.map((data, index) => (
                                 <tr key={index} className="">
                                     <input className="form-check-input input-radio ml-1"
-                                    id={data.id.toString()}
-                                    type="radio"
-                                    value={data.fullName}
-                                    onChange={handleChange}
-                                    checked={data.fullName == value}
+                                        type="radio"
+                                        name="user-select"
+                                        onClick={()=>setSelected({label: data.fullName, value: data.id})}
                                     />
                                     <td>{data.staffCode}</td>
                                     <td>{data.fullName}</td>
@@ -160,7 +145,7 @@ const UserLookupTable: React.FC<ILookupTable> = ({
                 <div className="ml-auto">
                     <button className="btn btn-danger mr-4"
                         type="submit" disabled={false}
-                        onClick={() => handleChangeName()}
+                        onClick={()=>{onSelect(selected.label, selected.value); closeModal();}}
                     >
                         Save
                     </button>
