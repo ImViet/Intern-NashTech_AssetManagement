@@ -12,7 +12,8 @@ import IAssignmentForm from 'src/interfaces/Assignment/IAssignmentForm';
 import { Modal } from 'react-bootstrap';
 import UserLookupTable from './UserLookupTable';
 import { Search } from 'react-feather';
-import { getLookUpUserRequest } from './sagas/requests';
+import { getLookUpAssetRequest, getLookUpUserRequest } from './sagas/requests';
+import AssetLookupTable from './AssetLookupTable';
 
 const initialFormValues: IAssignmentForm = {
     user: '',
@@ -91,14 +92,14 @@ function AssignmentFormContainer({ initialAssetForm = {
                             TableComponent={UserLookupTable}
                         />
 
-                        {/* <LookupField
+                        <LookupField
                             name="asset"
                             label="Asset"
                             isrequired
-                            lookupLabel="Users"
-                            request={()=>{}}
-                            TableComponent={UserLookupTable}
-                        /> */}
+                            lookupLabel="Assets"
+                            request={getLookUpAssetRequest}
+                            TableComponent={AssetLookupTable}
+                        />
 
                         <DateField
                             name="assignedDate"

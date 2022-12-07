@@ -48,7 +48,7 @@ export function getLookUpUserRequest(
 export function getLookUpAssetRequest(
   assetQuery: IQueryAssetModel
 ): Promise<AxiosResponse<IAsset[]>> {
-  return RequestService.axios.get(EndPoints.user + "/lookupasset", {
+  return RequestService.axios.get(EndPoints.asset + "/getlookupasset", {
     params: assetQuery,
     paramsSerializer: (params) => qs.stringify(params),
   });

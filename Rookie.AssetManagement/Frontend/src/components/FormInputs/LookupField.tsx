@@ -19,6 +19,7 @@ const LookupField: React.FC<InputFieldProps> = (props) => {
     const [field, { error, touched }] = useField(props);
     const { label, isrequired, notvalidate, TableComponent,request } = props;
     const [showLookup, setShowLookup] = useState(false);
+    const [username, setUsername] = useState();
 
     const validateClass = () => {
         if (touched && error) return 'is-invalid';
@@ -38,7 +39,7 @@ const LookupField: React.FC<InputFieldProps> = (props) => {
                 </label>
                 <div className="col">
                     <input {...field} {...props} hidden />
-                    <div className={`form-control ${validateClass()} pointer`}>adasdasd</div>
+                    <div className={`form-control ${validateClass()} pointer`}>{username}</div>
                     <div className="" style={{ position: 'absolute', right: 30, top: 4, pointerEvents: "none" }}>
                         <Search />
                     </div>
@@ -47,8 +48,9 @@ const LookupField: React.FC<InputFieldProps> = (props) => {
                     )}
                 </div>
             </div>
+
             <Modal
-                className="modal-user"
+                className="lookup-modal"
                 show={showLookup}
                 onHide={() => setShowLookup(false)}
                 aria-labelledby="login-modal"
@@ -57,7 +59,7 @@ const LookupField: React.FC<InputFieldProps> = (props) => {
                     <Modal.Body>
                         <TableComponent 
                             closeModal={()=>setShowLookup(false)}
-                            onSelect={(label, value)=>{}}
+                            onSelect={(label, value)=>{setUsername(value)}}
                             requestData={request}
                         />
                     </Modal.Body>

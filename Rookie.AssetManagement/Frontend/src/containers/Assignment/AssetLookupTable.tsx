@@ -2,43 +2,42 @@ import React, { useEffect, useState } from "react";
 import IColumnOption from "src/interfaces/IColumnOption";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import IAsset from "src/interfaces/Asset/IAsset";
-import HistoryTableAsset from "src/components/Table/HistoryTableAsset";
-import IAssetHistory from "src/interfaces/Asset/IAssetHistory";
 import IPagedModel from "src/interfaces/IPagedModel";
-import IUser from "src/interfaces/User/IUser";
 import Table, { SortType } from "src/components/Table";
 import ILookupTable from "src/interfaces/ILookupTable";
 import { Search } from "react-bootstrap-icons";
-import IQueryUserModel from "src/interfaces/User/IQueryUserModel";
-import { ACCSENDING, DECSENDING, DEFAULT_PAGE_LIMIT, DEFAULT_USER_SORT_COLUMN_NAME } from "src/constants/paging";
+import { ACCSENDING, DECSENDING, DEFAULT_PAGE_LIMIT, DEFAULT_ASSET_SORT_COLUMN_NAME } from "src/constants/paging";
+import IQueryAssetModel from "src/interfaces/Asset/IQueryAssetModel";
 
 const columns: IColumnOption[] = [
     { columnName: "", columnValue: "checkbox" },
-    { columnName: "Staff Code ", columnValue: "staffCode" },
-    { columnName: "Full Name ", columnValue: "fullName" },
-    { columnName: "Type ", columnValue: "Type" },
+    { columnName: "Asset Code ", columnValue: "assetCode" },
+    { columnName: "Asset Name ", columnValue: "assetName" },
+    { columnName: "Category ", columnValue: "category" },
 ];
 
-const defaultQuery: IQueryUserModel = {
+const defaultQuery: IQueryAssetModel = {
     page: 1,
     limit: DEFAULT_PAGE_LIMIT,
     sortOrder: ACCSENDING,
-    sortColumn: DEFAULT_USER_SORT_COLUMN_NAME,
-    types: [],
+    sortColumn: DEFAULT_ASSET_SORT_COLUMN_NAME,
+    categories: ["All"],
+    states: ["All"],
     search: ""
 }
 
 
-const UserLookupTable: React.FC<ILookupTable> = ({
+const AssetLookupTable: React.FC<ILookupTable> = ({
     onSelect,
     closeModal,
     requestData,
 }) => {
-    const [users, setUsers]= useState({} as IPagedModel<IUser>);
+    const [assets, setAssets]= useState({} as IPagedModel<IAsset>);
     const [query, setQuery] = useState({ ...defaultQuery });
     const [search, setSearch] = useState("");
     const [value, setValue] = useState("");
-    const [id, setId] = useState(0);
+    const [id, setId] = useState(1);
+    // const []
 
     const handlePage = (page: number) => {
         setQuery({
@@ -78,7 +77,7 @@ const UserLookupTable: React.FC<ILookupTable> = ({
 
     const fetchData=()=>{
         requestData(query)
-            .then(res=>setUsers(res.data))
+            .then(res=>setAssets(res.data))
             .catch(err=>console.log(err));
     }
     
@@ -106,7 +105,7 @@ const UserLookupTable: React.FC<ILookupTable> = ({
                         marginLeft: "-10px",
                         marginBottom: "5px",
                         color: "#cf2338",
-                    }}>Users</strong>
+                    }}>Asset</strong>
                     <div className="d-flex align-items-center w-ld ml-auto mr-2">
                         <div style={{ marginTop: -33, marginLeft: -15 }} className="input-group">
                             <input
@@ -138,18 +137,18 @@ const UserLookupTable: React.FC<ILookupTable> = ({
                             //     handleChange: handlePage,
                             // }}
                         >
-                            {users?.items?.map((data, index) => (
+                            {assets?.items?.map((data, index) => (
                                 <tr key={index} className="">
                                     <input className="form-check-input input-radio ml-1"
                                     id={data.id.toString()}
                                     type="radio"
-                                    value={data.fullName}
+                                    value={data.assetName}
                                     onChange={handleChange}
-                                    checked={data.fullName == value}
+                                    checked={data.assetName == value}
                                     />
-                                    <td>{data.staffCode}</td>
-                                    <td>{data.fullName}</td>
-                                    <td>{data.type}</td>
+                                    <td>{data.assetCode}</td>
+                                    <td>{data.assetName}</td>
+                                    <td>{data.category}</td>
                                 </tr>
                             ))}
                         </Table>
@@ -175,4 +174,4 @@ const UserLookupTable: React.FC<ILookupTable> = ({
     );
 };
 
-export default UserLookupTable;
+export default AssetLookupTable;
