@@ -40,6 +40,8 @@ function AssignmentFormContainer({ initialAssetForm = {
     const isUpdate = initialAssetForm.id ? true : false;
 
     const [loading, setLoading] = useState(false);
+    const [showLookup, setShowLookup] = useState(false);
+    const [search, setSearch] = useState("");
 
     const dispatch = useAppDispatch();
 
@@ -49,79 +51,88 @@ function AssignmentFormContainer({ initialAssetForm = {
             navigate(ASSIGNMENT_PARENT_ROOT);
         }
     };
-    
+
+    useEffect(() => {
+        dispatch(getCategory())
+        dispatch(getState())
+    }, [])
+
+    const showLookupModal = () => {
+        setShowLookup(true)
+    };
+
     return (
         <>
             <Formik
-            initialValues={initialAssetForm}
-            enableReinitialize
-            validationSchema={validationSchema}
+                initialValues={initialAssetForm}
+                enableReinitialize
+                validationSchema={validationSchema}
 
-            onSubmit={(values) => {
-                setLoading(true);
-                setTimeout(() => {
-                    if (isUpdate) {
-                        // dispatch(updateAsset({ handleResult, formValues: {...values} }));
-                    }
-                    else {
-                        dispatch(createAssignment({ handleResult, formValues: {...values} }));
-                    }
-                    setLoading(false);
-                }, 1000);
-            }}
-        >
-            {(actions) => {
-                return (
-                    <Form className='intro-y col-lg-6 col-12'>
-                        <LookupField
-                            name="user"
-                            label="User"
-                            isrequired
-                            lookupLabel="Users"
-                            request={getLookUpUserRequest}
-                            TableComponent={UserLookupTable}
-                        />
+                onSubmit={(values) => {
+                    setLoading(true);
+                    setTimeout(() => {
+                        if (isUpdate) {
+                            // dispatch(updateAsset({ handleResult, formValues: {...values} }));
+                        }
+                        else {
+                            // dispatch(createAsset({ handleResult, formValues: {...values} }));
+                        }
+                        setLoading(false);
+                    }, 1000);
+                }}
+            >
+                {(actions) => {
+                    return (
+                        <Form className='intro-y col-lg-6 col-12'>
+                            <LookupField
+                                name="user"
+                                label="User"
+                                isrequired
+                                lookupLabel="Users"
+                                request={getLookUpUserRequest}
+                                TableComponent={UserLookupTable}
+                            />
 
-                        <LookupField
-                            name="asset"
-                            label="Asset"
-                            isrequired
-                            lookupLabel="Assets"
-                            request={getLookUpAssetRequest}
-                            TableComponent={AssetLookupTable}
-                        />
+                            <LookupField
+                                name="asset"
+                                label="Asset"
+                                isrequired
+                                lookupLabel="Assets"
+                                request={getLookUpAssetRequest}
+                                TableComponent={AssetLookupTable}
+                            />
 
-                        <DateField
-                            name="assignedDate"
-                            label="Assigned Date"
-                            placeholder=""
-                            isrequired
-                            minDate={new Date()}
-                        />
+                            <DateField
+                                name="assignedDate"
+                                label="Assigned Date"
+                                placeholder=""
+                                isrequired
+                                minDate={new Date()}
+                            />
 
-                        <TextAreaField
-                            name="note"
-                            label="Note"
-                            placeholder=""
-                            isrequired
-                        />
+                            <TextAreaField
+                                name="note"
+                                label="Note"
+                                placeholder=""
+                                isrequired
+                            />
 
-                        <div className="d-flex">
-                            <div className="ml-auto">
-                                <button className="btn btn-danger mr-4"
-                                    type="submit" disabled={!(actions.dirty && actions.isValid)}
-                                >
-                                    Save {(loading) && <img src="/oval.svg" className='w-4 h-4 ml-2 inline-block' />}
-                                </button>
+                            <div className="d-flex">
+                                <div className="ml-auto">
+                                    <button className="btn btn-danger mr-4"
+                                        type="submit" disabled={!(actions.dirty && actions.isValid)}
+                                    >
+                                        Save {(loading) && <img src="/oval.svg" className='w-4 h-4 ml-2 inline-block' />}
+                                    </button>
 
-                                <Link to={"/" + ASSIGNMENT} className="btn btn-outline-secondary ml-2">
-                                    Cancel
-                                </Link>
+                                    <Link to={"/" + ASSIGNMENT} className="btn btn-outline-secondary ml-2">
+                                        Cancel
+                                    </Link>
+                                </div>
                             </div>
-                        </div>
-                    </Form>
-                );
-            }}
+                        </Form>
+                    );
+                }}
             </Formik>
         </>
     );

@@ -3,6 +3,7 @@ import { CaretDownFill, CaretUpFill } from "react-bootstrap-icons";
 import IColumnOption from "src/interfaces/IColumnOption";
 
 import Paging, { PageType } from "./Paging";
+import Pagination from "./Pagination";
 
 export type SortType = {
   columnValue: string;
@@ -62,7 +63,7 @@ const Table: React.FC<Props> = ({ columns, children, page, sortState, handleSort
       </div>
 
       {
-        (!!(page && page.totalPage && page.totalPage > 1)) && <Paging {...page} />
+        (!!(page && page.totalPage && page.totalPage > 0)) && <Pagination {...page} />
       }
     </>
   );

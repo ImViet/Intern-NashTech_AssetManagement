@@ -47,7 +47,6 @@ const AssignmentTable: React.FC<Props> = ({
     handleDisable,
 }) => {
     const dispatch = useAppDispatch();
-
     const [showDetail, setShowDetail] = useState(false);
     const [assignmentDetail, setAssignmentDetail] = useState(null as IAssignment | null);
     const [disableState, setDisable] = useState({
@@ -132,7 +131,7 @@ const AssignmentTable: React.FC<Props> = ({
             >
                 {rows?.map((data, index) => (
                     <tr key={index} className="" onClick={() => handleShowInfo(data.id)}>
-                        <td>{data.no}</td>
+                        <td>{result ? index + 1 : data.no}</td>
                         <td>{data.assetCode}</td>
                         <td>{data.assetName}</td>
                         <td>{data.assignedTo}</td>
