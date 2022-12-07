@@ -35,7 +35,7 @@ const Pagination: React.FC<PageType> = ({ currentPage = 1, totalPage = 1, handle
         return (
             [...Array(highPage).keys()].map(i => (
                 (i + lowPage <= highPage) ?
-                    <li className="intro-x">
+                    <li key={i} className="intro-x">
                         <a onClick={e => onPageNumber(e, i + lowPage)} className={pageStyle(i + lowPage)}
                         >
                             {i + lowPage}
@@ -72,7 +72,6 @@ const Pagination: React.FC<PageType> = ({ currentPage = 1, totalPage = 1, handle
         }
     }
     const createPagination = (pages, page) => {
-        console.log(pages, page)
         let pageCutLow = page - 1;
         let pageCutHigh = page + 1;
         page === 1 ? pageCutHigh += 2 : (page === 2 ? pageCutHigh += 1 : pageCutHigh)
