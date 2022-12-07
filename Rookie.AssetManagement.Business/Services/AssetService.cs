@@ -208,10 +208,10 @@ namespace Rookie.AssetManagement.Business.Services
             return await Task.FromResult(true);
         }
 
-        public async Task<PagedResponseModel<LookUpAssetDto>> GetLookUpAset(AssetQueryCriteriaDto assetQueryCriteria, CancellationToken cancellationToken)
+        public async Task<PagedResponseModel<LookUpAssetDto>> GetLookUpAsset(AssetQueryCriteriaDto assetQueryCriteria, CancellationToken cancellationToken)
         {
             var assetQuery = AssetSortLookUp(
-            _assetRepository.Entities
+            _assetRepository.Entities.Include(a=>a.Category)
             .Where(x => !x.IsDeleted).AsQueryable(),
             assetQueryCriteria);
 

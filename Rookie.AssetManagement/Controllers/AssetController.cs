@@ -115,17 +115,17 @@ namespace Rookie.AssetManagement.Controllers
 
         [HttpGet]
         [Route("GetLookUpAsset")]
-        public async Task<ActionResult<PagedResponseModel<UserDto>>> GetLookUpAsset(
+        public async Task<ActionResult<PagedResponseModel<LookUpAssetDto>>> GetLookUpAsset(
             [FromQuery] AssetQueryCriteriaDto assetQueryCriteriaDto,
             CancellationToken cancellationToken)
         {
 
 
-            var userResponses = await _assetService.GetLookUpAset(
+            var assetResponses = await _assetService.GetLookUpAsset(
                                             assetQueryCriteriaDto,
                                             cancellationToken
                                             );
-            return Ok(userResponses);
+            return Ok(assetResponses);
         }
     }
 }
