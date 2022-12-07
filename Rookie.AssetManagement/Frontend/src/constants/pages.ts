@@ -21,8 +21,11 @@ export const ASSET_PARENT_ROOT = "..";
 export const ASSIGNMENT = "assignment/*";
 export const ASSIGNMENT_LIST = "*";
 export const CREATE_ASSIGNMENT = "create";
+export const EDIT_ASSIGNMENT = "edit/:id";
+export const EDIT_ASSIGNMENT_ID = (id: string | number) => `edit/${id}`;
 export const ASSIGNMENT_LIST_LINK = "/assignment";
 export const ASSIGNMENT_PARENT_ROOT = "..";
+
 
 export const RETURNING = "returning/*";
 export const RETURNING_LIST_LINK = "/returning";
