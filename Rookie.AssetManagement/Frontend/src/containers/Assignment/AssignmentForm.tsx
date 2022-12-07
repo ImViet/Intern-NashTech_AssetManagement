@@ -14,7 +14,7 @@ import UserLookupTable from './UserLookupTable';
 import { Search } from 'react-feather';
 import { getLookUpAssetRequest, getLookUpUserRequest } from './sagas/requests';
 import AssetLookupTable from './AssetLookupTable';
-import { createAssignment } from './reducer';
+import { createAssignment, updateAssignment } from './reducer';
 
 const initialFormValues: IAssignmentForm = {
     user: '',
@@ -34,10 +34,10 @@ type Props = {
     initialAssetForm?: IAssignmentForm;
 };
 
-function AssignmentFormContainer({ initialAssetForm = {
+function AssignmentFormContainer({ initialAssignmentForm = {
     ...initialFormValues
 } }) {
-    const isUpdate = initialAssetForm.id ? true : false;
+    const isUpdate = initialAssignmentForm.id ? true : false;
 
     const [loading, setLoading] = useState(false);
 
@@ -53,7 +53,7 @@ function AssignmentFormContainer({ initialAssetForm = {
     return (
         <>
             <Formik
-                initialValues={initialAssetForm}
+                initialValues={initialAssignmentForm}
                 enableReinitialize
                 validationSchema={validationSchema}
 
@@ -61,7 +61,7 @@ function AssignmentFormContainer({ initialAssetForm = {
                     setLoading(true);
                     setTimeout(() => {
                         if (isUpdate) {
-                            // dispatch(updateAsset({ handleResult, formValues: {...values} }));
+                            dispatch(updateAssignment({ handleResult, formValues: {...values} }));
                         }
                         else {
                             dispatch(createAssignment({ handleResult, formValues: {...values} }));
