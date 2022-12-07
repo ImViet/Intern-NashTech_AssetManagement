@@ -11,6 +11,7 @@ using System.Linq;
 using MockQueryable.Moq;
 using System.Threading.Tasks;
 using FluentAssertions;
+using System;
 
 namespace Rookie.AssetManagement.UnitTests.Business{
     public class AssignmentServiceShould{
@@ -60,6 +61,30 @@ namespace Rookie.AssetManagement.UnitTests.Business{
             result.Should().NotBeNull();
             _assignmentRepository.Verify(mock => mock.Entities, Times.Once());
 
+        }
+        [Fact]
+        public async Task AddAssignmentAsyncShouldSuccessfullyAsync()
+        {
+            //Arrange
+            var newAssignment = _mapper.Map<Assignment>(AssignmentTestData.GetAssignmentCreateDto());
+
+            var user = AssignmentTestData.GetUsers().AsQueryable().BuildMock();
+            _userRepository.Setup(x => x.Entities).Returns(user);
+
+            var listAsset = AssetTestData.GetAssets().ToList().BuildMock();
+            _assetRepository.Setup(x => x.Entities).Returns(listAsset);
+
+            //Act
+            var result = await _assignmentService.AddAssignmentAsync(AssignmentTestData.GetAssignmentCreateDto(), "vietdq");
+            //Assert
+            Assert.Equal("Monitor xyz", result.AssetName);
+            Assert.Equal("RAM 8Gb", result.Note);
+        }
+        [Fact]
+        public async Task AddAssignmentAsyncShouldThrowExceptionAsync()
+        {
+            Func<Task> act = async () => await _assignmentService.AddAssignmentAsync(null, null);
+            await act.Should().ThrowAsync<ArgumentNullException>();
         }
     }
 }

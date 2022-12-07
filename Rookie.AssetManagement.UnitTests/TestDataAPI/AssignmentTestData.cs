@@ -101,5 +101,39 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
             Page = 1,
             Limit = 5,
         };
+        public static AssignmentCreateDto GetAssignmentCreateDto()
+        {
+            return new AssignmentCreateDto()
+            {
+                User = "2",
+                Asset = "1",
+                AssignedDate = new DateTime(),
+                Note = "RAM 8Gb"
+            };
+        }
+        public static List<User> GetUsers()
+        {
+            return new List<User>()
+            {
+               new User() {
+                    Id = 1,
+                    FirstName = "Trieu",
+                    LastName = "Duong",
+                    Type = "STAFF",
+                    StaffCode = "SD0001",
+                    IsDeleted = false,
+                    Location="HCM"
+                },
+                new User() {
+                    Id = 2,
+                    FirstName = "Dong",
+                    LastName = "Hoang Huu",
+                    Type = "STAFF",
+                    StaffCode = "SD0002",
+                    IsDeleted = false,
+                    Location="HCM"
+                }
+            };
+        }
     }
 }
