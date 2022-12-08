@@ -198,11 +198,11 @@ namespace Rookie.AssetManagement.Business.Services
             return assignment;
         } 
 
-        public async Task<AssignmentUpdateDto> GetFormDataById(int id)
+        public async Task<AssignmentFormDto> GetFormDataById(int id)
         {
             var assignment = await _assignmentRepository.Entities
                 .Where(a => a.Id == id)
-                .ProjectTo<AssignmentUpdateDto>(_mapper.ConfigurationProvider)
+                .ProjectTo<AssignmentFormDto>(_mapper.ConfigurationProvider)
                 .FirstAsync();
             return assignment;
         }

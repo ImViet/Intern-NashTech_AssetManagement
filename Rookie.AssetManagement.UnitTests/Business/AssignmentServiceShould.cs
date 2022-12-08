@@ -12,6 +12,8 @@ using MockQueryable.Moq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using System;
+using Rookie.AssetManagement.Contracts;
+using Rookie.AssetManagement.IntegrationTests.TestData;
 
 namespace Rookie.AssetManagement.UnitTests.Business{
     public class AssignmentServiceShould{
@@ -86,5 +88,38 @@ namespace Rookie.AssetManagement.UnitTests.Business{
             Func<Task> act = async () => await _assignmentService.AddAssignmentAsync(null, null);
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
+        [Fact]
+        public async Task UpdateAssignmentAsyncShouldThrowNotFoundException()
+        {
+            //Arrange
+            var assignmentsMock = AssignmentTestData.GetAssignments().AsQueryable().BuildMock();
+            _assignmentRepository.Setup(x => x.Entities).Returns(assignmentsMock);
+            //Act
+            Func<Task> act = async () => await _assignmentService.UpdateAssignmentAsync(
+                AssignmentTestData.GetUpdateAssignmentDtoFail()
+                );
+            //Assert
+            await act.Should().ThrowAsync<NotFoundException>();
+        }
+
+        //[Fact]
+        //public async Task UpdateAssetAsyncShouldSuccess()
+        //{
+        //    //Arrange
+        //    var assetsMock = AssetTestData.GetAssets().AsQueryable().BuildMock();
+        //    var listState = AssetTestData.GetStates().ToList().BuildMock();
+        //    _stateRepository.Setup(x => x.Entities).Returns(listState);
+        //    _assetRepository.Setup(x => x.Entities).Returns(assetsMock);
+        //    _assetRepository.Setup(x => x.Update(It.IsAny<Asset>()))
+        //                                .Returns(Task.FromResult(AssetTestData.GetUpdateAsset()));
+        //    //Act
+        //    var result = await _assetService.UpdateAssetAsync(
+        //        AssetTestData.GetUpdateAssetDtoSuccess(),
+        //        "HCM"
+        //        );
+        //    //Assert
+        //    Assert.Equal("Laptop Asus", result.AssetName);
+        //}
+
     }
 }
