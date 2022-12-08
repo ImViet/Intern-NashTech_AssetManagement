@@ -45,9 +45,7 @@ const ListAssignment = () => {
     const [selectedState, setSelectedState] = useState(defaultSelectedState);
 
     const { FilterAssignmentStateOptions } = useAppSelector(state => state.assignmentReducer)
-    const states = useMemo(() => {
-        return FilterAssignmentStateOptions.filter(state => state.label == "Accepted" || state.label == "Waiting for acceptance" || state.label == "All")
-    }, [FilterAssignmentStateOptions])
+
     const handleState = (selected: ISelectOption[]) => {
         if (selected.length === 0) {
             setQuery({
@@ -167,7 +165,7 @@ const ListAssignment = () => {
                         <div className="button">
                             <div className="filter-state-assignment">
                                 <SelectBox
-                                    options={states}
+                                    options={FilterAssignmentStateOptions}
                                     placeholderButtonLabel="State"
                                     value={selectedState}
                                     onChange={handleState} />

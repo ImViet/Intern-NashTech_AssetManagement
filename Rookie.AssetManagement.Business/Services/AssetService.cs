@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
+using Rookie.AssetManagement.DataAccessor.Enum;
 
 namespace Rookie.AssetManagement.Business.Services
 {
@@ -82,7 +83,7 @@ namespace Rookie.AssetManagement.Business.Services
             {
                 throw new NotFoundException("Category Not Found!");
             }
-            var getState = _stateRepository.Entities.Where(x => x.Id == asset.State).FirstOrDefault();
+            var getState = _stateRepository.Entities.Where(x => x.Id == asset.State && x.Entity == "ASSET").FirstOrDefault();
             if (getState == null)
             {
                 throw new NotFoundException("State Not Found!");
@@ -172,11 +173,11 @@ namespace Rookie.AssetManagement.Business.Services
             {
                 throw new NotFoundException("Asset Not Found!");
             }
-            if (asset.State.Id == 1)
+            if (asset.State.Id == (int)AssetStateEnum.Assigned)
             {
                 throw new NotFoundException("Assigned Asset can not be edit");
             }
-            var getState = _stateRepository.Entities.Where(x => x.Id == assetUpdateDto.State).FirstOrDefault();
+            var getState = _stateRepository.Entities.Where(x => x.Id == assetUpdateDto.State && x.Entity == "ASSET").FirstOrDefault();
             if (getState == null)
             {
                 throw new NotFoundException("State Not Found!");
@@ -197,7 +198,7 @@ namespace Rookie.AssetManagement.Business.Services
             {
                 throw new NotFoundException("Asset Not Found!");
             }
-            if (asset.State.Id == 1)
+            if (asset.State.Id == (int)AssetStateEnum.Assigned)
             {
                 throw new NotFoundException("Asset is assigned can not be delete");
             }
@@ -211,7 +212,7 @@ namespace Rookie.AssetManagement.Business.Services
         public async Task<PagedResponseModel<LookUpAssetDto>> GetLookUpAsset(AssetQueryCriteriaDto assetQueryCriteria, CancellationToken cancellationToken)
         {
             var assetQuery = AssetSortLookUp(
-            _assetRepository.Entities.Include(a=>a.Category)
+            _assetRepository.Entities.Include(a => a.Category)
             .Where(x => !x.IsDeleted).AsQueryable(),
             assetQueryCriteria);
 

@@ -26,9 +26,14 @@ namespace Rookie.AssetManagement.Business.Services
             _stateRepository = stateRepository;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<StateDto>> GetAllAsync()
+        public async Task<IEnumerable<StateDto>> GetAssetStateAsync()
         {
-            var listState = _mapper.Map<IEnumerable<StateDto>>(await _stateRepository.Entities.ToListAsync());
+            var listState = _mapper.Map<IEnumerable<StateDto>>(await _stateRepository.Entities.Where(s => s.Entity == "ASSET").ToListAsync());
+            return (List<StateDto>)listState;
+        }
+        public async Task<IEnumerable<StateDto>> GetAssignmentStateAsync()
+        {
+            var listState = _mapper.Map<IEnumerable<StateDto>>(await _stateRepository.Entities.Where(s => s.Entity == "ASSIGNMENT").ToListAsync());
             return (List<StateDto>)listState;
         }
     }
