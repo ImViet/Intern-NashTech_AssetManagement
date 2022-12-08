@@ -82,7 +82,8 @@ namespace Rookie.AssetManagement.Controllers
         [HttpPut]
         public async Task<ActionResult<AssignmentDto>> UpdateAssignmentAsync([FromBody] AssignmentUpdateDto assignmentUpdateDto)
         {
-            AssignmentDto assignment = await _assignmentService.UpdateAssignmentAsync(assignmentUpdateDto);
+            var AssignedBy = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
+            AssignmentDto assignment = await _assignmentService.UpdateAssignmentAsync(assignmentUpdateDto, AssignedBy);
             return Created(Endpoints.User, assignment);
         }
 

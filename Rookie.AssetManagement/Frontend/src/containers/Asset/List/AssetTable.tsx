@@ -30,7 +30,7 @@ type Props = {
   handlePage: (page: number) => void;
   handleSort: (colValue: string) => void;
   handleDisable: Function;
-  
+
   sortState: SortType;
   fetchData: Function;
 };
@@ -57,7 +57,7 @@ const AssetTable: React.FC<Props> = ({
   });
 
   const handleShowInfo = (id: number) => {
-    const asset = assets?.items.find((item) => item.id === id);
+    const asset = result?.id == id ? (result) : (assets?.items.find((item) => item.id === id));
 
     if (asset) {
       setAssetDetail(asset);
@@ -85,7 +85,7 @@ const AssetTable: React.FC<Props> = ({
     });
   };
 
-  const onDisable= ()=>{
+  const onDisable = () => {
     handleDisable(disableState.id)
     setDisable({
       isOpen: false,
@@ -95,7 +95,7 @@ const AssetTable: React.FC<Props> = ({
       isDisable: true,
     });
   }
-    
+
   const handleCloseDetail = () => {
     setShowDetail(false);
   };
@@ -108,11 +108,11 @@ const AssetTable: React.FC<Props> = ({
   let rows
   if (result && assets) {
     rows = [...assets.items]
-    const index = rows.findIndex(r=>r.id === result.id)
-    if(index >= 0){
+    const index = rows.findIndex(r => r.id === result.id)
+    if (index >= 0) {
       rows.splice(index, 1)
     }
-    rows.unshift(result)  
+    rows.unshift(result)
   } else if (assets) {
     rows = [...assets.items]
   }
@@ -134,36 +134,36 @@ const AssetTable: React.FC<Props> = ({
             <td>{data.assetName}</td>
             <td>{data.category}</td>
             <td>{data.state}</td>
-            <td className="d-flex">     
-            {(() => {
-              if (data.state == "Assigned") {
-                return (
-                  <>
-                    <ButtonIcon disable={true} onClick={() => handleEdit(data.id)}>
-                      <PencilFill className="text-black" />
-                    </ButtonIcon>
-                    <ButtonIcon disable={true} onClick={() => handleShowDisable(data.id)}>
-                      <XCircle className="text-danger mx-2" />
-                  </ButtonIcon> 
-                  </>
-                )
-              } else {
-                return (
-                  <>
-                    <ButtonIcon onClick={() => handleEdit(data.id)}>
-                      <PencilFill className="text-black" />
-                    </ButtonIcon>
-                    <ButtonIcon onClick={() => handleShowDisable(data.id)}>
-                      <XCircle className="text-danger mx-2" />
-                    </ButtonIcon>
-                  </>
-                )
-              }
-            })()}                                     
+            <td className="d-flex">
+              {(() => {
+                if (data.state == "Assigned") {
+                  return (
+                    <>
+                      <ButtonIcon disable={true} onClick={() => handleEdit(data.id)}>
+                        <PencilFill className="text-black" />
+                      </ButtonIcon>
+                      <ButtonIcon disable={true} onClick={() => handleShowDisable(data.id)}>
+                        <XCircle className="text-danger mx-2" />
+                      </ButtonIcon>
+                    </>
+                  )
+                } else {
+                  return (
+                    <>
+                      <ButtonIcon onClick={() => handleEdit(data.id)}>
+                        <PencilFill className="text-black" />
+                      </ButtonIcon>
+                      <ButtonIcon onClick={() => handleShowDisable(data.id)}>
+                        <XCircle className="text-danger mx-2" />
+                      </ButtonIcon>
+                    </>
+                  )
+                }
+              })()}
             </td>
           </tr>
 
-        ))}       
+        ))}
       </Table>
       {assetDetail && showDetail && (
         <Info asset={assetDetail} handleClose={handleCloseDetail} />

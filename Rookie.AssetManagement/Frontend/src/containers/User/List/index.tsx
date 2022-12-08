@@ -34,7 +34,7 @@ const defaultSelectedType: ISelectOption[] = [
 
 const ListUser = () => {
   const dispatch = useAppDispatch();
-  
+
   const { users, actionResult } = useAppSelector((state) => state.userReducer);
 
   const [query, setQuery] = useState(users ? { ...defaultQuery, page: users.currentPage } : defaultQuery);
@@ -98,9 +98,9 @@ const ListUser = () => {
 
   const handleSort = (sortColumn: string) => {
     let sortOrder
-    if(query.sortColumn != sortColumn){
+    if (query.sortColumn != sortColumn) {
       sortOrder = ACCSENDING
-    }else{
+    } else {
       sortOrder = query.sortOrder === ACCSENDING ? DECSENDING : ACCSENDING;
     }
     setQuery({
@@ -126,12 +126,12 @@ const ListUser = () => {
   };
 
   useEffect(() => {
-    dispatch(cleanUpUserActionResult());  
+    dispatch(cleanUpUserActionResult());
     fetchData();
   }, [query]);
 
   useEffect(() => {
-    dispatch(getUserList({...defaultQuery}))
+    dispatch(getUserList({ ...defaultQuery }))
   }, []);
 
   return (
@@ -148,7 +148,7 @@ const ListUser = () => {
               onChange={handleType} />
           </div>
 
-          <SearchBox handleSearch={handleSearch} getSuggestionRequest={getSearchUserSuggestion}/>
+          <SearchBox handleSearch={handleSearch} getSuggestionRequest={getSearchUserSuggestion} />
 
           <div className="d-flex align-items-center ml-3">
             <Link to="/user/create" type="button" className="btn btn-danger">
@@ -156,19 +156,29 @@ const ListUser = () => {
             </Link>
           </div>
         </div>
-
-        <UserTable
-          users={users}
-          result={actionResult}
-          handlePage={handlePage}
-          handleSort={handleSort}
-          handleDisable={handleDisable}
-          sortState={{
-            columnValue: query.sortColumn,
-            orderBy: query.sortOrder,
-          }}
-          fetchData={fetchData}
-        />
+        {(() => {
+          if (users?.totalItems == 0) {
+            return (
+              <h5 className="not-data-found">No data found</h5>
+            )
+          } else {
+            return (
+              <>
+                <UserTable
+                  users={users}
+                  result={actionResult}
+                  handlePage={handlePage}
+                  handleSort={handleSort}
+                  handleDisable={handleDisable}
+                  sortState={{
+                    columnValue: query.sortColumn,
+                    orderBy: query.sortOrder,
+                  }}
+                  fetchData={fetchData}
+                />
+              </>)
+          }
+        })()}
       </div>
     </>
   );

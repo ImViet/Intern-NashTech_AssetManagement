@@ -208,7 +208,7 @@ namespace Rookie.AssetManagement.Business.Services
             return assignment;
         }
         
-        public async Task<AssignmentDto> UpdateAssignmentAsync(AssignmentUpdateDto assignmentUpdateDto)
+        public async Task<AssignmentDto> UpdateAssignmentAsync(AssignmentUpdateDto assignmentUpdateDto, string AssignedBy)
         {
             var assignment = await _assignmentRepository.Entities.Include(x => x.AssignedTo).Include(x => x.Asset).Include(x => x.State).FirstOrDefaultAsync(a => a.Id == assignmentUpdateDto.Id);
             if (assignment == null)
@@ -229,9 +229,11 @@ namespace Rookie.AssetManagement.Business.Services
             {
                 throw new NotFoundException("Asset Not Found!");
             }
+            var getAssignedBy = _userRepository.Entities.Where(x => x.UserName == AssignedBy).FirstOrDefault();
+            _mapper.Map(assignmentUpdateDto, assignment);
             assignment.AssignedTo = getUserTo;
             assignment.Asset = getAsset;
-            _mapper.Map(assignmentUpdateDto, assignment);
+            assignment.AssignedBy = getAssignedBy;
 
             var assignmentUpdated = await _assignmentRepository.Update(assignment);
             var assignmentUpdatedDto = _mapper.Map<AssignmentDto>(assignmentUpdated);
