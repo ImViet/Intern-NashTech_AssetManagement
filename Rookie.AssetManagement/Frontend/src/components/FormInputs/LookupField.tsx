@@ -13,14 +13,15 @@ type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
     notvalidate?: boolean;
     TableComponent: FunctionComponent<ILookupTable>;
     request: Function;
+    intialValueLabel: string;
 };
 
 const LookupField: React.FC<InputFieldProps> = (props) => {
     const [field, { error, touched }, helpers] = useField(props);
     const { setValue } = helpers;
-    const { label, isrequired, notvalidate, TableComponent,request } = props;
+    const { label, isrequired, notvalidate, TableComponent, request, intialValueLabel } = props;
     const [showLookup, setShowLookup] = useState(false);
-    const [username, setUsername] = useState("");
+    const [valueLabel, setValueLabel] = useState(intialValueLabel);
 
     const validateClass = () => {
         if (touched && error) return 'is-invalid';
@@ -40,7 +41,11 @@ const LookupField: React.FC<InputFieldProps> = (props) => {
                 </label>
                 <div className="col">
                     <input {...field} {...props} hidden />
-                    <div className={`form-control ${validateClass()} pointer`}>{username}</div>
+                    <div className={`form-control ${validateClass()} pointer `}>
+                        <div className="text-overflow">
+                          {valueLabel}
+                        </div>
+                    </div>
                     <div className="" style={{ position: 'absolute', right: 30, top: 4, pointerEvents: "none" }}>
                         <Search />
                     </div>
@@ -56,13 +61,13 @@ const LookupField: React.FC<InputFieldProps> = (props) => {
                 onHide={() => setShowLookup(false)}
                 aria-labelledby="login-modal"
             >
-                    <Modal.Body>
-                        <TableComponent 
-                            closeModal={()=>setShowLookup(false)}
-                            onSelect={(label, value)=>{setUsername(label); setValue(value);}}
-                            requestData={request}
-                        />
-                    </Modal.Body>
+                <Modal.Body>
+                    <TableComponent 
+                        closeModal={()=>setShowLookup(false)}
+                        onSelect={(label, value)=>{setValueLabel(label); setValue(value);}}
+                        requestData={request}
+                    />
+                </Modal.Body>
             </Modal>
         </>
     );

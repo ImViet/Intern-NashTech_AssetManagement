@@ -181,6 +181,8 @@ const ListAsset = () => {
         }
       }
     }))
+    setSelectedState(defaultSelectedCategory);
+    setSelectedCategory([FilterAssetCategoryOptions[0]]);
   };
 
   const fetchData = () => {

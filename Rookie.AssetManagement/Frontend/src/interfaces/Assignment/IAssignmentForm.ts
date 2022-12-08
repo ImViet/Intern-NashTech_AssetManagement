@@ -1,8 +1,10 @@
 export default interface IAssignmentForm {
-    id?: number;
-    user: string;
-    asset: string;
-    note: string;
-    assignedDate?: Date;
-    state: number;
-  }
+  id?: number;
+  user: string;
+  userName: string;
+  asset: string;
+  assetName: string;
+  note: string;
+  assignedDate?: Date;
+  state: number;
+}
