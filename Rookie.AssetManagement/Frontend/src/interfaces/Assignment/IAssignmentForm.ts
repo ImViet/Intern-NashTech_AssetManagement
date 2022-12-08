@@ -4,4 +4,5 @@ export default interface IAssignmentForm {
     asset: string;
     note: string;
     assignedDate?: Date;
+    state: number;
   }

@@ -21,6 +21,7 @@ const initialFormValues: IAssignmentForm = {
     asset: "",
     note: '',
     assignedDate: new Date(),
+    state: 2,
 };
 
 const validationSchema = Yup.object().shape({

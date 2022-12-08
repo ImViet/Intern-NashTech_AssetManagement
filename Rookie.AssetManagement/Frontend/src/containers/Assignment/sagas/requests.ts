@@ -43,6 +43,19 @@ export function createAssignmentRequest(
   return RequestService.axios.post(EndPoints.assignment, assignmentForm);
 }
 
+export function updateAssignmentRequest(
+  assignmentForm: IAssignmentForm
+): Promise<AxiosResponse<IAssignment>> {
+  return RequestService.axios.put(EndPoints.assignment, assignmentForm, {
+    paramsSerializer: (params) => JSON.stringify(params),
+  });
+}
+export function getAssignmentFormDataRequest(
+  id: number
+): Promise<AxiosResponse<IAssignmentForm>> {
+  return RequestService.axios.get(`${EndPoints.getAssignmentDataForm}/${id}`);
+}
+
 export function getLookUpUserRequest(
   userQuery: IQueryUserModel
 ): Promise<AxiosResponse<IUser[]>> {
