@@ -18,10 +18,12 @@ import { createAssignment, updateAssignment } from './reducer';
 
 const initialFormValues: IAssignmentForm = {
     user: '',
-    asset: "",
+    userName:'',
+    asset: '',
+    assetName:'',
     note: '',
     assignedDate: new Date(),
-    state: 2,
+    state: 7
 };
 
 const validationSchema = Yup.object().shape({
@@ -30,10 +32,6 @@ const validationSchema = Yup.object().shape({
     note: Yup.string().required(""),
     assignedDate: Yup.date().required("")
 });
-
-type Props = {
-    initialAssetForm?: IAssignmentForm;
-};
 
 function AssignmentFormContainer({ initialAssignmentForm = {
     ...initialFormValues
@@ -81,6 +79,7 @@ function AssignmentFormContainer({ initialAssignmentForm = {
                                 lookupLabel="Users"
                                 request={getLookUpUserRequest}
                                 TableComponent={UserLookupTable}
+                                intialValueLabel={initialAssignmentForm.userName}
                             />
 
                             <LookupField
@@ -90,6 +89,7 @@ function AssignmentFormContainer({ initialAssignmentForm = {
                                 lookupLabel="Assets"
                                 request={getLookUpAssetRequest}
                                 TableComponent={AssetLookupTable}
+                                intialValueLabel={initialAssignmentForm.assetName}
                             />
 
                             <DateField

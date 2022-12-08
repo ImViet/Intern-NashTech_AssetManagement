@@ -13,9 +13,7 @@ public class UpdateAssignmentDTOValidator : AbstractValidator<AssignmentUpdateDt
            .WithMessage("Asset is empty");
         RuleFor(assginment => assginment.AssignedDate)
            .NotEmpty()
-           .WithMessage("Assgined Date is empty")
-           .GreaterThanOrEqualTo(DateTime.Today)
-           .WithMessage("Assgined Date is less than day now");
+           .WithMessage("Assgined Date is empty");
         RuleFor(assginment => assginment.Note)
            .NotEmpty()
            .WithMessage("Note is empty");
