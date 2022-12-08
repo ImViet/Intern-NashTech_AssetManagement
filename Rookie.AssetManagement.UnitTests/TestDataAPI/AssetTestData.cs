@@ -54,14 +54,17 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                 new State() {
                     Id = 1,
                     StateName="Assigned",
+                    Entity="ASSET"
                 },
                 new State() {
                     Id = 2,
                     StateName="Available",
+                    Entity="ASSET"
                 },
                 new State() {
                     Id = 3,
                     StateName="Not Available",
+                    Entity="ASSET"
                 }
             };
         }

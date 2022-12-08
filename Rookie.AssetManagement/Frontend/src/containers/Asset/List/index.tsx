@@ -51,9 +51,6 @@ const ListAsset = () => {
 
   const {FilterAssetCategoryOptions} = useAppSelector(state=> state.assetReducer)
   const {FilterAssetStateOptions} = useAppSelector(state=> state.assetReducer)
-  const states = useMemo(() => {
-        return FilterAssetStateOptions.filter(state => state.label != "Accepted" && state.label != "Waiting for acceptance")
-}, [FilterAssetStateOptions])
 
   const handleState = (selected: ISelectOption[]) => {
     if (selected.length === 0) {
@@ -181,6 +178,8 @@ const ListAsset = () => {
         }
       }
     }))
+    setSelectedState(defaultSelectedCategory);
+    setSelectedCategory([FilterAssetCategoryOptions[0]]);
   };
 
   const fetchData = () => {
@@ -207,11 +206,11 @@ const ListAsset = () => {
           <div className="d-flex align-items-center w-md mr-5">
             <div className="button">
               <div className="filter-state">
-                <SelectBox               
-                 options={states}
-                placeholderButtonLabel="State"
-                value={selectedState}
-                onChange={handleState}/>
+                <SelectBox            
+                  options={FilterAssetStateOptions}
+                  placeholderButtonLabel="State"
+                  value={selectedState}
+                  onChange={handleState}/>
               </div>
             </div>
           </div>
@@ -219,10 +218,10 @@ const ListAsset = () => {
             <div className="button">
                 <div className="filter-category">
                   <SelectBox
-                  options={FilterAssetCategoryOptions}
-                  placeholderButtonLabel="Category"
-                  value={selectedCategory}
-                  onChange={handleCategory}
+                    options={FilterAssetCategoryOptions}
+                    placeholderButtonLabel="Category"
+                    value={selectedCategory}
+                    onChange={handleCategory}
                   />
                 </div>
             </div>

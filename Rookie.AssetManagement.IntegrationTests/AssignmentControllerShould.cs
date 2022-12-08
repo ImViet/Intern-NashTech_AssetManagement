@@ -56,7 +56,7 @@ namespace Rookie.AssetManagement.IntegrationTests
             _assignmentService = new AssignmentService(_assetRepository, _stategoryRepository, _assignmentRepository, _userRepository, _mapper);
             _stateService = new StateService(_stategoryRepository, _mapper);
 
-            _assignmentController = new AssignmentController(_assignmentService);
+            _assignmentController = new AssignmentController(_assignmentService, _stateService);
 
 
             AssignmentData.InitStatesData(_dbContext);
@@ -89,6 +89,24 @@ namespace Rookie.AssetManagement.IntegrationTests
             var actionResult = Assert.IsType<OkObjectResult>(result.Result);
             var returnValue = Assert.IsType<List<AssignmentDto>>(actionResult.Value);
             Assert.Equal(assignmentList.Count, returnValue.Count);
+        }
+
+        [Fact]
+        public async Task GetAssignmentShouldReturnSuccess()
+        {
+            //Arrange
+            var idAssignment = 1;
+            var assignment = AssignmentData.GetAssignment();
+
+            //Act
+            var result = await _assignmentController.GetAssginmentById(idAssignment);
+            //Assert
+
+            result.Should().NotBeNull();
+            var actionResult = Assert.IsType<OkObjectResult>(result.Result);
+            var returnValue = Assert.IsType<AssignmentDto>(actionResult.Value);
+
+            Assert.Equal(assignment.Id, returnValue.Id);
         }
 
         [Fact]

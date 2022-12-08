@@ -5,13 +5,12 @@ const Endpoints = {
   user: "api/users",
   search: "api/users/GetUser",
   changePassword: "api/Auth/change-password",
-  asset:"api/Asset",
-  searchAsset:"api/Asset/GetAsset",
-  category:"api/Asset/GetAllCategory",
-  state:"api/Asset/GetAllState",
-  assignment:"api/Assignment",
-  searchAssignment:"api/Assignment/Assignment",
-  getAssignmentDataForm:"api/Assignment/GetAssignmentDataForm",
+  asset: "api/Asset",
+  searchAsset: "api/Asset/GetAsset",
+  category: "api/Asset/GetAllCategory",
+  assignment: "api/Assignment",
+  searchAssignment: "api/Assignment/Assignment",
+  getAssignmentDataForm: "api/Assignment/GetAssignmentDataForm",
 };
 
 export default Endpoints;

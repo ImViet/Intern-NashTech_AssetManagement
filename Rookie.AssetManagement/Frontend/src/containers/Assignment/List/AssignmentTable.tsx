@@ -58,42 +58,41 @@ const AssignmentTable: React.FC<Props> = ({
     });
 
     const handleShowInfo = (id: number) => {
-        const assignment = assignments?.items.find((item) => item.id === id);
-    
+        const assignment = result?.id == id ? (result) : (assignments?.items.find((item) => item.id === id));
         if (assignment) {
-          setAssignmentDetail(assignment);
-          setShowDetail(true);
+            setAssignmentDetail(assignment);
+            setShowDetail(true);
         }
-      };
+    };
 
     const handleShowDisable = async (id: number) => {
         setDisable({
-          id,
-          isOpen: true,
-          title: 'Are you sure?',
-          message: 'Do you want to delete this assignment?',
-          isDisable: true,
+            id,
+            isOpen: true,
+            title: 'Are you sure?',
+            message: 'Do you want to delete this assignment?',
+            isDisable: true,
         });
     };
 
     const handleCloseDisable = () => {
         setDisable({
-          isOpen: false,
-          id: 0,
-          title: '',
-          message: '',
-          isDisable: true,
+            isOpen: false,
+            id: 0,
+            title: '',
+            message: '',
+            isDisable: true,
         });
     };
 
     const onDisable = () => {
         handleDisable(disableState.id)
         setDisable({
-          isOpen: false,
-          id: 0,
-          title: '',
-          message: '',
-          isDisable: true,
+            isOpen: false,
+            id: 0,
+            title: '',
+            message: '',
+            isDisable: true,
         });
     }
 
@@ -117,7 +116,6 @@ const AssignmentTable: React.FC<Props> = ({
     } else if (assignments) {
         rows = [...assignments.items]
     }
-    
     return (
         <>
             <Table
@@ -139,41 +137,41 @@ const AssignmentTable: React.FC<Props> = ({
                         <td>{data.assignedBy}</td>
                         <td>{convertDDMMYYYY(data.assignedDate)}</td>
                         <td>{data.state}</td>
-                        <td className="d-flex">     
-                        {(() => {
-                        if (data.state == "Accepted") {
-                            return (
-                            <>
-                                <ButtonIcon disable={true} onClick={() => handleEdit(data.id)}>
-                                    <PencilFill className="text-black" />
-                                </ButtonIcon>
-                                <ButtonIcon disable={true} onClick={() => handleShowDisable(data.id)}>
-                                    <XCircle className="text-danger mx-2" />
-                                </ButtonIcon> 
-                                <ButtonIcon >
-                                    <ArrowCounterclockwise className="text-primary " />
-                                </ButtonIcon>
-                            </>
-                            )
-                        } else {
-                            return (
-                            <>
-                                <ButtonIcon onClick={() => handleEdit(data.id)}>
-                                    <PencilFill className="text-black" />
-                                </ButtonIcon>
-                                <ButtonIcon onClick={() => handleShowDisable(data.id)}>
-                                    <XCircle className="text-danger mx-2" />
-                                </ButtonIcon>
-                                <ButtonIcon>
-                                    <ArrowCounterclockwise fill="" className="text-primary " />
-                                </ButtonIcon>
-                            </>
-                            )
-                        }
-                        })()}                                     
+                        <td className="d-flex">
+                            {(() => {
+                                if (data.state == "Accepted") {
+                                    return (
+                                        <>
+                                            <ButtonIcon disable={true} onClick={() => handleEdit(data.id)}>
+                                                <PencilFill className="text-black" />
+                                            </ButtonIcon>
+                                            <ButtonIcon disable={true} onClick={() => handleShowDisable(data.id)}>
+                                                <XCircle className="text-danger mx-2" />
+                                            </ButtonIcon>
+                                            <ButtonIcon >
+                                                <ArrowCounterclockwise className="text-primary " />
+                                            </ButtonIcon>
+                                        </>
+                                    )
+                                } else {
+                                    return (
+                                        <>
+                                            <ButtonIcon onClick={() => handleEdit(data.id)}>
+                                                <PencilFill className="text-black" />
+                                            </ButtonIcon>
+                                            <ButtonIcon onClick={() => handleShowDisable(data.id)}>
+                                                <XCircle className="text-danger mx-2" />
+                                            </ButtonIcon>
+                                            <ButtonIcon>
+                                                <ArrowCounterclockwise fill="" className="text-primary " />
+                                            </ButtonIcon>
+                                        </>
+                                    )
+                                }
+                            })()}
                         </td>
                     </tr>
-                ))}                
+                ))}
             </Table>
             {assignmentDetail && showDetail && (
                 <Info assignment={assignmentDetail} handleClose={handleCloseDetail} />

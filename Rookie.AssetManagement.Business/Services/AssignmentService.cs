@@ -11,6 +11,7 @@ using Rookie.AssetManagement.Contracts.Dtos.AssignmentDtos;
 using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
+using Rookie.AssetManagement.DataAccessor.Enum;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -68,7 +69,7 @@ namespace Rookie.AssetManagement.Business.Services
             newAssignment.IsDeleted = false;
             newAssignment.AssignedBy = getAssignedBy;
 
-            var waitAcceptState = await _stateRepository.GetById(7);
+            var waitAcceptState = await _stateRepository.GetById((int)AssignmentStateEnum.WaitingForAcceptance);
             newAssignment.State = waitAcceptState;
 
             var createResult = await _assignmentRepository.Add(newAssignment);
@@ -207,14 +208,14 @@ namespace Rookie.AssetManagement.Business.Services
             return assignment;
         }
         
-        public async Task<AssignmentDto> UpdateAssignmentAsync(AssignmentUpdateDto assignmentUpdateDto)
+        public async Task<AssignmentDto> UpdateAssignmentAsync(AssignmentUpdateDto assignmentUpdateDto, string AssignedBy)
         {
             var assignment = await _assignmentRepository.Entities.Include(x => x.AssignedTo).Include(x => x.Asset).Include(x => x.State).FirstOrDefaultAsync(a => a.Id == assignmentUpdateDto.Id);
             if (assignment == null)
             {
                 throw new NotFoundException("Assignment Not Found!");
             }
-            if (assignment.State.Id == 6)
+            if (assignment.State.Id == (int)AssignmentStateEnum.Accepted)
             {
                 throw new NotFoundException("Accepted Assignment Can Not Be Edit");
             }
@@ -228,9 +229,11 @@ namespace Rookie.AssetManagement.Business.Services
             {
                 throw new NotFoundException("Asset Not Found!");
             }
+            var getAssignedBy = _userRepository.Entities.Where(x => x.UserName == AssignedBy).FirstOrDefault();
+            _mapper.Map(assignmentUpdateDto, assignment);
             assignment.AssignedTo = getUserTo;
             assignment.Asset = getAsset;
-            _mapper.Map(assignmentUpdateDto, assignment);
+            assignment.AssignedBy = getAssignedBy;
 
             var assignmentUpdated = await _assignmentRepository.Update(assignment);
             var assignmentUpdatedDto = _mapper.Map<AssignmentDto>(assignmentUpdated);
@@ -244,7 +247,7 @@ namespace Rookie.AssetManagement.Business.Services
             {
                 throw new NotFoundException("Assignment Not Found!");
             }
-            if (assignment .State.Id == 6)
+            if (assignment .State.Id == (int)AssignmentStateEnum.Accepted)
             {
                 throw new NotFoundException("Assignment is accepted can not be delete");
             }

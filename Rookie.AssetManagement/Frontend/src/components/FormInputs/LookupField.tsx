@@ -41,7 +41,11 @@ const LookupField: React.FC<InputFieldProps> = (props) => {
                 </label>
                 <div className="col">
                     <input {...field} {...props} hidden />
-                    <div className={`form-control ${validateClass()} pointer`}>{valueLabel}</div>
+                    <div className={`form-control ${validateClass()} pointer `}>
+                        <div className="text-overflow">
+                          {valueLabel}
+                        </div>
+                    </div>
                     <div className="" style={{ position: 'absolute', right: 30, top: 4, pointerEvents: "none" }}>
                         <Search />
                     </div>

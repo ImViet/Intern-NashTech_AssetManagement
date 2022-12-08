@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading;
 using Rookie.AssetManagement.Constants;
 using System;
+using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
 
 namespace Rookie.AssetManagement.Controllers
 {
@@ -20,8 +21,10 @@ namespace Rookie.AssetManagement.Controllers
     public class AssignmentController : ControllerBase
     {
         private readonly IAssignmentService _assignmentService;
-        public AssignmentController(IAssignmentService assignmentService)
+        private readonly IStateService _stateService;
+        public AssignmentController(IAssignmentService assignmentService, IStateService stateService)
         {
+            _stateService = stateService;
             _assignmentService = assignmentService;
         }
         [HttpGet]
@@ -62,6 +65,13 @@ namespace Rookie.AssetManagement.Controllers
             return Ok(assignmentResponses);
         }
 
+        [HttpGet]
+        [Route("GetAssignmentState")]
+        public async Task<ActionResult<StateDto>> GetAssignmentState()
+        {
+            return Ok(await _stateService.GetAssignmentStateAsync());
+        }
+
         [HttpPost]
         public async Task<ActionResult<AssignmentDto>> AddAssignmentAsync([FromBody] AssignmentCreateDto assignmentCreate)
         {
@@ -72,7 +82,8 @@ namespace Rookie.AssetManagement.Controllers
         [HttpPut]
         public async Task<ActionResult<AssignmentDto>> UpdateAssignmentAsync([FromBody] AssignmentUpdateDto assignmentUpdateDto)
         {
-            AssignmentDto assignment = await _assignmentService.UpdateAssignmentAsync(assignmentUpdateDto);
+            var AssignedBy = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
+            AssignmentDto assignment = await _assignmentService.UpdateAssignmentAsync(assignmentUpdateDto, AssignedBy);
             return Created(Endpoints.User, assignment);
         }
 

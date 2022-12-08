@@ -129,11 +129,11 @@ namespace Rookie.AssetManagement.IntegrationTests
             Assert.Equal(6, returnValue.Count);
         }
         [Fact]
-        public async Task GetAllStateShouldReturnAll()
+        public async Task GetAssetStateShouldReturnAll()
         {
             //Arrange
             //Act
-            var result = await _assetController.GetAllState();
+            var result = await _assetController.GetAssetState();
             //Assert 
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<OkObjectResult>(result.Result);

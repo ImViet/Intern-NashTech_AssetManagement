@@ -36,6 +36,7 @@ const AssetLookupTable: React.FC<ILookupTable> = ({
     const [assets, setAssets]= useState({} as IPagedModel<IAsset>);
     const [query, setQuery] = useState({ ...defaultQuery });
     const [search, setSearch] = useState("");
+    const [disable, setDisable] = useState(true);
 
     const handlePage = (page: number) => {
         setQuery({
@@ -83,6 +84,11 @@ const AssetLookupTable: React.FC<ILookupTable> = ({
         fetchData();
     }, [query]);
 
+    const handleClick = (data) =>{
+        setSelected({label: data.assetName, value: data.id})
+        setDisable(false)
+    }
+
     return (
         <>
             <div className="header-table">
@@ -127,7 +133,8 @@ const AssetLookupTable: React.FC<ILookupTable> = ({
                                     <input className="form-check-input input-radio ml-1"
                                         type="radio"
                                         name="asset-select"
-                                        onClick={()=>setSelected({label: data.assetName, value: data.id})}
+                                        checked={data.id == selected.value}
+                                        onClick={()=>handleClick(data)}
                                     />
                                     <td>{data.assetCode}</td>
                                     <td>{data.assetName}</td>
@@ -142,7 +149,7 @@ const AssetLookupTable: React.FC<ILookupTable> = ({
             <div className="d-flex mt-3 mr-2">
                 <div className="ml-auto">
                     <button className="btn btn-danger mr-4"
-                        type="submit" disabled={false}
+                        type="submit" disabled={disable}
                         onClick={()=>{onSelect(selected.label, selected.value); closeModal();}}
                     >
                         Save

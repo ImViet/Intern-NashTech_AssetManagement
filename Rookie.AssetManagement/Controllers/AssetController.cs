@@ -40,10 +40,10 @@ namespace Rookie.AssetManagement.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllState")]
-        public async Task<ActionResult<StateDto>> GetAllState()
+        [Route("GetAssetState")]
+        public async Task<ActionResult<StateDto>> GetAssetState()
         {
-            return Ok(await _stateService.GetAllAsync());
+            return Ok(await _stateService.GetAssetStateAsync());
         }
 
         [HttpGet]
