@@ -16,7 +16,7 @@ namespace Rookie.AssetManagement.Business.Interfaces
         Task<IEnumerable<AssignmentDto>> GetAllAsync();
 
         Task<AssignmentDto> GetByIdAsync(int id);
-
+        Task<AssignmentUpdateDto> GetFormDataById(int id);
         Task<AssignmentDto> AddAssignmentAsync(AssignmentCreateDto assignmentCreateDto, string AssignedBy);
 
         //Task<AssignmentDto> UpdateAsnyc(UserUpdateDto userUpdateDto, string location);

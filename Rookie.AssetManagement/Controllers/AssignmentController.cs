@@ -54,6 +54,14 @@ namespace Rookie.AssetManagement.Controllers
             return Ok(assignmentResponses);
         }
 
+        [HttpGet]
+        [Route("GetAssignmentDataForm/{id}")]
+        public async Task<ActionResult<AssignmentUpdateDto>> GetAssginmentDataById(int id)
+        {
+            var assignmentResponses = await _assignmentService.GetFormDataById(id);
+            return Ok(assignmentResponses);
+        }
+
         [HttpPost]
         public async Task<ActionResult<AssignmentDto>> AddAssignmentAsync([FromBody] AssignmentCreateDto assignmentCreate)
         {
