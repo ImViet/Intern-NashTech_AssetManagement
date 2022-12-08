@@ -99,7 +99,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
             _assignmentRepository.Setup(x => x.Entities).Returns(assignmentsMock);
             //Act
             Func<Task> act = async () => await _assignmentService.UpdateAssignmentAsync(
-                AssignmentTestData.GetUpdateAssignmentDtoFail()
+                AssignmentTestData.GetUpdateAssignmentDtoFail(), "trieud"
                 );
             //Assert
             await act.Should().ThrowAsync<NotFoundException>();
@@ -119,7 +119,7 @@ namespace Rookie.AssetManagement.UnitTests.Business
                                         .Returns(Task.FromResult(AssignmentTestData.GetUpdateAssignment()));
             //Act        
             var result = await _assignmentService.UpdateAssignmentAsync(
-                AssignmentTestData.GetUpdateAssignmentDtoSuccess()
+                AssignmentTestData.GetUpdateAssignmentDtoSuccess(), "hoanghd"
                 );
             //Assert
             Assert.Equal("Personal Computer xyz", result.AssetName);

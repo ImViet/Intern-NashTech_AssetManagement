@@ -19,7 +19,7 @@ namespace Rookie.AssetManagement.Business.Interfaces
         Task<AssignmentFormDto> GetFormDataById(int id);
         Task<AssignmentDto> AddAssignmentAsync(AssignmentCreateDto assignmentCreateDto, string AssignedBy);
         Task<PagedResponseModel<AssignmentDto>> GetByPageAsync(AssignmentQueryCriteriaDto assignmentQueryCriteria, CancellationToken cancellationToken);
-        Task<AssignmentDto> UpdateAssignmentAsync(AssignmentUpdateDto assignmentUpdateDto);
+        Task<AssignmentDto> UpdateAssignmentAsync(AssignmentUpdateDto assignmentUpdateDto, string AssignedBy);
         Task<bool> DisableAssignmentAsync(int id);
     }
 }
