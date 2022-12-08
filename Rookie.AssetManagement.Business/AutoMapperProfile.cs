@@ -5,6 +5,7 @@ using Rookie.AssetManagement.Contracts.Dtos.CategoryDtos;
 using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
 using Rookie.AssetManagement.Contracts.Dtos.AssignmentDtos;
+using Rookie.AssetManagement.Contracts.Dtos.ReturnRequestDtos;
 
 namespace Rookie.AssetManagement.Business
 {
@@ -131,6 +132,15 @@ namespace Rookie.AssetManagement.Business
                 .ForMember(d => d.Asset, t => t.MapFrom(c => c.Asset.Id))
                 .ForMember(d => d.AssetName, t => t.MapFrom(c => c.Asset.AssetName))
                 .ForMember(d => d.UserName, t => t.MapFrom(src => src.AssignedTo.FirstName + " " + src.AssignedTo.LastName));
+
+            CreateMap<ReturnRequest, ReturnRequestDto>()
+                .ForMember(d => d.AssetCode, t => t.MapFrom(c => c.Assignment.Asset.AssetCode))
+                .ForMember(d => d.AssetName, t => t.MapFrom(c => c.Assignment.Asset.AssetName))
+                .ForMember(d => d.RequestedBy, t => t.MapFrom(c => c.Assignment.AssignedTo.UserName))
+                .ForMember(d => d.AssignedDate, t => t.MapFrom(c => c.Assignment.AssignedDate))
+                .ForMember(d => d.AcceptedBy, t => t.MapFrom(c => c.AcceptedBy.UserName))
+                .ForMember(d => d.ReturnedDate, t => t.MapFrom(c => c.ReturnedDate))
+                .ForMember(d => d.State, t => t.MapFrom(c => c.State.StateName));
         }
 
     }
