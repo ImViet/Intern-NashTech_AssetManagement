@@ -142,3 +142,26 @@ export function* handleCreateAssignment(action: PayloadAction<CreateAction>) {
     );
   }
 }
+
+// export function* handleDisableAssignment(action: PayloadAction<DisableAction>) {
+//   const { id, handleResult } = action.payload;
+//   try {
+//     const { data } = yield call(disableAssignmentRequest, id);
+
+//     if (data) {
+//       handleResult(true, "");
+//     }
+//   } catch (error: any) {
+//     const message = error.response.data;
+//     handleResult(false, message);
+//     yield put(
+//       setStatus({
+//         status: Status.Failed,
+//         error: {
+//           error: true,
+//           message: message,
+//         },
+//       })
+//     );
+//   }
+// }

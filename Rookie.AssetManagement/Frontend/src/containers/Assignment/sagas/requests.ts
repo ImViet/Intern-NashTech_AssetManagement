@@ -60,3 +60,7 @@ export function getLookUpAssetRequest(
     paramsSerializer: (params) => qs.stringify(params),
   });
 }
+
+// export function disableAssignmentRequest(id: number): Promise<AxiosResponse<IAssignment>> {
+//   return RequestService.axios.delete(EndPoints.assignment + "/" + id);
+// }
