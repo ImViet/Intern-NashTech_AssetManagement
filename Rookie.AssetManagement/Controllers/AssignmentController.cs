@@ -75,5 +75,14 @@ namespace Rookie.AssetManagement.Controllers
             }
             return Created(Endpoints.User, assignment);
         }
+
+        
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DisableAssignmentAsync([FromRoute] int id)
+        {
+            var disableResult = await _assignmentService.DisableAssignmentAsync(id);
+
+            return Ok(disableResult);
+        }
     }
 }
