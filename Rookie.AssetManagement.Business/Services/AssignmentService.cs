@@ -236,5 +236,23 @@ namespace Rookie.AssetManagement.Business.Services
             var assignmentUpdatedDto = _mapper.Map<AssignmentDto>(assignmentUpdated);
             return assignmentUpdatedDto;
         }
+
+        public async Task<bool> DisableAssignmentAsync(int id)
+        {
+            var assignment = await _assignmentRepository.Entities.Include(a => a.State).SingleOrDefaultAsync(a => a.Id.Equals(id));
+            if (assignment  == null)
+            {
+                throw new NotFoundException("Assignment Not Found!");
+            }
+            if (assignment .State.Id == 6)
+            {
+                throw new NotFoundException("Assignment is accepted can not be delete");
+            }
+            
+
+            await _assignmentRepository.Delete(assignment );
+
+            return await Task.FromResult(true);
+        }
     }
 }

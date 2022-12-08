@@ -12,7 +12,7 @@ import IAssignmentForm from "src/interfaces/Assignment/IAssignmentForm";
 type AssignmentState = {
   FilterAssignmentStateOptions: ISelectOption[];
   loading: boolean;
-  // assetFormData: IAssetForm | null;
+  assignmentFormData: IAssignmentForm | null;
   actionResult: IAssignment | null;
   assignments: IPagedModel<IAssignment> | null;
   assignmentResult: IAssignment | null;
@@ -27,7 +27,7 @@ export type CreateAction = {
 
 export type UpdateAction = {
   handleResult: Function;
-  // formValues: IAssetForm;
+  formValues: IAssignmentForm;
 };
 
 export type DisableAction = {
@@ -39,7 +39,7 @@ const initialState: AssignmentState = {
   assignments: null,
   loading: false,
   assignmentResult: null,
-  // assetFormData: null,
+  assignmentFormData: null,
   actionResult: null,
   FilterAssignmentStateOptions: [],
 };
@@ -141,24 +141,24 @@ const AssignmentReducerSlice = createSlice({
         loading: false,
       };
     },
-    // getAssetFormData: (state, action: PayloadAction<number>): AssetState => {
-    //   return {
-    //     ...state,
-    //     loading: true,
-    //   };
-    // },
-    // setAssetFormData: (
-    //   state,
-    //   action: PayloadAction<IAssetForm>
-    // ): AssetState => {
-    //   const assetFormData = action.payload;
+    getAssignmentFormData: (state, action: PayloadAction<number>): AssignmentState => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+    setAssignmentFormData: (
+      state,
+      action: PayloadAction<IAssignmentForm>
+    ): AssignmentState => {
+      const assignmentFormData = action.payload;
 
-    //   return {
-    //     ...state,
-    //     assetFormData,
-    //     loading: false,
-    //   };
-    // },
+      return {
+        ...state,
+        assignmentFormData,
+        loading: false,
+      };
+    },
     disableAssignment: (
       state,
       action: PayloadAction<DisableAction>
@@ -188,6 +188,8 @@ export const {
   setState,
   setStatus,
   getAssignment,
+  getAssignmentFormData,
+  setAssignmentFormData,
   disableAssignment,
   cleanUpActionResult,
 } = AssignmentReducerSlice.actions;

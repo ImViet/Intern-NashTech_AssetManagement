@@ -103,7 +103,7 @@ const AssignmentTable: React.FC<Props> = ({
 
     const navigate = useNavigate();
     const handleEdit = (id: number) => {
-        //navigate(EDIT_ASSET_ID(id));
+        navigate(EDIT_ASSET_ID(id));
     };
 
     let rows
