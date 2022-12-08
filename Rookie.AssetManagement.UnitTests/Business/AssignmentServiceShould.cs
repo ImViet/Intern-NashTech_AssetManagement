@@ -15,8 +15,10 @@ using System;
 using Rookie.AssetManagement.Contracts;
 using Rookie.AssetManagement.IntegrationTests.TestData;
 
-namespace Rookie.AssetManagement.UnitTests.Business{
-    public class AssignmentServiceShould{
+namespace Rookie.AssetManagement.UnitTests.Business
+{
+    public class AssignmentServiceShould
+    {
         private readonly AssignmentService _assignmentService;
         private readonly Mock<IBaseRepository<Assignment>> _assignmentRepository;
         private readonly Mock<IBaseRepository<Asset>> _assetRepository;
@@ -25,7 +27,8 @@ namespace Rookie.AssetManagement.UnitTests.Business{
         private readonly IMapper _mapper;
         private readonly CancellationToken _cancellationToken;
 
-        public AssignmentServiceShould(){
+        public AssignmentServiceShould()
+        {
             _assetRepository = new Mock<IBaseRepository<Asset>>();
             _stateRepository = new Mock<IBaseRepository<State>>();
             _assignmentRepository = new Mock<IBaseRepository<Assignment>>();
@@ -33,7 +36,7 @@ namespace Rookie.AssetManagement.UnitTests.Business{
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
             _mapper = config.CreateMapper();
             _cancellationToken = new CancellationToken();
-            _assignmentService = new AssignmentService( _assetRepository.Object,_stateRepository.Object,_assignmentRepository.Object, _userRepository.Object, _mapper);
+            _assignmentService = new AssignmentService(_assetRepository.Object, _stateRepository.Object, _assignmentRepository.Object, _userRepository.Object, _mapper);
         }
 
         [Fact]
@@ -45,7 +48,7 @@ namespace Rookie.AssetManagement.UnitTests.Business{
             //Act
             var result = await _assignmentService.GetByPageAsync(AssignmentTestData.AssignmentQueryCriteriaDto, _cancellationToken);
             //Assert   
-            Assert.Equal(2,result.TotalItems);
+            Assert.Equal(2, result.TotalItems);
         }
 
         [Fact]
