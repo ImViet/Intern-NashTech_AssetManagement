@@ -227,7 +227,7 @@ const ListAsset = () => {
                 </div>
             </div>
           </div>
-          <div className="d-flex align-items-center w-ld ml-auto mr-2">
+          <div className="search-box d-flex align-items-center w-ld ml-auto mr-2">
             <div className="input-group">
               <input
                 onChange={handleChangeSearch}

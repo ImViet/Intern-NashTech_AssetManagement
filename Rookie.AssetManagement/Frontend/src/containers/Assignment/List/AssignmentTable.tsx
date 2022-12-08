@@ -67,34 +67,34 @@ const AssignmentTable: React.FC<Props> = ({
       };
 
     const handleShowDisable = async (id: number) => {
-        // setDisable({
-        //   id,
-        //   isOpen: true,
-        //   title: 'Are you sure?',
-        //   message: 'Do you want to delete this assignment?',
-        //   isDisable: true,
-        // });
+        setDisable({
+          id,
+          isOpen: true,
+          title: 'Are you sure?',
+          message: 'Do you want to delete this assignment?',
+          isDisable: true,
+        });
     };
 
     const handleCloseDisable = () => {
-        // setDisable({
-        //   isOpen: false,
-        //   id: 0,
-        //   title: '',
-        //   message: '',
-        //   isDisable: true,
-        // });
+        setDisable({
+          isOpen: false,
+          id: 0,
+          title: '',
+          message: '',
+          isDisable: true,
+        });
     };
 
     const onDisable = () => {
-        // handleDisable(disableState.id)
-        // setDisable({
-        //   isOpen: false,
-        //   id: 0,
-        //   title: '',
-        //   message: '',
-        //   isDisable: true,
-        // });
+        handleDisable(disableState.id)
+        setDisable({
+          isOpen: false,
+          id: 0,
+          title: '',
+          message: '',
+          isDisable: true,
+        });
     }
 
     const handleCloseDetail = () => {
