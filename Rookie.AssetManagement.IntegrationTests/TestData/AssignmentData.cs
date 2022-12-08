@@ -182,5 +182,17 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
             dbContext.SaveChanges();
 
         }
+
+        public static AssignmentUpdateDto GetAssignmentUpdateDto()
+        {
+            return new AssignmentUpdateDto()
+            {
+                Id = 1,
+                Asset = 2,
+                Note = "Laptop Dell",
+                AssignedDate = new DateTime(2022, 11, 10, 0, 0, 0),
+                User = 1,
+            };
+        }
     }
 }
