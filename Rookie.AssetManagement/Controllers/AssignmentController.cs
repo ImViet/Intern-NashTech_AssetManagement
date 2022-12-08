@@ -56,7 +56,7 @@ namespace Rookie.AssetManagement.Controllers
 
         [HttpGet]
         [Route("GetAssignmentDataForm/{id}")]
-        public async Task<ActionResult<AssignmentUpdateDto>> GetAssginmentDataById(int id)
+        public async Task<ActionResult<AssignmentFormDto>> GetAssginmentDataById(int id)
         {
             var assignmentResponses = await _assignmentService.GetFormDataById(id);
             return Ok(assignmentResponses);
@@ -84,7 +84,7 @@ namespace Rookie.AssetManagement.Controllers
             return Created(Endpoints.User, assignment);
         }
 
-        
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> DisableAssignmentAsync([FromRoute] int id)
         {
