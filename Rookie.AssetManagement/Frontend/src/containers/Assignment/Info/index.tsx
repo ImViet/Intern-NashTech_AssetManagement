@@ -21,7 +21,7 @@ const Info: React.FC<Props> = ({ assignment, handleClose }) => {
             <Modal
                 show={true}
                 onHide={handleClose}
-                dialogClassName="detail-modal modal-90w"
+                dialogClassName="detail-modal modal-90w table-detail-large"
                 centered
             >
                 <Modal.Header closeButton>
@@ -31,7 +31,7 @@ const Info: React.FC<Props> = ({ assignment, handleClose }) => {
                 </Modal.Header>
 
                 <Modal.Body>
-                    <div className="table-detail-large">
+                    <div className="">
                         <div className='row -intro-y'>
                             <div className='col-4'>Asset Code</div>
                             <div className='col-6'>{assignment.assetCode}</div>
@@ -63,7 +63,7 @@ const Info: React.FC<Props> = ({ assignment, handleClose }) => {
                         </div>
                         <div className='row -intro-y'>
                             <div className='col-4'>Note</div>
-                            <div className='col-6'>{assignment.note}</div>
+                            <div className='col-6 note'><p>{assignment.note}</p></div>
                         </div>
 
                     </div>

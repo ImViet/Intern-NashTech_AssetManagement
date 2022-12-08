@@ -106,3 +106,21 @@
 .table-detail>div>div:last-child{
     word-break:break-all;
 }
+.table-detail-large{
+    .note{
+        overflow-y: scroll;
+        scrollbar-width: none;
+        word-break: break-all;
+        overflow:auto;
+        max-height: 100px;
+    }
+    @media (min-width: 576px){
+        .model-info-asset{
+            max-width: 550px;
+        }
+    }
+
+}
+// .note::-webkit-scrollbar {
+//     display: none;
+// }
