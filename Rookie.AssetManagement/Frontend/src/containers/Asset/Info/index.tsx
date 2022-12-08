@@ -68,7 +68,7 @@ const Info: React.FC<Props> = ({ asset, handleClose }) => {
                         </div>
                         <div className='row -intro-y'>
                             <div className='col-3'>Specification</div>
-                            <div className='col-4'>{asset.specification}</div>
+                            <div className='col-4 scroll'>{asset.specification}</div>
                         </div>
                         <div className='row -intro-y'>
                             <div className='col-3'>History</div>

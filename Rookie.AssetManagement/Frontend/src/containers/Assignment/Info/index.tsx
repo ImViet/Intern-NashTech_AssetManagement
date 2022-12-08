@@ -63,7 +63,7 @@ const Info: React.FC<Props> = ({ assignment, handleClose }) => {
                         </div>
                         <div className='row -intro-y'>
                             <div className='col-4'>Note</div>
-                            <div className='col-6 note'><p>{assignment.note}</p></div>
+                            <div className='col-6 scroll'><p>{assignment.note}</p></div>
                         </div>
 
                     </div>
