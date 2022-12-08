@@ -97,7 +97,7 @@ function AssignmentFormContainer({ initialAssignmentForm = {
                                 label="Assigned Date"
                                 placeholder=""
                                 isrequired
-                                minDate={new Date()}
+                                minDate={isUpdate ? initialAssignmentForm.assignedDate :new Date()}
                             />
 
                             <TextAreaField
