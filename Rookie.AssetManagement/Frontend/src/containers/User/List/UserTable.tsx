@@ -66,7 +66,7 @@ const UserTable: React.FC<Props> = ({
   });
 
   const handleShowInfo = (id: number) => {
-    const user = users?.items.find((item) => item.id === id);
+    const user = result?.id == id ? (result) : (users?.items.find((item) => item.id === id));
 
     if (user) {
       setUserDetail(user);
@@ -98,7 +98,7 @@ const UserTable: React.FC<Props> = ({
     });
   };
 
-  const onDisable= ()=>{
+  const onDisable = () => {
     handleDisable(disableState.id)
     setDisable({
       isOpen: false,
@@ -148,11 +148,11 @@ const UserTable: React.FC<Props> = ({
   let rows
   if (result && users) {
     rows = [...users.items]
-    const index = rows.findIndex(r=>r.id === result.id)
-    if(index >= 0){
+    const index = rows.findIndex(r => r.id === result.id)
+    if (index >= 0) {
       rows.splice(index, 1)
     }
-    rows.unshift(result)  
+    rows.unshift(result)
   } else if (users) {
     rows = [...users.items]
   }
