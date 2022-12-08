@@ -123,5 +123,35 @@ namespace Rookie.AssetManagement.IntegrationTests
 
             // Assert
         }
+
+        [Fact]
+        public async Task UpdateAssignmentAsync_Success()
+        {
+            //Arrange
+            var assignmentRequest = AssignmentData.GetAssignmentUpdateDto();
+
+            // Act
+            var result = await _assignmentController.UpdateAssignmentAsync(assignmentRequest);
+
+            // Assert
+            result.Should().NotBeNull();
+
+            var actionResult = Assert.IsType<CreatedResult>(result.Result);
+            var returnValue = Assert.IsType<AssignmentDto>(actionResult.Value);
+
+            Assert.Equal(1, returnValue.Id);
+            Assert.Equal("MO000002", returnValue.AssetCode);
+        }
+
+        [Fact]
+        public async Task UpdateAsyncShouldThrowNotFoundExceptionAsync()
+        {
+            var unExistedId = 7;
+            var assignmentRequest = AssignmentData.GetAssignmentUpdateDto();
+
+            assignmentRequest.Id = unExistedId;
+
+            await Assert.ThrowsAsync<NotFoundException>(() => _assignmentController.UpdateAssignmentAsync(assignmentRequest));
+        }
     }
  }

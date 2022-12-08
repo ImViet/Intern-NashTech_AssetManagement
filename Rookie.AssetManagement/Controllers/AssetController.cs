@@ -92,14 +92,7 @@ namespace Rookie.AssetManagement.Controllers
             var location = User.Claims.FirstOrDefault(x => x.Type.Equals("Location", StringComparison.OrdinalIgnoreCase))?.Value;
 
             AssetDto asset;
-            try
-            {
                 asset = await _assetService.UpdateAssetAsync(assetUpdateDto, location);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
             return Created(Endpoints.User, asset);
         }
 
