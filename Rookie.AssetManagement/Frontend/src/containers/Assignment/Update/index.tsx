@@ -8,12 +8,18 @@ import { getAssignmentFormData } from "../reducer";
 
 const UpdateAssignmentContainer = () => {
     const { id } = useParams<{ id: string }>();
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
     const { assignmentFormData } = useAppSelector((state) => state.assignmentReducer);
     const dispatch = useAppDispatch();
     useEffect(()=>{
       dispatch(getAssignmentFormData(Number(id)))
     }, [])
+
+    useEffect(()=>{
+      if(assignmentFormData?.state === 6){
+        navigate(ASSIGNMENT_LIST_LINK)
+      }
+    }, [assignmentFormData?.state])
 
 
     return (
@@ -21,7 +27,7 @@ const UpdateAssignmentContainer = () => {
         <div className="primaryColor text-title intro-x">Edit Assignment</div>
   
         <div className="row">
-          { <AssignmentFormContainer />}
+        {assignmentFormData && <AssignmentFormContainer initialAssignmentForm={assignmentFormData}/>}
         </div>
       </div>
     );

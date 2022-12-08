@@ -20,5 +20,6 @@ namespace Rookie.AssetManagement.Business.Interfaces
         Task<AssetDto> UpdateAssetAsync(AssetUpdateDto assetUpdateDto, string location);
         Task<bool> DisableAssetAsync(int id, string location);
         Task<PagedResponseModel<LookUpAssetDto>> GetLookUpAsset(AssetQueryCriteriaDto assetQueryCriteria, CancellationToken cancellationToken);
+        
     }
 }

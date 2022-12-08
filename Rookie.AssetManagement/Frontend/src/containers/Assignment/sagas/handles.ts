@@ -17,6 +17,7 @@ import {
   setAssignmentResult,
   setActionResult,
   DisableAction,
+  setAssignmentFormData,
 } from "../reducer";
 import {
   getStateRequest,
@@ -24,6 +25,7 @@ import {
   getAssignmentByIdRequest,
   createAssignmentRequest,
   updateAssignmentRequest,
+  getAssignmentFormDataRequest,
 } from "./requests";
 import IAssignmentForm from "src/interfaces/Assignment/IAssignmentForm";
 
@@ -97,6 +99,27 @@ export function* handleGetAssignmentById(action: PayloadAction<number>) {
     const { data } = yield call(getAssignmentByIdRequest, id);
     data.AssignedDate = new Date(data.AssignedDate);
     yield put(setAssignmentResult(data));
+  } catch (error: any) {
+    const message = error.response.data;
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: {
+          error: true,
+          message: message,
+        },
+      })
+    );
+  }
+}
+
+export function* handleGetAssignmentForm(action: PayloadAction<number>) {
+  const id = action.payload;
+
+  try {
+    const { data } = yield call(getAssignmentFormDataRequest, id);
+    data.assignedDate = new Date(data.assignedDate);
+    yield put(setAssignmentFormData(data));
   } catch (error: any) {
     const message = error.response.data;
     yield put(

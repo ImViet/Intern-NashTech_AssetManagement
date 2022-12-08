@@ -20,5 +20,6 @@ namespace Rookie.AssetManagement.Business.Interfaces
         Task<AssignmentDto> AddAssignmentAsync(AssignmentCreateDto assignmentCreateDto, string AssignedBy);
         Task<PagedResponseModel<AssignmentDto>> GetByPageAsync(AssignmentQueryCriteriaDto assignmentQueryCriteria, CancellationToken cancellationToken);
         Task<AssignmentDto> UpdateAssignmentAsync(AssignmentUpdateDto assignmentUpdateDto);
+        Task<bool> DisableAssignmentAsync(int id);
     }
 }

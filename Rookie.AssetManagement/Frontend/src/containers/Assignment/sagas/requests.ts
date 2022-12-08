@@ -50,6 +50,11 @@ export function updateAssignmentRequest(
     paramsSerializer: (params) => JSON.stringify(params),
   });
 }
+export function getAssignmentFormDataRequest(
+  id: number
+): Promise<AxiosResponse<IAssignmentForm>> {
+  return RequestService.axios.get(`${EndPoints.getAssignmentDataForm}/${id}`);
+}
 
 export function getLookUpUserRequest(
   userQuery: IQueryUserModel
