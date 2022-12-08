@@ -1,7 +1,9 @@
 using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
 using Rookie.AssetManagement.Contracts.Dtos.AssignmentDtos;
 using Rookie.AssetManagement.Contracts.Dtos.CategoryDtos;
+using Rookie.AssetManagement.Contracts.Dtos.EnumDtos;
 using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
+using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using Rookie.AssetManagement.DataAccessor.Data;
 using Rookie.AssetManagement.DataAccessor.Entities;
 using Rookie.AssetManagement.DataAccessor.Enum;
@@ -135,6 +137,19 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     AssignedDate = new DateTime(),
                     State = "",
                 },
+
+            };
+        }
+
+        public static AssignmentUpdateDto GetAssignmentUpdateDto()
+        {
+            return new AssignmentUpdateDto()
+            {
+                Id = 1,
+                Asset =2,
+                Note = "Personal Computer xyz",
+                User = 1,
+                AssignedDate = new DateTime(),
 
             };
         }
