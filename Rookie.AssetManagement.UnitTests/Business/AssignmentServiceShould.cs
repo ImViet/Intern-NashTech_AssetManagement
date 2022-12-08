@@ -102,24 +102,26 @@ namespace Rookie.AssetManagement.UnitTests.Business{
             await act.Should().ThrowAsync<NotFoundException>();
         }
 
-        //[Fact]
-        //public async Task UpdateAssetAsyncShouldSuccess()
-        //{
-        //    //Arrange
-        //    var assetsMock = AssetTestData.GetAssets().AsQueryable().BuildMock();
-        //    var listState = AssetTestData.GetStates().ToList().BuildMock();
-        //    _stateRepository.Setup(x => x.Entities).Returns(listState);
-        //    _assetRepository.Setup(x => x.Entities).Returns(assetsMock);
-        //    _assetRepository.Setup(x => x.Update(It.IsAny<Asset>()))
-        //                                .Returns(Task.FromResult(AssetTestData.GetUpdateAsset()));
-        //    //Act
-        //    var result = await _assetService.UpdateAssetAsync(
-        //        AssetTestData.GetUpdateAssetDtoSuccess(),
-        //        "HCM"
-        //        );
-        //    //Assert
-        //    Assert.Equal("Laptop Asus", result.AssetName);
-        //}
+        [Fact]
+        public async Task UpdateAssignmentAsyncShouldSuccess()
+        {
+            //Arrange
+            var assignmentsMock = AssignmentTestData.GetAssignments().AsQueryable().BuildMock();
+            var listUser = AssignmentTestData.GetUsers().ToList().BuildMock();
+            var listAsset = AssignmentTestData.GetAssets().ToList().BuildMock();
+            _userRepository.Setup(x => x.Entities).Returns(listUser);
+            _assetRepository.Setup(x => x.Entities).Returns(listAsset);
+            _assignmentRepository.Setup(x => x.Entities).Returns(assignmentsMock);
+            _assignmentRepository.Setup(x => x.Update(It.IsAny<Assignment>()))
+                                        .Returns(Task.FromResult(AssignmentTestData.GetUpdateAssignment()));
+            //Act        
+            var result = await _assignmentService.UpdateAssignmentAsync(
+                AssignmentTestData.GetUpdateAssignmentDtoSuccess()
+                );
+            //Assert
+            Assert.Equal("Personal Computer xyz", result.AssetName);
+            Assert.Equal("Dong", result.AssignedTo);
+        }
 
     }
 }
