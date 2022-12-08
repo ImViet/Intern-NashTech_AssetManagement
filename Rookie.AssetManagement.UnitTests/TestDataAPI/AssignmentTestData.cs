@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace Rookie.AssetManagement.UnitTests.TestDataAPI
 {
-    public class AssignmentTestData{
+    public class AssignmentTestData
+    {
         public static List<Assignment> GetAssignments()
         {
             return new List<Assignment>() {
@@ -19,7 +20,7 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                     Asset = new Asset (){
                         AssetCode = "MO000001",
                         AssetName = "Personal Computer xyz",
-                    }, 
+                    },
                     AssignedTo= new User(){
                         UserName = "damthuy",
                     },
@@ -39,7 +40,7 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                     Asset = new Asset (){
                         AssetCode = "MO000002",
                         AssetName = "Personal Computer xyz2",
-                    }, 
+                    },
                     AssignedTo= new User(){
                         UserName = "binhnv",
                     },
@@ -58,28 +59,33 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
         }
         public static Assignment GetAssignment()
         {
-            return new Assignment {
-                    Id= 1,
-                    Asset = new Asset (){
-                        AssetCode = "MO000001",
-                        AssetName = "Personal Computer xyz",
-                    },
-                    AssignedTo= new User(){
-                        UserName = "damthuy",
-                    },
-                    AssignedBy = new User(){
-                        UserName = "admin",
-                    },
-                    AssignedDate = DateTime.Parse("2021-02-21"),
-                    State = new State(){
-                        Id = 1,
-                        StateName = "Accepted"
-                    },
-                    IsDeleted=false,
-                    Note=""
+            return new Assignment
+            {
+                Id = 1,
+                Asset = new Asset()
+                {
+                    AssetCode = "MO000001",
+                    AssetName = "Personal Computer xyz",
+                },
+                AssignedTo = new User()
+                {
+                    UserName = "damthuy",
+                },
+                AssignedBy = new User()
+                {
+                    UserName = "admin",
+                },
+                AssignedDate = DateTime.Parse("2021-02-21"),
+                State = new State()
+                {
+                    Id = 1,
+                    StateName = "Accepted"
+                },
+                IsDeleted = false,
+                Note = ""
 
             };
-         }
+        }
 
         public static List<State> GetStates()
         {
@@ -109,6 +115,30 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                 Asset = "1",
                 AssignedDate = new DateTime(),
                 Note = "RAM 8Gb"
+            };
+        }
+        public static int UnExistedAssignmentId = 3;
+        public static int ExistedAssignmentId = 1;
+        public static AssignmentUpdateDto GetUpdateAssignmentDtoFail()
+        {
+            return new AssignmentUpdateDto()
+            {
+                Id = UnExistedAssignmentId,
+                User = 1,
+                Asset = 1,
+                AssignedDate = DateTime.Parse("2021-11-21"),
+                Note = "Assignment 1"
+            };
+        }
+        public static AssetUpdateDto GetUpdateAssetDtoSuccess()
+        {
+            return new AssetUpdateDto()
+            {
+                Id = ExistedAssignmentId,
+                AssetName = "Laptop Asus",
+                Specification = "Window 11, Ram 8GB, Core i7",
+                InstalledDate = DateTime.Parse("2021-11-21"),
+                State = 1
             };
         }
         public static List<User> GetUsers()

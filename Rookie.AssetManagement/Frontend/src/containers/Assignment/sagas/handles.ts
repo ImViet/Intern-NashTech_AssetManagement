@@ -17,12 +17,16 @@ import {
   setAssignmentResult,
   setActionResult,
   DisableAction,
+  setAssignmentFormData,
 } from "../reducer";
 import {
   getStateRequest,
   getAssignmentsRequest,
   getAssignmentByIdRequest,
   createAssignmentRequest,
+  disableAssignmentRequest,
+  updateAssignmentRequest,
+  getAssignmentFormDataRequest,
 } from "./requests";
 import IAssignmentForm from "src/interfaces/Assignment/IAssignmentForm";
 
@@ -110,6 +114,27 @@ export function* handleGetAssignmentById(action: PayloadAction<number>) {
   }
 }
 
+export function* handleGetAssignmentForm(action: PayloadAction<number>) {
+  const id = action.payload;
+
+  try {
+    const { data } = yield call(getAssignmentFormDataRequest, id);
+    data.assignedDate = new Date(data.assignedDate);
+    yield put(setAssignmentFormData(data));
+  } catch (error: any) {
+    const message = error.response.data;
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: {
+          error: true,
+          message: message,
+        },
+      })
+    );
+  }
+}
+
 export function* handleCreateAssignment(action: PayloadAction<CreateAction>) {
   const { formValues, handleResult } = action.payload;
   try {
@@ -125,6 +150,52 @@ export function* handleCreateAssignment(action: PayloadAction<CreateAction>) {
 
     if (data) {
       handleResult(true);
+    }
+
+    yield put(setActionResult(data));
+  } catch (error: any) {
+    const errorModel = error.response.data;
+    handleResult(false, errorModel);
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: {
+          error: true,
+          message: "",
+        },
+      })
+    );
+  }
+}
+
+export function* handleDisableAssignment(action: PayloadAction<DisableAction>) {
+  const { id, handleResult } = action.payload;
+  try {
+    const { data } = yield call(disableAssignmentRequest, id);
+
+    if (data) {
+      handleResult(true, "");
+    }
+  } catch (error: any) {
+    const message = error.response.data;
+    handleResult(false, message);
+  }
+}
+
+export function* handleUpdateAssignment(action: PayloadAction<UpdateAction>) {
+  const { handleResult, formValues } = action.payload;
+  try {
+    console.log("handleUpdateAssignment");
+    console.log(formValues);
+
+    formValues.assignedDate = toUTCWithoutHour(formValues.assignedDate);
+
+    const { data } = yield call(updateAssignmentRequest, formValues);
+
+    data.AssignedDate = new Date(data.AssignedDate);
+
+    if (data) {
+      handleResult(true, data.id);
     }
 
     yield put(setActionResult(data));

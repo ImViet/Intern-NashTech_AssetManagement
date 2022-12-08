@@ -100,8 +100,8 @@ const Header = () => {
           const index = pathnameSplit.findIndex(s=>s== split)
           pathnameSplit.splice(index,1)
         }
-      }    
-      else if(type="asset")
+      } 
+      else if(type=="asset")
       {
         if(split == "create"){
           const index = pathnameSplit.findIndex(s=>s== split)
@@ -114,8 +114,8 @@ const Header = () => {
           const index = pathnameSplit.findIndex(s=>s== split)
           pathnameSplit.splice(index,1)
         }     
-      }    
-      else if(type="assigment")
+      }       
+      else if(type=="assignment")
       {
         if(split == "create"){
           const index = pathnameSplit.findIndex(s=>s== split)
@@ -128,7 +128,7 @@ const Header = () => {
           const index = pathnameSplit.findIndex(s=>s== split)
           pathnameSplit.splice(index,1)
         }     
-      }    
+      }            
     })
     
     return pathnameSplit.join(' > ').toString() || 'Home' ;

@@ -14,13 +14,16 @@ import UserLookupTable from './UserLookupTable';
 import { Search } from 'react-feather';
 import { getLookUpAssetRequest, getLookUpUserRequest } from './sagas/requests';
 import AssetLookupTable from './AssetLookupTable';
-import { createAssignment } from './reducer';
+import { createAssignment, updateAssignment } from './reducer';
 
 const initialFormValues: IAssignmentForm = {
     user: '',
-    asset: "",
+    userName:'',
+    asset: '',
+    assetName:'',
     note: '',
     assignedDate: new Date(),
+    state: 7
 };
 
 const validationSchema = Yup.object().shape({
@@ -30,14 +33,10 @@ const validationSchema = Yup.object().shape({
     assignedDate: Yup.date().required("")
 });
 
-type Props = {
-    initialAssetForm?: IAssignmentForm;
-};
-
-function AssignmentFormContainer({ initialAssetForm = {
+function AssignmentFormContainer({ initialAssignmentForm = {
     ...initialFormValues
 } }) {
-    const isUpdate = initialAssetForm.id ? true : false;
+    const isUpdate = initialAssignmentForm.id ? true : false;
 
     const [loading, setLoading] = useState(false);
 
@@ -53,7 +52,7 @@ function AssignmentFormContainer({ initialAssetForm = {
     return (
         <>
             <Formik
-                initialValues={initialAssetForm}
+                initialValues={initialAssignmentForm}
                 enableReinitialize
                 validationSchema={validationSchema}
 
@@ -61,7 +60,7 @@ function AssignmentFormContainer({ initialAssetForm = {
                     setLoading(true);
                     setTimeout(() => {
                         if (isUpdate) {
-                            // dispatch(updateAsset({ handleResult, formValues: {...values} }));
+                            dispatch(updateAssignment({ handleResult, formValues: {...values} }));
                         }
                         else {
                             dispatch(createAssignment({ handleResult, formValues: {...values} }));
@@ -80,6 +79,7 @@ function AssignmentFormContainer({ initialAssetForm = {
                                 lookupLabel="Users"
                                 request={getLookUpUserRequest}
                                 TableComponent={UserLookupTable}
+                                intialValueLabel={initialAssignmentForm.userName}
                             />
 
                             <LookupField
@@ -89,6 +89,7 @@ function AssignmentFormContainer({ initialAssetForm = {
                                 lookupLabel="Assets"
                                 request={getLookUpAssetRequest}
                                 TableComponent={AssetLookupTable}
+                                intialValueLabel={initialAssignmentForm.assetName}
                             />
 
                             <DateField
@@ -96,7 +97,7 @@ function AssignmentFormContainer({ initialAssetForm = {
                                 label="Assigned Date"
                                 placeholder=""
                                 isrequired
-                                minDate={new Date()}
+                                minDate={isUpdate ? initialAssignmentForm.assignedDate :new Date()}
                             />
 
                             <TextAreaField

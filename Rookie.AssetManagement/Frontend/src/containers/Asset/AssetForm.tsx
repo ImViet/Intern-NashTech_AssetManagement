@@ -42,14 +42,14 @@ function AssetFormContainer({ initialAssetForm = {
     
     const states = useMemo(() => {
         if (isUpdate) {
-            return FilterAssetStateOptions.filter(state => state.label != "Assigned" && state.label != "ALL" && state.label != "Accepted" && state.label != "Waiting for acceptance" )
+            return FilterAssetStateOptions.filter(state => state.label != "Assigned" && state.label != "All" && state.label != "Accepted" && state.label != "Waiting for acceptance" )
         }
         else {
             return FilterAssetStateOptions.filter(state => state.label == "Available" || state.label == "Not Available")
         }
     }, [FilterAssetStateOptions])
 
-    const categories = useMemo(() => FilterAssetCategoryOptions.filter(cate => cate.label != "ALL"), [FilterAssetCategoryOptions])
+    const categories = useMemo(() => FilterAssetCategoryOptions.filter(cate => cate.label != "All"), [FilterAssetCategoryOptions])
 
     const [loading, setLoading] = useState(false);
 

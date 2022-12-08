@@ -54,6 +54,14 @@ namespace Rookie.AssetManagement.Controllers
             return Ok(assignmentResponses);
         }
 
+        [HttpGet]
+        [Route("GetAssignmentDataForm/{id}")]
+        public async Task<ActionResult<AssignmentFormDto>> GetAssginmentDataById(int id)
+        {
+            var assignmentResponses = await _assignmentService.GetFormDataById(id);
+            return Ok(assignmentResponses);
+        }
+
         [HttpPost]
         public async Task<ActionResult<AssignmentDto>> AddAssignmentAsync([FromBody] AssignmentCreateDto assignmentCreate)
         {
@@ -64,16 +72,17 @@ namespace Rookie.AssetManagement.Controllers
         [HttpPut]
         public async Task<ActionResult<AssignmentDto>> UpdateAssignmentAsync([FromBody] AssignmentUpdateDto assignmentUpdateDto)
         {
-            AssignmentDto assignment;
-            try
-            {
-                assignment = await _assignmentService.UpdateAssignmentAsync(assignmentUpdateDto);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            AssignmentDto assignment = await _assignmentService.UpdateAssignmentAsync(assignmentUpdateDto);
             return Created(Endpoints.User, assignment);
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DisableAssignmentAsync([FromRoute] int id)
+        {
+            var disableResult = await _assignmentService.DisableAssignmentAsync(id);
+
+            return Ok(disableResult);
         }
     }
 }

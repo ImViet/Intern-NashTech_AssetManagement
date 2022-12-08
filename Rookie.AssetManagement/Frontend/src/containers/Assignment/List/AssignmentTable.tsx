@@ -11,7 +11,7 @@ import formatDateTime, { convertDDMMYYYY } from "src/utils/formatDateTime";
 import Info from "../Info";
 //import { disableUser } from "../reducer";
 
-import { EDIT_ASSET_ID } from "src/constants/pages";
+import { EDIT_ASSIGNMENT_ID } from "src/constants/pages";
 import ConfirmModal from "src/components/ConfirmModal";
 import { useAppDispatch } from "src/hooks/redux";
 import IAssignment from "src/interfaces/Assignment/IAssignment";
@@ -67,34 +67,34 @@ const AssignmentTable: React.FC<Props> = ({
       };
 
     const handleShowDisable = async (id: number) => {
-        // setDisable({
-        //   id,
-        //   isOpen: true,
-        //   title: 'Are you sure?',
-        //   message: 'Do you want to delete this assignment?',
-        //   isDisable: true,
-        // });
+        setDisable({
+          id,
+          isOpen: true,
+          title: 'Are you sure?',
+          message: 'Do you want to delete this assignment?',
+          isDisable: true,
+        });
     };
 
     const handleCloseDisable = () => {
-        // setDisable({
-        //   isOpen: false,
-        //   id: 0,
-        //   title: '',
-        //   message: '',
-        //   isDisable: true,
-        // });
+        setDisable({
+          isOpen: false,
+          id: 0,
+          title: '',
+          message: '',
+          isDisable: true,
+        });
     };
 
     const onDisable = () => {
-        // handleDisable(disableState.id)
-        // setDisable({
-        //   isOpen: false,
-        //   id: 0,
-        //   title: '',
-        //   message: '',
-        //   isDisable: true,
-        // });
+        handleDisable(disableState.id)
+        setDisable({
+          isOpen: false,
+          id: 0,
+          title: '',
+          message: '',
+          isDisable: true,
+        });
     }
 
     const handleCloseDetail = () => {
@@ -103,7 +103,7 @@ const AssignmentTable: React.FC<Props> = ({
 
     const navigate = useNavigate();
     const handleEdit = (id: number) => {
-        //navigate(EDIT_ASSET_ID(id));
+        navigate(EDIT_ASSIGNMENT_ID(id));
     };
 
     let rows

@@ -11,6 +11,7 @@ const Endpoints = {
   state:"api/Asset/GetAllState",
   assignment:"api/Assignment",
   searchAssignment:"api/Assignment/Assignment",
+  getAssignmentDataForm:"api/Assignment/GetAssignmentDataForm",
 };
 
 export default Endpoints;

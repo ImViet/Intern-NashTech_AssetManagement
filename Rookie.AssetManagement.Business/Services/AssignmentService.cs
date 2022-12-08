@@ -196,8 +196,17 @@ namespace Rookie.AssetManagement.Business.Services
                 .ProjectTo<AssignmentDto>(_mapper.ConfigurationProvider)
                 .FirstAsync();
             return assignment;
-        }
+        } 
 
+        public async Task<AssignmentFormDto> GetFormDataById(int id)
+        {
+            var assignment = await _assignmentRepository.Entities
+                .Where(a => a.Id == id)
+                .ProjectTo<AssignmentFormDto>(_mapper.ConfigurationProvider)
+                .FirstAsync();
+            return assignment;
+        }
+        
         public async Task<AssignmentDto> UpdateAssignmentAsync(AssignmentUpdateDto assignmentUpdateDto)
         {
             var assignment = await _assignmentRepository.Entities.Include(x => x.AssignedTo).Include(x => x.Asset).Include(x => x.State).FirstOrDefaultAsync(a => a.Id == assignmentUpdateDto.Id);
@@ -226,6 +235,24 @@ namespace Rookie.AssetManagement.Business.Services
             var assignmentUpdated = await _assignmentRepository.Update(assignment);
             var assignmentUpdatedDto = _mapper.Map<AssignmentDto>(assignmentUpdated);
             return assignmentUpdatedDto;
+        }
+
+        public async Task<bool> DisableAssignmentAsync(int id)
+        {
+            var assignment = await _assignmentRepository.Entities.Include(a => a.State).SingleOrDefaultAsync(a => a.Id.Equals(id));
+            if (assignment  == null)
+            {
+                throw new NotFoundException("Assignment Not Found!");
+            }
+            if (assignment .State.Id == 6)
+            {
+                throw new NotFoundException("Assignment is accepted can not be delete");
+            }
+            
+
+            await _assignmentRepository.Delete(assignment );
+
+            return await Task.FromResult(true);
         }
     }
 }

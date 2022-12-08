@@ -13,7 +13,7 @@ import {
     DEFAULT_ASSIGNMENT_SORT_COLUMN_NAME,
 } from "src/constants/paging";
 import IPagedModel from "src/interfaces/IPagedModel";
-import { cleanUpActionResult, getAssignmentList, getState } from "../reducer";
+import { cleanUpActionResult, getAssignmentList, getState, disableAssignment } from "../reducer";
 import IQueryAssignmentModel from "src/interfaces/Assignment/IQueryAssignmentModel";
 import SelectBox from "src/components/SelectBox";
 import { toUTCWithoutHour } from "src/utils/formatDateTime";
@@ -134,14 +134,14 @@ const ListAssignment = () => {
     };
 
     const handleDisable = (id) => {
-        // dispatch(disableAssignment({
-        //   id: id,
-        //   handleResult: (result, message) => {
-        //     if (result) {
-        //       setQuery({ ...defaultQuery });
-        //     }
-        //   }
-        // }))
+        dispatch(disableAssignment({
+          id: id,
+          handleResult: (result, message) => {
+            if (result) {
+              setQuery({ ...defaultQuery });
+            }
+          }
+        }))
     };
     const fetchData = () => {
         dispatch(getAssignmentList({ ...query }))
@@ -177,7 +177,7 @@ const ListAssignment = () => {
                     <div className="d-flex align-items-center w-md mr-5">
                         <DateFilter label="Assigned Date" date={assignedDate} handleDateChange={handleAssignDateChange} />
                     </div>
-                    <div className="d-flex align-items-center w-ld ml-auto mr-2">
+                    <div className="search-box d-flex align-items-center w-ld ml-auto mr-2">
                         <div className="input-group">
                             <input
                                 onChange={handleChangeSearch}

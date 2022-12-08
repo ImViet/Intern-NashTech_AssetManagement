@@ -16,14 +16,10 @@ namespace Rookie.AssetManagement.Business.Interfaces
         Task<IEnumerable<AssignmentDto>> GetAllAsync();
 
         Task<AssignmentDto> GetByIdAsync(int id);
-
+        Task<AssignmentFormDto> GetFormDataById(int id);
         Task<AssignmentDto> AddAssignmentAsync(AssignmentCreateDto assignmentCreateDto, string AssignedBy);
-
-        //Task<AssignmentDto> UpdateAsnyc(UserUpdateDto userUpdateDto, string location);
-
-        //Task<bool> DisableAsync(int id, string location);
-
         Task<PagedResponseModel<AssignmentDto>> GetByPageAsync(AssignmentQueryCriteriaDto assignmentQueryCriteria, CancellationToken cancellationToken);
         Task<AssignmentDto> UpdateAssignmentAsync(AssignmentUpdateDto assignmentUpdateDto);
+        Task<bool> DisableAssignmentAsync(int id);
     }
 }
