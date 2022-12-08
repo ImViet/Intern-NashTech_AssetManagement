@@ -121,5 +121,41 @@ namespace Rookie.AssetManagement.UnitTests.Business{
         //    Assert.Equal("Laptop Asus", result.AssetName);
         //}
 
+        [Fact]
+        public async Task DeleteAsyncShouldThrowException()
+        {
+            //Arrange
+            var UnExistedAssignmentId = 3;
+            var assignmentsMock = AssignmentTestData.GetAssignments().AsQueryable().BuildMock();
+
+            _assignmentRepository
+                  .Setup(x => x.Entities)
+                  .Returns(assignmentsMock);
+
+            //Act 
+            Func<Task> act = async () => await _assignmentService.DisableAssignmentAsync(UnExistedAssignmentId);
+
+            //Assert
+            await act.Should().ThrowAsync<NotFoundException>();
+        }
+
+        [Fact]
+        public async Task DeleteAsyncReturnTrue()
+        {
+            //Arrange
+            var DeleteAssignmentId = 1;
+            var assignmentsMock = AssignmentTestData.GetAssignments().AsQueryable().BuildMock();
+
+            _assignmentRepository
+                  .Setup(x => x.Entities)
+                  .Returns(assignmentsMock);
+
+            //Act
+            var result = await _assignmentService.DisableAssignmentAsync(DeleteAssignmentId);
+
+            //Assert
+            result.Should().Equals(true);
+        }
+
     }
 }
