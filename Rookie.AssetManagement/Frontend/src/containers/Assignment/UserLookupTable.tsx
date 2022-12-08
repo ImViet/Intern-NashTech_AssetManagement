@@ -38,6 +38,7 @@ const UserLookupTable: React.FC<ILookupTable> = ({
     const [users, setUsers]= useState({} as IPagedModel<IUser>);
     const [query, setQuery] = useState({ ...defaultQuery });
     const [search, setSearch] = useState("");
+    const [disable, setDisable] = useState(true);
 
     const handlePage = (page: number) => {
         setQuery({
@@ -85,6 +86,11 @@ const UserLookupTable: React.FC<ILookupTable> = ({
         fetchData();
     }, [query]);
 
+    const handleClick = (data) =>{
+        setSelected({label: data.fullName, value: data.id})
+        setDisable(false)
+    }
+
     return (
         <>
             <div className="header-table">
@@ -129,7 +135,8 @@ const UserLookupTable: React.FC<ILookupTable> = ({
                                     <input className="form-check-input input-radio ml-1"
                                         type="radio"
                                         name="user-select"
-                                        onClick={()=>setSelected({label: data.fullName, value: data.id})}
+                                        checked={data.id == selected.value}
+                                        onClick={()=>handleClick(data)}
                                     />
                                     <td>{data.staffCode}</td>
                                     <td>{data.fullName}</td>
@@ -144,7 +151,7 @@ const UserLookupTable: React.FC<ILookupTable> = ({
             <div className="d-flex mt-3 mr-2">
                 <div className="ml-auto">
                     <button className="btn btn-danger mr-4"
-                        type="submit" disabled={false}
+                        type="submit" disabled={disable}
                         onClick={()=>{onSelect(selected.label, selected.value); closeModal();}}
                     >
                         Save
