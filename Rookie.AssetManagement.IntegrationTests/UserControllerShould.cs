@@ -132,7 +132,7 @@ namespace Rookie.AssetManagement.IntegrationTests
         }
 
         [Fact]
-        public async Task EditAsyncShouldThrowNotFoundExceptionAsync()
+        public async Task UpdateAsyncShouldThrowNotFoundExceptionAsync()
         {
             var unExistedId = 5;
             var userRequest = ArrangeData.GetUserUpdateDto();
