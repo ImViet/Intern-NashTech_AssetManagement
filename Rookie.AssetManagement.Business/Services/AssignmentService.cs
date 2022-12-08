@@ -228,9 +228,10 @@ namespace Rookie.AssetManagement.Business.Services
             {
                 throw new NotFoundException("Asset Not Found!");
             }
+
+            _mapper.Map(assignmentUpdateDto, assignment);
             assignment.AssignedTo = getUserTo;
             assignment.Asset = getAsset;
-            _mapper.Map(assignmentUpdateDto, assignment);
 
             var assignmentUpdated = await _assignmentRepository.Update(assignment);
             var assignmentUpdatedDto = _mapper.Map<AssignmentDto>(assignmentUpdated);

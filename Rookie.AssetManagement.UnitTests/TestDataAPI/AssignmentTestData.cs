@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Rookie.AssetManagement.UnitTests.TestDataAPI
@@ -57,11 +58,11 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                 }
             };
         }
-        public static Assignment GetAssignment()
+        public static Assignment GetAssignment(int id, bool isDeleted = false)
         {
             return new Assignment
             {
-                Id = 1,
+                Id = id,
                 Asset = new Asset()
                 {
                     AssetCode = "MO000001",
@@ -69,7 +70,7 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                 },
                 AssignedTo = new User()
                 {
-                    UserName = "damthuy",
+                    UserName = "Dong",
                 },
                 AssignedBy = new User()
                 {
@@ -86,7 +87,13 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
 
             };
         }
-
+        public static int UnExistedAssignmentId = 3;
+        public static int ExistedAssignmentId = 1;
+        public static Assignment GetUpdateAssignment()
+        {
+            var updateAssignment = GetAssignment(ExistedAssignmentId);
+            return updateAssignment;
+        }
         public static List<State> GetStates()
         {
             return new List<State>() {
@@ -117,28 +124,26 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                 Note = "RAM 8Gb"
             };
         }
-        public static int UnExistedAssignmentId = 3;
-        public static int ExistedAssignmentId = 1;
         public static AssignmentUpdateDto GetUpdateAssignmentDtoFail()
         {
             return new AssignmentUpdateDto()
             {
                 Id = UnExistedAssignmentId,
                 User = 1,
-                Asset = 1,
+                Asset = 2,
                 AssignedDate = DateTime.Parse("2021-11-21"),
                 Note = "Assignment 1"
             };
         }
-        public static AssetUpdateDto GetUpdateAssetDtoSuccess()
+        public static AssignmentUpdateDto GetUpdateAssignmentDtoSuccess()
         {
-            return new AssetUpdateDto()
+            return new AssignmentUpdateDto()
             {
                 Id = ExistedAssignmentId,
-                AssetName = "Laptop Asus",
-                Specification = "Window 11, Ram 8GB, Core i7",
-                InstalledDate = DateTime.Parse("2021-11-21"),
-                State = 1
+                User = 2,
+                Asset = 1,
+                AssignedDate = DateTime.Parse("2021-11-21"),
+                Note = "Assignment 2"
             };
         }
         public static List<User> GetUsers()
@@ -162,6 +167,36 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                     StaffCode = "SD0002",
                     IsDeleted = false,
                     Location="HCM"
+                }
+            };
+        }
+        public static List<Asset> GetAssets()
+        {
+            return new List<Asset>() {
+                new Asset() {
+                    Id = 1,
+                    AssetCode = "MO000001",
+                    AssetName = "Personal Computer xyz",
+                    Specification = "abc",
+                    IsDeleted = false,
+                    Location="HCM",
+                    State=new State() {
+                        Id = 2,
+                        StateName="Available",
+                    },
+                },
+                new Asset() {
+                    Id = 2,
+                    AssetCode = "MO000002",                    
+                    AssetName = "Monitor xyz",
+                    Specification = "abc",
+                    IsDeleted = false,
+                    Location="HCM",
+                    State=new State() {
+                        Id = 1,
+                        StateName="Assigned",
+                    },
+
                 }
             };
         }
