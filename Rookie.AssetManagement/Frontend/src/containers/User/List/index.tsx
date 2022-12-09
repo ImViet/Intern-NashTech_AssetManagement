@@ -119,6 +119,7 @@ const ListUser = () => {
         }
       }
     }))
+    setSelectedType(defaultSelectedType);
   };
 
   const fetchData = () => {
