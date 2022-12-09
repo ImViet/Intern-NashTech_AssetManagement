@@ -206,7 +206,8 @@ const ListAsset = () => {
           <div className="d-flex align-items-center w-md mr-5">
             <div className="button">
               <div className="filter-state">
-                <SelectBox            
+                <SelectBox   
+                  currentSearch={query.search}         
                   options={FilterAssetStateOptions}
                   placeholderButtonLabel="State"
                   value={selectedState}
@@ -219,6 +220,7 @@ const ListAsset = () => {
             <div className="button">
                 <div className="filter-category">
                   <SelectBox
+                    currentSearch={query.search}
                     options={FilterAssetCategoryOptions}
                     placeholderButtonLabel="Category"
                     value={selectedCategory}

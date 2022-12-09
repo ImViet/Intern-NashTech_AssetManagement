@@ -7,12 +7,13 @@ function SelectBox({
     placeholderButtonLabel,
     value,
     onChange,
-    currentPage
+    currentPage,
+    currentSearch
 }) {
   const [open, setOpen] = useState(false)
   useEffect(()=>{
     setOpen(false)
-  }, [currentPage])
+  }, [currentPage,currentSearch])
   return (
     <div className="filter-css d-flex align-items-center w-md mr-5" onClick={()=>{setOpen(val=>!val)}}>
         <ReactMultiSelectCheckboxes
