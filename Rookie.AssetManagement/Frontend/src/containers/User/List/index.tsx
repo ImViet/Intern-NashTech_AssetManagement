@@ -119,6 +119,7 @@ const ListUser = () => {
         }
       }
     }))
+    setSelectedType(defaultSelectedType);
   };
 
   const fetchData = () => {
@@ -142,6 +143,8 @@ const ListUser = () => {
         <div className="d-flex mb-5 intro-x">
           <div className="filter-type">
             <SelectBox
+              currentPage={query.page}
+              currentSearch={query.search}
               options={FilterUserTypeOptions}
               placeholderButtonLabel="Type"
               value={selectedType}

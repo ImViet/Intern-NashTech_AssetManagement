@@ -172,7 +172,10 @@ const ListAssignment = () => {
                                     options={states}
                                     placeholderButtonLabel="State"
                                     value={selectedState}
-                                    onChange={handleState} />
+                                    onChange={handleState} 
+                                    currentPage={query.page}
+                                    currentSearch={query.search}
+                                    />
                             </div>
                         </div>
                     </div>

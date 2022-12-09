@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactMultiSelectCheckboxes from "react-multiselect-checkboxes";
 import { FunnelFill } from "react-bootstrap-icons";
 
@@ -7,10 +7,15 @@ function SelectBox({
     placeholderButtonLabel,
     value,
     onChange,
+    currentPage,
+    currentSearch
 }) {
   const [open, setOpen] = useState(false)
+  useEffect(()=>{
+    setOpen(false)
+  }, [currentPage,currentSearch])
   return (
-    <div className="filter-css d-flex align-items-center w-md mr-5" onBlur={()=>setOpen(false)} onClick={()=>setOpen(true)}>
+    <div className="filter-css d-flex align-items-center w-md mr-5" onClick={()=>{setOpen(val=>!val)}}>
         <ReactMultiSelectCheckboxes
             menuIsOpen={open}
             options={options}
