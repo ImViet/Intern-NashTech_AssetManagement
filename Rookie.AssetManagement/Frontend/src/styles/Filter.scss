@@ -20,7 +20,13 @@
         span{
             display: none;
         }
-    }   
+    }
+    div:last-child{
+        display: none;
+    }
+    div:first-child{
+        display: block;
+    }  
 }  
 .filter-css div:first-child div:first-child div:first-child:only-child {
     padding: 0;

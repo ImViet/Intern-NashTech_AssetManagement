@@ -210,7 +210,8 @@ const ListAsset = () => {
                   options={FilterAssetStateOptions}
                   placeholderButtonLabel="State"
                   value={selectedState}
-                  onChange={handleState}/>
+                  onChange={handleState}
+                  currentPage={query.page}/>
               </div>
             </div>
           </div>
@@ -222,6 +223,7 @@ const ListAsset = () => {
                     placeholderButtonLabel="Category"
                     value={selectedCategory}
                     onChange={handleCategory}
+                    currentPage={query.page}
                   />
                 </div>
             </div>

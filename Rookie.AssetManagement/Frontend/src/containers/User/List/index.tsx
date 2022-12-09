@@ -142,6 +142,7 @@ const ListUser = () => {
         <div className="d-flex mb-5 intro-x">
           <div className="filter-type">
             <SelectBox
+              currentPage={query.page}
               options={FilterUserTypeOptions}
               placeholderButtonLabel="Type"
               value={selectedType}
