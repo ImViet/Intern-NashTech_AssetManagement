@@ -138,4 +138,6 @@
 .not-data-found{
     opacity: 0.5;
     text-align: center;
+    position: relative;
+    z-index: -1;
 }
