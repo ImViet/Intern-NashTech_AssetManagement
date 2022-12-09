@@ -113,23 +113,28 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
             {
                 new State()
                 {
-                StateName = "Assigned",
+                    StateName = "Assigned",
+                    Entity = "ASSET",
                 },
                 new State()
                 {
-                 StateName = "Available",
+                    StateName = "Available",
+                    Entity = "ASSET",
                 },
                 new State()
                 {
-                 StateName = "Not Available",
+                    StateName = "Not Available",
+                    Entity = "ASSET",
                 },
-                 new State()
+                new State()
                 {
-                 StateName = "Waiting For Recycling",
+                    StateName = "Waiting For Recycling",
+                    Entity = "ASSET",
                 },
-                  new State()
+                new State()
                 {
-                 StateName = "Recycled",
+                    StateName = "Recycled",
+                    Entity = "ASSET",
                 },
             };
         }

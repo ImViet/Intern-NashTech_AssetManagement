@@ -11,6 +11,7 @@ using Rookie.AssetManagement.Contracts.Dtos.AssignmentDtos;
 using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
 using Rookie.AssetManagement.Contracts.Dtos.UserDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
+using Rookie.AssetManagement.DataAccessor.Enum;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -68,7 +69,7 @@ namespace Rookie.AssetManagement.Business.Services
             newAssignment.IsDeleted = false;
             newAssignment.AssignedBy = getAssignedBy;
 
-            var waitAcceptState = await _stateRepository.GetById(7);
+            var waitAcceptState = await _stateRepository.GetById((int)AssignmentStateEnum.WaitingForAcceptance);
             newAssignment.State = waitAcceptState;
 
             var createResult = await _assignmentRepository.Add(newAssignment);
@@ -214,7 +215,7 @@ namespace Rookie.AssetManagement.Business.Services
             {
                 throw new NotFoundException("Assignment Not Found!");
             }
-            if (assignment.State.Id == 6)
+            if (assignment.State.Id == (int)AssignmentStateEnum.Accepted)
             {
                 throw new NotFoundException("Accepted Assignment Can Not Be Edit");
             }
@@ -246,7 +247,7 @@ namespace Rookie.AssetManagement.Business.Services
             {
                 throw new NotFoundException("Assignment Not Found!");
             }
-            if (assignment .State.Id == 6)
+            if (assignment .State.Id == (int)AssignmentStateEnum.Accepted)
             {
                 throw new NotFoundException("Assignment is accepted can not be delete");
             }

@@ -36,7 +36,9 @@ export function getAssetFormDataRequest(
 ): Promise<AxiosResponse<IAssetForm>> {
   return RequestService.axios.get(`${EndPoints.searchAsset}/${id}`);
 }
-export function getAssetByIdRequest(id: number): Promise<AxiosResponse<IAsset>> {
+export function getAssetByIdRequest(
+  id: number
+): Promise<AxiosResponse<IAsset>> {
   return RequestService.axios.get(EndPoints.asset + "/" + id);
 }
 
@@ -45,9 +47,11 @@ export function getCategoryRequest(): Promise<AxiosResponse<ICategory[]>> {
 }
 
 export function getStateRequest(): Promise<AxiosResponse<IState[]>> {
-  return RequestService.axios.get(EndPoints.state);
+  return RequestService.axios.get(EndPoints.asset + "/GetAssetState");
 }
 
-export function disableAssetRequest(id: number): Promise<AxiosResponse<IAsset>> {
+export function disableAssetRequest(
+  id: number
+): Promise<AxiosResponse<IAsset>> {
   return RequestService.axios.delete(EndPoints.asset + "/" + id);
 }

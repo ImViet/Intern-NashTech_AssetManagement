@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rookie.AssetManagement.DataAccessor.Data;
 
@@ -11,9 +12,10 @@ using Rookie.AssetManagement.DataAccessor.Data;
 namespace Rookie.AssetManagement.DataAccessor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221208111029_UpdateState")]
+    partial class UpdateState
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,37 +259,6 @@ namespace Rookie.AssetManagement.DataAccessor.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Rookie.AssetManagement.DataAccessor.Entities.ReturnRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("AcceptedById")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AssignmentId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ReturnedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("StateId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AcceptedById");
-
-                    b.HasIndex("AssignmentId");
-
-                    b.HasIndex("StateId");
-
-                    b.ToTable("ReturnRequests");
-                });
-
             modelBuilder.Entity("Rookie.AssetManagement.DataAccessor.Entities.State", b =>
                 {
                     b.Property<int>("Id")
@@ -497,27 +468,6 @@ namespace Rookie.AssetManagement.DataAccessor.Migrations
                     b.Navigation("AssignedBy");
 
                     b.Navigation("AssignedTo");
-
-                    b.Navigation("State");
-                });
-
-            modelBuilder.Entity("Rookie.AssetManagement.DataAccessor.Entities.ReturnRequest", b =>
-                {
-                    b.HasOne("Rookie.AssetManagement.DataAccessor.Entities.User", "AcceptedBy")
-                        .WithMany()
-                        .HasForeignKey("AcceptedById");
-
-                    b.HasOne("Rookie.AssetManagement.DataAccessor.Entities.Assignment", "Assignment")
-                        .WithMany()
-                        .HasForeignKey("AssignmentId");
-
-                    b.HasOne("Rookie.AssetManagement.DataAccessor.Entities.State", "State")
-                        .WithMany()
-                        .HasForeignKey("StateId");
-
-                    b.Navigation("AcceptedBy");
-
-                    b.Navigation("Assignment");
 
                     b.Navigation("State");
                 });

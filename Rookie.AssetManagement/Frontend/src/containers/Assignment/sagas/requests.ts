@@ -34,7 +34,7 @@ export function getAssignmentByIdRequest(
 }
 
 export function getStateRequest(): Promise<AxiosResponse<IState[]>> {
-  return RequestService.axios.get(EndPoints.state);
+  return RequestService.axios.get(EndPoints.assignment + "/GetAssignmentState");
 }
 
 export function createAssignmentRequest(
@@ -74,6 +74,8 @@ export function getLookUpAssetRequest(
   });
 }
 
-export function disableAssignmentRequest(id: number): Promise<AxiosResponse<IAssignment>> {
+export function disableAssignmentRequest(
+  id: number
+): Promise<AxiosResponse<IAssignment>> {
   return RequestService.axios.delete(EndPoints.assignment + "/" + id);
 }

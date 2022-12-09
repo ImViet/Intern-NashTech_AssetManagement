@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading;
 using Rookie.AssetManagement.Constants;
 using System;
+using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
 
 namespace Rookie.AssetManagement.Controllers
 {
@@ -20,8 +21,10 @@ namespace Rookie.AssetManagement.Controllers
     public class AssignmentController : ControllerBase
     {
         private readonly IAssignmentService _assignmentService;
-        public AssignmentController(IAssignmentService assignmentService)
+        private readonly IStateService _stateService;
+        public AssignmentController(IAssignmentService assignmentService, IStateService stateService)
         {
+            _stateService = stateService;
             _assignmentService = assignmentService;
         }
         [HttpGet]
@@ -60,6 +63,13 @@ namespace Rookie.AssetManagement.Controllers
         {
             var assignmentResponses = await _assignmentService.GetFormDataById(id);
             return Ok(assignmentResponses);
+        }
+
+        [HttpGet]
+        [Route("GetAssignmentState")]
+        public async Task<ActionResult<StateDto>> GetAssignmentState()
+        {
+            return Ok(await _stateService.GetAssignmentStateAsync());
         }
 
         [HttpPost]

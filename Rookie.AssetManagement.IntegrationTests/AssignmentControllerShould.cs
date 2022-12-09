@@ -56,7 +56,7 @@ namespace Rookie.AssetManagement.IntegrationTests
             _assignmentService = new AssignmentService(_assetRepository, _stategoryRepository, _assignmentRepository, _userRepository, _mapper);
             _stateService = new StateService(_stategoryRepository, _mapper);
 
-            _assignmentController = new AssignmentController(_assignmentService);
+            _assignmentController = new AssignmentController(_assignmentService, _stateService);
 
 
             AssignmentData.InitStatesData(_dbContext);
