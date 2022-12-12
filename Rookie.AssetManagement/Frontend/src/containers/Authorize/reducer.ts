@@ -44,8 +44,8 @@ const AuthSlice = createSlice({
     ): AuthState => {
       const account = action.payload;
       if (account?.token) {
-        setLocalStorage("token", account.token);
         request.setAuthentication(account.token);
+        setLocalStorage("token", account.token);
       } else if (token) {
         account.token = token;
         request.setAuthentication(token);
