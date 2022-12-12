@@ -27,6 +27,7 @@ type Props = {
     handlePage: (page: number) => void;
     handleSort: (colValue: string) => void;
     sortState: SortType;
+    handleAccept: Function
 };
 
 const MyAssignmentTable: React.FC<Props> = ({
@@ -35,34 +36,25 @@ const MyAssignmentTable: React.FC<Props> = ({
     handlePage,
     handleSort,
     sortState,
+    handleAccept = () => { }
 }) => {
     const dispatch = useAppDispatch();
     const [showDetail, setShowDetail] = useState(false);
     const [assignmentDetail, setAssignmentDetail] = useState(null as IAssignment | null);
-    const [disableState, setDisable] = useState({
+    const [confirmState, setConfirmState] = useState({
         isOpen: false,
-        id: 0,
         title: '',
         message: '',
         isDisable: true,
+        callback: () => { }
     });
 
     const handleShowInfo = (id: number) => {
-        // const assignment = result?.id == id ? (result) : (assignments?.items.find((item) => item.id === id));
-        // if (assignment) {
-        //     setAssignmentDetail(assignment);
-        //     setShowDetail(true);
-        // }
-    };
-
-    const handleShowDisable = async (id: number) => {
-        setDisable({
-            id,
-            isOpen: true,
-            title: 'Are you sure?',
-            message: 'Do you want to delete this assignment?',
-            isDisable: true,
-        });
+        const assignment = result?.id == id ? (result) : (assignments?.items.find((item) => item.id === id));
+        if (assignment) {
+            setAssignmentDetail(assignment);
+            setShowDetail(true);
+        }
     };
 
     const handleCloseDetail = () => {
@@ -80,6 +72,7 @@ const MyAssignmentTable: React.FC<Props> = ({
     } else if (assignments) {
         rows = [...assignments.items]
     }
+
     return (
         <>
             <Table
@@ -100,13 +93,21 @@ const MyAssignmentTable: React.FC<Props> = ({
                         <td>{convertDDMMYYYY(data.assignedDate)}</td>
                         <td>{data.state}</td>
                         <td className="d-flex">
-                            <ButtonIcon disable={data.state == "Accepted"}>
+                            <ButtonIcon disable={data.state == "Accepted"} onClick={() => {
+                                setConfirmState({
+                                    isOpen: false,
+                                    title: 'Are you sure?',
+                                    message: 'Do you want to accept this assignment?',
+                                    isDisable: true,
+                                    callback: () => { handleAccept(data.id) }
+                                });
+                            }}>
                                 <CheckLg className="text-danger" />
                             </ButtonIcon>
                             <ButtonIcon disable={data.state == "Accepted"}>
                                 <XLg className="text-danger mx-2" />
                             </ButtonIcon>
-                            <ButtonIcon disable={data.state == "Accepted"}>
+                            <ButtonIcon disable={data.state == "Waiting for acceptance"}>
                                 <ArrowCounterclockwise className="text-primary " />
                             </ButtonIcon>
                         </td>
@@ -117,16 +118,16 @@ const MyAssignmentTable: React.FC<Props> = ({
                 <Info assignment={assignmentDetail} handleClose={handleCloseDetail} />
             )}
             <ConfirmModal
-                title={disableState.title}
-                isShow={disableState.isOpen}
+                title={confirmState.title}
+                isShow={confirmState.isOpen}
             >
                 <div>
 
                     <div className="text-start">
-                        {disableState.message}
+                        {confirmState.message}
                     </div>
                     {
-                        disableState.isDisable && (
+                        confirmState.isDisable && (
                             <div className="text-start mt-3">
                                 <button
                                     className="btn btn-danger mr-3"

@@ -76,7 +76,8 @@ const Home = () => {
             orderBy: query.sortOrder,
           }}
           assignments={null}
-          result={null} />
+          result={null}
+          handleAccept={(id) => { console.log("Accept:", id) }} />
       </div>
     </>
   );
