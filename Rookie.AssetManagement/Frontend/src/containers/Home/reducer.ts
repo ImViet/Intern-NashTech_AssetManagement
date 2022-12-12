@@ -72,11 +72,24 @@ const MyAssignmentReducerSlice = createSlice({
         actionResult,
         loading: false,
       };
-    }
+    },
+    cleanUpActionResult: (state): AssignmentState => {
+      return {
+        ...state,
+        actionResult: null,
+        loading: false,
+      };
+    },
   },
 });
 
-export const { setMyAssignmentList, getMyAssignmentList, setStatus, acceptAssignment, setActionResult } =
-  MyAssignmentReducerSlice.actions;
+export const {
+  setMyAssignmentList,
+  getMyAssignmentList,
+  setStatus,
+  acceptAssignment,
+  setActionResult,
+  cleanUpActionResult,
+} = MyAssignmentReducerSlice.actions;
 
 export default MyAssignmentReducerSlice.reducer;

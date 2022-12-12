@@ -12,7 +12,7 @@ import {
 } from "src/constants/paging";
 import MyAssignmentTable from "./MyAssignmentTable";
 import IQueryMyAssignmentModel from "src/interfaces/Assignment/IQueryMyAssignmentModel";
-import { acceptAssignment, getMyAssignmentList } from "./reducer";
+import { acceptAssignment, cleanUpActionResult, getMyAssignmentList } from "./reducer";
 
 const Home = () => {
   const { assignments, actionResult } = useAppSelector((state) => state.myAssignmentReducer);
@@ -31,9 +31,12 @@ const Home = () => {
     });
     console.log(query)
   };
+
   const handleAccept = (id: number) => {
     dispatch(acceptAssignment(id));
+    fetchData();
   }
+
   const handleSort = (sortColumn: string) => {
     let sortOrder
     if (query.sortColumn != sortColumn) {
@@ -52,15 +55,8 @@ const Home = () => {
     dispatch(getMyAssignmentList({ ...query }))
   };
 
-  // useEffect(() => {
-  //   if (isAuth) {
-  //     dispatch(me());
-  //   } else {
-  //     navigate(LOGIN)
-  //   }
-  // }, [isAuth]);
-
   useEffect(() => {
+    dispatch(cleanUpActionResult())
     fetchData()
   }, [query]);
 
@@ -79,7 +75,7 @@ const Home = () => {
           }}
           assignments={assignments}
           result={actionResult}
-          handleAccept={ handleAccept } />
+          handleAccept={handleAccept} />
       </div>
     </>
   );
