@@ -26,7 +26,7 @@ const SideBar = () => {
             <button className="btnCustom">Manage Assignment</button>
           </NavLink>
           <NavLink className="navItem intro-x" to={RETURNING_LIST_LINK}>
-            <button className="btnCustom">Manage for Returning</button>
+            <button className="btnCustom">Request for Returning</button>
           </NavLink>
           <NavLink className="navItem intro-x" to={REPORT_LIST_LINK}>
             <button className="btnCustom">Report</button>
