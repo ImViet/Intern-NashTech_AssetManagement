@@ -17,7 +17,6 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
             return new List<ReturnRequest>()
             {
                  new ReturnRequest(){
-                    Id = 1,
                     Assignment =  new Assignment()
                     {
                         Asset = new Asset(){
@@ -34,7 +33,6 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                         },
                         AssignedDate = new DateTime(),
                         State = new State(){
-                            Id = 2,
                             StateName = "Accepted"
                         },
                         IsDeleted = false,
@@ -45,12 +43,10 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     },
                     ReturnedDate = DateTime.Parse("2021-02-21"),
                     State = new State(){
-                        Id = 3,
                         StateName = "Waiting for returning"
                     }
                 },
                 new ReturnRequest(){
-                    Id = 2,
                     Assignment = new Assignment(){
                     Asset = new Asset (){
                         AssetCode = "MO000002",
@@ -66,7 +62,6 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     },
                     AssignedDate = new DateTime(),
                     State = new State(){
-                        Id = 1,
                         StateName = "Accepted"
                     },
                     IsDeleted = false,
@@ -77,7 +72,6 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     },
                     ReturnedDate = DateTime.Parse("2021-02-21"),
                     State = new State(){
-                        Id = 4,
                         StateName = "Waiting for returning"
                     }
                 }
@@ -136,16 +130,13 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                         AssetName = "Personal Computer xyz",
                     },
                         AssignedTo= new User(){
-
                         UserName = "damthuy",
                     },
                     AssignedBy = new User(){
-
                         UserName = "admin",
                     },
                     AssignedDate = new DateTime(),
                     State = new State(){
-                        Id = 2,
                         StateName = "Accepted"
                     },
                     IsDeleted = false,
@@ -166,7 +157,6 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     },
                     AssignedDate = new DateTime(),
                     State = new State(){
-                        Id = 1,
                         StateName = "Accepted"
                     },
                     IsDeleted = false,
@@ -263,18 +253,6 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                 }
             };
         }
-
-        public static AssignmentCreateDto GetCreateAssignmentDto()
-        {
-            return new AssignmentCreateDto()
-            {
-                User = "2",
-                Asset = "3",
-                AssignedDate = new DateTime(),
-                Note = "May tinh CR7",
-            };
-        }
-
         public static void InitReturnRequestsData(ApplicationDbContext dbContext)
         {
             var returnRequesets = GetSeedReturnRequestsData();

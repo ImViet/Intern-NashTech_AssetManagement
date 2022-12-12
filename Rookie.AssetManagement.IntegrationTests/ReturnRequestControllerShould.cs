@@ -18,6 +18,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using FluentAssertions;
+using Rookie.AssetManagement.Business.Interfaces;
+using Rookie.AssetManagement.Contracts.Dtos.ReturnRequestDtos;
 
 namespace Rookie.AssetManagement.IntegrationTests
 {
@@ -28,9 +30,10 @@ namespace Rookie.AssetManagement.IntegrationTests
         private readonly BaseRepository<State> _stategoryRepository;
         private readonly BaseRepository<Asset> _assetRepository;
         private readonly BaseRepository<User> _userRepository;
-        private readonly AssignmentService _assignmentService;
+        private readonly BaseRepository<ReturnRequest> _returnRequestRepository;
+        private readonly ReturnRequestService _returnRequestService;
         private readonly StateService _stateService;
-        private readonly AssignmentController _assignmentController;
+        private readonly ReturnRequestController _returnRequestController;
         private readonly IMapper _mapper;
         private ClaimsIdentity _identity;
         private ClaimsPrincipal _user;
@@ -45,11 +48,12 @@ namespace Rookie.AssetManagement.IntegrationTests
             _assignmentRepository = new BaseRepository<Assignment>(_dbContext);
             _stategoryRepository = new BaseRepository<State>(_dbContext);
             _userRepository = new BaseRepository<User>(_dbContext);
+            _returnRequestRepository = new BaseRepository<ReturnRequest>(_dbContext);
 
-            _assignmentService = new AssignmentService(_assetRepository, _stategoryRepository, _assignmentRepository, _userRepository, _mapper);
+            _returnRequestService = new ReturnRequestService(_stategoryRepository, _assignmentRepository, _userRepository, _returnRequestRepository, _mapper);
             _stateService = new StateService(_stategoryRepository, _mapper);
 
-            _assignmentController = new AssignmentController(_assignmentService, _stateService);
+            _returnRequestController = new ReturnRequestController(_stateService, _returnRequestService);
 
 
             ReturnRequestData.InitStatesData(_dbContext);
@@ -67,40 +71,38 @@ namespace Rookie.AssetManagement.IntegrationTests
             });
 
             _user = new ClaimsPrincipal(_identity);
-            _assignmentController.ControllerContext.HttpContext = new DefaultHttpContext() { User = _user };
+            _returnRequestController.ControllerContext.HttpContext = new DefaultHttpContext() { User = _user };
 
         }
 
-        //[Fact]
-        //public async Task GetAllReturnRequestsShouldReturnAll()
-        //{
-        //    //Arrange
-        //    //var returnRequestList = ReturnRequestData.GetAllReturnRequesets();
-        //    //Act
-        //    //var result = await _assignmentController.GetAllAssignment();
-        //    //Assert
-        //    //result.Should().NotBeNull();
-        //    //var actionResult = Assert.IsType<OkObjectResult>(result.Result);
-        //    //var returnValue = Assert.IsType<List<AssignmentDto>>(actionResult.Value);
-        //    //Assert.Equal(assignmentList.Count, returnValue.Count);
-        //}
+        [Fact]
+        public async Task GetAllReturnRequestsShouldReturnAll()
+        {
+            //Arrange
+            var returnRequestList = ReturnRequestData.GetAllReturnRequesets();
+            //Act
+            var result = await _returnRequestController.GetAllReturnRequest();
+            //Assert
+            result.Should().NotBeNull();
+            var actionResult = Assert.IsType<OkObjectResult>(result.Result);
+            var returnValue = Assert.IsType<List<ReturnRequestDto>>(actionResult.Value);
+            Assert.Equal(returnRequestList.Count, returnValue.Count);
+        }
 
         //[Fact]
         //public async Task GetReturnRequestShouldReturnSuccess()
         //{
         //    //Arrange
-        //    //var idAssignment = 1;
-        //    //var assignment = AssignmentData.GetAssignment();
-
+        //    var idAssignment = 1;
+        //    var returnRequest = ReturnRequestData.GetReturnRequest();
         //    //Act
-        //    //var result = await _assignmentController.GetAssginmentById(idAssignment);
+        //    var result = await _returnRequestController.Get(idAssignment);
         //    //Assert
+        //    result.Should().NotBeNull();
+        //    var actionResult = Assert.IsType<OkObjectResult>(result.Result);
+        //    var returnValue = Assert.IsType<AssignmentDto>(actionResult.Value);
 
-        //    //result.Should().NotBeNull();
-        //    //var actionResult = Assert.IsType<OkObjectResult>(result.Result);
-        //    //var returnValue = Assert.IsType<AssignmentDto>(actionResult.Value);
-
-        //    //Assert.Equal(assignment.Id, returnValue.Id);
+        //    Assert.Equal(assignment.Id, returnValue.Id);
         //}
     }
 }
