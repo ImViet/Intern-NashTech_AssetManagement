@@ -2,7 +2,13 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { call, put } from "redux-saga/effects";
 import { Status } from "src/constants/status";
 import IQueryMyAssignmentModel from "src/interfaces/Assignment/IQueryMyAssignmentModel";
-import { setActionResult, setMyAssignmentList, setStatus } from "../reducer";
+import {
+  AcceptAction,
+  DeclineAction,
+  setActionResult,
+  setMyAssignmentList,
+  setStatus,
+} from "../reducer";
 import {
   acceptAssignmentRequest,
   declineAssignmentRequest,
@@ -33,12 +39,13 @@ export function* handleGetMyAssignmentList(
   }
 }
 
-export function* handleAccept(action: PayloadAction<number>) {
-  const assignmentId = action.payload;
+export function* handleAccept(action: PayloadAction<AcceptAction>) {
+  const { id, handleResult } = action.payload;
   try {
-    console.log(assignmentId);
+    console.log(id);
 
-    const { data } = yield call(acceptAssignmentRequest, assignmentId);
+    const { data } = yield call(acceptAssignmentRequest, id);
+    handleResult();
     yield put(setActionResult(data));
   } catch (error: any) {
     const message = error.response.data;
@@ -54,12 +61,13 @@ export function* handleAccept(action: PayloadAction<number>) {
   }
 }
 
-export function* handleDecline(action: PayloadAction<number>) {
-  const assignmentId = action.payload;
+export function* handleDecline(action: PayloadAction<DeclineAction>) {
+  const { id, handleResult } = action.payload;
   try {
-    console.log(assignmentId);
+    console.log(id);
 
-    const { data } = yield call(declineAssignmentRequest, assignmentId);
+    const { data } = yield call(declineAssignmentRequest, id);
+    handleResult();
   } catch (error: any) {
     const message = error.response.data;
     yield put(

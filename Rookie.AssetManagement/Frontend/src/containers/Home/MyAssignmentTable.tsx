@@ -114,7 +114,7 @@ const MyAssignmentTable: React.FC<Props> = ({
                                     callback: () => { handleDecline(data.id) }
                                 });
                             }}>
-                                <XLg className="text-danger mx-2" />
+                                <XLg className="text-danger mx-2" fill="" />
                             </ButtonIcon>
                             <ButtonIcon disable={data.state == "Waiting for acceptance"}>
                                 <ArrowCounterclockwise className="text-primary " />
@@ -129,6 +129,15 @@ const MyAssignmentTable: React.FC<Props> = ({
             <ConfirmModal
                 title={confirmState.title}
                 isShow={confirmState.isOpen}
+                onHide={() => {
+                    setConfirmState({
+                        isOpen: false,
+                        title: '',
+                        message: '',
+                        isDisable: true,
+                        callback: () => { }
+                    })
+                }}
             >
                 <div>
 

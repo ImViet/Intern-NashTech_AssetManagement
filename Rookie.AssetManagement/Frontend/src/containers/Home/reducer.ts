@@ -21,6 +21,16 @@ const initialState: AssignmentState = {
   actionResult: null,
 };
 
+export type DeclineAction = {
+  id: number;
+  handleResult: Function;
+};
+
+export type AcceptAction = {
+  id: number;
+  handleResult: Function;
+};
+
 const MyAssignmentReducerSlice = createSlice({
   name: "my-assignment",
   initialState,
@@ -55,13 +65,13 @@ const MyAssignmentReducerSlice = createSlice({
         loading: false,
       };
     },
-    acceptAssignment: (state, action: PayloadAction<number>) => {
+    acceptAssignment: (state, action: PayloadAction<AcceptAction>) => {
       return {
         ...state,
         loading: true,
       };
     },
-    declineAssignment: (state, action: PayloadAction<number>) => {
+    declineAssignment: (state, action: PayloadAction<DeclineAction>) => {
       return {
         ...state,
         loading: true,
