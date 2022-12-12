@@ -266,6 +266,7 @@ namespace Rookie.AssetManagement.Business.Services
              .Include(b => b.AssignedBy)
              .Include(b => b.AssignedTo)
              .Include(b => b.Asset)
+             .ThenInclude(a=>a.Category)
              .Where( b => b.AssignedTo.UserName == userName)
              .AsQueryable(),
              assignmentQueryCriteria);
@@ -276,7 +277,6 @@ namespace Rookie.AssetManagement.Business.Services
                    assignmentQueryCriteria.Page,
                    assignmentQueryCriteria.Limit,
                    cancellationToken);
-
             var assignmentDto = _mapper.Map<IEnumerable<MyAssignmentDto>>(assignment.Items);
 
             return new PagedResponseModel<MyAssignmentDto>
