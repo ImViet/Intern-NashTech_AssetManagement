@@ -55,7 +55,8 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                     },
                     IsDeleted=false,
                     Note=""
-                }
+                },
+                
             };
         }
         public static Assignment GetAssignment(int id, bool isDeleted = false)

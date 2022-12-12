@@ -61,6 +61,16 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     IsDeleted = false,
                     Note = "abc"
                 }
+                
+            };
+        }
+
+        public static AssignmentQueryCriteriaDto GetAssignmentQueryCriteriaDto()
+        {
+            return new AssignmentQueryCriteriaDto()
+            {
+                Limit = 5,
+                Page = 1
             };
         }
 
