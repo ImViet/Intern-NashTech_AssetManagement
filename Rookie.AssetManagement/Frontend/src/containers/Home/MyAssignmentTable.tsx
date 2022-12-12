@@ -131,7 +131,16 @@ const MyAssignmentTable: React.FC<Props> = ({
                                 <button
                                     className="btn btn-danger mr-3"
                                     type="button"
-                                    onClick={() => { confirmState.callback() }}
+                                    onClick={() => { 
+                                        setConfirmState({
+                                            isOpen: false,
+                                            title: '',
+                                            message: '',
+                                            isDisable: true,
+                                            callback: () => { }
+                                        })
+                                        confirmState.callback() 
+                                    }}
                                 >
                                     Accept
                                 </button>

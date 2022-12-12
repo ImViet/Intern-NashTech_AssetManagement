@@ -13,7 +13,7 @@ namespace Rookie.AssetManagement.Business.Interfaces
 {
     public interface IAssignmentService
     {
-        Task<AssignmentDto> AcceptAssignmentAsync(string username, int id);
+        Task<MyAssignmentDto> AcceptAssignmentAsync(string username, int id);
         Task<IEnumerable<AssignmentDto>> GetAllAsync();
         Task<PagedResponseModel<MyAssignmentDto>> GetAssignmentByUserNameAsync(AssignmentQueryCriteriaDto assignmentQueryCriteria, CancellationToken cancellationToken, string userName);
         Task<AssignmentDto> GetByIdAsync(int id);

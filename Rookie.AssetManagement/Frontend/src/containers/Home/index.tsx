@@ -12,10 +12,10 @@ import {
 } from "src/constants/paging";
 import MyAssignmentTable from "./MyAssignmentTable";
 import IQueryMyAssignmentModel from "src/interfaces/Assignment/IQueryMyAssignmentModel";
-import { getMyAssignmentList } from "./reducer";
+import { acceptAssignment, getMyAssignmentList } from "./reducer";
 
 const Home = () => {
-  const { assignments } = useAppSelector((state) => state.myAssignmentReducer);
+  const { assignments, actionResult } = useAppSelector((state) => state.myAssignmentReducer);
   const dispatch = useAppDispatch();
 
   const [query, setQuery] = useState({
@@ -31,7 +31,9 @@ const Home = () => {
     });
     console.log(query)
   };
-
+  const handleAccept = (id: number) => {
+    dispatch(acceptAssignment(id));
+  }
   const handleSort = (sortColumn: string) => {
     let sortOrder
     if (query.sortColumn != sortColumn) {
@@ -76,8 +78,8 @@ const Home = () => {
             orderBy: query.sortOrder,
           }}
           assignments={assignments}
-          result={null}
-          handleAccept={(id) => { console.log("Accept:", id) }} />
+          result={actionResult}
+          handleAccept={ handleAccept } />
       </div>
     </>
   );

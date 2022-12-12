@@ -14,3 +14,9 @@ export function getMyAssignmentsRequest(
     paramsSerializer: (params) => qs.stringify(params),
   });
 }
+
+export function acceptAssignmentRequest(
+  assignmentId: number
+): Promise<AxiosResponse<IAssignment>> {
+  return RequestService.axios.patch(`${EndPoints.assignment}/accept/${assignmentId}`);
+}

@@ -1,7 +1,11 @@
 import { takeLatest } from "redux-saga/effects";
-import { getMyAssignmentList } from "../reducer";
-import { handleGetMyAssignmentList } from "./handles";
+import { acceptAssignment, getMyAssignmentList } from "../reducer";
+import {
+   handleGetMyAssignmentList,
+   handleAccept,
+ } from "./handles";
 
 export default function* MyAssignmentSagas() {
   yield takeLatest(getMyAssignmentList.type, handleGetMyAssignmentList);
+  yield takeLatest(acceptAssignment.type, handleAccept);
 }

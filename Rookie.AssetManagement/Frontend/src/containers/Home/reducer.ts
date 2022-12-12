@@ -11,12 +11,14 @@ type AssignmentState = {
   assignments: IPagedModel<IAssignment> | null;
   assignmentResult: IAssignment | null;
   error?: IError;
+  actionResult: IAssignment | null;
 };
 
 const initialState: AssignmentState = {
   assignments: null,
   loading: false,
   assignmentResult: null,
+  actionResult: null,
 };
 
 const MyAssignmentReducerSlice = createSlice({
@@ -53,10 +55,28 @@ const MyAssignmentReducerSlice = createSlice({
         loading: false,
       };
     },
+    acceptAssignment: (state, action: PayloadAction<number>) => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+    setActionResult: (
+      state,
+      action: PayloadAction<IAssignment>
+    ): AssignmentState => {
+      const actionResult = action.payload;
+
+      return {
+        ...state,
+        actionResult,
+        loading: false,
+      };
+    }
   },
 });
 
-export const { setMyAssignmentList, getMyAssignmentList, setStatus } =
+export const { setMyAssignmentList, getMyAssignmentList, setStatus, acceptAssignment, setActionResult } =
   MyAssignmentReducerSlice.actions;
 
 export default MyAssignmentReducerSlice.reducer;

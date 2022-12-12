@@ -243,11 +243,13 @@ namespace Rookie.AssetManagement.Business.Services
             return assignmentUpdatedDto;
         }
 
-        public async Task<AssignmentDto> AcceptAssignmentAsync(string username, int id)
+        public async Task<MyAssignmentDto> AcceptAssignmentAsync(string username, int id)
         {
             var assignment = await _assignmentRepository.Entities
                 .Include(x => x.AssignedTo)
                 .Include(x => x.State)
+                .Include(x => x.Asset)
+                .ThenInclude(x => x.Category)
                 .FirstOrDefaultAsync(a => a.Id == id);
             if (assignment == null)
             {
@@ -268,7 +270,7 @@ namespace Rookie.AssetManagement.Business.Services
 
             await _assignmentRepository.Update(assignment);
 
-            return _mapper.Map<AssignmentDto>(assignment);
+            return _mapper.Map<MyAssignmentDto>(assignment);
         }
 
         public async Task<bool> DisableAssignmentAsync(int id)
