@@ -11,7 +11,8 @@ const Endpoints = {
   assignment: "api/Assignment",
   searchAssignment: "api/Assignment/Assignment",
   getAssignmentDataForm: "api/Assignment/GetAssignmentDataForm",
-  returning: "api/Returning"
+  returning: "api/ReturnRequest",
+  searchReturnRequest: "api/ReturnRequest/ReturnRequest",
 
 };
 
