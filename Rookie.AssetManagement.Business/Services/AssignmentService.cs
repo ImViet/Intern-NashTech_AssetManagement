@@ -181,6 +181,9 @@ namespace Rookie.AssetManagement.Business.Services
                     case "STATE":
                         assignmentQuery = assignmentQueryCriteria.SortOrder == 0 ? assignmentQuery.OrderBy(x => x.State) : assignmentQuery.OrderByDescending(x => x.State);
                         break;
+                    case "CATEGORY":
+                        assignmentQuery = assignmentQueryCriteria.SortOrder == 0 ? assignmentQuery.OrderBy(x => x.Asset.Category.CategoryName) : assignmentQuery.OrderByDescending(x => x.Asset.Category.CategoryName);
+                        break;
                     default:
                         assignmentQuery = assignmentQuery.OrderBy(x => x.Id);
                         break;
