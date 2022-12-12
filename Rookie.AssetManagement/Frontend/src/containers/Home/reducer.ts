@@ -3,14 +3,12 @@ import { SetStatusType } from "src/constants/status";
 
 import IError from "src/interfaces/IError";
 import IPagedModel from "src/interfaces/IPagedModel";
-import IQueryAssigmentModel from "src/interfaces/Assignment/IQueryAssignmentModel";
 import IAssignment from "src/interfaces/Assignment/IAssignment";
 import IQueryMyAssignmentModel from "src/interfaces/Assignment/IQueryMyAssignmentModel";
-import IMyAssignment from "src/interfaces/Assignment/IMyAssignment";
 
 type AssignmentState = {
   loading: boolean;
-  assignments: IPagedModel<IMyAssignment> | null;
+  assignments: IPagedModel<IAssignment> | null;
   assignmentResult: IAssignment | null;
   error?: IError;
 };
@@ -36,7 +34,7 @@ const MyAssignmentReducerSlice = createSlice({
     },
     setMyAssignmentList: (
       state,
-      action: PayloadAction<IPagedModel<IMyAssignment>>
+      action: PayloadAction<IPagedModel<IAssignment>>
     ): AssignmentState => {
       const assignments = action.payload;
 

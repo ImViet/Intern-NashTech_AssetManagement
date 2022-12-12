@@ -15,8 +15,7 @@ import Info from "./Info";
 const columns: IColumnOption[] = [
     { columnName: "Asset Code ", columnValue: "assetCode" },
     { columnName: "Asset Name ", columnValue: "assetName" },
-    { columnName: "Assigned to ", columnValue: "assignedTo" },
-    { columnName: "Assigned by ", columnValue: "assignedBy" },
+    { columnName: "Category", columnValue: "category" },
     { columnName: "Assigned Date ", columnValue: "assignedDate" },
     { columnName: "State ", columnValue: "state" },
 ];

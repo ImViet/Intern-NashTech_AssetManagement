@@ -75,7 +75,7 @@ const Home = () => {
             columnValue: query.sortColumn,
             orderBy: query.sortOrder,
           }}
-          assignments={null}
+          assignments={assignments}
           result={null}
           handleAccept={(id) => { console.log("Accept:", id) }} />
       </div>
