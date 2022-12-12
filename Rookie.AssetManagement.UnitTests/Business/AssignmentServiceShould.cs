@@ -162,5 +162,18 @@ namespace Rookie.AssetManagement.UnitTests.Business
             result.Should().Equals(true);
         }
 
+        [Fact]
+        public async Task GetAssignmentByUserNameAsyncShouldSuccess()
+        {
+            string userName = "damthuy";
+            //Arrange
+            var assignmentsMock = AssignmentTestData.GetAssignments().AsEnumerable().BuildMock();
+            _assignmentRepository.Setup(x => x.Entities).Returns(assignmentsMock);
+            //Act
+            var result = await _assignmentService.GetAssignmentByUserNameAsync(AssignmentTestData.AssignmentQueryCriteriaDto, _cancellationToken, userName);
+            //Assert   
+            Assert.Equal(1, result.TotalItems);
+        }
+
     }
 }
