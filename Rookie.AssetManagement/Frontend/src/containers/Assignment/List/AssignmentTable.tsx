@@ -138,37 +138,17 @@ const AssignmentTable: React.FC<Props> = ({
                         <td>{convertDDMMYYYY(data.assignedDate)}</td>
                         <td>{data.state}</td>
                         <td className="d-flex">
-                            {(() => {
-                                if (data.state == "Accepted") {
-                                    return (
-                                        <>
-                                            <ButtonIcon disable={true} onClick={() => handleEdit(data.id)}>
-                                                <PencilFill className="text-black" />
-                                            </ButtonIcon>
-                                            <ButtonIcon disable={true} onClick={() => handleShowDisable(data.id)}>
-                                                <XCircle className="text-danger mx-2" />
-                                            </ButtonIcon>
-                                            <ButtonIcon >
-                                                <ArrowCounterclockwise className="text-primary " />
-                                            </ButtonIcon>
-                                        </>
-                                    )
-                                } else {
-                                    return (
-                                        <>
-                                            <ButtonIcon onClick={() => handleEdit(data.id)}>
-                                                <PencilFill className="text-black" />
-                                            </ButtonIcon>
-                                            <ButtonIcon onClick={() => handleShowDisable(data.id)}>
-                                                <XCircle className="text-danger mx-2" />
-                                            </ButtonIcon>
-                                            <ButtonIcon>
-                                                <ArrowCounterclockwise fill="" className="text-primary " />
-                                            </ButtonIcon>
-                                        </>
-                                    )
-                                }
-                            })()}
+                            <ButtonIcon disable={data.state == "Accepted"} onClick={() => handleEdit(data.id)}>
+                                <PencilFill className="text-black" />
+                            </ButtonIcon>
+                            <ButtonIcon disable={data.state == "Accepted"} onClick={() => handleShowDisable(data.id)}>
+                                <XCircle className="text-danger mx-2" />
+                            </ButtonIcon>
+                            <ButtonIcon >
+                                {(data.state == "Accepted") ?
+                                    <ArrowCounterclockwise className="text-primary " /> :
+                                    <ArrowCounterclockwise fill="" className="text-primary " />}
+                            </ButtonIcon>
                         </td>
                     </tr>
                 ))}
