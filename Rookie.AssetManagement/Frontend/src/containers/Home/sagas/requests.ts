@@ -18,5 +18,15 @@ export function getMyAssignmentsRequest(
 export function acceptAssignmentRequest(
   assignmentId: number
 ): Promise<AxiosResponse<IAssignment>> {
-  return RequestService.axios.patch(`${EndPoints.assignment}/accept/${assignmentId}`);
+  return RequestService.axios.patch(
+    `${EndPoints.assignment}/accept/${assignmentId}`
+  );
+}
+
+export function declineAssignmentRequest(
+  assignmentId: number
+): Promise<AxiosResponse<IAssignment>> {
+  return RequestService.axios.patch(
+    `${EndPoints.assignment}/decline/${assignmentId}`
+  );
 }

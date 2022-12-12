@@ -12,7 +12,7 @@ import {
 } from "src/constants/paging";
 import MyAssignmentTable from "./MyAssignmentTable";
 import IQueryMyAssignmentModel from "src/interfaces/Assignment/IQueryMyAssignmentModel";
-import { acceptAssignment, cleanUpActionResult, getMyAssignmentList } from "./reducer";
+import { acceptAssignment, cleanUpActionResult, declineAssignment, getMyAssignmentList } from "./reducer";
 
 const Home = () => {
   const { assignments, actionResult } = useAppSelector((state) => state.myAssignmentReducer);
@@ -34,6 +34,11 @@ const Home = () => {
 
   const handleAccept = (id: number) => {
     dispatch(acceptAssignment(id));
+    fetchData();
+  }
+
+  const handleDecline = (id: number) => {
+    dispatch(declineAssignment(id));
     fetchData();
   }
 
@@ -75,7 +80,8 @@ const Home = () => {
           }}
           assignments={assignments}
           result={actionResult}
-          handleAccept={handleAccept} />
+          handleAccept={handleAccept}
+          handleDecline={handleDecline} />
       </div>
     </>
   );

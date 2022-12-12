@@ -26,7 +26,8 @@ type Props = {
     handlePage: (page: number) => void;
     handleSort: (colValue: string) => void;
     sortState: SortType;
-    handleAccept: Function
+    handleAccept: Function;
+    handleDecline: Function;
 };
 
 const MyAssignmentTable: React.FC<Props> = ({
@@ -35,7 +36,8 @@ const MyAssignmentTable: React.FC<Props> = ({
     handlePage,
     handleSort,
     sortState,
-    handleAccept = () => { }
+    handleAccept = () => { },
+    handleDecline = () => { }
 }) => {
     const dispatch = useAppDispatch();
     const [showDetail, setShowDetail] = useState(false);
@@ -103,7 +105,15 @@ const MyAssignmentTable: React.FC<Props> = ({
                             }}>
                                 <CheckLg className="text-danger" />
                             </ButtonIcon>
-                            <ButtonIcon disable={data.state == "Accepted"}>
+                            <ButtonIcon disable={data.state == "Accepted"} onClick={() => {
+                                setConfirmState({
+                                    isOpen: true,
+                                    title: 'Are you sure?',
+                                    message: 'Do you want to decline this assignment?',
+                                    isDisable: true,
+                                    callback: () => { handleDecline(data.id) }
+                                });
+                            }}>
                                 <XLg className="text-danger mx-2" />
                             </ButtonIcon>
                             <ButtonIcon disable={data.state == "Waiting for acceptance"}>
@@ -131,7 +141,7 @@ const MyAssignmentTable: React.FC<Props> = ({
                                 <button
                                     className="btn btn-danger mr-3"
                                     type="button"
-                                    onClick={() => { 
+                                    onClick={() => {
                                         setConfirmState({
                                             isOpen: false,
                                             title: '',
@@ -139,7 +149,7 @@ const MyAssignmentTable: React.FC<Props> = ({
                                             isDisable: true,
                                             callback: () => { }
                                         })
-                                        confirmState.callback() 
+                                        confirmState.callback()
                                     }}
                                 >
                                     Accept

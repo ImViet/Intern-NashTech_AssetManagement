@@ -61,6 +61,12 @@ const MyAssignmentReducerSlice = createSlice({
         loading: true,
       };
     },
+    declineAssignment: (state, action: PayloadAction<number>) => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
     setActionResult: (
       state,
       action: PayloadAction<IAssignment>
@@ -90,6 +96,7 @@ export const {
   acceptAssignment,
   setActionResult,
   cleanUpActionResult,
+  declineAssignment,
 } = MyAssignmentReducerSlice.actions;
 
 export default MyAssignmentReducerSlice.reducer;
