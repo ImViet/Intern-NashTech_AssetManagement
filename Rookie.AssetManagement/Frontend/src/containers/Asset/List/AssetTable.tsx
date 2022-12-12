@@ -135,31 +135,12 @@ const AssetTable: React.FC<Props> = ({
             <td>{data.category}</td>
             <td>{data.state}</td>
             <td className="d-flex">
-              {(() => {
-                if (data.state == "Assigned") {
-                  return (
-                    <>
-                      <ButtonIcon disable={true} onClick={() => handleEdit(data.id)}>
-                        <PencilFill className="text-black" />
-                      </ButtonIcon>
-                      <ButtonIcon disable={true} onClick={() => handleShowDisable(data.id)}>
-                        <XCircle className="text-danger mx-2" />
-                      </ButtonIcon>
-                    </>
-                  )
-                } else {
-                  return (
-                    <>
-                      <ButtonIcon onClick={() => handleEdit(data.id)}>
-                        <PencilFill className="text-black" />
-                      </ButtonIcon>
-                      <ButtonIcon onClick={() => handleShowDisable(data.id)}>
-                        <XCircle className="text-danger mx-2" />
-                      </ButtonIcon>
-                    </>
-                  )
-                }
-              })()}
+              <ButtonIcon disable={(data.state === "Assigned")} onClick={() => handleEdit(data.id)}>
+                <PencilFill className="text-black" />
+              </ButtonIcon>
+              <ButtonIcon disable={(data.state === "Assigned")} onClick={() => handleShowDisable(data.id)}>
+                <XCircle className="text-danger mx-2" />
+              </ButtonIcon>
             </td>
           </tr>
 
