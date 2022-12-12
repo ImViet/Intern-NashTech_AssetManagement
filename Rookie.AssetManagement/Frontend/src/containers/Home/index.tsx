@@ -42,6 +42,11 @@ const Home = () => {
     fetchData();
   }
 
+  const handleReturn = (id: number) =>{
+    // dispatch(declineAssignment(id));
+    // fetchData();
+  }
+
   const handleSort = (sortColumn: string) => {
     let sortOrder
     if (query.sortColumn != sortColumn) {
@@ -81,7 +86,9 @@ const Home = () => {
           assignments={assignments}
           result={actionResult}
           handleAccept={handleAccept}
-          handleDecline={handleDecline} />
+          handleDecline={handleDecline}
+          handleReturn={handleReturn}
+          />
       </div>
     </>
   );
