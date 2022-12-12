@@ -71,6 +71,20 @@ namespace Rookie.AssetManagement.Controllers
         {
             return Ok(await _stateService.GetAssignmentStateAsync());
         }
+        [HttpGet]
+        [Route("my")]
+        public async Task<ActionResult<PagedResponseModel<MyAssignmentDto>>> GetAssignmentByUserName(
+        [FromQuery] AssignmentQueryCriteriaDto assignmentCriteriaDto,
+        CancellationToken cancellationToken)
+        {
+            var userName = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
+            var assetResponses = await _assignmentService.GetAssignmentByUserNameAsync(
+                                            assignmentCriteriaDto,
+                                            cancellationToken,
+                                            userName
+                                            );
+            return Ok(assetResponses);
+        }
 
         [HttpPost]
         public async Task<ActionResult<AssignmentDto>> AddAssignmentAsync([FromBody] AssignmentCreateDto assignmentCreate)

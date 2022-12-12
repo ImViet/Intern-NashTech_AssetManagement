@@ -257,5 +257,35 @@ namespace Rookie.AssetManagement.Business.Services
 
             return await Task.FromResult(true);
         }
+
+        public async Task<PagedResponseModel<MyAssignmentDto>> GetAssignmentByUserNameAsync(AssignmentQueryCriteriaDto assignmentQueryCriteria, CancellationToken cancellationToken, string userName)
+        {
+            var assignmentQuery = AssignmentFilter(
+             _assignmentRepository.Entities
+             .Include(a => a.State)
+             .Include(b => b.AssignedBy)
+             .Include(b => b.AssignedTo)
+             .Include(b => b.Asset)
+             .Where( b => b.AssignedTo.UserName == userName)
+             .AsQueryable(),
+             assignmentQueryCriteria);
+
+            var assignment = await assignmentQuery
+               .AsNoTracking()
+               .PaginateAsync<Assignment>(
+                   assignmentQueryCriteria.Page,
+                   assignmentQueryCriteria.Limit,
+                   cancellationToken);
+
+            var assignmentDto = _mapper.Map<IEnumerable<MyAssignmentDto>>(assignment.Items);
+
+            return new PagedResponseModel<MyAssignmentDto>
+            {
+                CurrentPage = assignment.CurrentPage,
+                TotalPages = assignment.TotalPages,
+                TotalItems = assignment.TotalItems,
+                Items = assignmentDto
+            };
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace Rookie.AssetManagement.Business.Interfaces
     public interface IAssignmentService
     {
         Task<IEnumerable<AssignmentDto>> GetAllAsync();
-
+        Task<PagedResponseModel<MyAssignmentDto>> GetAssignmentByUserNameAsync(AssignmentQueryCriteriaDto assignmentQueryCriteria, CancellationToken cancellationToken, string userName);
         Task<AssignmentDto> GetByIdAsync(int id);
         Task<AssignmentFormDto> GetFormDataById(int id);
         Task<AssignmentDto> AddAssignmentAsync(AssignmentCreateDto assignmentCreateDto, string AssignedBy);
