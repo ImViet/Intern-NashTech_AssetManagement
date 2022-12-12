@@ -108,7 +108,7 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
             };
         }
 
-        public static ReturnRequestQueryCriteriaDto AssignmentQueryCriteriaDto = new ReturnRequestQueryCriteriaDto()
+        public static AssignmentQueryCriteriaDto AssignmentQueryCriteriaDto = new AssignmentQueryCriteriaDto()
         {
             Search = "Personal Computer",
             Page = 1,

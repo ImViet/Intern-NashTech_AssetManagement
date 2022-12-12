@@ -1,5 +1,6 @@
 ﻿using Rookie.AssetManagement.Contracts.Dtos.AssetDtos;
 using Rookie.AssetManagement.Contracts.Dtos.AssignmentDtos;
+using Rookie.AssetManagement.Contracts.Dtos.ReturnRequestDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
 using System;
 using System.Collections.Generic;
@@ -92,11 +93,11 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
             };
         }
 
-        //public static AssignmentQueryCriteriaDto AssignmentQueryCriteriaDto = new AssignmentQueryCriteriaDto()
-        //{
-        //    Search = "Personal Computer",
-        //    Page = 1,
-        //    Limit = 5,
-        //};
+        public static ReturnRequestQueryCriteriaDto ReturnRequestQueryCriteriaDto = new ReturnRequestQueryCriteriaDto()
+        {
+            Search = "Personal Computer",
+            Page = 1,
+            Limit = 5,
+        };
     }
 }
