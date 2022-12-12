@@ -14,10 +14,10 @@ import {
 } from "src/constants/paging";
 import IPagedModel from "src/interfaces/IPagedModel";
 import { cleanUpActionResult, getAssignmentList, getState, disableAssignment } from "../reducer";
-import IQueryAssignmentModel from "src/interfaces/Assignment/IQueryAssignmentModel";
 import SelectBox from "src/components/SelectBox";
 import { toUTCWithoutHour } from "src/utils/formatDateTime";
 import DateFilter from "src/components/DateFilter";
+import IQueryAssignmentModel from "src/interfaces/Assignment/IQueryAssignmentModel";
 
 const defaultQuery: IQueryAssignmentModel = {
     search: "",
@@ -145,6 +145,7 @@ const ListAssignment = () => {
         }))
         setSelectedState([FilterAssignmentStateOptions[0]]);
     };
+
     const fetchData = () => {
         dispatch(getAssignmentList({ ...query }))
     };
@@ -172,10 +173,10 @@ const ListAssignment = () => {
                                     options={states}
                                     placeholderButtonLabel="State"
                                     value={selectedState}
-                                    onChange={handleState} 
+                                    onChange={handleState}
                                     currentPage={query.page}
                                     currentSearch={query.search}
-                                    />
+                                />
                             </div>
                         </div>
                     </div>
