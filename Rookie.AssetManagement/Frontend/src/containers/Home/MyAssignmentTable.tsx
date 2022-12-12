@@ -94,7 +94,7 @@ const MyAssignmentTable: React.FC<Props> = ({
                         <td className="d-flex">
                             <ButtonIcon disable={data.state == "Accepted"} onClick={() => {
                                 setConfirmState({
-                                    isOpen: false,
+                                    isOpen: true,
                                     title: 'Are you sure?',
                                     message: 'Do you want to accept this assignment?',
                                     isDisable: true,
@@ -131,13 +131,23 @@ const MyAssignmentTable: React.FC<Props> = ({
                                 <button
                                     className="btn btn-danger mr-3"
                                     type="button"
+                                    onClick={() => { confirmState.callback() }}
                                 >
-                                    Delete
+                                    Accept
                                 </button>
 
                                 <button
                                     className="btn btn-outline-secondary"
                                     type="button"
+                                    onClick={() => {
+                                        setConfirmState({
+                                            isOpen: false,
+                                            title: '',
+                                            message: '',
+                                            isDisable: true,
+                                            callback: () => { }
+                                        })
+                                    }}
                                 >
                                     Cancel
                                 </button>
