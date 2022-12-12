@@ -334,7 +334,8 @@ namespace Rookie.AssetManagement.Business.Services
              .Include(b => b.AssignedTo)
              .Include(b => b.Asset)
              .ThenInclude(a => a.Category)
-             .Where(b => b.AssignedTo.UserName == userName && b.State.Id != (int)AssignmentStateEnum.Declined)
+             .Where(b => b.AssignedTo.UserName == userName && b.State.Id != (int)AssignmentStateEnum.Declined
+                && b.AssignedDate <= DateTime.Today)
              .AsQueryable(),
              assignmentQueryCriteria);
 
