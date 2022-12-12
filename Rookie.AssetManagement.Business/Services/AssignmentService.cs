@@ -264,9 +264,43 @@ namespace Rookie.AssetManagement.Business.Services
                 throw new NotFoundException("Assignment already Accepted!");
             }
 
-            var acceptState = await _stateRepository.GetById((int)AssignmentStateEnum.Accepted);
+            var acceptedState = await _stateRepository.GetById((int)AssignmentStateEnum.Accepted);
+            var assignedState = await _stateRepository.GetById((int)AssetStateEnum.Assigned);
 
-            assignment.State = acceptState;
+            assignment.State = acceptedState;
+            assignment.Asset.State = assignedState;
+
+            await _assignmentRepository.Update(assignment);
+
+            return _mapper.Map<MyAssignmentDto>(assignment);
+        }
+
+        public async Task<MyAssignmentDto> DeclineAssignmentAsync(string username, int id)
+        {
+            var assignment = await _assignmentRepository.Entities
+                .Include(x => x.AssignedTo)
+                .Include(x => x.State)
+                .Include(x => x.Asset)
+                .ThenInclude(x => x.Category)
+                .FirstOrDefaultAsync(a => a.Id == id);
+            if (assignment == null)
+            {
+                throw new NotFoundException("Assignment Not Found!");
+            }
+            if (assignment.AssignedTo.UserName != username)
+            {
+                throw new NotFoundException("It not your assignment!");
+            }
+            if (assignment.State.Id == (int)AssignmentStateEnum.Declined)
+            {
+                throw new NotFoundException("Assignment already Accepted!");
+            }
+
+            var declinedState = await _stateRepository.GetById((int)AssignmentStateEnum.Declined);
+            var availableState = await _stateRepository.GetById((int)AssetStateEnum.Available);
+
+            assignment.State = declinedState;
+            assignment.Asset.State = availableState;
 
             await _assignmentRepository.Update(assignment);
 

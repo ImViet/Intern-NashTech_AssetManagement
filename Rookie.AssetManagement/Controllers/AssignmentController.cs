@@ -71,6 +71,8 @@ namespace Rookie.AssetManagement.Controllers
         {
             return Ok(await _stateService.GetAssignmentStateAsync());
         }
+
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet]
         [Route("my")]
         public async Task<ActionResult<PagedResponseModel<MyAssignmentDto>>> GetAssignmentByUserName(
@@ -101,12 +103,24 @@ namespace Rookie.AssetManagement.Controllers
             return Created(Endpoints.User, assignment);
         }
 
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPatch("accept/{id}")]
         public async Task<ActionResult> AcceptAssignmentAsync([FromRoute] int id)
         {
             var userName = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
 
             var disableResult = await _assignmentService.AcceptAssignmentAsync(userName, id);
+
+            return Ok(disableResult);
+        }
+
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpPatch("decline/{id}")]
+        public async Task<ActionResult> DeclineAssignmentAsync([FromRoute] int id)
+        {
+            var userName = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
+
+            var disableResult = await _assignmentService.DeclineAssignmentAsync(userName, id);
 
             return Ok(disableResult);
         }
