@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Rookie.AssetManagement.Contracts.Dtos.AssignmentDtos
+namespace Rookie.AssetManagement.Contracts.Dtos.ReturnRequestDtos
 {
-    public class AssignmentQueryCriteriaDto : BaseQueryCriteria
+    public class ReturnRequestQueryCriteriaDto : BaseQueryCriteria
     {
-        public DateTime AssignedDate { get; set; }
+        public DateTime ReturnedDate { get; set; }
         public string[] States { get; set; }
         public int Id { get; set; }
     }
