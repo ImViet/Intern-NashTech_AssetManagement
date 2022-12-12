@@ -200,7 +200,7 @@ namespace Rookie.AssetManagement.Business.Services
                 .ProjectTo<AssignmentDto>(_mapper.ConfigurationProvider)
                 .FirstAsync();
             return assignment;
-        } 
+        }
 
         public async Task<AssignmentFormDto> GetFormDataById(int id)
         {
@@ -210,7 +210,7 @@ namespace Rookie.AssetManagement.Business.Services
                 .FirstAsync();
             return assignment;
         }
-        
+
         public async Task<AssignmentDto> UpdateAssignmentAsync(AssignmentUpdateDto assignmentUpdateDto, string AssignedBy)
         {
             var assignment = await _assignmentRepository.Entities.Include(x => x.AssignedTo).Include(x => x.Asset).Include(x => x.State).FirstOrDefaultAsync(a => a.Id == assignmentUpdateDto.Id);
@@ -243,20 +243,48 @@ namespace Rookie.AssetManagement.Business.Services
             return assignmentUpdatedDto;
         }
 
-        public async Task<bool> DisableAssignmentAsync(int id)
+        public async Task<AssignmentDto> AcceptAssignmentAsync(string username, int id)
         {
-            var assignment = await _assignmentRepository.Entities.Include(a => a.State).SingleOrDefaultAsync(a => a.Id.Equals(id));
-            if (assignment  == null)
+            var assignment = await _assignmentRepository.Entities
+                .Include(x => x.AssignedTo)
+                .Include(x => x.State)
+                .FirstOrDefaultAsync(a => a.Id == id);
+            if (assignment == null)
             {
                 throw new NotFoundException("Assignment Not Found!");
             }
-            if (assignment .State.Id == (int)AssignmentStateEnum.Accepted)
+            if (assignment.AssignedTo.UserName != username)
+            {
+                throw new NotFoundException("It not your assignment!");
+            }
+            if (assignment.State.Id == (int)AssignmentStateEnum.Accepted)
+            {
+                throw new NotFoundException("Assignment already Accepted!");
+            }
+
+            var acceptState = await _stateRepository.GetById((int)AssignmentStateEnum.Accepted);
+
+            assignment.State = acceptState;
+
+            await _assignmentRepository.Update(assignment);
+
+            return _mapper.Map<AssignmentDto>(assignment);
+        }
+
+        public async Task<bool> DisableAssignmentAsync(int id)
+        {
+            var assignment = await _assignmentRepository.Entities.Include(a => a.State).SingleOrDefaultAsync(a => a.Id.Equals(id));
+            if (assignment == null)
+            {
+                throw new NotFoundException("Assignment Not Found!");
+            }
+            if (assignment.State.Id == (int)AssignmentStateEnum.Accepted)
             {
                 throw new NotFoundException("Assignment is accepted can not be delete");
             }
-            
 
-            await _assignmentRepository.Delete(assignment );
+
+            await _assignmentRepository.Delete(assignment);
 
             return await Task.FromResult(true);
         }
@@ -269,8 +297,8 @@ namespace Rookie.AssetManagement.Business.Services
              .Include(b => b.AssignedBy)
              .Include(b => b.AssignedTo)
              .Include(b => b.Asset)
-             .ThenInclude(a=>a.Category)
-             .Where( b => b.AssignedTo.UserName == userName)
+             .ThenInclude(a => a.Category)
+             .Where(b => b.AssignedTo.UserName == userName)
              .AsQueryable(),
              assignmentQueryCriteria);
 

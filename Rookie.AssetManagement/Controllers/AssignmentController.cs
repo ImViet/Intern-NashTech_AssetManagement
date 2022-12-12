@@ -89,18 +89,27 @@ namespace Rookie.AssetManagement.Controllers
         [HttpPost]
         public async Task<ActionResult<AssignmentDto>> AddAssignmentAsync([FromBody] AssignmentCreateDto assignmentCreate)
         {
-            var AssignedBy = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
-            var assigment = await _assignmentService.AddAssignmentAsync(assignmentCreate, AssignedBy);
+            var userName = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
+            var assigment = await _assignmentService.AddAssignmentAsync(assignmentCreate, userName);
             return Created(Endpoints.User, assigment);
         }
         [HttpPut]
         public async Task<ActionResult<AssignmentDto>> UpdateAssignmentAsync([FromBody] AssignmentUpdateDto assignmentUpdateDto)
         {
-            var AssignedBy = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
-            AssignmentDto assignment = await _assignmentService.UpdateAssignmentAsync(assignmentUpdateDto, AssignedBy);
+            var userName = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
+            AssignmentDto assignment = await _assignmentService.UpdateAssignmentAsync(assignmentUpdateDto, userName);
             return Created(Endpoints.User, assignment);
         }
 
+        [HttpPatch("accept/{id}")]
+        public async Task<ActionResult> AcceptAssignmentAsync([FromRoute] int id)
+        {
+            var userName = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
+
+            var disableResult = await _assignmentService.AcceptAssignmentAsync(userName, id);
+
+            return Ok(disableResult);
+        }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DisableAssignmentAsync([FromRoute] int id)
