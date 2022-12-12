@@ -4,51 +4,63 @@ import { LOGIN } from "src/constants/pages";
 
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import { me } from "../Authorize/reducer";
-import HomeTable from "./HomeTable";
 import {
   ACCSENDING,
   DECSENDING,
   DEFAULT_USER_SORT_COLUMN_NAME,
   DEFAULT_PAGE_LIMIT,
 } from "src/constants/paging";
-import IQueryUserModel from "src/interfaces/User/IQueryUserModel";
+import MyAssignmentTable from "./MyAssignmentTable";
+import IQueryMyAssignmentModel from "src/interfaces/Assignment/IQueryMyAssignmentModel";
+import { getMyAssignmentList } from "./reducer";
 
 const Home = () => {
-  const { isAuth, account } = useAppSelector((state) => state.authReducer);
-  const { users, loading } = useAppSelector((state) => state.userReducer);
+  const { assignments } = useAppSelector((state) => state.myAssignmentReducer);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+
+  const [query, setQuery] = useState({
+    page: assignments?.currentPage ?? 1,
+    sortOrder: DECSENDING,
+    sortColumn: DEFAULT_USER_SORT_COLUMN_NAME,
+  } as IQueryMyAssignmentModel);
+
   const handlePage = (page: number) => {
     setQuery({
       ...query,
       page,
     });
+    console.log(query)
   };
+
   const handleSort = (sortColumn: string) => {
-    const sortOrder = query.sortOrder === ACCSENDING ? DECSENDING : ACCSENDING;
+    let sortOrder
+    if (query.sortColumn != sortColumn) {
+      sortOrder = ACCSENDING
+    } else {
+      sortOrder = query.sortOrder === ACCSENDING ? DECSENDING : ACCSENDING;
+    }
     setQuery({
       ...query,
       sortColumn,
       sortOrder,
     });
   };
-  const fetchData = () => {
 
+  const fetchData = () => {
+    dispatch(getMyAssignmentList({ ...query }))
   };
 
-  const [query, setQuery] = useState({
-    page: users?.currentPage ?? 1,
-    sortOrder: DECSENDING,
-    sortColumn: DEFAULT_USER_SORT_COLUMN_NAME,
-  } as IQueryUserModel);
+  // useEffect(() => {
+  //   if (isAuth) {
+  //     dispatch(me());
+  //   } else {
+  //     navigate(LOGIN)
+  //   }
+  // }, [isAuth]);
 
   useEffect(() => {
-    if (isAuth) {
-      dispatch(me());
-    } else {
-      navigate(LOGIN)
-    }
-  }, [isAuth]);
+    fetchData()
+  }, [query]);
 
   return (
     <>
@@ -56,16 +68,16 @@ const Home = () => {
         My Assignment
       </div>
       <div>
-        <HomeTable
-
+        <MyAssignmentTable
           handlePage={handlePage}
           handleSort={handleSort}
           sortState={{
             columnValue: query.sortColumn,
             orderBy: query.sortOrder,
           }}
-          fetchData={fetchData}
-        />
+          assignments={null}
+          result={null}
+          handleAccept={(id) => { console.log("Accept:", id) }} />
       </div>
     </>
   );
