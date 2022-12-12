@@ -145,6 +145,7 @@ const ListAssignment = () => {
         }))
         setSelectedState([FilterAssignmentStateOptions[0]]);
     };
+
     const fetchData = () => {
         dispatch(getAssignmentList({ ...query }))
     };

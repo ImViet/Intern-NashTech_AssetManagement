@@ -12,15 +12,14 @@ import {
 } from "src/constants/paging";
 import MyAssignmentTable from "./MyAssignmentTable";
 import IQueryMyAssignmentModel from "src/interfaces/Assignment/IQueryMyAssignmentModel";
+import { getMyAssignmentList } from "./reducer";
 
 const Home = () => {
-  const { isAuth, account } = useAppSelector((state) => state.authReducer);
-  const { users, loading } = useAppSelector((state) => state.userReducer);
+  const { assignments } = useAppSelector((state) => state.myAssignmentReducer);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const [query, setQuery] = useState({
-    page: users?.currentPage ?? 1,
+    page: assignments?.currentPage ?? 1,
     sortOrder: DECSENDING,
     sortColumn: DEFAULT_USER_SORT_COLUMN_NAME,
   } as IQueryMyAssignmentModel);
@@ -30,14 +29,25 @@ const Home = () => {
       ...query,
       page,
     });
+    console.log(query)
   };
+
   const handleSort = (sortColumn: string) => {
-    const sortOrder = query.sortOrder === ACCSENDING ? DECSENDING : ACCSENDING;
+    let sortOrder
+    if (query.sortColumn != sortColumn) {
+      sortOrder = ACCSENDING
+    } else {
+      sortOrder = query.sortOrder === ACCSENDING ? DECSENDING : ACCSENDING;
+    }
     setQuery({
       ...query,
       sortColumn,
       sortOrder,
     });
+  };
+
+  const fetchData = () => {
+    dispatch(getMyAssignmentList({ ...query }))
   };
 
   // useEffect(() => {
@@ -47,6 +57,10 @@ const Home = () => {
   //     navigate(LOGIN)
   //   }
   // }, [isAuth]);
+
+  useEffect(() => {
+    fetchData()
+  }, [query]);
 
   return (
     <>
