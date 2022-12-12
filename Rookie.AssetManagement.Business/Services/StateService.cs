@@ -36,5 +36,10 @@ namespace Rookie.AssetManagement.Business.Services
             var listState = _mapper.Map<IEnumerable<StateDto>>(await _stateRepository.Entities.Where(s => s.Entity == "ASSIGNMENT").ToListAsync());
             return (List<StateDto>)listState;
         }
+        public async Task<IEnumerable<StateDto>> GetReturningStateAsync()
+        {
+            var listState = _mapper.Map<IEnumerable<StateDto>>(await _stateRepository.Entities.Where(s => s.Entity == "RETURN_REQUEST").ToListAsync());
+            return (List<StateDto>)listState;
+        }
     }
 }

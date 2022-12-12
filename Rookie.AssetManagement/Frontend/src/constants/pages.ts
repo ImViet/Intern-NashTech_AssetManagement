@@ -28,6 +28,7 @@ export const ASSIGNMENT_PARENT_ROOT = "..";
 
 
 export const RETURNING = "returning/*";
+export const RETURNING_LIST = "*";
 export const RETURNING_LIST_LINK = "/returning";
 
 export const REPORT = "report/*";
