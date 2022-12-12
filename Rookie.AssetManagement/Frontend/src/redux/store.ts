@@ -10,6 +10,7 @@ import userReducer from "src/containers/User/reducer";
 import assetReducer from "src/containers/Asset/reducer";
 import assignmentReducer from "src/containers/Assignment/reducer";
 import myAssignmentReducer from "src/containers/Home/reducer";
+import returingReducer from "src/containers/Returning/reducer"
 import rootSaga from "./sagas/rootSaga";
 
 const reducer = combineReducers({
@@ -18,6 +19,7 @@ const reducer = combineReducers({
   assetReducer,
   assignmentReducer,
   myAssignmentReducer,
+  returingReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();

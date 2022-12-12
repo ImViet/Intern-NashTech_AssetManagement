@@ -16,6 +16,7 @@ namespace Rookie.AssetManagement.Business.Interfaces
     public interface IStateService
     {
         Task<IEnumerable<StateDto>> GetAssetStateAsync();
+        Task<IEnumerable<StateDto>> GetReturningStateAsync();
         Task<IEnumerable<StateDto>> GetAssignmentStateAsync();
     }
 }
