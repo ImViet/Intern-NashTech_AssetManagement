@@ -142,6 +142,7 @@ namespace Rookie.AssetManagement.Business
                 .ForMember(d => d.UserName, t => t.MapFrom(src => src.AssignedTo.FirstName + " " + src.AssignedTo.LastName));
 
             CreateMap<ReturnRequest, ReturnRequestDto>()
+                .ForMember(d => d.No, t => t.Ignore())
                 .ForMember(d => d.AssetCode, t => t.MapFrom(c => c.Assignment.Asset.AssetCode))
                 .ForMember(d => d.AssetName, t => t.MapFrom(c => c.Assignment.Asset.AssetName))
                 .ForMember(d => d.RequestedBy, t => t.MapFrom(c => c.Assignment.AssignedTo.UserName))
