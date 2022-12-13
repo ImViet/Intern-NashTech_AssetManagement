@@ -30,3 +30,11 @@ export function declineAssignmentRequest(
     `${EndPoints.assignment}/decline/${assignmentId}`
   );
 }
+
+export function returnAssignmentRequest(
+  assignmentId: string
+): Promise<AxiosResponse<IAssignment>> {
+  return RequestService.axios.post(
+    EndPoints.returning, assignmentId,
+  );
+}
