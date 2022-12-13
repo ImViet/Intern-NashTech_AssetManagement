@@ -30,7 +30,10 @@ export type AcceptAction = {
   id: number;
   handleResult: Function;
 };
-
+export type ReturnAction = {
+  id: number;
+  handleResult: Function;
+};
 const MyAssignmentReducerSlice = createSlice({
   name: "my-assignment",
   initialState,
@@ -77,6 +80,12 @@ const MyAssignmentReducerSlice = createSlice({
         loading: true,
       };
     },
+    returnAssignment: (state, action: PayloadAction<ReturnAction>) => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
     setActionResult: (
       state,
       action: PayloadAction<IAssignment>
@@ -107,6 +116,7 @@ export const {
   setActionResult,
   cleanUpActionResult,
   declineAssignment,
+  returnAssignment
 } = MyAssignmentReducerSlice.actions;
 
 export default MyAssignmentReducerSlice.reducer;
