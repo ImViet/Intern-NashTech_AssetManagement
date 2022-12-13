@@ -100,7 +100,7 @@ namespace Rookie.AssetManagement.Business.Services
             {
                 throw new NotFoundException("Not Found!");
             }
-            if (user.IsNewUser == true)
+            if (user.IsNewUser == false)
             {
                 throw new NotFoundException("Not new user");
             }
