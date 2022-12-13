@@ -12,7 +12,7 @@ import {
 } from "src/constants/paging";
 import MyAssignmentTable from "./MyAssignmentTable";
 import IQueryMyAssignmentModel from "src/interfaces/Assignment/IQueryMyAssignmentModel";
-import { acceptAssignment, cleanUpActionResult, declineAssignment, getMyAssignmentList } from "./reducer";
+import { acceptAssignment, cleanUpActionResult, declineAssignment, getMyAssignmentList, returnAssignment } from "./reducer";
 
 const defaultQuery = {
   page: 1,
@@ -54,8 +54,12 @@ const Home = () => {
   }
 
   const handleReturn = (id: number) =>{
-    // dispatch(declineAssignment(id));
-    // fetchData();
+    dispatch(returnAssignment({
+      id: id,
+      handleResult: () => {
+        dispatch(getMyAssignmentList({ ...defaultQuery }))
+      }
+    }));
   }
 
   const handleSort = (sortColumn: string) => {

@@ -91,7 +91,7 @@ const Header = () => {
       {
         if(split == "create"){
           const index = pathnameSplit.findIndex(s=>s== split)
-          pathnameSplit[index] = "Create User";
+          pathnameSplit[index] = "Create New User";
         }
         else if(split == "edit"){
           const index = pathnameSplit.findIndex(s=>s== split)

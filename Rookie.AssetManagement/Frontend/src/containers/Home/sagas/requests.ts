@@ -5,6 +5,7 @@ import RequestService from "src/services/request";
 import qs from "qs";
 import EndPoints from "src/constants/endpoints";
 import IMyAssignment from "src/interfaces/Assignment/IMyAssignment";
+import IReturning from "src/interfaces/Returning/IReturning";
 
 export function getMyAssignmentsRequest(
   assigmentQuery: IQueryMyAssignmentModel
@@ -29,4 +30,12 @@ export function declineAssignmentRequest(
   return RequestService.axios.patch(
     `${EndPoints.assignment}/decline/${assignmentId}`
   );
+}
+
+export function returnAssignmentRequest(
+  assignmentId
+): Promise<AxiosResponse<IReturning>> {
+  return RequestService.axios.post(EndPoints.returning, {
+    assignmentId: assignmentId,
+  });
 }
