@@ -11,6 +11,7 @@ namespace Rookie.AssetManagement.DataAccessor.Enum
         Accepted = 6,
         WaitingForAcceptance,
         Declined,
-        Returned
+        Returned,
+        WaitingForReturning = 12
     }
 }

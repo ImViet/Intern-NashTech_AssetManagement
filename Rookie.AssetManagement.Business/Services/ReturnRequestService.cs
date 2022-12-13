@@ -19,7 +19,6 @@ namespace Rookie.AssetManagement.Business.Services
 {
     public class ReturnRequestService : IReturnRequestService
     {
-        private readonly IBaseRepository<User> _userRepository;
         private readonly IBaseRepository<State> _stateRepository;
         private readonly IBaseRepository<Assignment> _assignmentRepository;
         private readonly IBaseRepository<ReturnRequest> _returnrequesRepository;
@@ -33,8 +32,7 @@ namespace Rookie.AssetManagement.Business.Services
             , IBaseRepository<ReturnRequest> returnrequesRepository
             , IMapper mapper)
         {
-            
-            _userRepository = userRepository;
+
             _stateRepository = stateRepository;
             _assignmentRepository = assignmentRepository;
             _returnrequesRepository = returnrequesRepository;
@@ -44,31 +42,36 @@ namespace Rookie.AssetManagement.Business.Services
         public async Task<ReturnRequestDto> AddReturnRequestAsync(ReturnRequestCreateDto returnRequestCreateDto, string AssignedBy)
         {
             Ensure.Any.IsNotNull(returnRequestCreateDto);
+
+            var assignment = _assignmentRepository.Entities.Where(x => x.Id == returnRequestCreateDto.AssignmentId).FirstOrDefault();
+            if (assignment == null)
+            {
+                throw new NotFoundException("Assignment Not Found!");
+            }
+            var state = await _stateRepository.GetById((int)AssignmentStateEnum.WaitingForReturning);
+            assignment.State = state;
+            await _assignmentRepository.Update(assignment);
+
             var newReturnRequest = _mapper.Map<ReturnRequest>(returnRequestCreateDto);
-            var getAssignment = _assignmentRepository.Entities.Where(x => x.Id == returnRequestCreateDto.AssignmentId).FirstOrDefault();
-            if (getAssignment == null)
-            {
-                throw new NotFoundException("User Not Found!");
-            }
-           
-            var getUser = _userRepository.Entities.Where(x => x.Id == returnRequestCreateDto.AcceptedBy).FirstOrDefault();
-            if (getUser == null)
-            {
-                throw new NotFoundException("Asset Not Found!");
-            }
-
-            //var getState = _userRepository.Entities.Where(x => x.UserName == AssignedBy).FirstOrDefault();
-
-            newReturnRequest.Assignment = getAssignment;
-            newReturnRequest.AcceptedBy = getUser;
-            newReturnRequest.State.Id = 4;
+            newReturnRequest.Assignment = assignment;
             newReturnRequest.ReturnedDate = DateTime.Now;
 
-            //var waitAcceptState = await _stateRepository.GetById((int)AssignmentStateEnum.WaitingForAcceptance);
-            //newAssignment.State = waitAcceptState;
+            state = await _stateRepository.GetById((int)ReturnRequestStateEnum.WaitingForReturning);
+            newReturnRequest.State = state;
 
-            //var createResult = await _assignmentRepository.Add(newAssignment);
-            return _mapper.Map<ReturnRequestDto>(newReturnRequest);
+            await _returnrequesRepository.Add(newReturnRequest);
+
+            var result = await _returnrequesRepository.Entities
+                .Include(a => a.State)
+                .Include(a => a.Assignment)
+                .Include(a => a.AcceptedBy)
+                .Include(a => a.Assignment.Asset)
+                .Include(a => a.Assignment.AssignedTo)
+                .Include(a => a.Assignment.AssignedBy)
+                .Where(r => r.Id == newReturnRequest.Id)
+                .FirstOrDefaultAsync();
+
+            return _mapper.Map<ReturnRequestDto>(result);
         }
 
         public async Task<IEnumerable<ReturnRequestDto>> GetAllAsync()
