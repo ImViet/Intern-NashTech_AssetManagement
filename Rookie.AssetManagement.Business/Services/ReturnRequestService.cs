@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using EnsureThat;
 using Microsoft.EntityFrameworkCore;
 using Rookie.AssetManagement.Business.Interfaces;
 using Rookie.AssetManagement.Contracts;
 using Rookie.AssetManagement.Contracts.Dtos.AssignmentDtos;
 using Rookie.AssetManagement.Contracts.Dtos.ReturnRequestDtos;
 using Rookie.AssetManagement.DataAccessor.Entities;
+using Rookie.AssetManagement.DataAccessor.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +19,6 @@ namespace Rookie.AssetManagement.Business.Services
 {
     public class ReturnRequestService : IReturnRequestService
     {
-        private readonly IBaseRepository<User> _userRepository;
         private readonly IBaseRepository<State> _stateRepository;
         private readonly IBaseRepository<Assignment> _assignmentRepository;
         private readonly IBaseRepository<ReturnRequest> _returnrequesRepository;
@@ -31,12 +32,46 @@ namespace Rookie.AssetManagement.Business.Services
             , IBaseRepository<ReturnRequest> returnrequesRepository
             , IMapper mapper)
         {
-            
-            _userRepository = userRepository;
+
             _stateRepository = stateRepository;
             _assignmentRepository = assignmentRepository;
             _returnrequesRepository = returnrequesRepository;
             _mapper = mapper;
+        }
+
+        public async Task<ReturnRequestDto> AddReturnRequestAsync(ReturnRequestCreateDto returnRequestCreateDto, string AssignedBy)
+        {
+            Ensure.Any.IsNotNull(returnRequestCreateDto);
+
+            var assignment = _assignmentRepository.Entities.Where(x => x.Id == returnRequestCreateDto.AssignmentId).FirstOrDefault();
+            if (assignment == null)
+            {
+                throw new NotFoundException("Assignment Not Found!");
+            }
+            var state = await _stateRepository.GetById((int)AssignmentStateEnum.WaitingForReturning);
+            assignment.State = state;
+            await _assignmentRepository.Update(assignment);
+
+            var newReturnRequest = _mapper.Map<ReturnRequest>(returnRequestCreateDto);
+            newReturnRequest.Assignment = assignment;
+            newReturnRequest.ReturnedDate = DateTime.Now;
+
+            state = await _stateRepository.GetById((int)ReturnRequestStateEnum.WaitingForReturning);
+            newReturnRequest.State = state;
+
+            await _returnrequesRepository.Add(newReturnRequest);
+
+            var result = await _returnrequesRepository.Entities
+                .Include(a => a.State)
+                .Include(a => a.Assignment)
+                .Include(a => a.AcceptedBy)
+                .Include(a => a.Assignment.Asset)
+                .Include(a => a.Assignment.AssignedTo)
+                .Include(a => a.Assignment.AssignedBy)
+                .Where(r => r.Id == newReturnRequest.Id)
+                .FirstOrDefaultAsync();
+
+            return _mapper.Map<ReturnRequestDto>(result);
         }
 
         public async Task<IEnumerable<ReturnRequestDto>> GetAllAsync()
@@ -114,7 +149,7 @@ namespace Rookie.AssetManagement.Business.Services
                 b.ReturnedDate == returnRequestQueryCriteria.ReturnedDate);
             }
 
-            if (returnRequestQueryCriteria.States != null && !returnRequestQueryCriteria.States.Any(e => e == "ALL"))
+            if (returnRequestQueryCriteria.States != null && !returnRequestQueryCriteria.States.Any(e => e == " "))
             {
                 returnRequestQuery = returnRequestQuery.Where(x => returnRequestQueryCriteria.States.Any(e => e == x.State.Id.ToString()));
             }

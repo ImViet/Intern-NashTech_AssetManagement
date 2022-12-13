@@ -2,10 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Rookie.AssetManagement.Business.Interfaces;
 using Rookie.AssetManagement.Business.Services;
+using Rookie.AssetManagement.Constants;
 using Rookie.AssetManagement.Contracts;
 using Rookie.AssetManagement.Contracts.Dtos.AssignmentDtos;
 using Rookie.AssetManagement.Contracts.Dtos.ReturnRequestDtos;
 using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
+using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -34,8 +37,8 @@ namespace Rookie.AssetManagement.Controllers
         [HttpGet]
         [Route("ReturnRequest")]
         public async Task<ActionResult<PagedResponseModel<ReturnRequestDto>>> GetReturnRequest(
-       [FromQuery] ReturnRequestQueryCriteriaDto returnRequestCriteriaDto,
-       CancellationToken cancellationToken)
+        [FromQuery] ReturnRequestQueryCriteriaDto returnRequestCriteriaDto,
+        CancellationToken cancellationToken)
         {
             var assetResponses = await _returnRequestService.GetByPageAsync(
                                             returnRequestCriteriaDto,
@@ -49,6 +52,14 @@ namespace Rookie.AssetManagement.Controllers
         public async Task<ActionResult<StateDto>> GetReturningState()
         {
             return Ok(await _stateService.GetReturningStateAsync());
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ReturnRequestDto>> AddAssignmentAsync([FromBody] ReturnRequestCreateDto returnRequestCreate)
+        {
+            var userName = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
+            var assigment = await _returnRequestService.AddReturnRequestAsync(returnRequestCreate, userName);
+            return Created(Endpoints.User, assigment);
         }
     }
 
