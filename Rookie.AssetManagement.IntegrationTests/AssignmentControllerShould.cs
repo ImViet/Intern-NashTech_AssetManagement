@@ -20,6 +20,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using Xunit;
 using Rookie.AssetManagement.Contracts.Dtos.CategoryDtos;
 using Rookie.AssetManagement.Contracts.Dtos.StateDtos;
@@ -52,7 +53,7 @@ namespace Rookie.AssetManagement.IntegrationTests
             _assignmentRepository = new BaseRepository<Assignment>(_dbContext);
             _stategoryRepository = new BaseRepository<State>(_dbContext);
             _userRepository = new BaseRepository<User>(_dbContext);
-
+            
             _assignmentService = new AssignmentService(_assetRepository, _stategoryRepository, _assignmentRepository, _userRepository, _mapper);
             _stateService = new StateService(_stategoryRepository, _mapper);
 
@@ -67,7 +68,7 @@ namespace Rookie.AssetManagement.IntegrationTests
             _identity = new ClaimsIdentity();
             _identity.AddClaims(new[]
             {
-                new Claim("UserName", "admin"),
+                new Claim("UserName", "damthuy"),
                 new Claim("Type", "ADMIN"),
                 new Claim("Location","HCM")
             });
@@ -169,5 +170,24 @@ namespace Rookie.AssetManagement.IntegrationTests
 
             await Assert.ThrowsAsync<NotFoundException>(() => _assignmentController.UpdateAssignmentAsync(assignmentRequest));
         }
+
+        [Fact]
+        public async Task GetAssignmentByUserNameAsync_Success()
+        {
+            //Arrange
+            var AssignmentQueryCriteriaDto = AssignmentData.GetAssignmentQueryCriteriaDto();
+
+            // Act
+            var result = await _assignmentController.GetAssignmentByUserName(AssignmentQueryCriteriaDto, new CancellationToken());
+
+            // Assert
+            result.Result.Should().HaveStatusCode(StatusCodes.Status200OK);
+            result.Should().NotBeNull();
+
+            var actionResult = Assert.IsType<OkObjectResult>(result.Result);
+            var returnValue = Assert.IsType<PagedResponseModel<MyAssignmentDto>>(actionResult.Value);
+            Assert.Equal(returnValue.TotalItems, 1);
+        }
+
     }
  }

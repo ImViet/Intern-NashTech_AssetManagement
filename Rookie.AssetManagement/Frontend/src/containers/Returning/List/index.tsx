@@ -23,7 +23,7 @@ const defaultQuery: IQueryReturningModel = {
     search: "",
     page: 1,
     limit: DEFAULT_PAGE_LIMIT,
-    assignedDate: null,
+    returnedDate: null,
     sortOrder: ACCSENDING,
     sortColumn: DEFAULT_ASSIGNMENT_SORT_COLUMN_NAME,
     states: [],
@@ -89,7 +89,7 @@ const ListReturning = () => {
     const handleReturnedDateChange = (date: Date) => {
         setQuery({
             ...query,
-            assignedDate: toUTCWithoutHour(date)
+            returnedDate: toUTCWithoutHour(date)
         });
         setReturnedDate(date);
         console.log(query)
