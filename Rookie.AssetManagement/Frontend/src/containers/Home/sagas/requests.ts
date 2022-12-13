@@ -32,9 +32,10 @@ export function declineAssignmentRequest(
 }
 
 export function returnAssignmentRequest(
-  assignmentId: string
+  assignmentId: number
 ): Promise<AxiosResponse<IAssignment>> {
   return RequestService.axios.post(
-    EndPoints.returning, assignmentId,
+    EndPoints.returning, { id: assignmentId}
+    ,
   );
 }
