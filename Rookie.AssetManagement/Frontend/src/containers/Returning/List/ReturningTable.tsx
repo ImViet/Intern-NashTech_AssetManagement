@@ -33,7 +33,7 @@ type Props = {
     result: IReturning | null;
     handlePage: (page: number) => void;
     handleSort: (colValue: string) => void;
-    //handleCancel: Function;
+    handleCancel: Function;
     sortState: SortType;
     fetchData: Function;
 };
@@ -45,7 +45,7 @@ const ReturningTable: React.FC<Props> = ({
     handleSort,
     sortState,
     fetchData,
-    //handleCancel,
+    handleCancel,
 }) => {
     const dispatch = useAppDispatch();
     //const [showDetail, setShowDetail] = useState(false);
@@ -78,16 +78,16 @@ const ReturningTable: React.FC<Props> = ({
         });
     };
 
-    // const onCancel = () => {
-    //     handleCancel(cancelState.id)
-    //     setCancel({
-    //         isOpen: false,
-    //         id: 0,
-    //         title: '',
-    //         message: '',
-    //         isDisable: true,
-    //     });
-    // };
+    const onCancel = () => {
+        handleCancel(cancelState.id)
+        setCancel({
+            isOpen: false,
+            id: 0,
+            title: '',
+            message: '',
+            isDisable: true,
+        });
+    };
 
     let rows
     if (result && returnings) {
@@ -152,6 +152,39 @@ const ReturningTable: React.FC<Props> = ({
                     </tr>
                 ))}
             </Table>
+            <ConfirmModal
+                title={cancelState.title}
+                isShow={cancelState.isOpen}
+                onHide={handleCloseCancel}
+            >
+                <div>
+
+                    <div className="text-start">
+                        {cancelState.message}
+                    </div>
+                    {
+                        cancelState.isDisable && (
+                            <div className="text-start mt-3">
+                                <button
+                                    className="btn btn-danger mr-3"
+                                    type="button"
+                                    onClick={onCancel}
+                                >
+                                    Yes
+                                </button>
+
+                                <button
+                                    className="btn btn-outline-secondary"
+                                    onClick={handleCloseCancel}
+                                    type="button"
+                                >
+                                    No
+                                </button>
+                            </div>
+                        )
+                    }
+                </div>
+            </ConfirmModal>
         </>
     );
 };
