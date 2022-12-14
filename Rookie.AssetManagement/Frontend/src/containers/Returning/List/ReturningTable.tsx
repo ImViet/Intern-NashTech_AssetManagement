@@ -34,6 +34,7 @@ type Props = {
     handlePage: (page: number) => void;
     handleSort: (colValue: string) => void;
     handleCancel: Function;
+    handleComplete: Function;
     sortState: SortType;
     fetchData: Function;
 };
@@ -46,60 +47,35 @@ const ReturningTable: React.FC<Props> = ({
     sortState,
     fetchData,
     handleCancel,
+    handleComplete
 }) => {
     const dispatch = useAppDispatch();
     //const [showDetail, setShowDetail] = useState(false);
     //const [assignmentDetail, setAssignmentDetail] = useState(null as IReturning | null);
-    const [cancelState, setCancel] = useState({
+    const [confirmState, setConfirmState] = useState({
         isOpen: false,
         id: 0,
         title: '',
+        button: '',
         message: '',
         isDisable: true,
+        cancleButton: "Cancel",
         callback: () => { }
     });
 
     const handleShowCancel = async (id: number) => {
-        setCancel({
-            id,
-            isOpen: true,
-            title: 'Are you sure?',
-            message: 'Do you want to cancel this returning request?',
-            isDisable: true,
-            callback: () => { }
-        });
+
     };
 
     const handleShowComplete = async (id: number) => {
-        setCancel({
+        setConfirmState({
             id,
             isOpen: true,
             title: 'Are you sure?',
             message: "Do you want to mark this returning request as 'Completed'?",
             isDisable: true,
-            callback: () => { }
-        });
-    };
-
-    const handleCloseCancel = () => {
-        setCancel({
-            isOpen: false,
-            id: 0,
-            title: '',
-            message: '',
-            isDisable: true,
-            callback: () => { }
-        });
-    };
-
-    const onCancel = () => {
-        handleCancel(cancelState.id)
-        setCancel({
-            isOpen: false,
-            id: 0,
-            title: '',
-            message: '',
-            isDisable: true,
+            button: "COMPLETE",
+            cancleButton: "",
             callback: () => { }
         });
     };
@@ -138,62 +114,103 @@ const ReturningTable: React.FC<Props> = ({
                         <td>{convertDDMMYYYY(data.returnedDate)}</td>
                         <td>{data.state}</td>
                         <td className="d-flex">
-                            {(() => {
-                                if (data.state == "Completed") {
-                                    return (
-                                        <>
-                                            <ButtonIcon disable={true} >
-                                                <CheckLg className="text-danger" />
-                                            </ButtonIcon>
-                                            <ButtonIcon disable={true} onClick={() => handleShowCancel(data.id)}>
-                                                <XLg className="text-black mx-2" />
-                                            </ButtonIcon>
-                                        </>
-                                    )
-                                } else {
-                                    return (
-                                        <>
-                                            <ButtonIcon >
-                                                <CheckLg className="text-danger" onClick={() => handleShowComplete(data.id)}/>
-                                            </ButtonIcon>
-                                            <ButtonIcon onClick={() => handleShowCancel(data.id)}>
-                                                <XLg className="text-black mx-2" />
-                                            </ButtonIcon>
-                                        </>
-                                    )
-                                }
-                            })()}
+                            <ButtonIcon disable={data.state == "Completed"}
+                                onClick={() => {
+                                    setConfirmState({
+                                        id: data.id,
+                                        isOpen: true,
+                                        title: 'Are you sure?',
+                                        message: 'Do you want to mark this returning request as \'Completed\'?',
+                                        isDisable: false,
+                                        button: "Yes",
+                                        cancleButton: "No",
+                                        callback: () => { handleComplete(data.id) }
+                                    });
+                                }}
+                            >
+                                <CheckLg className="text-danger" />
+                            </ButtonIcon>
+                            <ButtonIcon disable={data.state == "Completed"}
+                                onClick={() => {
+                                    setConfirmState({
+                                        id: data.id,
+                                        isOpen: true,
+                                        title: 'Are you sure?',
+                                        message: 'Do you want to cancel this returning request?',
+                                        isDisable: false,
+                                        button: "Yes",
+                                        cancleButton: "No",
+                                        callback: () => { handleCancel(data.id) }
+                                    });
+                                }}
+                            >
+                                <XLg className="text-black mx-2" />
+                            </ButtonIcon>
                         </td>
                     </tr>
                 ))}
             </Table>
             <ConfirmModal
-                title={cancelState.title}
-                isShow={cancelState.isOpen}
-                onHide={handleCloseCancel}
+                title={confirmState.title}
+                isShow={confirmState.isOpen}
+                onHide={() => {
+                    setConfirmState({
+                        id: 0,
+                        isOpen: false,
+                        title: '',
+                        message: '',
+                        isDisable: true,
+                        button: "",
+                        cancleButton: "",
+                        callback: () => { }
+                    })
+                }}
             >
                 <div>
 
                     <div className="text-start">
-                        {cancelState.message}
+                        {confirmState.message}
                     </div>
                     {
-                        cancelState.isDisable && (
+                        !confirmState.isDisable && (
                             <div className="text-start mt-3">
                                 <button
                                     className="btn btn-danger mr-3"
                                     type="button"
-                                    onClick={onCancel}
+                                    onClick={() => {
+                                        setConfirmState({
+                                            id: 0,
+                                            isOpen: false,
+                                            title: '',
+                                            message: '',
+                                            isDisable: true,
+                                            button: "",
+                                            cancleButton: "",
+                                            callback: () => { }
+                                        })
+                                        confirmState.callback()
+                                    }}
                                 >
-                                    Yes
+                                    {confirmState.button}
                                 </button>
 
                                 <button
                                     className="btn btn-outline-secondary"
-                                    onClick={handleCloseCancel}
                                     type="button"
+                                    onClick={() => {
+                                        setConfirmState({
+                                            id: 0,
+                                            isOpen: false,
+                                            title: '',
+                                            message: '',
+                                            isDisable: true,
+                                            button: "",
+                                            cancleButton: "",
+                                            callback: () => { }
+                                        })
+                                    }}
                                 >
-                                    No
+                                    {confirmState.cancleButton}
                                 </button>
                             </div>
                         )

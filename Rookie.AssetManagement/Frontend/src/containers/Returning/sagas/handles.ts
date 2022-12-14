@@ -6,16 +6,19 @@ import {
   setState,
   setStatus,
   setReturningList,
+  CompleteAction,
+  CancelAction,
 } from "src/containers/Returning/reducer";
-
 
 import {
   getStateRequest,
   getReturningRequest,
-
+  completeRequest,
+  cancelRequest,
 } from "./requests";
 import IQueryReturingModel from "src/interfaces/Returning/IQueryReturningModel";
 import { toUTCWithoutHour } from "src/utils/formatDateTime";
+import { setActionResult } from "src/containers/User/reducer";
 
 export function* handleGetReturingList(
   action: PayloadAction<IQueryReturingModel>
@@ -79,5 +82,42 @@ export function* handleGetStateList() {
   }
 }
 
+export function* handleComplete(action: PayloadAction<CompleteAction>) {
+  const { id, handleResult } = action.payload;
+  try {
+    const { data } = yield call(completeRequest, id);
+    handleResult(data);
+    yield put(setActionResult(data));
+  } catch (error: any) {
+    const message = error.response.data;
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: {
+          error: true,
+          message: message,
+        },
+      })
+    );
+  }
+}
 
-
+export function* handleCancel(action: PayloadAction<CancelAction>) {
+  const { id, handleResult } = action.payload;
+  try {
+    const { data } = yield call(cancelRequest, id);
+    handleResult(data);
+    yield put(setActionResult(data));
+  } catch (error: any) {
+    const message = error.response.data;
+    yield put(
+      setStatus({
+        status: Status.Failed,
+        error: {
+          error: true,
+          message: message,
+        },
+      })
+    );
+  }
+}

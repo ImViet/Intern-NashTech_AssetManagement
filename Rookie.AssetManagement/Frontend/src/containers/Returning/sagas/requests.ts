@@ -10,11 +10,27 @@ export function getReturningRequest(
   returningQuery: IQueryReturningModel
 ): Promise<AxiosResponse<IReturning[]>> {
   return RequestService.axios.get(EndPoints.searchReturnRequest, {
-    params: returningQuery,    
+    params: returningQuery,
     paramsSerializer: (params) => qs.stringify(params),
   });
 }
 
 export function getStateRequest(): Promise<AxiosResponse<IState[]>> {
   return RequestService.axios.get(EndPoints.returning + "/ReturningState");
+}
+
+export function completeRequest(
+  requestId: number
+): Promise<AxiosResponse<IState[]>> {
+  return RequestService.axios.patch(
+    EndPoints.returning + "/complete/" + requestId
+  );
+}
+
+export function cancelRequest(
+  requestId: number
+): Promise<AxiosResponse<IState[]>> {
+  return RequestService.axios.patch(
+    EndPoints.returning + "/cancel/" + requestId
+  );
 }

@@ -35,6 +35,16 @@ export type DisableAction = {
   id: number;
 };
 
+export type CompleteAction = {
+  handleResult: Function;
+  id: number;
+};
+
+export type CancelAction = {
+  handleResult: Function;
+  id: number;
+};
+
 const initialState: ReturningState = {
   returnings: null,
   loading: false,
@@ -48,31 +58,12 @@ const ReturningReducerSlice = createSlice({
   name: "returning",
   initialState,
   reducers: {
-    // createAssignment: (
-    //   state,
-    //   action: PayloadAction<CreateAction>
-    // ): ReturningState => {
-    //   return {
-    //     ...state,
-    //     loading: true,
-    //   };
-    // },
-    // updateAssignment: (
-    //   state,
-    //   action: PayloadAction<UpdateAction>
-    // ): AssignmentState => {
-    //   return {
-    //     ...state,
-    //     loading: true,
-    //   };
-    // },
     getReturning: (state, action: PayloadAction<number>): ReturningState => {
       return {
         ...state,
         loading: true,
       };
     },
-
     getReturningList: (
       state,
       action: PayloadAction<IQueryReturningModel>
@@ -141,24 +132,6 @@ const ReturningReducerSlice = createSlice({
         loading: false,
       };
     },
-    // getAssignmentFormData: (state, action: PayloadAction<number>): ReturningState => {
-    //   return {
-    //     ...state,
-    //     loading: true,
-    //   };
-    // },
-    // setAssignmentFormData: (
-    //   state,
-    //   action: PayloadAction<IAssignmentForm>
-    // ): ReturningState => {
-    //   const returningFormData = action.payload;
-
-    //   return {
-    //     ...state,
-    //     returningFormData,
-    //     loading: false,
-    //   };
-    // },
     disableReturning: (
       state,
       action: PayloadAction<DisableAction>
@@ -174,12 +147,27 @@ const ReturningReducerSlice = createSlice({
         actionResult: null,
       };
     },
+    complete: (
+      state,
+      action: PayloadAction<CompleteAction>
+    ): ReturningState => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+    cancel: (state, action: PayloadAction<CancelAction>): ReturningState => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
   },
 });
 
 export const {
-  //createAssignment,
-  //updateAssignment,
+  complete,
+  cancel,
   setActionResult,
   setReturningResult,
   setReturningList,
@@ -188,8 +176,6 @@ export const {
   setState,
   setStatus,
   getReturning,
-  //getAssignmentFormData,
-  //setAssignmentFormData,
   disableReturning,
   cleanUpActionResult,
 } = ReturningReducerSlice.actions;

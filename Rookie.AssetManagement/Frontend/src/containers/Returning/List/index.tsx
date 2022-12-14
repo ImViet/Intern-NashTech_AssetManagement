@@ -13,7 +13,7 @@ import {
     DEFAULT_ASSIGNMENT_SORT_COLUMN_NAME,
 } from "src/constants/paging";
 import IPagedModel from "src/interfaces/IPagedModel";
-import { cleanUpActionResult, getReturningList, getState, disableReturning } from "../reducer";
+import { cleanUpActionResult, getReturningList, getState, disableReturning, complete, cancel } from "../reducer";
 import IQueryReturningModel from "src/interfaces/Returning/IQueryReturningModel";
 import SelectBox from "src/components/SelectBox";
 import { toUTCWithoutHour } from "src/utils/formatDateTime";
@@ -45,7 +45,7 @@ const ListReturning = () => {
 
     const { FilterReturningStateOptions } = useAppSelector(state => state.returingReducer)
     const states = useMemo(() => {
-        
+
         return FilterReturningStateOptions.filter(state => state.label == "Completed" || state.label == "Waiting for returning" || state.label == "All")
     }, [FilterReturningStateOptions])
     const handleState = (selected: ISelectOption[]) => {
@@ -134,7 +134,7 @@ const ListReturning = () => {
     };
 
     const handleCancel = (id) => {
-        dispatch(disableReturning({
+        dispatch(cancel({
             id: id,
             handleResult: (result, message) => {
                 if (result) {
@@ -144,6 +144,19 @@ const ListReturning = () => {
         }))
         setSelectedState([FilterReturningStateOptions[0]]);
     };
+
+    const handleComplete = (id) => {
+        dispatch(complete({
+            id: id,
+            handleResult: (result, message) => {
+                if (result) {
+                    setQuery({ ...defaultQuery });
+                }
+            }
+        }))
+        setSelectedState([FilterReturningStateOptions[0]]);
+    };
+
     const fetchData = () => {
         dispatch(getReturningList({ ...query }))
     };
@@ -158,7 +171,7 @@ const ListReturning = () => {
         dispatch(getState())
     }, []);
 
-    return(
+    return (
         <>
             <div className="primaryColor text-title intro-x ">Request List</div>
 
@@ -171,10 +184,10 @@ const ListReturning = () => {
                                     options={states}
                                     placeholderButtonLabel="State"
                                     value={selectedState}
-                                    onChange={handleState} 
+                                    onChange={handleState}
                                     currentPage={query.page}
                                     currentSearch={query.search}
-                                    />
+                                />
                             </div>
                         </div>
                     </div>
@@ -195,35 +208,25 @@ const ListReturning = () => {
                         </div>
                     </div>
 
-                    {/* <div className="d-flex align-items-center ml-3">
-                        <Link to="/assignment/create" type="button" className="btn btn-danger">
-                            Create new assignment
-                        </Link>
-                    </div> */}
                 </div>
-                {(() => {
-                    if (returnings?.totalItems == 0) {
-                        return (
-                            <h5 className="not-data-found">No data found</h5>
-                        )
-                    } else {
-                        return (
-                            <>
-                                <ReturningTable
-                                    returnings={returnings}
-                                    result={actionResult}
-                                    handlePage={handlePage}
-                                    handleSort={handleSort}
-                                    handleCancel={handleCancel}
-                                    sortState={{
-                                        columnValue: query.sortColumn,
-                                        orderBy: query.sortOrder,
-                                    }}
-                                    fetchData={fetchData}                              />
-                            </>
-                        )
-                    }
-                })()}
+                {returnings?.totalItems == 0 ? (
+                    <h5 className="not-data-found">No data found</h5>
+                ) : (
+                    <>
+                        <ReturningTable
+                            returnings={returnings}
+                            result={actionResult}
+                            handlePage={handlePage}
+                            handleSort={handleSort}
+                            handleCancel={handleCancel}
+                            handleComplete={handleComplete}
+                            sortState={{
+                                columnValue: query.sortColumn,
+                                orderBy: query.sortOrder,
+                            }}
+                            fetchData={fetchData} />
+                    </>
+                )}
             </div>
         </>
     );
