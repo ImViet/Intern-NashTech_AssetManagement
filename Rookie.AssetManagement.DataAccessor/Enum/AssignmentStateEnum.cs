@@ -9,7 +9,7 @@ namespace Rookie.AssetManagement.DataAccessor.Enum
     public enum AssignmentStateEnum
     {
         Accepted = 6,
-        WaitingForAcceptance,
+        WaitingForAcceptance = 7,
         Declined,
         Returned,
         WaitingForReturning = 12
