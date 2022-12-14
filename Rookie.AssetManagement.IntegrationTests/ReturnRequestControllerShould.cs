@@ -50,7 +50,13 @@ namespace Rookie.AssetManagement.IntegrationTests
             _userRepository = new BaseRepository<User>(_dbContext);
             _returnRequestRepository = new BaseRepository<ReturnRequest>(_dbContext);
 
-            _returnRequestService = new ReturnRequestService(_stategoryRepository, _assignmentRepository, _userRepository, _returnRequestRepository, _mapper);
+            _returnRequestService = new ReturnRequestService(
+                _stategoryRepository,
+                _assignmentRepository,
+                _assetRepository,
+                _userRepository,
+                _returnRequestRepository,
+                _mapper);
             _stateService = new StateService(_stategoryRepository, _mapper);
 
             _returnRequestController = new ReturnRequestController(_stateService, _returnRequestService);

@@ -37,7 +37,13 @@ namespace Rookie.AssetManagement.UnitTests.Business
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
             _mapper = config.CreateMapper();
             _cancellationToken = new CancellationToken();
-            _returnRequestService = new ReturnRequestService(_stateRepository.Object, _assignmentRepository.Object, _userRepository.Object, _returnRequestRepository.Object, _mapper);
+            _returnRequestService = new ReturnRequestService(
+                _stateRepository.Object,
+                _assignmentRepository.Object,
+                _assetRepository.Object,
+                _userRepository.Object,
+                _returnRequestRepository.Object,
+                _mapper);
         }
 
         [Fact]

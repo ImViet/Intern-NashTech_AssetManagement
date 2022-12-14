@@ -53,7 +53,7 @@ namespace Rookie.AssetManagement.IntegrationTests
             _assignmentRepository = new BaseRepository<Assignment>(_dbContext);
             _stategoryRepository = new BaseRepository<State>(_dbContext);
             _userRepository = new BaseRepository<User>(_dbContext);
-            
+
             _assignmentService = new AssignmentService(_assetRepository, _stategoryRepository, _assignmentRepository, _userRepository, _mapper);
             _stateService = new StateService(_stategoryRepository, _mapper);
 
@@ -77,7 +77,7 @@ namespace Rookie.AssetManagement.IntegrationTests
             _assignmentController.ControllerContext.HttpContext = new DefaultHttpContext() { User = _user };
 
         }
-        
+
         [Fact]
         public async Task GetAllAssignmentShouldReturnAll()
         {
@@ -190,4 +190,4 @@ namespace Rookie.AssetManagement.IntegrationTests
         }
 
     }
- }
+}
