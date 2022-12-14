@@ -70,7 +70,6 @@ namespace Rookie.AssetManagement.Business.Services
                 .Include(a => a.Assignment.AssignedBy)
                 .Where(r => r.Id == newReturnRequest.Id)
                 .FirstOrDefaultAsync();
-
             return _mapper.Map<ReturnRequestDto>(result);
         }
 
@@ -85,6 +84,7 @@ namespace Rookie.AssetManagement.Business.Services
             var returnRequestQuery = ReturnRequestFilter(
               _returnrequesRepository.Entities
               .Include(a => a.State)
+              .Where(a => a.State.Id == (int)ReturnRequestStateEnum.WaitingForReturning || a.State.Id == (int)ReturnRequestStateEnum.Completed)
               .Include(a => a.Assignment)
               .Include(a => a.AcceptedBy)
               .Include(a => a.Assignment.Asset)
@@ -149,7 +149,7 @@ namespace Rookie.AssetManagement.Business.Services
                 b.ReturnedDate == returnRequestQueryCriteria.ReturnedDate);
             }
 
-            if (returnRequestQueryCriteria.States != null && !returnRequestQueryCriteria.States.Any(e => e == " "))
+            if (returnRequestQueryCriteria.States != null && !returnRequestQueryCriteria.States.Any(e => e == "ALL"))
             {
                 returnRequestQuery = returnRequestQuery.Where(x => returnRequestQueryCriteria.States.Any(e => e == x.State.Id.ToString()));
             }
