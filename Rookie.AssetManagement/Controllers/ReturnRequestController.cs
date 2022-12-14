@@ -63,7 +63,7 @@ namespace Rookie.AssetManagement.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ReturnRequestDto>> AddAssignmentAsync([FromBody] ReturnRequestCreateDto returnRequestCreate)
+        public async Task<ActionResult<ReturnRequestDto>> AddReturnRequestAsync([FromBody] ReturnRequestCreateDto returnRequestCreate)
         {
             var userName = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
             var assigment = await _returnRequestService.AddReturnRequestAsync(returnRequestCreate, userName);

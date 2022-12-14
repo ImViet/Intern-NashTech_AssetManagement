@@ -110,5 +110,23 @@ namespace Rookie.AssetManagement.IntegrationTests
 
         //    Assert.Equal(assignment.Id, returnValue.Id);
         //}
+        [Fact]
+        public async Task AddReturningRequestAsync_Success()
+        {
+            //Arrange
+            var returnRequest = ReturnRequestData.GetReturnRequestCreateDto();
+
+            // Act
+            var result = await _returnRequestController.AddReturnRequestAsync(returnRequest);
+
+            // Assert
+            result.Should().NotBeNull();
+
+            var actionResult = Assert.IsType<CreatedResult>(result.Result);
+            var returnValue = Assert.IsType<ReturnRequestDto>(actionResult.Value);
+
+            Assert.Equal(3, returnValue.Id);
+            Assert.Equal("Waiting for returning", returnValue.State);
+        }
     }
 }

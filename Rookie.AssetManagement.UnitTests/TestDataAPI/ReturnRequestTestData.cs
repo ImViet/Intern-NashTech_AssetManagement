@@ -42,7 +42,7 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                     },
                     ReturnedDate = DateTime.Parse("2021-02-21"),
                     State = new State(){
-                        Id = 3,
+                        Id = 10,
                         StateName = "Completed"
                     }
                 },
@@ -73,25 +73,120 @@ namespace Rookie.AssetManagement.UnitTests.TestDataAPI
                     },
                     ReturnedDate = DateTime.Parse("2021-02-21"),
                     State = new State(){
-                        Id = 4,
+                        Id = 11,
                         StateName = "Waiting for returning"
                     }
                 }
+            };
+        }
+        public static List<Assignment> GetAssignments()
+        {
+            return new List<Assignment>()
+            {
+                new Assignment (){
+                        Id= 1,
+                        Asset = new Asset (){
+                            AssetCode = "MO000001",
+                            AssetName = "Personal Computer xyz",
+                        },
+                        AssignedTo= new User(){
+                            UserName = "damthuy",
+                        },
+                        AssignedBy = new User(){
+                            UserName = "admin",
+                        },
+                        AssignedDate = DateTime.Parse("2021-02-21"),
+                        State = new State(){
+                            Id = 1,
+                            StateName = "Accepted"
+                        },
+                        IsDeleted=false,
+                        Note=""
+                    }, new Assignment (){
+                        Id= 2,
+                        Asset = new Asset (){
+                            AssetCode = "MO000002",
+                            AssetName = "Personal Computer xyz2",
+                        },
+                        AssignedTo= new User(){
+                            UserName = "binhnv",
+                        },
+                        AssignedBy = new User(){
+                            UserName = "admin",
+                        },
+                        AssignedDate = DateTime.Parse("2021-02-21"),
+                        State = new State(){
+                            Id = 2,
+                            StateName = "Waiting for Acceptance",
+                        },
+                        IsDeleted=false,
+                        Note=""
+                    }
             };
         }
         public static List<State> GetStates()
         {
             return new List<State>() {
                 new State() {
-                    Id = 3,
+                    Id = 10,
                     StateName="Completed",
                 },
                 new State() {
-                    Id = 4,
+                    Id = 11,
                     StateName="Waiting for returning",
                 },
             };
         }
+        public static State GetState = new State()
+        {
+            Id = 11,
+            StateName = "Waiting for returning",
+        };
+        public static ReturnRequest ReturnRequest = new ReturnRequest()
+        {
+            Id = 3,
+            Assignment = new Assignment()
+            {
+                Id = 2,
+                Asset = new Asset()
+                {
+                    AssetCode = "MO000003",
+                    AssetName = "Personal Computer xyz3",
+                },
+                AssignedTo = new User()
+                {
+                    UserName = "binhnv",
+                },
+                AssignedBy = new User()
+                {
+                    UserName = "admin",
+                },
+                AssignedDate = DateTime.Parse("2021-02-21"),
+                State = new State()
+                {
+                    Id = 2,
+                    StateName = "Waiting for Acceptance",
+                },
+                IsDeleted = false,
+                Note = ""
+            },
+            AcceptedBy = new User()
+            {
+                UserName = "vietdq",
+            },
+            ReturnedDate = DateTime.Parse("2021-02-21"),
+            State = new State()
+            {
+                Id = 11,
+                StateName = "Waiting for returning"
+            }
+        };
+
+        public static ReturnRequestCreateDto GetReturnRequestDto = new ReturnRequestCreateDto()
+        {
+            AssignmentId = 1,
+        };
+
 
         public static ReturnRequestQueryCriteriaDto ReturnRequestQueryCriteriaDto = new ReturnRequestQueryCriteriaDto()
         {
