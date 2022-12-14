@@ -56,6 +56,7 @@ const ReturningTable: React.FC<Props> = ({
         title: '',
         message: '',
         isDisable: true,
+        callback: () => { }
     });
 
     const handleShowCancel = async (id: number) => {
@@ -65,6 +66,18 @@ const ReturningTable: React.FC<Props> = ({
             title: 'Are you sure?',
             message: 'Do you want to cancel this returning request?',
             isDisable: true,
+            callback: () => { }
+        });
+    };
+
+    const handleShowComplete = async (id: number) => {
+        setCancel({
+            id,
+            isOpen: true,
+            title: 'Are you sure?',
+            message: "Do you want to mark this returning request as 'Completed'?",
+            isDisable: true,
+            callback: () => { }
         });
     };
 
@@ -75,6 +88,7 @@ const ReturningTable: React.FC<Props> = ({
             title: '',
             message: '',
             isDisable: true,
+            callback: () => { }
         });
     };
 
@@ -86,6 +100,7 @@ const ReturningTable: React.FC<Props> = ({
             title: '',
             message: '',
             isDisable: true,
+            callback: () => { }
         });
     };
 
@@ -139,7 +154,7 @@ const ReturningTable: React.FC<Props> = ({
                                     return (
                                         <>
                                             <ButtonIcon >
-                                                <CheckLg className="text-danger" />
+                                                <CheckLg className="text-danger" onClick={() => handleShowComplete(data.id)}/>
                                             </ButtonIcon>
                                             <ButtonIcon onClick={() => handleShowCancel(data.id)}>
                                                 <XLg className="text-black mx-2" />
