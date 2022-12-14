@@ -33,7 +33,7 @@ type Props = {
     result: IReturning | null;
     handlePage: (page: number) => void;
     handleSort: (colValue: string) => void;
-    //handleCancel: Function;
+    handleCancel: Function;
     sortState: SortType;
     fetchData: Function;
 };
@@ -45,7 +45,7 @@ const ReturningTable: React.FC<Props> = ({
     handleSort,
     sortState,
     fetchData,
-    //handleCancel,
+    handleCancel,
 }) => {
     const dispatch = useAppDispatch();
     //const [showDetail, setShowDetail] = useState(false);
@@ -56,6 +56,7 @@ const ReturningTable: React.FC<Props> = ({
         title: '',
         message: '',
         isDisable: true,
+        callback: () => { }
     });
 
     const handleShowCancel = async (id: number) => {
@@ -65,6 +66,18 @@ const ReturningTable: React.FC<Props> = ({
             title: 'Are you sure?',
             message: 'Do you want to cancel this returning request?',
             isDisable: true,
+            callback: () => { }
+        });
+    };
+
+    const handleShowComplete = async (id: number) => {
+        setCancel({
+            id,
+            isOpen: true,
+            title: 'Are you sure?',
+            message: "Do you want to mark this returning request as 'Completed'?",
+            isDisable: true,
+            callback: () => { }
         });
     };
 
@@ -75,19 +88,21 @@ const ReturningTable: React.FC<Props> = ({
             title: '',
             message: '',
             isDisable: true,
+            callback: () => { }
         });
     };
 
-    // const onCancel = () => {
-    //     handleCancel(cancelState.id)
-    //     setCancel({
-    //         isOpen: false,
-    //         id: 0,
-    //         title: '',
-    //         message: '',
-    //         isDisable: true,
-    //     });
-    // };
+    const onCancel = () => {
+        handleCancel(cancelState.id)
+        setCancel({
+            isOpen: false,
+            id: 0,
+            title: '',
+            message: '',
+            isDisable: true,
+            callback: () => { }
+        });
+    };
 
     let rows
     if (result && returnings) {
@@ -128,10 +143,10 @@ const ReturningTable: React.FC<Props> = ({
                                     return (
                                         <>
                                             <ButtonIcon disable={true} >
-                                                <CheckLg className="text-black" />
+                                                <CheckLg className="text-danger" />
                                             </ButtonIcon>
                                             <ButtonIcon disable={true} onClick={() => handleShowCancel(data.id)}>
-                                                <XLg className="text-danger mx-2" />
+                                                <XLg className="text-black mx-2" />
                                             </ButtonIcon>
                                         </>
                                     )
@@ -139,10 +154,10 @@ const ReturningTable: React.FC<Props> = ({
                                     return (
                                         <>
                                             <ButtonIcon >
-                                                <CheckLg className="text-black" />
+                                                <CheckLg className="text-danger" onClick={() => handleShowComplete(data.id)}/>
                                             </ButtonIcon>
                                             <ButtonIcon onClick={() => handleShowCancel(data.id)}>
-                                                <XLg className="text-danger mx-2" />
+                                                <XLg className="text-black mx-2" />
                                             </ButtonIcon>
                                         </>
                                     )
@@ -152,6 +167,39 @@ const ReturningTable: React.FC<Props> = ({
                     </tr>
                 ))}
             </Table>
+            <ConfirmModal
+                title={cancelState.title}
+                isShow={cancelState.isOpen}
+                onHide={handleCloseCancel}
+            >
+                <div>
+
+                    <div className="text-start">
+                        {cancelState.message}
+                    </div>
+                    {
+                        cancelState.isDisable && (
+                            <div className="text-start mt-3">
+                                <button
+                                    className="btn btn-danger mr-3"
+                                    type="button"
+                                    onClick={onCancel}
+                                >
+                                    Yes
+                                </button>
+
+                                <button
+                                    className="btn btn-outline-secondary"
+                                    onClick={handleCloseCancel}
+                                    type="button"
+                                >
+                                    No
+                                </button>
+                            </div>
+                        )
+                    }
+                </div>
+            </ConfirmModal>
         </>
     );
 };
