@@ -62,13 +62,13 @@ namespace Rookie.AssetManagement.Business.Services
             await _returnrequesRepository.Add(newReturnRequest);
 
             var result = await _returnrequesRepository.Entities
+                .Where(r => r.Id == newReturnRequest.Id)
                 .Include(a => a.State)
                 .Include(a => a.Assignment)
                 .Include(a => a.AcceptedBy)
                 .Include(a => a.Assignment.Asset)
                 .Include(a => a.Assignment.AssignedTo)
                 .Include(a => a.Assignment.AssignedBy)
-                .Where(r => r.Id == newReturnRequest.Id)
                 .FirstOrDefaultAsync();
 
             return _mapper.Map<ReturnRequestDto>(result);
