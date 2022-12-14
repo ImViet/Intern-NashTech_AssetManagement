@@ -19,6 +19,7 @@ const initialFormValues: IAssetForm = {
     specification: '',
     installedDate: undefined,
     state: 2,
+    isEditable: true
 };
 
 const validationSchema = Yup.object().shape({
@@ -39,7 +40,7 @@ function AssetFormContainer({ initialAssetForm = {
     const isUpdate = initialAssetForm.id ? true : false;
 
     const { FilterAssetCategoryOptions, FilterAssetStateOptions } = useAppSelector(state => state.assetReducer)
-    
+
     const states = useMemo(() => {
         if (isUpdate) {
             return FilterAssetStateOptions.filter(state => state.label != "Assigned" && state.label != "All")
@@ -61,7 +62,7 @@ function AssetFormContainer({ initialAssetForm = {
             navigate(ASSET_PARENT_ROOT);
         }
     };
-    
+
     useEffect(() => {
         dispatch(getCategory())
         dispatch(getState())
@@ -76,10 +77,10 @@ function AssetFormContainer({ initialAssetForm = {
                 setLoading(true);
                 setTimeout(() => {
                     if (isUpdate) {
-                        dispatch(updateAsset({ handleResult, formValues: {...values} }));
+                        dispatch(updateAsset({ handleResult, formValues: { ...values } }));
                     }
                     else {
-                        dispatch(createAsset({ handleResult, formValues: {...values} }));
+                        dispatch(createAsset({ handleResult, formValues: { ...values } }));
                     }
                     setLoading(false);
                 }, 1000);

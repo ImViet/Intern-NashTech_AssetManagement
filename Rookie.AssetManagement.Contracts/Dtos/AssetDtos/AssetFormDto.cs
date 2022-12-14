@@ -15,5 +15,6 @@ namespace Rookie.AssetManagement.Contracts.Dtos.AssetDtos
         public DateTime InstalledDate { get; set; }
         public int State { get; set; }
         public string Location { get; set; }
+        public bool IsEditable { get; set; } = true;
     }
 }

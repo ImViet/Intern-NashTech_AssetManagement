@@ -6,5 +6,6 @@ export default interface IAssetForm {
   category: string;
   specification: string;
   installedDate?: Date;
-  state: number;  
+  state: number;
+  isEditable: boolean;
 }

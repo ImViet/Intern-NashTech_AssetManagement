@@ -40,6 +40,17 @@ namespace Rookie.AssetManagement.Business.Services
                 .Where(a => a.Id == id && a.Location == location)
                 .ProjectTo<AssetFormDto>(_mapper.ConfigurationProvider)
                 .FirstAsync();
+
+            var isValidAsssignment = await _assignmentRepository.Entities
+                .AnyAsync(a =>
+                    a.Asset.Id == assetForm.Id &&
+                    a.Asset.Location == location &&
+                    a.State.Id == (int)AssignmentStateEnum.WaitingForAcceptance);
+            if (!isValidAsssignment || assetForm.State == (int)AssetStateEnum.Assigned)
+            {
+                assetForm.IsEditable = false;
+            }
+
             return assetForm;
         }
         public async Task<IEnumerable<AssetDto>> GetAllAsync()
@@ -66,14 +77,27 @@ namespace Rookie.AssetManagement.Business.Services
                    assetQueryCriteria.Limit,
                    cancellationToken);
 
-            var assetDto = _mapper.Map<IEnumerable<AssetDto>>(asset.Items);
+            var assetDtos = _mapper.Map<IEnumerable<AssetDto>>(asset.Items);
+
+            foreach (var assetDto in assetDtos)
+            {
+                var isValidAsssignment = await _assignmentRepository.Entities
+                    .AnyAsync(a =>
+                        a.Asset.Id == assetDto.Id &&
+                        a.Asset.Location == location &&
+                        a.State.Id == (int)AssignmentStateEnum.WaitingForAcceptance);
+                if (!isValidAsssignment || assetDto.State == AssetStateEnum.Assigned.ToString())
+                {
+                    assetDto.IsEditable = false;
+                }
+            }
 
             return new PagedResponseModel<AssetDto>
             {
                 CurrentPage = asset.CurrentPage,
                 TotalPages = asset.TotalPages,
                 TotalItems = asset.TotalItems,
-                Items = assetDto
+                Items = assetDtos
             };
         }
         public async Task<AssetDto> AddAssetAsync(AssetCreateDto asset, string location)
