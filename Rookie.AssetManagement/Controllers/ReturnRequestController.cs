@@ -71,7 +71,7 @@ namespace Rookie.AssetManagement.Controllers
         }
 
         [HttpDelete]
-        [Route("CancelReturnRequest/{id}")]
+        [Route("cancel/{id}")]
         public async Task<ActionResult> CancelReturnRequestAsync([FromRoute] int id)
         {
             var cancelResult = await _returnRequestService.CancelReturnRequestAsync(id);

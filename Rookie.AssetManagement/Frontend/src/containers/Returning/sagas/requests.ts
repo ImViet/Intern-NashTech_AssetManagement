@@ -30,7 +30,7 @@ export function completeRequest(
 export function cancelRequest(
   requestId: number
 ): Promise<AxiosResponse<IState[]>> {
-  return RequestService.axios.patch(
+  return RequestService.axios.delete(
     EndPoints.returning + "/cancel/" + requestId
   );
 }
