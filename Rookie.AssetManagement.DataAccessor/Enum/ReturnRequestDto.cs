@@ -8,6 +8,6 @@ namespace Rookie.AssetManagement.DataAccessor.Enum
     public enum ReturnRequestStateEnum
     {
         Completed = 10,
-        WaitingForReturning
+        WaitingForReturning = 11,
     }
 }

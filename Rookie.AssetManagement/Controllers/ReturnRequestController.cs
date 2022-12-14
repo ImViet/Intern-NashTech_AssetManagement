@@ -69,6 +69,15 @@ namespace Rookie.AssetManagement.Controllers
             var assigment = await _returnRequestService.AddReturnRequestAsync(returnRequestCreate, userName);
             return Created(Endpoints.User, assigment);
         }
+
+        [HttpDelete]
+        [Route("CancelReturnRequest/{id}")]
+        public async Task<ActionResult> CancelReturnRequestAsync([FromRoute] int id)
+        {
+            var cancelResult = await _returnRequestService.CancelReturnRequestAsync(id);
+
+            return Ok(cancelResult);
+        }
     }
 
 }

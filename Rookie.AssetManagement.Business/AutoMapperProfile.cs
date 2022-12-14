@@ -100,7 +100,6 @@ namespace Rookie.AssetManagement.Business
                 .ForMember(d => d.State, t => t.Ignore())
                 .ForMember(d => d.ReturnedDate, t => t.Ignore())
                 .ForMember(d => d.AcceptedBy, t => t.Ignore());
-
         }
 
         private void FromDataAccessorLayer()
@@ -157,6 +156,7 @@ namespace Rookie.AssetManagement.Business
                 .ForMember(d => d.AcceptedBy, t => t.MapFrom(c => c.AcceptedBy.UserName))
                 .ForMember(d => d.ReturnedDate, t => t.MapFrom(c => c.ReturnedDate))
                 .ForMember(d => d.State, t => t.MapFrom(c => c.State.StateName));
+
         }
 
     }
