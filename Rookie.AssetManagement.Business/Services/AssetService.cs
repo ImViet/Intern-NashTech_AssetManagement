@@ -20,14 +20,16 @@ namespace Rookie.AssetManagement.Business.Services
     public class AssetService : IAssetService
     {
         private readonly IBaseRepository<Asset> _assetRepository;
+        private readonly IBaseRepository<Assignment> _assignmentRepository;
         private readonly IBaseRepository<Category> _categoryRepository;
         private readonly IBaseRepository<State> _stateRepository;
         private readonly IMapper _mapper;
 
-        public AssetService(IBaseRepository<Asset> assetRepository, IBaseRepository<Category> categoryRepository,
+        public AssetService(IBaseRepository<Asset> assetRepository, IBaseRepository<Assignment> assignmentRepository, IBaseRepository<Category> categoryRepository,
             IBaseRepository<State> stateRepository, IMapper mapper)
         {
             _assetRepository = assetRepository;
+            _assignmentRepository = assignmentRepository;
             _categoryRepository = categoryRepository;
             _stateRepository = stateRepository;
             _mapper = mapper;
@@ -168,7 +170,10 @@ namespace Rookie.AssetManagement.Business.Services
         }
         public async Task<AssetDto> UpdateAssetAsync(AssetUpdateDto assetUpdateDto, string location)
         {
-            var asset = await _assetRepository.Entities.Include(x => x.State).Include(x => x.Category).FirstOrDefaultAsync(a => a.Id == assetUpdateDto.Id && a.Location == location);
+            var asset = await _assetRepository.Entities
+                .Include(x => x.State)
+                .Include(x => x.Category)
+                .FirstOrDefaultAsync(a => a.Id == assetUpdateDto.Id && a.Location == location);
             if (asset == null)
             {
                 throw new NotFoundException("Asset Not Found!");
@@ -181,6 +186,13 @@ namespace Rookie.AssetManagement.Business.Services
             if (getState == null)
             {
                 throw new NotFoundException("State Not Found!");
+            }
+
+            var isValidAsssignment = await _assignmentRepository.Entities
+                .AnyAsync(a => a.Asset.Id == assetUpdateDto.Id && a.Asset.Location == location && a.State.Id == (int)AssignmentStateEnum.WaitingForAcceptance);
+            if (isValidAsssignment)
+            {
+                throw new NotFoundException("Can't edit assets which have assignment with state Waiting for acceptance or Assigned!");
             }
 
             _mapper.Map(assetUpdateDto, asset);
