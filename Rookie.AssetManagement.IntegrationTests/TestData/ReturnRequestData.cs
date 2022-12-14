@@ -88,8 +88,45 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                 },
                 new State()
                 {
+                StateName = "Available",
+                },
+                new State()
+                {
+                StateName = "Not Available",
+                },
+                new State()
+                {
+                StateName = "Waiting For Recycling",
+                },
+                new State()
+                {
+                StateName = "Recycled",
+                },
+                new State()
+                {
+                StateName = "Accepted",
+                },
+                new State()
+                {
+                StateName = "Waiting for acceptance",
+                },
+                new State()
+                {
+                StateName = "Declined",
+                },
+                new State()
+                {
+                StateName = "Returned",
+                },
+                new State()
+                {
+                StateName = "Completed",
+                },
+                new State()
+                {
                 StateName = "Waiting for returning",
                 }
+
         };
         }
 
@@ -291,7 +328,13 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
             var assignments = GetSeedAssignmentsData();
             dbContext.Assignments.AddRange(assignments);
             dbContext.SaveChanges();
-
+        }
+        public static ReturnRequestCreateDto GetReturnRequestCreateDto()
+        {
+            return new ReturnRequestCreateDto()
+            {
+                AssignmentId = 1
+            };
         }
     }
 }

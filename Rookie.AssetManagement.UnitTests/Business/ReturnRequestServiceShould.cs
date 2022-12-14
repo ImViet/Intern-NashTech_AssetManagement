@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using MockQueryable.Moq;
 using Moq;
 using Rookie.AssetManagement.Business;
@@ -56,6 +58,12 @@ namespace Rookie.AssetManagement.UnitTests.Business
             var result = await _returnRequestService.GetByPageAsync(ReturnRequestTestData.ReturnRequestQueryCriteriaDto, _cancellationToken);
             //Assert   
             Assert.Equal(2, result.TotalItems);
+        }
+        [Fact]
+        public async Task AddReturningRequestAsyncShouldThrowExceptionAsync()
+        {
+            Func<Task> act = async () => await _returnRequestService.AddReturnRequestAsync(null, null);
+            await act.Should().ThrowAsync<ArgumentNullException>();
         }
     }
 }
