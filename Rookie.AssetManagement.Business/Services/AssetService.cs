@@ -213,7 +213,7 @@ namespace Rookie.AssetManagement.Business.Services
         {
             var assetQuery = AssetSortLookUp(
             _assetRepository.Entities.Include(a => a.Category)
-            .Where(x => !x.IsDeleted).Where(x => x.State.Id == 2).AsQueryable(),
+                .Where(x => !x.IsDeleted).Where(x => x.State.Id == (int)AssetStateEnum.Available).AsQueryable(),
             assetQueryCriteria);
 
             var asset = await assetQuery

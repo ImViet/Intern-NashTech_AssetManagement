@@ -50,24 +50,26 @@ namespace Rookie.AssetManagement.Business.Services
         {
             Ensure.Any.IsNotNull(assignmentCreateDto);
             var newAssignment = _mapper.Map<Assignment>(assignmentCreateDto);
-            var getUser = _userRepository.Entities.Where(x => x.Id.ToString() == assignmentCreateDto.User).FirstOrDefault();
-            if (getUser == null)
+            var user = _userRepository.Entities.Where(x => x.Id.ToString() == assignmentCreateDto.User).FirstOrDefault();
+            if (user == null)
             {
                 throw new NotFoundException("User Not Found!");
             }
-            // var getAsset = _assetRepository.Entities.Where(x => x.Id == assignmentCreateDto.Asset).FirstOrDefault();
-            var getAsset = _assetRepository.Entities.Where(x => x.Id.ToString() == assignmentCreateDto.Asset).FirstOrDefault();
-            if (getAsset == null)
+
+            var asset = _assetRepository.Entities.Where(x => x.Id.ToString() == assignmentCreateDto.Asset && x.State.Id == (int)AssetStateEnum.Available).Include(x => x.State).FirstOrDefault();
+            if (asset == null)
             {
                 throw new NotFoundException("Asset Not Found!");
             }
+            asset.State = await _stateRepository.GetById((int)AssetStateEnum.NotAvailable);
+            await _assetRepository.Update(asset);
 
-            var getAssignedBy = _userRepository.Entities.Where(x => x.UserName == AssignedBy).FirstOrDefault();
+            var assignedByUser = _userRepository.Entities.Where(x => x.UserName == AssignedBy).FirstOrDefault();
 
-            newAssignment.AssignedTo = getUser;
-            newAssignment.Asset = getAsset;
+            newAssignment.AssignedTo = user;
+            newAssignment.Asset = asset;
             newAssignment.IsDeleted = false;
-            newAssignment.AssignedBy = getAssignedBy;
+            newAssignment.AssignedBy = assignedByUser;
 
             var waitAcceptState = await _stateRepository.GetById((int)AssignmentStateEnum.WaitingForAcceptance);
             newAssignment.State = waitAcceptState;
@@ -334,7 +336,7 @@ namespace Rookie.AssetManagement.Business.Services
              .Include(b => b.AssignedTo)
              .Include(b => b.Asset)
              .ThenInclude(a => a.Category)
-             .Where(b => b.AssignedTo.UserName == userName && b.State.Id != (int)AssignmentStateEnum.Declined && b.State.Id != (int)AssignmentStateEnum.WaitingForReturning 
+             .Where(b => b.AssignedTo.UserName == userName && b.State.Id != (int)AssignmentStateEnum.Declined && b.State.Id != (int)AssignmentStateEnum.WaitingForReturning
                 && b.AssignedDate <= DateTime.Today)
              .AsQueryable(),
              assignmentQueryCriteria);
