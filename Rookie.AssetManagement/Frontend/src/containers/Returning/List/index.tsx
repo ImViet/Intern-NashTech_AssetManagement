@@ -133,17 +133,17 @@ const ListReturning = () => {
         });
     };
 
-    // const handleCancel = (id) => {
-    //     dispatch(disableReturning({
-    //         id: id,
-    //         handleResult: (result, message) => {
-    //             if (result) {
-    //                 setQuery({ ...defaultQuery });
-    //             }
-    //         }
-    //     }))
-    //     setSelectedState([FilterReturningStateOptions[0]]);
-    // };
+    const handleCancel = (id) => {
+        dispatch(disableReturning({
+            id: id,
+            handleResult: (result, message) => {
+                if (result) {
+                    setQuery({ ...defaultQuery });
+                }
+            }
+        }))
+        setSelectedState([FilterReturningStateOptions[0]]);
+    };
     const fetchData = () => {
         dispatch(getReturningList({ ...query }))
     };
@@ -214,7 +214,7 @@ const ListReturning = () => {
                                     result={actionResult}
                                     handlePage={handlePage}
                                     handleSort={handleSort}
-                                    //handleDisable={handleDisable}
+                                    handleCancel={handleCancel}
                                     sortState={{
                                         columnValue: query.sortColumn,
                                         orderBy: query.sortOrder,

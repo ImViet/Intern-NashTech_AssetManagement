@@ -128,10 +128,10 @@ const ReturningTable: React.FC<Props> = ({
                                     return (
                                         <>
                                             <ButtonIcon disable={true} >
-                                                <CheckLg className="text-black" />
+                                                <CheckLg className="text-danger" />
                                             </ButtonIcon>
                                             <ButtonIcon disable={true} onClick={() => handleShowCancel(data.id)}>
-                                                <XLg className="text-danger mx-2" />
+                                                <XLg className="text-black mx-2" />
                                             </ButtonIcon>
                                         </>
                                     )
@@ -139,10 +139,10 @@ const ReturningTable: React.FC<Props> = ({
                                     return (
                                         <>
                                             <ButtonIcon >
-                                                <CheckLg className="text-black" />
+                                                <CheckLg className="text-danger" />
                                             </ButtonIcon>
                                             <ButtonIcon onClick={() => handleShowCancel(data.id)}>
-                                                <XLg className="text-danger mx-2" />
+                                                <XLg className="text-black mx-2" />
                                             </ButtonIcon>
                                         </>
                                     )
