@@ -21,6 +21,8 @@ namespace Rookie.AssetManagement.Business.Services
     {
         private readonly IBaseRepository<State> _stateRepository;
         private readonly IBaseRepository<Assignment> _assignmentRepository;
+        private readonly IBaseRepository<Asset> _assetRepository;
+        private readonly IBaseRepository<User> _userRepository;
         private readonly IBaseRepository<ReturnRequest> _returnrequesRepository;
         private readonly IMapper _mapper;
 
@@ -28,6 +30,7 @@ namespace Rookie.AssetManagement.Business.Services
         public ReturnRequestService(
              IBaseRepository<State> stateRepository
             , IBaseRepository<Assignment> assignmentRepository
+            , IBaseRepository<Asset> assetRepository
             , IBaseRepository<User> userRepository
             , IBaseRepository<ReturnRequest> returnrequesRepository
             , IMapper mapper)
@@ -35,6 +38,8 @@ namespace Rookie.AssetManagement.Business.Services
 
             _stateRepository = stateRepository;
             _assignmentRepository = assignmentRepository;
+            _assetRepository = assetRepository;
+            _userRepository = userRepository;
             _returnrequesRepository = returnrequesRepository;
             _mapper = mapper;
         }
@@ -72,6 +77,40 @@ namespace Rookie.AssetManagement.Business.Services
                 .FirstOrDefaultAsync();
 
             return _mapper.Map<ReturnRequestDto>(result);
+        }
+
+        public async Task<ReturnRequestDto> CompleteReturnRequest(string acceptUsername, int requestId)
+        {
+            var returnRequest = await _returnrequesRepository.Entities
+                .Where(r => r.Id == requestId)
+                .Include(a => a.State)
+                .Include(a => a.Assignment)
+                .Include(a => a.AcceptedBy)
+                .Include(a => a.Assignment.Asset)
+                .Include(a => a.Assignment.AssignedTo)
+                .Include(a => a.Assignment.AssignedBy)
+                .FirstOrDefaultAsync();
+            if (returnRequest == null)
+            {
+                throw new NotFoundException("Request Not Found!");
+            }
+            var acceptUser = await _userRepository.Entities.Where(u => u.UserName == acceptUsername).FirstOrDefaultAsync();
+            if (acceptUser == null)
+            {
+                throw new NotFoundException("User Not Found!");
+            }
+
+            returnRequest.State = await _stateRepository.GetById((int)ReturnRequestStateEnum.Completed);
+            returnRequest.AcceptedBy = acceptUser;
+            await _returnrequesRepository.Update(returnRequest);
+
+            returnRequest.Assignment.State = await _stateRepository.GetById((int)AssignmentStateEnum.Returned);
+            await _assignmentRepository.Update(returnRequest.Assignment);
+
+            returnRequest.Assignment.Asset.State = await _stateRepository.GetById((int)AssetStateEnum.Available);
+            await _assetRepository.Update(returnRequest.Assignment.Asset);
+
+            return _mapper.Map<ReturnRequestDto>(returnRequest);
         }
 
         public async Task<IEnumerable<ReturnRequestDto>> GetAllAsync()

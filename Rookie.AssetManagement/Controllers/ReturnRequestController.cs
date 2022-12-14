@@ -27,7 +27,7 @@ namespace Rookie.AssetManagement.Controllers
             _stateService = stateService;
             _returnRequestService = returnRequestService;
         }
-        
+
         [HttpGet]
         public async Task<ActionResult<ReturnRequestDto>> GetAllReturnRequest()
         {
@@ -52,6 +52,14 @@ namespace Rookie.AssetManagement.Controllers
         public async Task<ActionResult<StateDto>> GetReturningState()
         {
             return Ok(await _stateService.GetReturningStateAsync());
+        }
+
+        [HttpPatch("complete/{id}")]
+        public async Task<ActionResult<ReturnRequestDto>> CompleteReturnRequest([FromRoute] int id)
+        {
+            var userName = User.Claims.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value;
+            var returnRequest = await _returnRequestService.CompleteReturnRequest(userName, id);
+            return Ok(returnRequest);
         }
 
         [HttpPost]
