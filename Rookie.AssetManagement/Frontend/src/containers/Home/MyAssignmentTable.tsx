@@ -96,9 +96,9 @@ const MyAssignmentTable: React.FC<Props> = ({
                         <td>{data.assetName}</td>
                         <td>{data.category}</td>
                         <td>{convertDDMMYYYY(data.assignedDate)}</td>
-                        <td>{data.state}</td>
+                        <td>{data.state == "Waiting for returning" ? "Accepted" : data.state}</td>
                         <td className="d-flex">
-                            <ButtonIcon disable={data.state == "Accepted"} onClick={() => {
+                            <ButtonIcon disable={data.state == "Accepted" || data.state == "Waiting for returning"} onClick={() => {
                                 setConfirmState({
                                     isOpen: true,
                                     title: 'Are you sure?',
@@ -111,7 +111,7 @@ const MyAssignmentTable: React.FC<Props> = ({
                             }}>
                                 <CheckLg className="text-danger" />
                             </ButtonIcon>
-                            <ButtonIcon disable={data.state == "Accepted"} onClick={() => {
+                            <ButtonIcon disable={data.state == "Accepted" || data.state == "Waiting for returning"} onClick={() => {
                                 setConfirmState({
                                     isOpen: true,
                                     title: 'Are you sure?',
@@ -124,7 +124,7 @@ const MyAssignmentTable: React.FC<Props> = ({
                             }}>
                                 <XLg className="text-danger mx-2" fill="" />
                             </ButtonIcon>
-                            <ButtonIcon disable={data.state != "Accepted"} onClick={() => {
+                            <ButtonIcon disable={data.state == "Waiting for returning" || data.state == "Waiting for acceptance"} onClick={() => {
                                 setConfirmState({
                                     isOpen: true,
                                     title: 'Are you sure?',
