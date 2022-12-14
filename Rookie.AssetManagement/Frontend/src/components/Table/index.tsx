@@ -40,16 +40,16 @@ const Table: React.FC<Props> = ({ columns, children, page, sortState, handleSort
               {
                 columns.map((col, i) => (
                   <th key={i} className={`table-th-${i}`}>
-                    {(col.columnValue !== "userName") ? (<a className="btn" style={{ paddingLeft: 0 }} onClick={() => handleSort!(col.columnValue)}>
-                      {col.columnName}
-                      <ColumnIcon colValue={col.columnValue} sortState={sortState} />
-                    </a>
+                    {(col.columnValue !== "userName") ? (
+                      <a className="btn" style={{ paddingLeft: 0 }} onClick={() => handleSort!(col.columnValue)}>
+                        {col.columnName}
+                        <ColumnIcon colValue={col.columnValue} sortState={sortState} />
+                      </a>
                     ) : (
                       <a className=" btn " style={{ paddingLeft: 0 }}>
                         {col.columnName}
                       </a>
-                    )
-                    }
+                    )}
                   </th>
                 ))
               }

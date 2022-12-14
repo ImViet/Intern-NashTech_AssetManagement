@@ -53,7 +53,7 @@ const Home = () => {
     }));
   }
 
-  const handleReturn = (id: number) =>{
+  const handleReturn = (id: number) => {
     dispatch(returnAssignment({
       id: id,
       handleResult: () => {
@@ -87,19 +87,25 @@ const Home = () => {
         My Assignment
       </div>
       <div>
-        <MyAssignmentTable
-          handlePage={handlePage}
-          handleSort={handleSort}
-          sortState={{
-            columnValue: query.sortColumn,
-            orderBy: query.sortOrder,
-          }}
-          assignments={assignments}
-          result={actionResult}
-          handleAccept={handleAccept}
-          handleDecline={handleDecline}
-          handleReturn={handleReturn}
-          />
+        {assignments?.totalItems == 0 ? (
+          <h5 className="not-data-found">No assignment found</h5>
+        ) : (
+          <>
+            <MyAssignmentTable
+              handlePage={handlePage}
+              handleSort={handleSort}
+              sortState={{
+                columnValue: query.sortColumn,
+                orderBy: query.sortOrder,
+              }}
+              assignments={assignments}
+              result={actionResult}
+              handleAccept={handleAccept}
+              handleDecline={handleDecline}
+              handleReturn={handleReturn}
+            />
+          </>
+        )}
       </div>
     </>
   );

@@ -203,30 +203,24 @@ const ListAssignment = () => {
                         </Link>
                     </div>
                 </div>
-                {(() => {
-                    if (assignments?.totalItems == 0) {
-                        return (
-                            <h5 className="not-data-found">No data found</h5>
-                        )
-                    } else {
-                        return (
-                            <>
-                                <AssignmentTable
-                                    assignments={assignments}
-                                    result={actionResult}
-                                    handlePage={handlePage}
-                                    handleSort={handleSort}
-                                    handleDisable={handleDisable}
-                                    sortState={{
-                                        columnValue: query.sortColumn,
-                                        orderBy: query.sortOrder,
-                                    }}
-                                    fetchData={fetchData}
-                                />
-                            </>
-                        )
-                    }
-                })()}
+                {assignments?.totalItems == 0 ? (
+                    <h5 className="not-data-found">No data found</h5>
+                ) : (
+                    <>
+                        <AssignmentTable
+                            assignments={assignments}
+                            result={actionResult}
+                            handlePage={handlePage}
+                            handleSort={handleSort}
+                            handleDisable={handleDisable}
+                            sortState={{
+                                columnValue: query.sortColumn,
+                                orderBy: query.sortOrder,
+                            }}
+                            fetchData={fetchData}
+                        />
+                    </>
+                )}
             </div>
         </>
     );
