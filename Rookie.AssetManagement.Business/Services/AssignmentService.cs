@@ -56,7 +56,9 @@ namespace Rookie.AssetManagement.Business.Services
                 throw new NotFoundException("User Not Found!");
             }
 
-            var asset = _assetRepository.Entities.Where(x => x.Id.ToString() == assignmentCreateDto.Asset && x.State.Id == (int)AssetStateEnum.Available).Include(x => x.State).FirstOrDefault();
+            var asset = _assetRepository.Entities
+                .Where(x => x.Id.ToString() == assignmentCreateDto.Asset && x.State.Id == (int)AssetStateEnum.Available)
+                .Include(x => x.State).FirstOrDefault();
             if (asset == null)
             {
                 throw new NotFoundException("Asset Not Found!");

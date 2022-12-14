@@ -30,7 +30,7 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     InstalledDate = new DateTime(),
                     State =  new State()
                     {
-                        Id = 2,
+                        Id = (int)AssetStateEnum.Available,
                         StateName = "Available",
                     },
                     IsDeleted = false,
@@ -48,7 +48,7 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     InstalledDate = new DateTime(),
                     State = new State()
                     {
-                        Id = 2,
+                        Id = (int)AssetStateEnum.Available,
                         StateName = "Available",
                     },
                     IsDeleted = false,
@@ -66,7 +66,7 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
                     InstalledDate = new DateTime(),
                     State = new State()
                     {
-                        Id = 2,
+                        Id = (int)AssetStateEnum.Available,
                         StateName = "Available",
                     },
                     IsDeleted = false,

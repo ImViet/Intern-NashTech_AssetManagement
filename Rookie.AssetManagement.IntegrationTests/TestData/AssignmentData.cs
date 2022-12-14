@@ -157,25 +157,42 @@ namespace Rookie.AssetManagement.IntegrationTests.TestData
             };
         }
 
-        // public static AssignmentUpdateDto GetAssignmentUpdateDto()
-        // {
-        //     return new AssignmentUpdateDto()
-        //     {
-        //         Id = 1,
-        //         Asset =2,
-        //         Note = "Personal Computer xyz",
-        //         User = 1,
-        //         AssignedDate = new DateTime(),
+        public static Assignment GetAssignment()
+        {
+            return new Assignment
+            {
+                Id = 1,
+                Asset = new Asset()
+                {
+                    AssetCode = "MO000001",
+                    AssetName = "Personal Computer xyz",
+                },
+                AssignedTo = new User()
+                {
+                    UserName = "damthuy",
+                },
+                AssignedBy = new User()
+                {
+                    UserName = "admin",
+                },
+                AssignedDate = DateTime.Parse("2021-02-21"),
+                State = new State()
+                {
+                    Id = 1,
+                    StateName = "Accepted"
+                },
+                IsDeleted = false,
+                Note = ""
 
-        //     };
-        // }
+            };
+        }
 
         public static AssignmentCreateDto GetCreateAssignmentDto()
         {
             return new AssignmentCreateDto()
             {
                 User = "2",
-                Asset = "3",
+                Asset = "2",
                 AssignedDate = new DateTime(),
                 Note = "May tinh CR7",
             };

@@ -110,24 +110,24 @@ namespace Rookie.AssetManagement.IntegrationTests
         //     Assert.Equal(assignment.Id, returnValue.Id);
         // }
 
-        [Fact]
-        public async Task AddAssignmentAsync_Success()
-        {
-            //Arrange
-            var assignmentRequest = AssignmentData.GetCreateAssignmentDto();
+        //[Fact]
+        //public async Task AddAssignmentAsync_Success()
+        //{
+        //    //Arrange
+        //    var assignmentRequest = AssignmentData.GetCreateAssignmentDto();
 
-            // Act
-            var result = await _assignmentController.AddAssignmentAsync(assignmentRequest);
+        //    // Act
+        //    var result = await _assignmentController.AddAssignmentAsync(assignmentRequest);
 
-            // Assert
-            result.Should().NotBeNull();
+        //    // Assert
+        //    result.Should().NotBeNull();
 
-            var actionResult = Assert.IsType<CreatedResult>(result.Result);
-            var returnValue = Assert.IsType<AssignmentDto>(actionResult.Value);
+        //    var actionResult = Assert.IsType<CreatedResult>(result.Result);
+        //    var returnValue = Assert.IsType<AssignmentDto>(actionResult.Value);
 
-            Assert.Equal(3, returnValue.Id);
-            Assert.Equal(assignmentRequest.Note, returnValue.Note);
-        }
+        //    Assert.Equal(3, returnValue.Id);
+        //    Assert.Equal(assignmentRequest.Note, returnValue.Note);
+        //}
 
         [Fact]
         public async Task AddAssignmentShouldThrowExceptionAsync()
