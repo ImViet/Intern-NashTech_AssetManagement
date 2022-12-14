@@ -74,6 +74,34 @@ namespace Rookie.AssetManagement.Business.Services
             return _mapper.Map<ReturnRequestDto>(result);
         }
 
+        public async Task<bool> CancelReturnRequestAsync(int returnRequestId)
+        {
+            var returnRequest = _returnrequesRepository.Entities
+                .Where(x => x.Id == returnRequestId)
+                .Include(a => a.State)
+                .Include(a => a.AcceptedBy)
+                .Include(a => a.Assignment)
+                .ThenInclude(a => a.AssignedTo)
+                .FirstOrDefault();
+            if (returnRequest == null)
+            {
+                throw new NotFoundException("Request For Returning Not Found!");
+            }          
+            if (returnRequest.State != await _stateRepository.GetById((int)ReturnRequestStateEnum.WaitingForReturning))
+            {
+                throw new NotFoundException("Completed Request For Returning Can Not Be Edit!");
+            }
+            var assignment = _assignmentRepository.Entities.Where(x => x.Id == returnRequest.Assignment.Id).FirstOrDefault();
+            var state = await _stateRepository.GetById((int)AssignmentStateEnum.Accepted);
+            assignment.State = state;
+
+            await _assignmentRepository.Update(assignment);
+
+            await _returnrequesRepository.Delete(returnRequest);
+
+            return await Task.FromResult(true);
+        }
+
         public async Task<IEnumerable<ReturnRequestDto>> GetAllAsync()
         {
             var listReturnRequest = await _returnrequesRepository.Entities.ProjectTo<ReturnRequestDto>(_mapper.ConfigurationProvider).ToListAsync();
