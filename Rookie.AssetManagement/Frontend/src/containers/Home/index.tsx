@@ -54,8 +54,13 @@ const Home = () => {
   }
 
   const handleReturn = (id: number) => {
+    const assignment = assignments?.items.find(i => i.id == id);
+    if (!assignment) {
+      return
+    }
     dispatch(returnAssignment({
       id: id,
+      assignment: assignment,
       handleResult: () => {
         dispatch(getMyAssignmentList({ ...defaultQuery }))
       }

@@ -10,6 +10,7 @@ import ConfirmModal from "src/components/ConfirmModal";
 import { useAppDispatch } from "src/hooks/redux";
 import IAssignment from "src/interfaces/Assignment/IAssignment";
 import Info from "./Info";
+import IMyAssignment from "src/interfaces/Assignment/IMyAssignment";
 
 
 const columns: IColumnOption[] = [
@@ -21,8 +22,8 @@ const columns: IColumnOption[] = [
 ];
 
 type Props = {
-    assignments: IPagedModel<IAssignment> | null;
-    result: IAssignment | null;
+    assignments: IPagedModel<IMyAssignment> | null;
+    result: IMyAssignment | null;
     handlePage: (page: number) => void;
     handleSort: (colValue: string) => void;
     sortState: SortType;
@@ -43,7 +44,7 @@ const MyAssignmentTable: React.FC<Props> = ({
 }) => {
     const dispatch = useAppDispatch();
     const [showDetail, setShowDetail] = useState(false);
-    const [assignmentDetail, setAssignmentDetail] = useState(null as IAssignment | null);
+    const [assignmentDetail, setAssignmentDetail] = useState(null as IMyAssignment | null);
     const [confirmState, setConfirmState] = useState({
         isOpen: false,
         title: '',

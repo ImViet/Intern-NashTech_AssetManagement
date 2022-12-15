@@ -41,12 +41,12 @@ namespace Rookie.AssetManagement.Business.Services
                 .ProjectTo<AssetFormDto>(_mapper.ConfigurationProvider)
                 .FirstAsync();
 
-            var isValidAsssignment = await _assignmentRepository.Entities
+            var isHaveAsssignment = await _assignmentRepository.Entities
                 .AnyAsync(a =>
                     a.Asset.Id == assetForm.Id &&
                     a.Asset.Location == location &&
                     a.State.Id == (int)AssignmentStateEnum.WaitingForAcceptance);
-            if (!isValidAsssignment || assetForm.State == (int)AssetStateEnum.Assigned)
+            if (isHaveAsssignment || assetForm.State == (int)AssetStateEnum.Assigned)
             {
                 assetForm.IsEditable = false;
             }
@@ -81,12 +81,12 @@ namespace Rookie.AssetManagement.Business.Services
 
             foreach (var assetDto in assetDtos)
             {
-                var isValidAsssignment = await _assignmentRepository.Entities
+                var isHaveAsssignment = await _assignmentRepository.Entities
                     .AnyAsync(a =>
                         a.Asset.Id == assetDto.Id &&
                         a.Asset.Location == location &&
                         a.State.Id == (int)AssignmentStateEnum.WaitingForAcceptance);
-                if (!isValidAsssignment || assetDto.State == AssetStateEnum.Assigned.ToString())
+                if (isHaveAsssignment || assetDto.State == AssetStateEnum.Assigned.ToString())
                 {
                     assetDto.IsEditable = false;
                 }

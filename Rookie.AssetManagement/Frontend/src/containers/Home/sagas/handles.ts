@@ -1,4 +1,4 @@
-import { ReturnAction } from './../reducer';
+import { ReturnAction } from "./../reducer";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, put } from "redux-saga/effects";
 import { Status } from "src/constants/status";
@@ -85,12 +85,13 @@ export function* handleDecline(action: PayloadAction<DeclineAction>) {
 }
 
 export function* handleReturn(action: PayloadAction<ReturnAction>) {
-  const { id, handleResult } = action.payload;
+  const { id, assignment, handleResult } = action.payload;
   try {
     console.log(id);
-
     const { data } = yield call(returnAssignmentRequest, id);
     handleResult();
+    const newAssignment = { ...assignment, state: "Waiting for returning" };
+    yield put(setActionResult(newAssignment));
   } catch (error: any) {
     const message = error.response.data;
     yield put(
@@ -104,4 +105,3 @@ export function* handleReturn(action: PayloadAction<ReturnAction>) {
     );
   }
 }
-

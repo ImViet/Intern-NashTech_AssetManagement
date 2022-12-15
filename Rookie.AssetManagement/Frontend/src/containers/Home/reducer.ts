@@ -5,16 +5,17 @@ import IError from "src/interfaces/IError";
 import IPagedModel from "src/interfaces/IPagedModel";
 import IAssignment from "src/interfaces/Assignment/IAssignment";
 import IQueryMyAssignmentModel from "src/interfaces/Assignment/IQueryMyAssignmentModel";
+import IMyAssignment from "src/interfaces/Assignment/IMyAssignment";
 
-type AssignmentState = {
+type MyAssignmentState = {
   loading: boolean;
-  assignments: IPagedModel<IAssignment> | null;
-  assignmentResult: IAssignment | null;
+  assignments: IPagedModel<IMyAssignment> | null;
+  assignmentResult: IMyAssignment | null;
   error?: IError;
-  actionResult: IAssignment | null;
+  actionResult: IMyAssignment | null;
 };
 
-const initialState: AssignmentState = {
+const initialState: MyAssignmentState = {
   assignments: null,
   loading: false,
   assignmentResult: null,
@@ -32,6 +33,7 @@ export type AcceptAction = {
 };
 export type ReturnAction = {
   id: number;
+  assignment: IMyAssignment;
   handleResult: Function;
 };
 const MyAssignmentReducerSlice = createSlice({
@@ -41,7 +43,7 @@ const MyAssignmentReducerSlice = createSlice({
     getMyAssignmentList: (
       state,
       action: PayloadAction<IQueryMyAssignmentModel>
-    ): AssignmentState => {
+    ): MyAssignmentState => {
       return {
         ...state,
         loading: true,
@@ -49,8 +51,8 @@ const MyAssignmentReducerSlice = createSlice({
     },
     setMyAssignmentList: (
       state,
-      action: PayloadAction<IPagedModel<IAssignment>>
-    ): AssignmentState => {
+      action: PayloadAction<IPagedModel<IMyAssignment>>
+    ): MyAssignmentState => {
       const assignments = action.payload;
 
       return {
@@ -88,8 +90,8 @@ const MyAssignmentReducerSlice = createSlice({
     },
     setActionResult: (
       state,
-      action: PayloadAction<IAssignment>
-    ): AssignmentState => {
+      action: PayloadAction<IMyAssignment>
+    ): MyAssignmentState => {
       const actionResult = action.payload;
 
       return {
@@ -98,7 +100,7 @@ const MyAssignmentReducerSlice = createSlice({
         loading: false,
       };
     },
-    cleanUpActionResult: (state): AssignmentState => {
+    cleanUpActionResult: (state): MyAssignmentState => {
       return {
         ...state,
         actionResult: null,
@@ -116,7 +118,7 @@ export const {
   setActionResult,
   cleanUpActionResult,
   declineAssignment,
-  returnAssignment
+  returnAssignment,
 } = MyAssignmentReducerSlice.actions;
 
 export default MyAssignmentReducerSlice.reducer;

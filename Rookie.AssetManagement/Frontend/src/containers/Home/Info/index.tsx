@@ -2,10 +2,11 @@ import React from "react";
 import { Modal, } from "react-bootstrap";
 import { User } from "react-feather";
 import IAssignment from "src/interfaces/Assignment/IAssignment";
+import IMyAssignment from "src/interfaces/Assignment/IMyAssignment";
 import formatDateTime, { convertDDMMYYYY } from "src/utils/formatDateTime";
 
 type Props = {
-    assignment: IAssignment;
+    assignment: IMyAssignment;
     handleClose: () => void;
 };
 
