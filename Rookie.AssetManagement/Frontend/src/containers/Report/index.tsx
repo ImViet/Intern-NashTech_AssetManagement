@@ -4,6 +4,7 @@ import ReportTable from "./ReportTable";
 import RequestService from "../../services/request";
 import EndPoints from "../../constants/endpoints"
 import { ACCSENDING, DECSENDING, DEFAULT_REPORT_SORT_COLUMN_NAME } from "src/constants/paging";
+import { ExportToExcel } from "src/components/ExportToExcel";
 
 const Report = () => {
     const [reports, setReports] = useState([] as IReport[]);
@@ -11,7 +12,7 @@ const Report = () => {
         columnValue: DEFAULT_REPORT_SORT_COLUMN_NAME,
         orderBy: ACCSENDING
     });
-
+    const fileName = "report"; // here enter filename for your excel file
     useEffect(() => {
         RequestService.axios.get(EndPoints.report)
             .then(res => {
@@ -47,13 +48,8 @@ const Report = () => {
     return (
         <>
             <div className="primaryColor text-title intro-x ">Report</div>
-            <div>
-                <div className="d-flex align-items-center justify-content-end ml-3">
-                    <button type="button" className="btn btn-danger">
-                        Export
-                    </button>
-                </div>
-            </div>
+
+            <ExportToExcel apiData={reports} fileName={fileName} />
             {reports.length == 0 ? (
                 <h5 className="not-data-found">No data found</h5>
             ) : (
