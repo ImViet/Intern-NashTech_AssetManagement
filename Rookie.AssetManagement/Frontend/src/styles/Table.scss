@@ -67,6 +67,14 @@
     }
 }
 
+.report-table{
+    td:last-child {
+        border-bottom: 2px solid #dee2e6 !important;
+        padding: 0 !important;
+        border-top: none !important;
+    }
+}
+
 
 .pagination {
     margin-left: auto;

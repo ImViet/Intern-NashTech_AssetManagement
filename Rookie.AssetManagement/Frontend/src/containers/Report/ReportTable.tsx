@@ -18,13 +18,13 @@ import { IReport } from "src/interfaces/Report/IReport";
 
 
 const columns: IColumnOption[] = [
-    { columnName: "Category", columnValue: "category" },
-    { columnName: "Total", columnValue: "total" },
-    { columnName: "Assigned", columnValue: "assigned" },
-    { columnName: "Available", columnValue: "available" },
-    { columnName: "Not Available", columnValue: "notAvailable" },
-    { columnName: "Waiting For Recycling", columnValue: "waitingForRecycling" },
-    { columnName: "Recycled", columnValue: "recycled" },
+    { columnName: "Category ", columnValue: "category" },
+    { columnName: "Total ", columnValue: "total" },
+    { columnName: "Assigned ", columnValue: "assigned" },
+    { columnName: "Available ", columnValue: "available" },
+    { columnName: "Not Available ", columnValue: "notAvailable" },
+    { columnName: "Waiting For Recycling ", columnValue: "waitingForRecycling" },
+    { columnName: "Recycled ", columnValue: "recycled" },
 ];
 
 type Props = {
@@ -39,7 +39,7 @@ const ReportTable: React.FC<Props> = ({
     sortState,
 }) => {
     return (
-        <>
+        <div className="report-table">
             <Table
                 columns={columns}
                 handleSort={handleSort}
@@ -57,7 +57,7 @@ const ReportTable: React.FC<Props> = ({
                     </tr>
                 ))}
             </Table>
-        </>
+        </div>
     );
 };
 
