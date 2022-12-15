@@ -44,9 +44,9 @@ namespace Rookie.AssetManagement.Business.Services
             var isHaveAsssignment = await _assignmentRepository.Entities
                 .AnyAsync(a =>
                     a.Asset.Id == assetForm.Id &&
-                    a.Asset.Location == location &&
-                    a.State.Id == (int)AssignmentStateEnum.WaitingForAcceptance);
-            if (isHaveAsssignment || assetForm.State == (int)AssetStateEnum.Assigned)
+                    a.Asset.Location == location);
+            assetForm.IsHaveAsssignment = isHaveAsssignment;
+            if (assetForm.State == (int)AssetStateEnum.Assigned)
             {
                 assetForm.IsEditable = false;
             }
@@ -84,9 +84,9 @@ namespace Rookie.AssetManagement.Business.Services
                 var isHaveAsssignment = await _assignmentRepository.Entities
                     .AnyAsync(a =>
                         a.Asset.Id == assetDto.Id &&
-                        a.Asset.Location == location &&
-                        a.State.Id == (int)AssignmentStateEnum.WaitingForAcceptance);
-                if (isHaveAsssignment || assetDto.State == AssetStateEnum.Assigned.ToString())
+                        a.Asset.Location == location);
+                assetDto.IsHaveAsssignment = isHaveAsssignment;
+                if (assetDto.State == AssetStateEnum.Assigned.ToString())
                 {
                     assetDto.IsEditable = false;
                 }

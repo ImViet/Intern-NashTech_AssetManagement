@@ -8,4 +8,5 @@ export default interface IAssetForm {
   installedDate?: Date;
   state: number;
   isEditable: boolean;
+  isHaveAsssignment: boolean;
 }

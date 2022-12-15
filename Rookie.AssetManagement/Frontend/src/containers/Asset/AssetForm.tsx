@@ -19,7 +19,8 @@ const initialFormValues: IAssetForm = {
     specification: '',
     installedDate: undefined,
     state: 2,
-    isEditable: true
+    isEditable: true,
+    isHaveAsssignment: false
 };
 
 const validationSchema = Yup.object().shape({

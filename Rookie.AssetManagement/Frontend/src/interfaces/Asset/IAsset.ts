@@ -8,4 +8,5 @@ export default interface IAsset {
   state: string;
   location: string;
   isEditable: boolean;
+  isHaveAsssignment: boolean;
 }

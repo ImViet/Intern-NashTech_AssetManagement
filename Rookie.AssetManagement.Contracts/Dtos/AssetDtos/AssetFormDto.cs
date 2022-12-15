@@ -16,5 +16,6 @@ namespace Rookie.AssetManagement.Contracts.Dtos.AssetDtos
         public int State { get; set; }
         public string Location { get; set; }
         public bool IsEditable { get; set; } = true;
+        public bool IsHaveAsssignment { get; set; } = false;
     }
 }

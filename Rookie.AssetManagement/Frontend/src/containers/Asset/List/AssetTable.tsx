@@ -11,10 +11,11 @@ import formatDateTime, { convertDDMMYYYY } from "src/utils/formatDateTime";
 import Info from "../Info";
 //import { disableUser } from "../reducer";
 
-import { EDIT_ASSET_ID } from "src/constants/pages";
+import { EDIT_ASSET_ID, EDIT_ASSIGNMENT_ID } from "src/constants/pages";
 import ConfirmModal from "src/components/ConfirmModal";
 import { useAppDispatch } from "src/hooks/redux";
 import IAsset from "src/interfaces/Asset/IAsset";
+import { Link } from "react-router-dom";
 
 
 const columns: IColumnOption[] = [
@@ -44,15 +45,13 @@ const AssetTable: React.FC<Props> = ({
   fetchData,
   handleDisable,
 }) => {
-  const dispatch = useAppDispatch();
-
   const [showDetail, setShowDetail] = useState(false);
   const [assetDetail, setAssetDetail] = useState(null as IAsset | null);
   const [disableState, setDisable] = useState({
     isOpen: false,
     id: 0,
     title: '',
-    message: '',
+    message: (<></>),
     isDisable: true,
   });
 
@@ -66,13 +65,30 @@ const AssetTable: React.FC<Props> = ({
   };
 
   const handleShowDisable = async (id: number) => {
-    setDisable({
-      id,
-      isOpen: true,
-      title: 'Are you sure?',
-      message: 'Do you want to delete this asset?',
-      isDisable: true,
-    });
+    const asset = assets?.items.find(i => i.id == id)
+    if (!asset) {
+      return;
+    }
+    if (asset.isHaveAsssignment) {
+      setDisable({
+        id,
+        isOpen: true,
+        title: 'Cannot Delete Asset',
+        message: (<p>
+          <p>Cannot delete the asset because it belongs to one or more historical assignments.</p>
+          <p>If the asset is not able to be used anymore, please update its state in <Link to={EDIT_ASSIGNMENT_ID(id)}>Edit Asset page?</Link></p>
+        </p>),
+        isDisable: false,
+      });
+    } else {
+      setDisable({
+        id,
+        isOpen: true,
+        title: 'Are you sure?',
+        message: (<>Do you want to delete this asset?</>),
+        isDisable: true,
+      });
+    }
   };
 
   const handleCloseDisable = () => {
@@ -80,7 +96,7 @@ const AssetTable: React.FC<Props> = ({
       isOpen: false,
       id: 0,
       title: '',
-      message: '',
+      message: (<></>),
       isDisable: true,
     });
   };
@@ -91,7 +107,7 @@ const AssetTable: React.FC<Props> = ({
       isOpen: false,
       id: 0,
       title: '',
-      message: '',
+      message: (<></>),
       isDisable: true,
     });
   }
