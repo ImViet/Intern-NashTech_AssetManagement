@@ -18,6 +18,7 @@ namespace Rookie.AssetManagement.Business
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IAssignmentService, AssignmentService>();
             services.AddTransient<IReturnRequestService, ReturnRequestService>();
+            services.AddTransient<IReport, ReportService>();
         }
     }
 }
