@@ -13,7 +13,7 @@ const Endpoints = {
   getAssignmentDataForm: "api/Assignment/GetAssignmentDataForm",
   returning: "api/ReturnRequest",
   searchReturnRequest: "api/ReturnRequest/ReturnRequest",
-
+  report: "api/report",
 };
 
 export default Endpoints;
