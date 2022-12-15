@@ -117,10 +117,12 @@ namespace Rookie.AssetManagement.Business
 
             CreateMap<Asset, AssetDto>()
                 .ForMember(d => d.IsEditable, t => t.Ignore())
+                .ForMember(d => d.IsHaveAsssignment, t => t.Ignore())
                 .ForMember(d => d.Category, t => t.MapFrom(c => c.Category.CategoryName))
                 .ForMember(d => d.State, t => t.MapFrom(c => c.State.StateName));
             CreateMap<Asset, AssetFormDto>()
                 .ForMember(d => d.IsEditable, t => t.Ignore())
+                .ForMember(d => d.IsHaveAsssignment, t => t.Ignore())
                 .ForMember(d => d.Category, t => t.MapFrom(c => c.Category.Id))
                 .ForMember(d => d.State, t => t.MapFrom(c => c.State.Id));
             CreateMap<Asset, LookUpAssetDto>()
