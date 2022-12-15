@@ -44,7 +44,9 @@ namespace Rookie.AssetManagement.Business.Services
                     NotAvailable = c.Assets.Where(a => a.State.Id == (int)AssetStateEnum.NotAvailable).Count(),
                     WaitingForRecycling = c.Assets.Where(a => a.State.Id == (int)AssetStateEnum.WaitingForRecycling).Count(),
                     Recycled = c.Assets.Where(a => a.State.Id == (int)AssetStateEnum.Recycled).Count(),
-                }).ToListAsync();
+                })
+                .OrderBy(r => r.Category)
+                .ToListAsync();
 
             return result;
         }

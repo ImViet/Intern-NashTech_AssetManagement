@@ -13,3 +13,6 @@ export const DEFAULT_ASSIGNMENT_SORT_COLUMN_NAME = "id";
 
 //My Assignment
 export const DEFAULT_My_ASSIGNMENT_SORT_COLUMN_NAME = "assignedDate";
+
+//Report
+export const DEFAULT_REPORT_SORT_COLUMN_NAME = "category";
