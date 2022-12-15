@@ -110,7 +110,7 @@ const MyAssignmentTable: React.FC<Props> = ({
                                     callback: () => { handleAccept(data.id) }
                                 });
                             }}>
-                                <CheckLg className="text-danger" />
+                                <CheckLg className="text-danger fw-bolder" size={25} />
                             </ButtonIcon>
                             <ButtonIcon disable={data.state == "Accepted" || data.state == "Waiting for returning"} onClick={() => {
                                 setConfirmState({
@@ -123,7 +123,7 @@ const MyAssignmentTable: React.FC<Props> = ({
                                     callback: () => { handleDecline(data.id) }
                                 });
                             }}>
-                                <XLg className="text-danger mx-2" fill="" />
+                                <XLg className="text-danger mx-2  fw-bolder" fill="" size={20} />
                             </ButtonIcon>
                             <ButtonIcon disable={data.state == "Waiting for returning" || data.state == "Waiting for acceptance"} onClick={() => {
                                 setConfirmState({
@@ -136,15 +136,17 @@ const MyAssignmentTable: React.FC<Props> = ({
                                     callback: () => { handleReturn(data.id) }
                                 });
                             }}>
-                                <ArrowCounterclockwise className="text-primary " />
+                                <ArrowCounterclockwise className="text-primary fw-bolder" size={20} />
                             </ButtonIcon>
                         </td>
                     </tr>
                 ))}
             </Table>
-            {assignmentDetail && showDetail && (
-                <Info assignment={assignmentDetail} handleClose={handleCloseDetail} />
-            )}
+            {
+                assignmentDetail && showDetail && (
+                    <Info assignment={assignmentDetail} handleClose={handleCloseDetail} />
+                )
+            }
             <ConfirmModal
                 title={confirmState.title}
                 isShow={confirmState.isOpen}
