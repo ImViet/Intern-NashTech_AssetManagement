@@ -97,6 +97,8 @@ namespace Rookie.AssetManagement.Business.Services
              .Include(b => b.AssignedTo)
              .Include(b => b.Asset)
              .Where(b => b.State.Id != (int)AssignmentStateEnum.WaitingForReturning)
+             .Where(b => b.State.Id != (int)AssignmentStateEnum.Returned)
+             .Where(b => b.State.Id != (int)AssignmentStateEnum.Declined)
              .AsQueryable(),
              assignmentQueryCriteria);
 
