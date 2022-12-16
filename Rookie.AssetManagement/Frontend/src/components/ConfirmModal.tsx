@@ -6,15 +6,16 @@ type Props = {
     isShow: boolean,
     onHide?: (() => void),
     children: React.ReactNode,
+    dialogClassName?: string
 }
 
-const ConfirmModal: React.FC<Props> = ({ title, isShow, onHide, children }) => {
+const ConfirmModal: React.FC<Props> = ({ title, isShow, onHide, children, dialogClassName = "" }) => {
 
     return (
         <Modal
             show={isShow}
             onHide={onHide}
-            dialogClassName="modal-90w"
+            dialogClassName={`modal-90w ${dialogClassName}`}
             aria-labelledby="login-modal"
         >
             <Modal.Header closeButton>

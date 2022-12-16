@@ -151,6 +151,7 @@ const ReturningTable: React.FC<Props> = ({
                 ))}
             </Table>
             <ConfirmModal
+                dialogClassName="return-modal"
                 title={confirmState.title}
                 isShow={confirmState.isOpen}
                 onHide={() => {
