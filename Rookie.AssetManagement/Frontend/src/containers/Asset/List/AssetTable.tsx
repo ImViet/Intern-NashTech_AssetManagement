@@ -166,6 +166,7 @@ const AssetTable: React.FC<Props> = ({
         <Info asset={assetDetail} handleClose={handleCloseDetail} />
       )}
       <ConfirmModal
+        dialogClassName="asset-modal"
         title={disableState.title}
         isShow={disableState.isOpen}
         onHide={handleCloseDisable}
