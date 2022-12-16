@@ -41,18 +41,19 @@ namespace Rookie.AssetManagement.Business.Services
                 .ProjectTo<AssetFormDto>(_mapper.ConfigurationProvider)
                 .FirstAsync();
 
-            var isHaveAsssignment = await _assignmentRepository.Entities
+            var isHaveWaitingAsssignment = await _assignmentRepository.Entities
                 .AnyAsync(a =>
                     a.Asset.Id == assetForm.Id &&
-                    a.Asset.Location == location);
-            assetForm.IsHaveAsssignment = isHaveAsssignment;
-            if (assetForm.State == (int)AssetStateEnum.Assigned)
+                    a.Asset.Location == location &&
+                    a.State.Id == (int)AssignmentStateEnum.WaitingForAcceptance);
+            if (assetForm.State == (int)AssetStateEnum.Assigned || isHaveWaitingAsssignment)
             {
                 assetForm.IsEditable = false;
             }
 
             return assetForm;
         }
+
         public async Task<IEnumerable<AssetDto>> GetAllAsync()
         {
             var listAsset = _mapper.Map<IEnumerable<AssetDto>>(await _assetRepository.Entities.ToListAsync());
@@ -85,8 +86,13 @@ namespace Rookie.AssetManagement.Business.Services
                     .AnyAsync(a =>
                         a.Asset.Id == assetDto.Id &&
                         a.Asset.Location == location);
+                var isHaveWaitingAsssignment = await _assignmentRepository.Entities
+                    .AnyAsync(a =>
+                        a.Asset.Id == assetDto.Id &&
+                        a.Asset.Location == location &&
+                        a.State.Id == (int)AssignmentStateEnum.WaitingForAcceptance);
                 assetDto.IsHaveAsssignment = isHaveAsssignment;
-                if (assetDto.State == AssetStateEnum.Assigned.ToString())
+                if (assetDto.State == AssetStateEnum.Assigned.ToString() || isHaveWaitingAsssignment)
                 {
                     assetDto.IsEditable = false;
                 }

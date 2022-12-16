@@ -142,9 +142,11 @@ const MyAssignmentTable: React.FC<Props> = ({
                     </tr>
                 ))}
             </Table>
-            {assignmentDetail && showDetail && (
-                <Info assignment={assignmentDetail} handleClose={handleCloseDetail} />
-            )}
+            {
+                assignmentDetail && showDetail && (
+                    <Info assignment={assignmentDetail} handleClose={handleCloseDetail} />
+                )
+            }
             <ConfirmModal
                 title={confirmState.title}
                 isShow={confirmState.isOpen}
