@@ -113,7 +113,7 @@ const ReturningTable: React.FC<Props> = ({
                         <td>{data.acceptedBy}</td>
                         <td>{convertDDMMYYYY(data.returnedDate)}</td>
                         <td>{data.state}</td>
-                        <td className="d-flex">
+                        <td className="d-flex cvg-custom">
                             <ButtonIcon disable={data.state == "Completed"}
                                 onClick={() => {
                                     setConfirmState({
@@ -128,7 +128,7 @@ const ReturningTable: React.FC<Props> = ({
                                     });
                                 }}
                             >
-                                <CheckLg className="text-danger" />
+                                <CheckLg className="text-danger check-cvg" />
                             </ButtonIcon>
                             <ButtonIcon disable={data.state == "Completed"}
                                 onClick={() => {
@@ -144,7 +144,7 @@ const ReturningTable: React.FC<Props> = ({
                                     });
                                 }}
                             >
-                                <XLg className="text-black mx-2" />
+                                <XLg className="text-black mx-2 xlg-cvg" />
                             </ButtonIcon>
                         </td>
                     </tr>
