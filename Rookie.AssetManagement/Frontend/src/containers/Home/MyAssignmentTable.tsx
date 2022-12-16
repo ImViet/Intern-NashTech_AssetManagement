@@ -98,7 +98,7 @@ const MyAssignmentTable: React.FC<Props> = ({
                         <td>{data.category}</td>
                         <td>{convertDDMMYYYY(data.assignedDate)}</td>
                         <td>{data.state == "Waiting for returning" ? "Accepted" : data.state}</td>
-                        <td className="d-flex">
+                        <td className="d-flex cvg-custom">
                             <ButtonIcon disable={data.state == "Accepted" || data.state == "Waiting for returning"} onClick={() => {
                                 setConfirmState({
                                     isOpen: true,
@@ -110,7 +110,7 @@ const MyAssignmentTable: React.FC<Props> = ({
                                     callback: () => { handleAccept(data.id) }
                                 });
                             }}>
-                                <CheckLg className="text-danger fw-bolder" size={25} />
+                                <CheckLg className="text-danger check-cvg" />
                             </ButtonIcon>
                             <ButtonIcon disable={data.state == "Accepted" || data.state == "Waiting for returning"} onClick={() => {
                                 setConfirmState({
@@ -123,7 +123,7 @@ const MyAssignmentTable: React.FC<Props> = ({
                                     callback: () => { handleDecline(data.id) }
                                 });
                             }}>
-                                <XLg className="text-danger mx-2  fw-bolder" fill="" size={20} />
+                                <XLg className="text-danger mx-2 xlg-cvg" fill="" />
                             </ButtonIcon>
                             <ButtonIcon disable={data.state == "Waiting for returning" || data.state == "Waiting for acceptance"} onClick={() => {
                                 setConfirmState({
@@ -136,7 +136,7 @@ const MyAssignmentTable: React.FC<Props> = ({
                                     callback: () => { handleReturn(data.id) }
                                 });
                             }}>
-                                <ArrowCounterclockwise className="text-primary fw-bolder" size={20} />
+                                <ArrowCounterclockwise className="text-primary arrowccw-svg" />
                             </ButtonIcon>
                         </td>
                     </tr>

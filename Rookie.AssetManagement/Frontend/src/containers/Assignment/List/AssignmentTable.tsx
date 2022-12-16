@@ -137,7 +137,7 @@ const AssignmentTable: React.FC<Props> = ({
                         <td>{data.assignedBy}</td>
                         <td>{convertDDMMYYYY(data.assignedDate)}</td>
                         <td>{data.state}</td>
-                        <td className="d-flex">
+                        <td className="d-flex cvg-custom">
                             <ButtonIcon disable={data.state == "Accepted"} onClick={() => handleEdit(data.id)}>
                                 <PencilFill className="text-black" />
                             </ButtonIcon>
@@ -146,8 +146,8 @@ const AssignmentTable: React.FC<Props> = ({
                             </ButtonIcon>
                             <ButtonIcon >
                                 {(data.state == "Accepted") ?
-                                    <ArrowCounterclockwise className="text-primary " /> :
-                                    <ArrowCounterclockwise fill="" className="text-primary " />}
+                                    <ArrowCounterclockwise className="text-primary arrowccw-svg" /> :
+                                    <ArrowCounterclockwise fill="" className="text-primary arrowccw-disable-svg" />}
                             </ButtonIcon>
                         </td>
                     </tr>

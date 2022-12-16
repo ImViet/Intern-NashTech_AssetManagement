@@ -1,0 +1,24 @@
+.cvg-custom{
+    div{
+        svg{
+            path{
+            stroke-width: 2;
+            }
+        }
+        .check-cvg{
+            path{
+            stroke: #dc3545;
+            }
+        }
+        .xlg-cvg{
+            stroke: #484848
+        }
+        .arrowccw-svg{
+            stroke: #007bff;
+        }
+        .arrowccw-disable-svg{
+            stroke: #484848;
+        }
+    }
+  
+}
