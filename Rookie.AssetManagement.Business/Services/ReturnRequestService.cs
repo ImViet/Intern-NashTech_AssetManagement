@@ -59,7 +59,7 @@ namespace Rookie.AssetManagement.Business.Services
 
             var newReturnRequest = _mapper.Map<ReturnRequest>(returnRequestCreateDto);
             newReturnRequest.Assignment = assignment;
-            newReturnRequest.ReturnedDate = DateTime.Now;
+            newReturnRequest.ReturnedDate = DateTime.Today;
 
             state = await _stateRepository.GetById((int)ReturnRequestStateEnum.WaitingForReturning);
             newReturnRequest.State = state;
