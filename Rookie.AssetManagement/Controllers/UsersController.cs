@@ -40,14 +40,14 @@ namespace Rookie.AssetManagement.Controllers
         {
             var location = User.Claims.FirstOrDefault(x => x.Type.Equals("Location", StringComparison.OrdinalIgnoreCase))?.Value;
             var user = await _userService.AddAsync(userRequest, location);
-            return Created(Endpoints.User, user);
+            return user;
         }
         [HttpPut]
         public async Task<ActionResult<UserDto>> UpdateUser([FromBody] UserUpdateDto userRequest)
         {
             var location = User.Claims.FirstOrDefault(x => x.Type.Equals("Location", StringComparison.OrdinalIgnoreCase))?.Value;
             var user = await _userService.UpdateAsnyc(userRequest, location);
-            return Created(Endpoints.User, user);
+            return user;
         }
 
         [HttpGet]
@@ -89,7 +89,7 @@ namespace Rookie.AssetManagement.Controllers
              [FromQuery] UserQueryCriteriaDto userCriteriaDto,
              CancellationToken cancellationToken)
         {
-           
+
 
             var userResponses = await _userService.GetLookUpUser(
                                             userCriteriaDto,
