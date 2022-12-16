@@ -59,7 +59,6 @@ namespace Rookie.AssetManagement.Business.Services
 
             var newReturnRequest = _mapper.Map<ReturnRequest>(returnRequestCreateDto);
             newReturnRequest.Assignment = assignment;
-            newReturnRequest.ReturnedDate = DateTime.Today;
 
             state = await _stateRepository.GetById((int)ReturnRequestStateEnum.WaitingForReturning);
             newReturnRequest.State = state;
@@ -101,6 +100,8 @@ namespace Rookie.AssetManagement.Business.Services
 
             returnRequest.State = await _stateRepository.GetById((int)ReturnRequestStateEnum.Completed);
             returnRequest.AcceptedBy = acceptUser;
+            returnRequest.ReturnedDate = DateTime.Today;
+
             await _returnrequesRepository.Update(returnRequest);
 
             returnRequest.Assignment.State = await _stateRepository.GetById((int)AssignmentStateEnum.Returned);

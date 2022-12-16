@@ -17,15 +17,13 @@ export function convertDDMMYYYY(input) {
   if (dd < 10) dd = "0" + dd;
   if (mm < 10) mm = "0" + mm;
 
-  return dd + "/" + mm + "/" + yyyy;
+  const result = dd + "/" + mm + "/" + yyyy;
+
+  return result;
 }
 
 export function toUTCWithoutHour(date) {
   return new Date(
-    Date.UTC(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate(),
-    )
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
   );
 }
